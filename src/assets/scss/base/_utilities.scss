@@ -1,0 +1,383 @@
+//avatar
+.avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 50%;
+  position: relative;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .indicator {
+    width: 0.5rem;
+    height: 0.5rem;
+    display: block;
+    border-radius: 50%;
+    position: absolute;
+    right: 0rem;
+    bottom: 0.1rem;
+    background-color: $green;
+    &.inactive {
+      background-color: $red;
+    }
+  }
+  &-xl {
+    @extend .avatar;
+    width: 4rem;
+    height: 4rem;
+  }
+  &-placeholder {
+    width: 4rem;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $gray-5;
+    @include rfs(24px);
+    border-radius: $input-border-radius;
+  }
+  &-lg {
+    @extend .avatar;
+    width: 3rem;
+    height: 3rem;
+  }
+  &-md {
+    @extend .avatar;
+    width: 2rem;
+    height: 2rem;
+    flex-shrink: 0;
+  }
+  &-sm {
+    @extend .avatar;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  &-collection {
+    display: flex;
+    align-items: center;
+    li {
+      .avatar {
+        border: 2px solid $white;
+        box-sizing: border-box;
+        border-radius: 50%;
+      }
+      &:not(:last-child) {
+        margin-right: -0.75rem;
+      }
+    }
+  }
+  &-box {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.25rem;
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+  &-details {
+    margin-left: 0.5rem;
+    h6 {
+      color: $gray-700;
+      font-weight: 500;
+      @include small;
+    }
+    p {
+      font-weight: 400;
+      color: $gray-600;
+      @include small;
+    }
+  }
+  &-wrapper {
+    display: flex;
+    align-items: center;
+    &:hover {
+      button {
+        display: flex;
+        [class^='ic-'],
+        [class*=' ic-'] {
+          @include rfs(24px);
+          color: $gray-56;
+        }
+      }
+    }
+    button {
+      display: none;
+    }
+  }
+  &-text {
+    @include rfs(16px);
+    font-weight: 600;
+    color: $gray-16;
+  }
+  &-collection {
+    display: flex;
+    align-items: center;
+    li {
+      &:not(:last-child) {
+        margin-right: -0.5rem;
+      }
+    }
+  }
+  @each $color, $value in $colortypes {
+    &-#{$color} {
+      background-color: rgba($value, 0.12);
+      color: $value;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+
+.alert {
+  @include des;
+  border: 1px solid;
+  padding: $alert-padding-y $alert-padding-x;
+  margin-bottom: $alert-margin-bottom;
+  border-radius: $alert-border-radius;
+  border: $alert-border-width solid;
+  i {
+    font-size: 10px;
+  }
+}
+
+//alignment
+.align {
+  display: flex;
+  &-vertical {
+    display: flex;
+    align-items: center;
+  }
+  &-start {
+    display: flex;
+    align-items: flex-start;
+  }
+  &-baseline {
+    display: flex;
+    align-items: baseline;
+  }
+  &-end {
+    display: flex;
+    align-items: flex-end;
+  }
+}
+
+//moves from small to large
+.scrollable {
+  @include scrollable;
+  transition: all 0.3s ease-out;
+  &-default {
+    // @include hover{
+    //   background-color: $navy-24!important;
+    // }
+  }
+}
+
+//pill
+.pill {
+  border-radius: 100px;
+  padding: 0.25rem 0.75rem;
+  @include des;
+}
+
+.divider {
+  border-top: 1px solid $input-border-color;
+}
+
+//flexbox
+.flexbox {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.ticket {
+  &-box {
+    border: 1px solid $gray-100;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    display: flex;
+  }
+  &-status {
+    h6 {
+      color: $gray-500;
+      @include small;
+      margin-bottom: 0.5rem;
+    }
+  }
+  &-outline {
+    width: 100%;
+    padding: 0.25rem 0.5rem;
+    border: 1px dotted red;
+  }
+}
+
+//user
+.user {
+  display: flex;
+  align-items: flex-start;
+  &-avatar {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.5rem;
+    flex-shrink: 0;
+    @each $color, $value in $colortypes {
+      &-#{$color} {
+        background-color: rgba($value, 0.12);
+        color: $value;
+      }
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+    }
+  }
+  &-detail {
+    h6 {
+      color: $gray-700;
+      font-weight: 500;
+      @include rfs(14px);
+      margin-bottom: 0.25rem;
+      &.activity {
+        font-weight: 400;
+        span {
+          &.name {
+            color: $blue;
+            margin: 0 0.125rem;
+          }
+          &.action {
+            font-weight: 500;
+            margin: 0 0.125rem;
+          }
+        }
+      }
+    }
+    p {
+      font-weight: 400;
+      color: $gray-600;
+      @include rfs(12px);
+    }
+  }
+}
+
+//iconbox
+.iconbox {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.position {
+  &-relative {
+    position: relative;
+  }
+}
+
+.icon {
+  &-lg {
+    @include rfs(46px);
+  }
+  &-md {
+    @include rfs(32px);
+  }
+}
+
+.error {
+  display: inline-flex;
+  align-items: center;
+  color: $red;
+  @include rfs(12px);
+  font-weight: 400;
+  [class^='ic-'],
+  [class*=' ic-'] {
+    margin-right: 0.25rem;
+  }
+}
+
+.cursor {
+  &-pointer {
+    cursor: pointer;
+  }
+}
+
+.img {
+  &-lg {
+    height: 140px;
+    width: 100%;
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: contain;
+    }
+  }
+  &-xl {
+    height: 121px;
+  }
+  &-md {
+    height: 7rem;
+    width: 7rem;
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      border: 2px solid white;
+      border-radius: 50%;
+    }
+  }
+}
+
+.point {
+  @each $color, $value in $theme-colors {
+    &-#{$color} {
+      display: flex;
+      align-items: center;
+      &:before {
+        content: '';
+        left: 0;
+        top: 0.25rem;
+        width: 0.75rem;
+        height: 0.75rem;
+        border-radius: 50%;
+        background-color: $value;
+        display: block;
+        margin-right: 0.25rem;
+      }
+    }
+  }
+}
+
+.border {
+  &-right {
+    border-right: 1px solid $border-color-gray;
+  }
+}
+
+.letter {
+  padding: 0.5rem;
+  color: $gray-48;
+  font-weight: 400;
+  border-bottom: 1px solid $border-color-gray;
+}
+
+.fw-semibold {
+  font-weight: 600;
+}
+
+.bg-blue-96 {
+  background-color: $blue-96;
+}

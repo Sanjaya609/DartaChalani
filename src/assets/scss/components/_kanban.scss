@@ -1,0 +1,67 @@
+.kanban {
+  &-board {
+    border-radius: 0.25rem;
+    // border: 1px solid $gray-100;
+    padding: 0.75rem 1rem;
+    // display: grid;
+    // grid-template-columns: repeat(3, 1fr);
+    // column-gap: 1rem;
+  }
+  &-title {
+    @include rfs(12px);
+    color: $gray-500;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  &-item {
+  }
+  &-indicator {
+    border: 1px dashed $gray-300;
+    background-color: $gray-5;
+    border-radius: 2px;
+    display: flex;
+    padding: 0 0.5rem;
+    height: 1.5rem;
+    align-items: center;
+    box-sizing: border-box;
+    @include rfs(10px);
+    span {
+      margin-left: 0.25rem;
+    }
+    &.active {
+      background-color: $indigo-500;
+      border: unset;
+      color: white;
+    }
+  }
+  &-card {
+    padding: 1rem;
+    border: 1px solid $gray-100;
+    border-radius: 0.25rem;
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+    .btn {
+      border-radius: 1rem;
+
+      &:focus {
+        box-shadow: none;
+      }
+      &-outline-checked {
+        border: 1px solid $blue-5;
+        color: $blue-5;
+      }
+      &-primary-checked {
+        background-color: $blue-5;
+        color: white;
+      }
+    }
+
+    // .btn-outline-primary {
+    //   &:hover {
+    //     background-color: rgba($primary, 0.6);
+    //     border-color: transparent;
+    //   }
+    // }
+  }
+}

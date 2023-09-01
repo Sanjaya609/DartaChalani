@@ -1,0 +1,120 @@
+.approval {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  &--date {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  &--item {
+    padding: 0.5rem;
+  }
+  &--member {
+    display: flex;
+    align-items: flex-start;
+    img {
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  &--name {
+    @include rfs(map-get($font-sizes, p));
+    font-weight: 600;
+  }
+  &--text {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding-left: map-get($approval, px);
+    border-left: 2px solid map-get($approval, boderColor);
+    @include rfs(map-get($font-sizes, p));
+    color: $gray-100;
+    a {
+      color: $gray-900;
+    }
+  }
+
+  li {
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+    &.internal {
+      .approval {
+        &--item {
+          background-color: $white;
+        }
+
+        &--name {
+          color: $info;
+        }
+      }
+    }
+    &.external {
+      .approval {
+        &--item {
+          background-color: map-get($approval, tabDetails);
+        }
+
+        &--name {
+          color: $gray-700;
+        }
+      }
+    }
+
+    &.verified {
+      position: relative;
+      .approval {
+        &--name {
+          color: $success;
+        }
+      }
+
+      &:after {
+        content: '\e918';
+        font-family: 'icomoon';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        color: $green;
+        font-size: 14px;
+      }
+    }
+
+    &.activeUser {
+      .approval {
+        &--name {
+          color: map-get($approval, activeColor);
+        }
+      }
+    }
+
+    &.pending {
+      .approval {
+        &--name {
+          color: map-get($approval, pendingColor);
+        }
+      }
+    }
+  }
+
+  &__edit {
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 0.5rem;
+      &:not(:last-child) {
+        border-bottom: 1px solid #f3f2ee;
+      }
+
+      .btn-outline-danger {
+        color: $red;
+        @include hover-focus-active {
+          color: white;
+        }
+      }
+    }
+  }
+}

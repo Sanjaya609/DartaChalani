@@ -1,0 +1,114 @@
+.header {
+  &-01 {
+    height: var(--header-height);
+
+    background-color: $navy-40;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  &-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @include media-breakpoint-down(sm) {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0;
+    }
+    .left,
+    .right {
+      display: flex;
+      align-items: center;
+      @include media-breakpoint-down(sm) {
+        width: 100%;
+        padding: 0.5rem 2rem;
+      }
+      @include media-breakpoint-up(md) {
+        justify-content: space-between;
+      }
+    }
+
+    .left {
+      .btn {
+        background-color: $navy-24;
+      }
+      .toggler {
+        color: $blue;
+        margin-right: 1.5rem;
+        @include media-breakpoint-down(sm) {
+          margin-right: 0.75rem;
+        }
+      }
+      @include media-breakpoint-down(sm) {
+        order: 2;
+        margin-right: 0;
+      }
+    }
+
+    .right {
+      .form-control {
+        width: 20.625rem;
+        background-color: $navy-32;
+        color: white;
+        &-icon {
+          i,
+          svg {
+            color: white;
+          }
+        }
+      }
+      padding-right: 1.5rem;
+      @include media-breakpoint-down(sm) {
+        background: linear-gradient(236.99deg, #2f6fcf 18.23%, #0b3f8c 100%);
+      }
+      input {
+        background-color: $gray-0;
+        border: none;
+      }
+    }
+  }
+  &-title {
+    color: $gray-600;
+    font-weight: 600;
+    @include rfs(16px);
+  }
+
+  &-icon {
+    display: flex;
+    align-items: center;
+    li {
+      &:not(:last-child) {
+        margin-right: 1rem;
+      }
+      [class^='ic-'],
+      [class*=' ic-'],
+      svg {
+        color: $blue-80;
+        font-size: 1.25rem;
+      }
+    }
+    @include rfs(20px);
+    &:hover {
+      cursor: pointer;
+    }
+    @include media-breakpoint-down(sm) {
+      color: white;
+    }
+  }
+  &-seperator {
+    position: relative;
+    &:after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: -0.75rem;
+      transform: translateY(-50%);
+      background-color: rgba(white, 0.32);
+      height: 1.75rem;
+      width: 1px;
+    }
+  }
+}

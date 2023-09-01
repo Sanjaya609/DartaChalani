@@ -1,0 +1,619 @@
+@font-face {
+  font-family: 'icomoon';
+  src: url('./fonts/icomoon.eot?3sb9z9');
+  src: url('./fonts/icomoon.eot?3sb9z9#iefix') format('embedded-opentype'),
+    url('./fonts/icomoon.ttf?3sb9z9') format('truetype'),
+    url('./fonts/icomoon.woff?3sb9z9') format('woff'),
+    url('./fonts/icomoon.svg?3sb9z9#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^='ic-'],
+[class*=' ic-'] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ic-checkmark:before {
+  content: '\e900';
+}
+.ic-newspaper-2:before {
+  content: '\e904';
+}
+.ic-fingerprint:before {
+  content: '\e902';
+}
+.ic-shield:before {
+  content: '\e905';
+}
+.ic-user-2:before {
+  content: '\e906';
+}
+.ic-user-add:before {
+  content: '\e907';
+}
+.ic-add-box-filled:before {
+  content: '\e908';
+}
+.ic-add-circular-filled:before {
+  content: '\e909';
+}
+.ic-add-circular-outline:before {
+  content: '\e90a';
+}
+.ic-arrow-line-down:before {
+  content: '\e90b';
+}
+.ic-arrow-down-circle-fill:before {
+  content: '\e90c';
+}
+.ic-arrow-line-left:before {
+  content: '\e90d';
+}
+.ic-arrow-left-circle-fill:before {
+  content: '\e90e';
+}
+.ic-arrow-line-right:before {
+  content: '\e90f';
+}
+.ic-arrow-right-circle-fill:before {
+  content: '\e910';
+}
+.ic-arrow-line-up:before {
+  content: '\e911';
+}
+.ic-arrow-up-circle-fill:before {
+  content: '\e912';
+}
+.ic-checkbox-active:before {
+  content: '\e913';
+}
+.ic-checkmark-1:before {
+  content: '\e915';
+}
+.ic-close-circular-filled:before {
+  content: '\e919';
+}
+.ic-close-circular-outline:before {
+  content: '\e91a';
+}
+.ic-dashboard-outline:before {
+  content: '\e91b';
+}
+.ic-delete-filled:before {
+  content: '\e91c';
+}
+.ic-delete-outline:before {
+  content: '\e91d';
+}
+.ic-edit-filled:before {
+  content: '\e91e';
+}
+.ic-edit-outline:before {
+  content: '\e91f';
+}
+.ic-file:before {
+  content: '\e920';
+}
+.ic-graph-outline:before {
+  content: '\e921';
+}
+.ic-attach-2:before {
+  content: '\e922';
+}
+.ic-home-outline:before {
+  content: '\e923';
+}
+.ic-image-outline:before {
+  content: '\e924';
+}
+.ic-mail-outline:before {
+  content: '\e925';
+}
+.ic-delete-2:before {
+  content: '\e926';
+}
+.ic-mic-mute-outline:before {
+  content: '\e927';
+}
+.ic-mic-on-outline:before {
+  content: '\e928';
+}
+.ic-pin-outline:before {
+  content: '\e929';
+}
+.ic-product-outline:before {
+  content: '\e92a';
+}
+.ic-radio-active:before {
+  content: '\e92b';
+}
+.ic-radio-default:before {
+  content: '\e92c';
+}
+.ic-refresh1:before {
+  content: '\e92d';
+}
+.ic-remove-box-filled:before {
+  content: '\e92e';
+}
+.ic-remove-circular-filled:before {
+  content: '\e92f';
+}
+.ic-remove-circular-outline:before {
+  content: '\e930';
+}
+.ic-remove-default:before {
+  content: '\e931';
+}
+.ic-settings-outline:before {
+  content: '\e932';
+}
+.ic-mic:before {
+  content: '\e933';
+}
+.ic-volume-on:before {
+  content: '\e934';
+}
+.ic-volume-off:before {
+  content: '\e935';
+}
+.ic-update:before {
+  content: '\e936';
+}
+.ic-upload-1:before {
+  content: '\e937';
+}
+.ic-user-outline:before {
+  content: '\e938';
+}
+.ic-mic-mute:before {
+  content: '\e939';
+}
+.ic-gallery:before {
+  content: '\e93a';
+}
+.ic-volume-mute-outline:before {
+  content: '\e93b';
+}
+.ic-volume-on-outline:before {
+  content: '\e93c';
+}
+.ic-account:before {
+  content: '\e94a';
+}
+.ic-money:before {
+  content: '\e94b';
+}
+.ic-plane:before {
+  content: '\e94c';
+}
+.ic-qa:before {
+  content: '\e94d';
+}
+.ic-qr-code:before {
+  content: '\e94e';
+}
+.ic-transaction:before {
+  content: '\e94f';
+}
+.ic-bank:before {
+  content: '\e950';
+}
+.ic-currency:before {
+  content: '\e951';
+}
+.ic-hand:before {
+  content: '\e952';
+}
+.ic-mobile-banking:before {
+  content: '\e953';
+}
+.ic-smartphone:before {
+  content: '\e954';
+}
+.ic-tax:before {
+  content: '\e955';
+}
+.ic-add:before {
+  content: '\e956';
+}
+.ic-alert:before {
+  content: '\e957';
+}
+.ic-arrow-down:before {
+  content: '\e958';
+}
+.ic-arrow-left:before {
+  content: '\e959';
+}
+.ic-arrow-pointer:before {
+  content: '\e95a';
+}
+.ic-arrow-right:before {
+  content: '\e95b';
+}
+.ic-arrow-up:before {
+  content: '\e95c';
+}
+.ic-attach:before {
+  content: '\e95d';
+}
+.ic-bag:before {
+  content: '\e95e';
+}
+.ic-behance:before {
+  content: '\e95f';
+}
+.ic-bell:before {
+  content: '\e960';
+}
+.ic-book:before {
+  content: '\e961';
+}
+.ic-bookmark:before {
+  content: '\e962';
+}
+.ic-box-2:before {
+  content: '\e963';
+}
+.ic-boxline-arrow-down:before {
+  content: '\e964';
+}
+.ic-boxline-arrow-up:before {
+  content: '\e965';
+}
+.ic-briefcase:before {
+  content: '\e966';
+}
+.ic-calendar:before {
+  content: '\e967';
+}
+.ic-calendar-event:before {
+  content: '\e968';
+}
+.ic-call:before {
+  content: '\e969';
+}
+.ic-cart:before {
+  content: '\e96a';
+}
+.ic-center-meeting:before {
+  content: '\e96b';
+}
+.ic-chat:before {
+  content: '\e96c';
+}
+.ic-clock:before {
+  content: '\e96e';
+}
+.ic-close:before {
+  content: '\e96f';
+}
+.ic-credit-card:before {
+  content: '\e970';
+}
+.ic-customer-rating:before {
+  content: '\e971';
+}
+.ic-delete:before {
+  content: '\e972';
+}
+.ic-diamond:before {
+  content: '\e973';
+}
+.ic-document-edit:before {
+  content: '\e974';
+}
+.ic-download:before {
+  content: '\e975';
+}
+.ic-dribbble:before {
+  content: '\e976';
+}
+.ic-edit:before {
+  content: '\e977';
+}
+.ic-equalizer:before {
+  content: '\e978';
+}
+.ic-error:before {
+  content: '\e979';
+}
+.ic-excel:before {
+  content: '\e97a';
+}
+.ic-facebook:before {
+  content: '\e97b';
+}
+.ic-filter:before {
+  content: '\e97c';
+}
+.ic-filter-2:before {
+  content: '\e97d';
+}
+.ic-folder-closed:before {
+  content: '\e97e';
+}
+.ic-folder-opened:before {
+  content: '\e97f';
+}
+.ic-globe:before {
+  content: '\e980';
+}
+.ic-graph:before {
+  content: '\e981';
+}
+.ic-hand-pointer:before {
+  content: '\e982';
+}
+.ic-heart:before {
+  content: '\e983';
+}
+.ic-heart-line:before {
+  content: '\e984';
+}
+.ic-hidden:before {
+  content: '\e985';
+}
+.ic-home:before {
+  content: '\e986';
+}
+.ic-image:before {
+  content: '\e987';
+}
+.ic-info:before {
+  content: '\e988';
+}
+.ic-instagram:before {
+  content: '\e989';
+}
+.ic-issue-ticket:before {
+  content: '\e98a';
+}
+.ic-language:before {
+  content: '\e98b';
+}
+.ic-leaf:before {
+  content: '\e98c';
+}
+.ic-linked-in:before {
+  content: '\e98e';
+}
+.ic-loading:before {
+  content: '\e98f';
+}
+.ic-location:before {
+  content: '\e990';
+}
+.ic-lock:before {
+  content: '\e991';
+}
+.ic-login:before {
+  content: '\e992';
+}
+.ic-logout:before {
+  content: '\e993';
+}
+.ic-mail:before {
+  content: '\e994';
+}
+.ic-menu:before {
+  content: '\e995';
+}
+.ic-meter:before {
+  content: '\e996';
+}
+.ic-minus:before {
+  content: '\e997';
+}
+.ic-more:before {
+  content: '\e998';
+}
+.ic-newspaper:before {
+  content: '\e999';
+}
+.ic-question:before {
+  content: '\e99a';
+}
+.ic-question-2:before {
+  content: '\e99b';
+}
+.ic-refresh:before {
+  content: '\e99c';
+}
+.ic-repair:before {
+  content: '\e99d';
+}
+.ic-restrict:before {
+  content: '\e99e';
+}
+.ic-sad-face:before {
+  content: '\e99f';
+}
+.ic-save:before {
+  content: '\e9a0';
+}
+.ic-search:before {
+  content: '\e9a1';
+}
+.ic-settings:before {
+  content: '\e9a2';
+}
+.ic-smiley:before {
+  content: '\e9a3';
+}
+.ic-sms-credit:before {
+  content: '\e9a4';
+}
+.ic-sort:before {
+  content: '\e9a5';
+}
+.ic-sort-arrow:before {
+  content: '\e9a6';
+}
+.ic-star:before {
+  content: '\e9a7';
+}
+.ic-test:before {
+  content: '\e9a8';
+}
+.ic-top-up-request:before {
+  content: '\e9a9';
+}
+.ic-triangle-down:before {
+  content: '\e9aa';
+}
+.ic-triangle-left:before {
+  content: '\e9ab';
+}
+.ic-triangle-right:before {
+  content: '\e9ac';
+}
+.ic-triangle-up:before {
+  content: '\e9ad';
+}
+.ic-twitter:before {
+  content: '\e9ae';
+}
+.ic-upload:before {
+  content: '\e9af';
+}
+.ic-user:before {
+  content: '\e9b0';
+}
+.ic-visible:before {
+  content: '\e9b1';
+}
+.ic-windows:before {
+  content: '\e9b2';
+}
+.ic-play:before {
+  content: '\e9b3';
+}
+.ic-mobile-pay:before {
+  content: '\e9b4';
+}
+.ic-admin:before {
+  content: '\e9b5';
+}
+.ic-app:before {
+  content: '\e9b6';
+}
+.ic-arrow-down-a:before {
+  content: '\e9b7';
+}
+.ic-arrow-left-a:before {
+  content: '\e9b8';
+}
+.ic-arrow-right-a:before {
+  content: '\e9b9';
+}
+.ic-arrow-up-a:before {
+  content: '\e9ba';
+}
+.ic-atm:before {
+  content: '\e9bb';
+}
+.ic-bank1:before {
+  content: '\e9bc';
+}
+.ic-bottom-left-arrow:before {
+  content: '\e9bd';
+}
+.ic-bottom-right-arrow:before {
+  content: '\e9be';
+}
+.ic-chevron-down:before {
+  content: '\e9bf';
+}
+.ic-chevron-left:before {
+  content: '\e9c0';
+}
+.ic-chevron-right:before {
+  content: '\e9c1';
+}
+.ic-chevron-up:before {
+  content: '\e9c2';
+}
+.ic-email:before {
+  content: '\e9c3';
+}
+.ic-faq:before {
+  content: '\e9c4';
+}
+.ic-fax:before {
+  content: '\e9c5';
+}
+.ic-health-insurance:before {
+  content: '\e9c6';
+}
+.ic-human-resource:before {
+  content: '\e9c7';
+}
+.ic-loan:before {
+  content: '\e9c8';
+}
+.ic-marketing:before {
+  content: '\e9c9';
+}
+.ic-microfinance:before {
+  content: '\e9ca';
+}
+.ic-mobile-banking1:before {
+  content: '\e9cb';
+}
+.ic-non-financial:before {
+  content: '\e9cc';
+}
+.ic-online-payment:before {
+  content: '\e9cd';
+}
+.ic-other-services:before {
+  content: '\e9ce';
+}
+.ic-phone:before {
+  content: '\e9cf';
+}
+.ic-qr-payment:before {
+  content: '\e9d0';
+}
+.ic-remittance:before {
+  content: '\e9d1';
+}
+.ic-saving-deposit:before {
+  content: '\e9d2';
+}
+.ic-security-settings:before {
+  content: '\e9d3';
+}
+.ic-send-money:before {
+  content: '\e9d4';
+}
+.ic-sms-banking:before {
+  content: '\e9d5';
+}
+.ic-top-left-arrow:before {
+  content: '\e9d6';
+}
+.ic-top-right-arrow:before {
+  content: '\e9d7';
+}
+.ic-topup:before {
+  content: '\e9d8';
+}
+.ic-view-account:before {
+  content: '\e9d9';
+}

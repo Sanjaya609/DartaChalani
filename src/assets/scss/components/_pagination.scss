@@ -1,0 +1,50 @@
+.pagination {
+  &-wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem;
+    background-color: white;
+    // border-top: none;
+    border-top: 1px solid $border-color-gray;
+    border-bottom-left-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+  }
+  &-01 {
+    .page {
+      &-item {
+        &.active {
+          .page-link {
+            &:hover {
+              color: white;
+            }
+          }
+        }
+      }
+      &-link {
+        border: none;
+        background: transparent;
+        border-radius: 0.125rem;
+        padding: 0.125rem 0.5rem;
+        @include rfs(14px);
+        &:hover {
+          color: $primary;
+        }
+        [class^='ic-'],
+        [class*=' ic-'],
+        svg {
+          color: $gray-56;
+          @include rfs(12px);
+        }
+        &.prev,
+        &.next {
+          padding: 0.125rem 0.5rem;
+          [class^='ic-'],
+          [class*=' ic-'],
+          svg {
+            font-size: 1.5rem;
+          }
+        }
+      }
+    }
+  }
+}

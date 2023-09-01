@@ -1,0 +1,299 @@
+// Heading Tags and Classes
+
+$h1-font-size: $font-size-base * 2.5 !default;
+$h2-font-size: $font-size-base * 2 !default;
+$h3-font-size: $font-size-base * 1.75 !default;
+$h4-font-size: $font-size-base * 1.5 !default;
+$h5-font-size: $font-size-base * 1.25 !default;
+$h6-font-size: $font-size-base !default;
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-bottom: 0;
+}
+
+@mixin h1 {
+  @include rfs(2.488rem); //39.81px
+}
+@mixin h2 {
+  @include rfs(2.074rem); //33.18px
+}
+@mixin h3 {
+  @include rfs(1.728rem); //27.65px
+}
+@mixin h4 {
+  @include rfs(1.44rem); //23.04px
+}
+@mixin h5 {
+  @include rfs(1.25rem); //20px
+}
+@mixin h6 {
+  @include rfs(1rem); //16px
+}
+@mixin des {
+  @include rfs(0.875rem); //14px
+}
+@mixin small {
+  @include rfs(0.75rem); //12px
+}
+h1,
+.h1 {
+  @include rfs(2.488rem); //39.81px
+  margin: 0;
+}
+h2,
+.h2 {
+  @include rfs(2.074rem); //33.18px
+  margin: 0;
+}
+h3,
+.h3 {
+  @include rfs(1.728rem); //27.65px
+  margin: 0;
+}
+
+h4,
+.h4 {
+  @include rfs(1.44rem); //23.04px
+  margin: 0;
+}
+h5,
+.h5 {
+  @include rfs(1.2rem); //19.20px
+  margin: 0;
+}
+h6,
+.h6 {
+  @include rfs(1rem); //16px
+  margin: 0;
+}
+
+p,
+.des {
+  @include rfs(0.875rem); //14px
+  margin: 0;
+}
+small,
+.small {
+  @include rfs(0.75rem); //12px
+}
+
+// Font weight
+.font-regular {
+  font-weight: 400;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+label {
+  margin-bottom: 0.25rem;
+  @include des;
+  color: $gray-400;
+  font-weight: 500;
+}
+
+//text
+.text {
+  &-underline {
+    text-decoration: underline;
+    text-decoration-color: inherit;
+  }
+  &-label {
+    @include des;
+    font-weight: 400;
+  }
+  &-help {
+    @include des;
+    margin-top: 1.5rem;
+    a {
+      color: $blue;
+    }
+  }
+}
+
+.heading {
+  color: $gray-16;
+  font-weight: 600;
+  &-line {
+    display: flex;
+    align-items: center;
+    color: $red;
+    font-weight: 600;
+
+    &:after {
+      content: '';
+      display: block;
+      width: 1px;
+      flex: 1;
+
+      height: 2px;
+      background-color: $red;
+      margin-left: 1rem;
+    }
+  }
+  &-spacing {
+    letter-spacing: 0.12rem;
+  }
+
+  &-01 {
+    @include rfs(14px);
+    font-weight: 400;
+    color: $gray-50;
+  }
+
+  //used in section header
+
+  &-02 {
+    @include rfs(18px);
+    font-weight: 600;
+    color: $navy-40;
+  }
+
+  &-03 {
+    @include rfs(20px);
+    font-weight: 600;
+    color: $gray-16;
+  }
+  &-04 {
+    @include rfs(18px);
+    font-weight: 400;
+  }
+  &-05 {
+    @include rfs(16px);
+    color: $primary;
+    font-weight: 800;
+  }
+  &-07 {
+    @include rfs(16px);
+    color: $navy-24;
+  }
+}
+
+//textbox
+.textbox {
+  &-01 {
+    h6 {
+      @extend .heading-01;
+    }
+    p {
+      margin-top: 0.5rem;
+      @extend .paragraph-01;
+    }
+  }
+
+  &-02 {
+    color: $red-56;
+    margin-top: 2rem;
+    h2 {
+      @include rfs(48px);
+      font-weight: 800;
+    }
+  }
+  &-03 {
+    h6 {
+      color: $gray-56;
+      font-weight: 400;
+      @include rfs(14px);
+    }
+    p {
+      color: $gray-32;
+      font-weight: 800;
+      @include rfs(16px);
+      margin-top: 0.5rem;
+    }
+  }
+
+  &-04 {
+    h6 {
+      color: $gray-56;
+      font-weight: 400;
+      @include rfs(14px);
+      margin-bottom: 0.25rem;
+    }
+    p {
+      color: $gray-16;
+      @include rfs(16px);
+    }
+  }
+  &-05 {
+    h6 {
+      font-weight: 600;
+      @include rfs(16px);
+    }
+    p {
+      font-weight: 400;
+      @include rfs(14px);
+      margin-top: 0.25rem;
+    }
+  }
+  &-06 {
+    h6 {
+      @include rfs(16px);
+    }
+    p {
+      @include rfs(18px);
+    }
+  }
+  &-07 {
+    h6 {
+      color: $gray-48;
+      @include rfs(16px);
+      margin-bottom: 0.5rem;
+      font-weight: 400;
+    }
+    p {
+      color: $gray-16;
+      @include rfs(16px);
+      font-weight: 400;
+    }
+  }
+}
+
+.text {
+  &-01 {
+    @include small;
+    color: $gray-600;
+    font-weight: 400;
+  }
+  &-02 {
+    @include rfs(16px);
+    font-weight: 400;
+    color: $gray-32;
+  }
+}
+
+.title {
+  &-01 {
+    color: $gray-500;
+    font-weight: 500;
+  }
+  &-count {
+    color: $gray-800;
+    font-weight: 600;
+  }
+}
+
+.paragraph {
+  &-01 {
+    @include rfs(14px);
+    font-weight: 400;
+    color: $gray-80;
+    line-height: 1.5;
+  }
+}
+
+.font-weight-medium {
+  font-weight: 500;
+}
+
+.lang {
+  color: white;
+  cursor: pointer;
+}

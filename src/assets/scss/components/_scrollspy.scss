@@ -1,0 +1,122 @@
+:root {
+  --scroll-container: 320px;
+
+  @include media-breakpoint-up(xxl) {
+    --scroll-container: 520px;
+  }
+  @include media-breakpoint-down(lg) {
+    --scroll-container: 420px;
+  }
+  @include media-breakpoint-down(md) {
+    --scroll-container: 520px;
+  }
+  @include media-breakpoint-down(sm) {
+    --scroll-container: 320px;
+  }
+}
+
+.scrollspy {
+  background-color: white;
+  position: relative;
+  min-height: 100vh;
+  &--head {
+    position: absolute;
+    top: 4rem;
+
+    height: 100px;
+    width: 100%;
+
+    .imgbox {
+      width: var(--scroll-container);
+      margin: auto;
+      display: flex;
+      justify-content: flex-start;
+      img {
+        display: block;
+      }
+    }
+  }
+
+  &--content {
+    position: absolute;
+    top: 12rem;
+    width: 100%;
+    margin: auto;
+    height: 58vh;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      background: rgba($info, 0.9);
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+      background: $info;
+      cursor: pointer;
+    }
+
+    @include media-breakpoint-up(xxl) {
+      height: 70vh;
+    }
+    section {
+      width: var(--scroll-container);
+      margin: auto;
+
+      padding-bottom: 30vh;
+
+      .heading--form {
+        margin-bottom: 0.75rem;
+      }
+      p {
+        margin-bottom: 1.5rem;
+      }
+    }
+  }
+
+  &--footer {
+    position: absolute;
+    bottom: 0;
+    padding-bottom: 1.5rem;
+    width: 100%;
+    margin: auto;
+    z-index: 1;
+    background-color: white;
+    display: none;
+
+    .links {
+      width: var(--scroll-container);
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid rgba($gray-700, 0.16);
+      padding: 0 1rem 0 0;
+      a {
+        padding: 1rem 1rem 0 1rem;
+        &.active {
+          position: relative;
+          color: $green;
+          &:before {
+            content: '';
+            display: block;
+            width: calc(100% + 1rem);
+            height: 4px;
+            position: absolute;
+            top: -2px;
+            left: 0rem;
+            background: $green;
+            border-radius: 2px;
+          }
+        }
+      }
+    }
+  }
+}

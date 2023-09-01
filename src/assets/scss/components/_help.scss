@@ -1,0 +1,20 @@
+.help {
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+  &-title {
+    color: $gray-32;
+    @include rfs(20px);
+    font-weight: 700;
+  }
+  &-btn {
+    color: white;
+    &:hover,
+    &:focus {
+      background-color: $yellow-56;
+      color: white;
+    }
+  }
+}

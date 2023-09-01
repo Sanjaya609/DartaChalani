@@ -1,0 +1,359 @@
+.modal {
+  &-title {
+    @include rfs(16px);
+    color: $navy-40;
+    font-weight: 600;
+  }
+  &-body {
+    // background-color: $gray-96;
+    &.scrollable {
+      max-height: 32rem;
+      min-height: 20rem;
+      @include scrollable;
+    }
+  }
+  // &-scrollable{
+  //   max-height: 32rem;
+  //   min-height: 20rem;
+  //   @include scrollable;
+  // }
+  &-footer {
+    border-top: 1px solid $border-color-gray;
+  }
+
+  &-header {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid $border-color-gray;
+    background-color: $blue-10;
+    .nav-link {
+      padding: 0;
+    }
+  }
+  .ic-close {
+    @include rfs(16px);
+  }
+  &-overlay {
+    .modal-dialog {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      right: calc(-1 * var(--modal-overlay-size));
+      height: 100%;
+      max-height: 100%;
+      margin: 0;
+      width: var(--modal-overlay-size);
+      transition: all 0.3s ease-in-out;
+    }
+    &.show {
+      .modal-dialog {
+        right: 0;
+      }
+    }
+    &.accordion-problem {
+      .modal-dialog {
+        box-shadow: -4px 0px 16px rgba(0, 0, 0, 0.08);
+        @include media-breakpoint-up(sm) {
+          width: var(--overlay-width);
+          height: 100%;
+        }
+      }
+    }
+    .modal-content {
+      height: 100%;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    .modal-body {
+      overflow-y: auto;
+      background-color: white;
+      @include scrollable;
+      @include media-breakpoint-down(xs) {
+        height: calc(100% - 7rem - 1rem);
+        overflow: auto;
+        flex: none;
+      }
+    }
+    &-01 {
+      .modal {
+        &-dialog {
+          position: fixed;
+          // right: 0;
+          top: 0;
+          bottom: 0;
+          right: calc(-1 * var(--modal-overlay-size-lg));
+          height: 100%;
+          max-height: 100%;
+          margin: 0;
+          max-width: var(--modal-overlay-size-lg);
+          width: var(--modal-overlay-size-lg);
+          transition: all 0.3s ease-in-out;
+        }
+        &-header {
+          padding: 1rem;
+          background-color: white;
+          border-bottom-color: transparent;
+        }
+        &-body {
+          background-color: white;
+        }
+      }
+      &.show {
+        .modal-dialog {
+          right: 0;
+        }
+      }
+
+      .modal-content {
+        height: 100%;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+      .modal-body {
+        padding: 0;
+        overflow-y: auto;
+        @include scrollable;
+        @include media-breakpoint-down(xs) {
+          height: calc(100% - 7rem - 1rem);
+          overflow: auto;
+          flex: none;
+        }
+      }
+    }
+
+    &-02 {
+      @extend .modal-overlay;
+      .modal-dialog {
+        width: 629px;
+      }
+    }
+  }
+
+  &-ticket {
+    .ticket {
+      background-color: $blue-200;
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      i {
+        font-size: 36px;
+        color: $blue;
+      }
+      &-info {
+        p {
+          color: $gray-600;
+        }
+      }
+    }
+    .modal-body {
+      padding: 1.5rem 1rem;
+      position: relative;
+      .ic-close {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+      }
+    }
+  }
+  &-dialog {
+    &.withTab {
+      .modal-header {
+        background-color: $white;
+        padding: 0 1.5rem;
+        .tab-01 {
+          background-color: $white;
+        }
+        .nav-link {
+          padding: 0.5rem 0;
+          background-color: $white;
+        }
+      }
+      .modal-body {
+        padding: 0;
+      }
+    }
+  }
+
+  &-01 {
+    .modal {
+      &-header {
+        border-bottom: none;
+      }
+      &-body {
+        background-color: white;
+        max-height: unset;
+        min-height: unset;
+      }
+      &-content {
+        .icon {
+          height: 3.5rem;
+          width: 3.5rem;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: auto;
+          [class^='ic-'],
+          [class*=' ic-'] {
+            font-size: 1.25rem;
+          }
+          &.primary {
+            background-color: $blue-200;
+            [class^='ic-'],
+            [class*=' ic-'] {
+              color: $blue;
+            }
+          }
+          &.success {
+            background-color: $green-100;
+            [class^='ic-'],
+            [class*=' ic-'] {
+              color: $green;
+            }
+          }
+          &.warning {
+            background-color: $orange-100;
+            [class^='ic-'],
+            [class*=' ic-'] {
+              color: $orange;
+            }
+          }
+          &.danger {
+            background-color: $red-100;
+            [class^='ic-'],
+            [class*=' ic-'] {
+              color: $red;
+            }
+          }
+        }
+      }
+      &-body {
+        p {
+          @include rfs(1rem);
+          color: $gray-70;
+          // margin-top: 0.5rem;
+        }
+      }
+      &-footer {
+        border-top: none;
+        // justify-content: center;
+      }
+    }
+  }
+  &-02 {
+    .modal {
+      &-header {
+        align-items: flex-start;
+        background-color: $blue-10;
+
+        border-bottom: 1px solid $border-color-gray;
+      }
+    }
+  }
+  &-confirm {
+    max-width: 450px;
+
+    .icon {
+      height: 40px;
+      width: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      margin: auto;
+      margin-bottom: 1rem;
+
+      [class^='ic-'],
+      [class*=' ic-'] {
+        color: white;
+      }
+    }
+    .modal {
+      &-header,
+      &-footer {
+        border: none;
+      }
+    }
+    &.danger {
+      .modal-header {
+        background-color: #f9e9e8;
+        color: $danger;
+        .modal-title {
+          color: $danger;
+        }
+        .icon {
+          background-color: $danger;
+        }
+      }
+    }
+    &.success {
+      .modal-header {
+        background-color: #e9f6ea;
+      }
+      .modal-title {
+        color: $success;
+      }
+      .icon {
+        background-color: $success;
+      }
+    }
+    &.primary {
+      .modal-header {
+        // background-color: $blue-7;
+      }
+      .modal-title {
+        color: $primary;
+      }
+      .icon {
+        background-color: $primary;
+      }
+    }
+
+    .modal {
+      &-header {
+        justify-content: center;
+        padding: 1.5rem;
+        display: block;
+        text-align: center;
+      }
+      &-footer {
+        padding-bottom: 1.5rem;
+      }
+      &-body {
+        background-color: white;
+        padding: 2.5rem 2.5rem 1rem 2.5rem;
+        text-align: center;
+      }
+    }
+  }
+  &-profile {
+    .modal {
+      &-header {
+        position: relative;
+        display: flex;
+        justify-content: flex-end;
+        align-items: start;
+        height: 6rem;
+        background-color: white;
+        img {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border-radius: 0.25rem 0.25rem 0;
+        }
+        button {
+          z-index: 1;
+        }
+      }
+      &-body {
+        .img-md {
+          margin-top: -3.5rem;
+        }
+      }
+    }
+  }
+}

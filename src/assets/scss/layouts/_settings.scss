@@ -1,0 +1,43 @@
+.settings {
+  &--nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    @include media-breakpoint-down(md) {
+      margin-bottom: 1.5rem;
+    }
+    li {
+      a {
+        @include des;
+        font-weight: 700;
+        color: #808080;
+      }
+
+      &:not(:last-child) {
+        margin-bottom: 1.5rem;
+        @include media-breakpoint-down(md) {
+          margin-right: 1.5rem;
+          margin-bottom: 0;
+        }
+      }
+      &.active {
+        a {
+          color: $primary;
+        }
+      }
+      @include media-breakpoint-down(md) {
+        display: inline-block;
+      }
+    }
+  }
+}
+
+//roles
+.roles {
+  &--heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+}

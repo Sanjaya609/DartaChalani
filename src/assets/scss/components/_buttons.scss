@@ -1,0 +1,241 @@
+.btn-xs {
+  @include button-size(
+    $btn-padding-y-xs,
+    $btn-padding-x-xs,
+    $btn-font-size-xs,
+    $btn-border-radius-xs
+  );
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  &-secondary,
+  &-success,
+  &-danger {
+    color: white;
+
+    &:hover,
+    &:focus {
+      color: white;
+      border: none;
+      box-shadow: none;
+    }
+  }
+
+  &-icon {
+    line-height: $btn-line-height;
+    display: inline-flex;
+    align-items: center;
+
+    [class^="ic-"],
+    [class*=" ic-"],
+    svg {
+      @include rfs(14px);
+      vertical-align: middle;
+    }
+
+    svg {
+      width: 1.15rem;
+      height: 1.15rem;
+    }
+
+    &.lft {
+      [class^="ic-"],
+      [class*=" ic-"],
+      svg {
+        margin-right: 0.5rem;
+      }
+    }
+
+    &.rft {
+      [class^="ic-"],
+      [class*=" ic-"],
+      svg {
+        margin-left: 0.5rem;
+      }
+    }
+  }
+
+  &-filter {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+
+    &:focus {
+      outline: none;
+      color: $gray-16;
+    }
+
+    [class^="ic-"],
+    [class*=" ic-"] {
+      font-size: 12px;
+    }
+
+    span {
+      position: relative;
+      margin-right: 1rem;
+
+      &:after {
+        content: "";
+        position: absolute;
+        right: -0.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 1rem;
+        width: 1px;
+        background-color: $gray-80;
+      }
+    }
+  }
+
+  &-circle {
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    padding: 0;
+    border-radius: 50%;
+
+    svg {
+      fill: $indigo;
+    }
+  }
+
+  &-bulb {
+    background-image: radial-gradient(
+      50% 50% at 50% 50%,
+      #8eb3f5 0%,
+      #2264d1 75.52%
+    );
+    height: 4rem;
+    width: 4rem;
+    border: none;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+
+    &:focus {
+      outline: none;
+    }
+
+    svg,
+    i {
+      color: white;
+      font-size: 26px;
+    }
+
+    @include media-breakpoint-down(lg) {
+      right: 1rem;
+      bottom: 5.5rem;
+      width: 3rem;
+      height: 3rem;
+    }
+
+    @include media-breakpoint-down(sm) {
+      height: 2.5rem;
+      width: 2.5rem;
+    }
+  }
+
+  &-actions {
+    display: flex;
+    flex-wrap: wrap;
+
+    .btn {
+      background-color: $gray-10;
+      color: $gray-700;
+
+      &:hover {
+        background-color: $green;
+        color: white;
+      }
+    }
+  }
+
+  &-trash {
+    background-color: rgba($red, 0.1);
+    color: $red;
+
+    &:hover {
+      background-color: $red;
+      color: white;
+    }
+  }
+
+  &-download {
+    background-color: rgba($blue, 0.1);
+    color: $blue;
+
+    &:hover {
+      background-color: $blue;
+      color: white;
+    }
+  }
+
+  &-ghost {
+    color: $gray-50;
+
+    &:hover {
+      color: $blue;
+      background-color: $blue-10;
+    }
+  }
+
+  &-outline {
+    &-gray-16 {
+      @include button-outline-variant($gray-65, $gray-16, white, $gray-80);
+    }
+
+    &-navy-40 {
+      @include button-outline-variant($navy-40, $gray-800, white, $gray-80);
+    }
+    &-navy {
+      @include button-outline-variant($navy-40, $navy-40, white, $blue-88);
+      &:hover {
+        background-color: $navy-40;
+        color: white;
+      }
+    }
+
+    &-red {
+      @include button-outline-variant($red-48, $red-88, white, $red-88);
+    }
+    &-green-40 {
+      @include button-outline-variant($green-40, $green-88, white, $green-88);
+    }
+  }
+
+  &-dropdown {
+    border-left: 0;
+    position: relative;
+
+    &:before {
+      content: "";
+      width: 1px;
+      height: 1rem;
+      background-color: $gray-80;
+      display: block;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0;
+    }
+
+    &:after {
+      content: "\e90e";
+      font-family: "icomoon";
+      border: 0;
+      @include rfs(8px);
+      color: $gray-48;
+    }
+  }
+
+  &-close {
+    font-size: 0.75rem;
+  }
+}

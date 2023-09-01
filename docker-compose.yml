@@ -1,0 +1,19 @@
+version: '3.3'
+networks:
+  mtef:
+    external:
+      name: mtef
+services:
+  mtef-front:
+    build: .
+    image: mtef-front
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "3"
+        max-size: "1000m"
+    container_name: mtef-front
+    network_mode: mtef
+    restart: always
+    ports:
+      - 3000:80

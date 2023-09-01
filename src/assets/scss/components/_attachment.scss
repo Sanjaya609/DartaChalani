@@ -1,0 +1,116 @@
+.attachment {
+  &-grid {
+    display: flex;
+    height: 100%;
+    & > div {
+      flex-grow: 1;
+      flex-basis: 100%;
+    }
+    @include media-breakpoint-down(xs) {
+      flex-direction: column;
+    }
+  }
+
+  &-detail {
+    border-left: 1px solid $gray-900;
+    text-align: center;
+    i,
+    svg {
+      &.file {
+        color: $blue-500;
+        @include rfs(52px);
+      }
+    }
+    .list {
+      margin-top: 2.5rem;
+      li {
+        column-count: 2;
+        text-align: left;
+        padding: 0.5rem 1rem;
+        border-bottom: 1px solid $blue-300;
+        h6,
+        p {
+          @include des;
+        }
+        h6 {
+          font-weight: 500;
+        }
+        p {
+          font-weight: 400;
+        }
+      }
+    }
+  }
+
+  &-upload {
+    padding: 0.5rem 1rem;
+    background-color: $blue-100;
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      h6,
+      i {
+        color: $indigo;
+        font-weight: 500;
+      }
+      h6 {
+        @include des;
+      }
+      i {
+        @include small;
+      }
+    }
+    .list {
+      li {
+        display: flex;
+        padding: 0.5rem 0;
+        align-items: center;
+        h6 {
+          @include small;
+          color: $gray-700;
+          font-weight: 400;
+        }
+        i {
+          color: $blue;
+          @include h6;
+        }
+        .action {
+          display: flex;
+          i {
+            &.ic-delete {
+              color: $red-50;
+              @include des;
+            }
+            &.ic-close {
+              background-color: $red;
+              font-size: 6px;
+              color: white;
+              padding: 0.25rem;
+              border-radius: 50%;
+            }
+            &.ic-checkmark {
+              background-color: $green;
+              font-size: 6px;
+              color: white;
+              padding: 0.25rem;
+              border-radius: 50%;
+            }
+          }
+        }
+        .details {
+          margin-left: 20px;
+          flex-grow: 1;
+        }
+        .progress {
+          background-color: $blue;
+          height: 0.25rem;
+          margin-top: 0.25rem;
+        }
+        &:first-child {
+          margin-top: 0.25rem;
+        }
+      }
+    }
+  }
+}

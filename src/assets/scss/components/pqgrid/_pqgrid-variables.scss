@@ -1,0 +1,116 @@
+$title: (
+  px: 12px,
+  py: 4px,
+  fontWeight: 600
+);
+
+$grid-row: (
+  stripedBgColor: $cool-gray-10,
+  hoverBgColor: $cool-gray-300,
+  activeBgColor: #c5dffe,
+  activeColor: inherit
+);
+
+$grid-cell: (
+  px: 12px,
+  py: 4px,
+  textAlign: left,
+  hoverBgColor: $cool-gray-400
+);
+
+$grid-number-cell: (
+  px: 2px,
+  py: 6px,
+  bgColor: $cool-gray-10,
+  textAlign: center
+);
+
+$grid-header: (
+  bgColor: $theme-dark-blue,
+  color: $white,
+  borderColor: rgba($white, 0.2),
+  textAlign: center
+);
+
+$grid-search: (
+  bgColor: $theme-dark-blue
+);
+
+$grid-top-bottom: (
+  topBgColor: $cool-gray-10,
+  topColor: $theme-dark-blue,
+  bottomBgColor: $cool-gray-10,
+  bottomColor: $theme-dark-blue
+);
+
+$grid-ui-action-btn: (
+  px: 2px,
+  py: 2px,
+  fontSize: 12px,
+  bgColor: transparent,
+  borderWidth: 0,
+  borderColor: transparent,
+  hoverBgColor: transparent,
+  hoverColor: $blue
+);
+
+// pqgrid base
+$pq-grid-font-size: 0.75rem;
+$pq-grid-border-color: $cool-gray-300;
+$pq-ui-button-hover-bg-color: rgba($blue, 0.12);
+$pq-grid-ui-icon-sprite: url('/src/assets/img/pqgrid/ui-icons_222222_256x240.png');
+
+// pqgrid row
+$pq-grid-row-striped-bg: map-get($grid-row, stripedBgColor);
+$pq-grid-row-hover-bg: map-get($grid-row, hoverBgColor);
+$pq-grid-row-active-bg: map-get($grid-row, activeBgColor);
+$pq-grid-row-active-color: map-get($grid-row, activeColor);
+
+// pqgrid title
+$pq-grid-title-padding-x: map-get($title, px);
+$pq-grid-title-padding-y: map-get($title, py);
+$pq-grid-title-font-weight: map-get($title, fontWeight);
+
+// pqgrid cell
+$pq-grid-cell-padding-x: map-get($grid-cell, px);
+$pq-grid-cell-padding-y: map-get($grid-cell, py);
+$pq-grid-cell-align: map-get($grid-cell, textAlign);
+$pq-grid-cell-hover-bg: map-get($grid-cell, hoverBgColor);
+$pq-grid-border-bottom-bg-color: $cool-gray-300;
+
+// pqgrid number cell
+$pq-grid-number-cell-padding-x: map-get($grid-number-cell, px);
+$pq-grid-number-cell-padding-y: map-get($grid-number-cell, py);
+$pq-grid-number-cell-bg-color: map-get($grid-number-cell, bgColor);
+$pq-grid-number-cell-align: map-get($grid-number-cell, textAlign);
+
+// pqgrid header
+$pq-grid-header-bg-color: map-get($grid-header, bgColor);
+$pq-grid-header-color: map-get($grid-header, color);
+$pq-grid-header-border-color: map-get($grid-header, borderColor);
+$pq-grid-head-col-align: map-get($grid-header, textAlign);
+
+// pqgrid search on header
+$pq-grid-search-header-bg-color: map-get($grid-search, bgColor);
+
+// pqgrid top (titlebar)
+$pq-grid-top-bg-color: map-get($grid-top-bottom, topBgColor);
+$pq-grid-top-color: map-get($grid-top-bottom, topColor);
+
+// pqgrid bottom (footerbar)
+$pq-grid-bottom-bg-color: map-get($grid-top-bottom, bottomBgColor);
+$pq-grid-bottom-color: map-get($grid-top-bottom, bottomBgColor);
+
+// pqgrid action btn
+$ui-action-btn-px: map-get($grid-ui-action-btn, px);
+$ui-action-btn-py: map-get($grid-ui-action-btn, py);
+$ui-action-font-size: map-get($grid-ui-action-btn, fontSize);
+$ui-action-btn-bg-color: map-get($grid-ui-action-btn, bgColor);
+$ui-action-btn-border-width: map-get($grid-ui-action-btn, borderWidth);
+$ui-action-btn-border-color: map-get($grid-ui-action-btn, borderColor);
+$ui-action-btn-hover-bg-color: map-get($grid-ui-action-btn, hoverBgColor);
+$ui-action-btn-hover-color: map-get($grid-ui-action-btn, hoverColor);
+
+// pqgrid misc
+$pq-slider-icon-top-offset: $pq-grid-title-padding-y;
+$pq-head-td-top-offset: $pq-grid-title-padding-y;

@@ -1,0 +1,87 @@
+.role {
+  &-sidebar {
+    width: var(--role-sidebar);
+    height: 100%;
+    background-color: white;
+    flex-shrink: 0;
+  }
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-bottom: 0.75rem;
+  }
+
+  &-list {
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      // padding: 0.5rem 1rem;
+
+      .hasSub {
+        &:after {
+          color: $gray-56;
+        }
+        &[aria-expanded='true'] {
+          &:after {
+            color: white;
+          }
+        }
+      }
+    }
+  }
+  &-sublist {
+    display: block;
+    width: 100%;
+    li {
+      &.active {
+        background-color: $blue-96;
+      }
+    }
+    a {
+      padding: 0.5rem 1rem;
+      color: $gray-32;
+      font-weight: 400;
+    }
+    p {
+      @include rfs(16px);
+      flex-grow: 1;
+      padding: 0.5rem 1rem;
+      color: $gray-32;
+      font-weight: 400;
+    }
+  }
+  &-link {
+    @include rfs(14px);
+    color: $gray-32;
+    display: block;
+    line-height: 100%;
+  }
+  &-action {
+    cursor: pointer;
+    i {
+      @include rfs(14px);
+      color: $gray-32;
+    }
+  }
+  &-accordion {
+    width: 100%;
+    .header {
+      padding: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: default;
+      &.active {
+        background: $blue;
+        color: white;
+      }
+      h6 {
+        font-weight: 600;
+      }
+    }
+  }
+}

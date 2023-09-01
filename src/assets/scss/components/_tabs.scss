@@ -1,0 +1,92 @@
+.tab {
+  &-basic {
+    display: flex;
+    li {
+      &:first-child {
+        .nav-link {
+          border-radius: 4px 0px 0px 4px;
+        }
+      }
+      &:last-child {
+        .nav-link {
+          border-radius: 0px 4px 4px 0px;
+        }
+      }
+      .nav-link {
+        @include rfs(14px);
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        color: $gray-60;
+        background-color: $gray-0;
+        cursor: pointer;
+        &.active {
+          background-color: $primary;
+          color: white;
+        }
+      }
+    }
+  }
+
+  &-01 {
+    border: none;
+    flex-wrap: nowrap;
+
+    li {
+      .nav-link {
+        // background: white;
+        border: none;
+        color: $gray-56;
+        @include rfs(16px);
+        padding: 0.75rem 0;
+        font-weight: 400;
+        cursor: pointer;
+        &.active {
+          color: $blue;
+          background: none;
+          font-weight: 600;
+          border-bottom: 2px solid $blue;
+        }
+      }
+      &:not(:last-child) {
+        .nav-link {
+          margin-right: 1.5rem;
+        }
+      }
+    }
+  }
+  &-02 {
+    @extend .tab-01;
+    li {
+      .nav-link {
+        &.active {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+  &-03 {
+    @extend .tab-01;
+    background-color: transparent;
+    border-bottom: 1px solid $border-color-gray;
+    // padding: 0 1.5rem;
+    li {
+      .nav-link {
+        background-color: transparent;
+        white-space: nowrap;
+
+        &.active {
+          color: $navy-40;
+          background: none;
+          font-weight: 600;
+          border-bottom: 4px solid $navy-40;
+        }
+      }
+    }
+  }
+  &-content {
+    & > .active {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}

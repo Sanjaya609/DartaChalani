@@ -1,0 +1,167 @@
+@mixin tag-variant($color, $bg) {
+  h6 {
+    display: inline-block;
+    background-color: $bg;
+    color: $color;
+    // border: 1px solid $border;
+    @include rfs(12px);
+    font-weight: 700;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    text-transform: uppercase;
+  }
+}
+@mixin tag-variant-sm($color, $bg) {
+  // display: inline-block;
+  background-color: $bg;
+  color: $color;
+  @include rfs(14px);
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.125rem;
+  cursor: pointer;
+}
+
+.tags {
+  display: flex;
+  align-items: center;
+  a {
+    margin-left: 0.25rem;
+    font-size: 8px;
+  }
+  &-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: -0.25rem;
+    > div {
+      &:not(first-child) {
+        margin-right: 0.5rem;
+      }
+    }
+    .tags {
+      margin-top: 0.5rem;
+    }
+  }
+
+  &-primary {
+    @include tag-variant(white, $blue-72);
+  }
+  &-danger {
+    @include tag-variant(white, $red-56);
+  }
+  &-warning {
+    @include tag-variant(white, $yellow-56);
+  }
+  &-success {
+    @include tag-variant(white, $green-56);
+  }
+  &-secondary {
+    @include tag-variant(white, $gray-300);
+  }
+  &-yellow-48 {
+    @include tag-variant(white, $yellow-48);
+  }
+  &-red-48 {
+    @include tag-variant(white, $red-48);
+  }
+  &-red-59 {
+    @include tag-variant(white, $red-59);
+  }
+  &-navy-40 {
+    @include tag-variant(white, $navy-40);
+  }
+  &-green-76 {
+    @include tag-variant(white, $green-76);
+  }
+  &-green-40 {
+    @include tag-variant(white, $green-40);
+  }
+
+  &-blue-80 {
+    background: $blue-80;
+    padding: 0.125rem 0.25rem;
+    color: $navy-24;
+    white-space: nowrap;
+    span {
+      @include rfs(12px);
+    }
+    [class^='ic-'],
+    [class*=' ic-'] {
+      color: $navy-40;
+      margin-left: 0.25rem;
+    }
+  }
+  &-sm {
+    &.primary {
+      @include tag-variant-sm(white, $navy-40);
+    }
+    &.danger {
+      @include tag-variant-sm(white, $red-48);
+    }
+    &.warning {
+      @include tag-variant-sm(white, $yellow-48);
+    }
+    &.secondary {
+      @include tag-variant-sm($gray-16, $gray-92);
+    }
+    &.success {
+      @include tag-variant-sm(white, $green-56);
+    }
+  }
+  &-status {
+    padding: 0.125rem 0.375rem;
+    color: white;
+    border-radius: 1rem;
+    @include rfs(16px);
+    // font-weight: 600;
+    display: flex;
+    align-items: center;
+    .icon {
+      height: 1rem;
+      width: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background-color: white;
+    }
+    &.danger {
+      background-color: $red-48;
+      .icon {
+        [class^='ic-'],
+        [class*=' ic-'] {
+          color: $red-48;
+          font-size: 0.75rem;
+        }
+      }
+    }
+    &.success {
+      background-color: $green-40;
+      .icon {
+        [class^='ic-'],
+        [class*=' ic-'] {
+          color: $green-40;
+          font-size: 0.75rem;
+        }
+      }
+    }
+    &.secondary {
+      background-color: $gray-88;
+      color: $gray-16;
+    }
+  }
+}
+.filter {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid $gray-10;
+  background-color: white;
+  &-options {
+    background-color: $body-bg;
+  }
+  &-right {
+    display: flex;
+    flex-shrink: 0;
+  }
+}

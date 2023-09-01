@@ -1,0 +1,40 @@
+.ticket {
+  &-status {
+    span {
+      color: $gray-500;
+      @include rfs(0.688rem);
+      font-weight: 400;
+    }
+    i {
+      vertical-align: middle;
+      margin-right: 0.5rem;
+      color: $blue-600;
+    }
+    &.decrement {
+      i {
+        color: $red-50;
+      }
+    }
+  }
+
+  &-icon {
+    border-radius: 0.25rem;
+    height: 2rem;
+    width: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    i {
+      @include rfs(20px);
+    }
+
+    @each $color, $value in $colortypes {
+      //for alert
+      &.#{$color} {
+        background-color: rgba($value, 0.12);
+        color: $value;
+      }
+    }
+  }
+}

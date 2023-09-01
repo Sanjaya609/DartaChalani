@@ -1,0 +1,41 @@
+.Toastify {
+  &__toast {
+    padding: 1rem;
+    h6 {
+      color: $gray-80;
+      font-weight: 600;
+    }
+    p {
+      color: $gray-60;
+      font-weight: 400;
+      @include rfs(14px);
+    }
+    @each $color, $value in $theme-colors {
+      &--#{$color} {
+        background-color: white;
+        border-radius: 0.5rem;
+        border-left: 4px solid $value;
+        .toaster-icon {
+          background-color: $value;
+        }
+        .Toastify__close-button {
+          color: $gray-300;
+        }
+      }
+    }
+  }
+}
+
+.toaster {
+  &-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    @extend .align-vertical;
+    justify-content: center;
+    i {
+      color: white;
+      @include rfs(12px);
+    }
+  }
+}

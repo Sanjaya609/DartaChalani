@@ -1,0 +1,44 @@
+.rct {
+  &-checkbox {
+    svg {
+      color: $blue;
+      &.unchecked {
+        color: rgba(black, 0.4);
+        // border-radius: .25rem;
+      }
+    }
+  }
+  &-collapse {
+    margin-top: 0.25rem;
+    svg {
+      color: rgba(black, 0.4);
+    }
+  }
+
+  &-text {
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+    label {
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
+  &-title {
+    display: inline-block;
+    @include rfs(16px);
+  }
+}
+.react {
+  &-checkbox {
+    &-tree {
+      ol {
+        li {
+          &:not(:last-child) {
+            margin-bottom: 0.25rem;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+.score {
+  @include flex(inline-flex, center, center);
+  border: 1px solid $gray-88;
+  color: $primary;
+  font-weight: bold;
+  padding: 0.5rem;
+  line-height: 100%;
+
+  &-circle {
+    &-xl {
+      @include circle(4rem);
+    }
+
+    &:not(.score-circle-xl) {
+      @include circle(2.5rem);
+      font-size: 0.75rem;
+    }
+  }
+
+  &-selected {
+    border-color: $primary;
+    background-color: $primary;
+    color: $white;
+  }
+
+  &:hover {
+    border-color: $primary;
+  }
+}

@@ -1,0 +1,96 @@
+.section {
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 4rem;
+    background-color: white;
+    border-bottom: 1px solid $gray-10;
+
+    &_sm {
+      padding: 0.5rem;
+    }
+
+    &.withTab {
+      padding: 0 4rem;
+    }
+  }
+
+  &-title {
+    @include rfs(16px);
+    font-weight: 400;
+    color: $gray-700;
+  }
+
+  &-subtitle {
+    @include rfs(12px);
+    font-weight: 400;
+    margin-bottom: 0.25rem;
+    color: $gray-50;
+  }
+
+  &-form {
+    background-color: $white;
+    flex-grow: 1;
+  }
+
+  &-inner {
+    margin: auto;
+    max-width: 1200px;
+    padding: 0;
+  }
+}
+
+.product {
+  &-logo {
+    width: 124px;
+    height: 124px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid $gray-5;
+    border-radius: 2px;
+    padding: 0 0.5rem;
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: contain;
+    }
+  }
+
+  &-detail {
+    li {
+      &:not(:last-child) {
+        margin-bottom: 1.5rem;
+      }
+    }
+  }
+
+  &-item {
+    display: flex;
+  }
+
+  &-title {
+    @include rfs(14px);
+    font-weight: 400;
+    color: $gray-80;
+  }
+
+  &-description {
+    @extend .heading-01;
+    margin-top: 0.5rem;
+  }
+
+  &-icon {
+    i {
+      color: $primary;
+      @include rfs(24px);
+    }
+  }
+}
+
+.chart-container {
+  // margin-top: 2rem;
+  // text-align: center;
+}

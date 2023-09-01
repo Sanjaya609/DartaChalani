@@ -1,0 +1,64 @@
+.mastermenu {
+  background-color: $navy-24;
+  width: var(--mastermenu-width);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+
+  height: 100%;
+  transform: translateX(calc(-1 * var(--mastermenu-width)));
+  transition: all 0.2s ease-in;
+  z-index: 10;
+
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--header-height);
+    .toggler {
+      height: 100%;
+      width: var(--appbar-width);
+    }
+  }
+  &-list {
+    @include list-unstyled;
+    margin: 0;
+    li {
+    }
+  }
+  &-logo {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    h6 {
+      font-weight: 700;
+    }
+  }
+  &-link {
+    padding: 0.75rem 1rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    @include rfs(14px);
+    [class^='ic-'],
+    [class*=' ic-'],
+    svg,
+    img {
+      margin-right: 0.5rem;
+      font-size: 1.5rem;
+    }
+    &:hover {
+      color: $white;
+      background: darken($navy-40, 8%);
+    }
+    &.active {
+      background-color: $navy-40;
+      color: white;
+    }
+  }
+  &.toggled {
+    transform: unset;
+  }
+}
