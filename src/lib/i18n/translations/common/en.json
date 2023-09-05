@@ -1,0 +1,119 @@
+{
+  "project-title": "OCR Phase 2 (English)",
+  "project-activity": "Activity",
+  "serial-number": "S.N",
+  "btns": {
+    "login": "Login",
+    "add": "Add",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "upload": "Upload",
+    "delete": "Delete",
+    "save": "Save",
+    "download": "Download",
+    "edit": "Edit",
+    "back": "Back",
+    "view": "View",
+    "filter": "Filter",
+    "reset": "Reset",
+    "continue": "Continue",
+    "close": "Close",
+    "approve": "Approve",
+    "accept": "Accept",
+    "forward": "Forward",
+    "reject": "Reject",
+    "confirm": "Confirm",
+    "ok": "Ok",
+    "generate": "Generate",
+    "duplicate": "Duplicate",
+    "search": "Search",
+    "configure": "Configure",
+    "activate": "Activate",
+    "deactivate": "Deactivate",
+    "apply": "Apply",
+    "try-again": "Try Again",
+    "yes": "Yes",
+    "no": "No",
+    "print": "Print",
+    "attach": "Attach",
+    "send": "Send",
+    "request": "Request",
+    "check-name": "Check Name",
+    "sort": "Sort",
+    "create": "Create",
+    "internal": "Internal",
+    "external": "External",
+    "male": "Male",
+    "female": "Female",
+    "others": "Others",
+    "action": "Action",
+    "update": "Update",
+    "setting": "Setting",
+    "copy": "View Log",
+    "logout": "Logout",
+    "changePassword": "Change Password",
+    "switch": "Switch",
+    "moa": "MOA",
+    "aoa": "AOA",
+    "3mahale": "3 Mahale",
+    "next": "Next"
+  },
+  "months": {
+    "Baisakh": "Baisakh",
+    "Jestha": "Jestha",
+    "Asar": "Asar",
+    "Shrawan": "Shrawan",
+    "Bhadau": "Bhadau",
+    "Asoj": "Asoj",
+    "Kartik": "Kartik",
+    "Mansir": "Mansir",
+    "Poush": "Poush",
+    "Magh": "Magh",
+    "Falgun": "Falgun",
+    "Chaitra": "Chaitra"
+  },
+  "current-language": {
+    "en": "EN",
+    "ne": "नेप"
+  },
+  "confirm-dialog": {
+    "title": "Confirmation",
+    "subTitle": "Are you sure you want to go further with this action ? You cannot undo this after confirmation."
+  },
+  "placeholder": {
+    "select": "Select..."
+  },
+  "toast-msg": {
+    "noPermission": "No permissions to access the screen. Please contact your admin."
+  },
+  "tabs": {
+    "submitted": "Submitted",
+    "rejected": "Rejected",
+    "approved": "Approved"
+  },
+  "heading": {
+    "logs": "Logs"
+  },
+  "companyDetails": {
+    "registrationNo": "Registration No.",
+    "registeredDate": "Registered Date",
+    "registeredDateBS": "Registered Date (in BS)",
+    "registeredDateAD": "Registered Date (in AD)",
+    "companyNameEn": "Company Name (in English)",
+    "companyNameNp": "Company Name (in Nepali)",
+    "companyType": "Company Type",
+    "companyAddress": "Company Address",
+    "companyShareHolder": {
+      "title": "Shareholder’s Details",
+      "shareholderName": "Shareholder’s Name",
+      "identificationDocType": "Identification Document Type",
+      "identificationDocNo": "Indentification Document No."
+    }
+  },
+  "documents": {
+    "necessaryDocuments": "Necessary Documents",
+    "documentType": "Document Type",
+    "file": "Files",
+    "noFiles": "No file added."
+  }
+}

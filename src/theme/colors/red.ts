@@ -1,17 +1,15 @@
-import { ColorVariant } from "./prop";
+import { ColorVariant } from './prop'
 
-const red : ColorVariant = {
-    50: '#fff0f3',
-    100: '#ffccd5',
-    200: '#ffb3c1',
-    300: '#ff8fa3',
-    400: '#ff758f',
-    500: '#ff4d6d',
-    600: '#c9184a',
-    700: '#a4133c',
-    800: '#800f2f',
-    900: '#590d22',
-
-   
-};
+const red: ColorVariant = {
+  50: '#FEF2F2',
+  100: '#FEE2E2',
+  200: '#FECACA',
+  300: '#FCA5A5',
+  400: '#F87171',
+  500: '#EF4444',
+  600: '#DC2626',
+  700: '#B91C1C',
+  800: '#991B1B',
+  900: '#7F1D1D',
+}
 export default red
