@@ -1,5 +1,4 @@
 {
-    "cSpell.words": [
-        "उपलब्धि"
-    ]
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "prettier.endOfLine": "crlf"
 }

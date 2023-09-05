@@ -1,6 +1,7 @@
 import React from 'react'
-import LoaderLogo from '../../assets/image/logo.png'
-import i18next from 'i18next'
+import { Box } from '@/components/ui/core/Box'
+import LoaderLogo from '@/assets/img/logo.png'
+import { getTextByLanguage } from '@/lib/i18n/i18n'
 
 interface FallbackProps {
   h?: number
@@ -9,31 +10,35 @@ interface FallbackProps {
 
 export default function FallbackLoader({ h, styles }: FallbackProps) {
   return (
-    <div
-      className={`relative w-100 h-${h || '100'
-        } d-flex flex-column align-items-center justify-content-center`}
+    <Box
+      className={`relative w-full h-${
+        h || 'full'
+      } flex flex-col items-center justify-center`}
       style={styles}
     >
       <img src={LoaderLogo} alt="Loader" />
 
-      <div className="mt-1">
-        <div className="mr-2 font-semibold text-gray-16">
+      <Box className="mt-1">
+        <Box as={'span'} className="mr-2 font-semibold text-gray-16">
           {' '}
-          {i18next?.language === 'en' ?
-            'Please wait. Loading data' :
+          {getTextByLanguage(
+            'Please wait. Loading data',
             'कृपया पर्खनुहोस्। डाटा लोड हुदै छ'
-          }
-        </div>
-        <div
-          className="mr-2 mb-1 inline-block h-1 w-1 animate-ping rounded-full bg-gray-900 duration-1000 ease-in-out"
+          )}
+        </Box>
+        <Box
+          as={'span'}
+          className="mb-1 mr-2 inline-block h-1 w-1 animate-ping rounded-full bg-gray-900 duration-1000 ease-in-out"
         />
-        <div
-          className="mr-2 mb-1  inline-block h-1 w-1 animate-ping rounded-full bg-gray-900 duration-1000 ease-in-out"
+        <Box
+          as={'span'}
+          className="mb-1 mr-2  inline-block h-1 w-1 animate-ping rounded-full bg-gray-900 duration-1000 ease-in-out"
         />
-        <div
-          className="mr-2 mb-1 inline-block h-1 w-1 animate-ping rounded-full bg-gray-900 duration-1000 ease-in-out"
+        <Box
+          as={'span'}
+          className="mb-1 mr-2 inline-block h-1 w-1 animate-ping rounded-full bg-gray-900 duration-1000 ease-in-out"
         />
-      </div>
-    </div >
+      </Box>
+    </Box>
   )
 }
