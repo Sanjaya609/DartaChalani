@@ -1,15 +1,17 @@
-import { ColorVariant } from './prop';
+import { ColorVariant } from './prop'
 
 const blue: ColorVariant = {
-  50: '#e3f2fd',
-  100: '#bbdefb',
-  200: '#90caf9',
-  300: '#64b5f6',
-  400: '#42a5f5',
-  500: '#2196f3',
-  600: '#1e88e5',
-  700: '#1976d2',
-  800: '#1565c0',
-  900: '#0D47A1'
-};
-export default blue;
+  16: '#0C2146',
+  24: '#113269',
+  32: '#18428B',
+  48: '#2979FF',
+  56: '#4F91FF',
+  64: '#76A9FF',
+  72: '#70A9FF',
+  80: '#99C2FF',
+  88: '#C2DAFF',
+  90: '#C0DBFF',
+  92: '#D6E7FF',
+  96: '#EBF3FF',
+}
+export default blue

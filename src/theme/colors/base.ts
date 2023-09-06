@@ -5,9 +5,9 @@ import red from './red'
 const base: ColorBase = {
   white: '#FFFFFF',
   black: '#000000',
-  primary: '#A62A22',
+  primary: '#2460B9',
   secondary: '#143566',
-  green: green[700],
-  danger: red[600],
+  green: green[40] as string,
+  danger: red[48] as string,
 }
 export default base

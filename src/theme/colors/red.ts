@@ -1,15 +1,16 @@
 import { ColorVariant } from './prop'
 
 const red: ColorVariant = {
-  50: '#FEF2F2',
-  100: '#FEE2E2',
-  200: '#FECACA',
-  300: '#FCA5A5',
-  400: '#F87171',
-  500: '#EF4444',
-  600: '#DC2626',
-  700: '#B91C1C',
-  800: '#991B1B',
-  900: '#7F1D1D',
+  16: '#43130F',
+  24: '#6F1F19',
+  32: '#9C2B23',
+  40: '#C8372D',
+  48: '#EB0A19',
+  56: '#F62735',
+  64: '#FB6F78',
+  72: '#FAA9A3',
+  80: '#FCCBC8',
+  88: '#FDC4C8',
+  96: '#FEE8E7',
 }
 export default red
