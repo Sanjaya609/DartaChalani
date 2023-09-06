@@ -1,9 +1,9 @@
 {
-  "project-title": "OCR Phase 2(नेपाली)",
-  "project-activity": "गतिविधि",
-  "serial-number": "क्र.सं",
+  "projectTitle": "दर्ता चलानी",
+  "sn": "क्र.सं",
   "btns": {
     "login": "लग-इन",
+    "logout": "लगआउट",
     "add": "थप्नुहोस्",
     "cancel": "रद्द गर्नुहोस्",
     "submit": "बुझाउनुहोस्",
@@ -18,102 +18,8 @@
     "reset": "रिसेट",
     "continue": "अगाडि बढ्नुहोस्",
     "close": "बन्द गर्नुहोस्",
-    "approve": "स्वीकृत गर्नुहोस्",
-    "accept": "स्वीकार",
-    "forward": "अगाडि पठाउनुहोस्",
-    "reject": "अस्वीकार ",
-    "confirm": "पुष्टि गर्नुहोस्",
-    "ok": "ठिक छ",
-    "generate": "जेनेरेट",
-    "duplicate": "नक्कल गर्नुहोस्",
-    "search": "खोज्नुहोस्",
-    "configure": "कन्फिगर गर्नुहोस्",
-    "activate": "सक्रिय गर्नुहोस्",
-    "deactivate": "निष्क्रिय गर्नुहोस्",
-    "apply": "सेभ गर्नुहोस्",
-    "try-again": "पुनःप्रयास गर्नुहोस",
-    "yes": "हो",
-    "no": "होइन",
-    "print": "प्रिन्ट गर्नुहोस्",
-    "attach": "संलग्न गर्नुहोस्",
-    "send": "पठाउनुहोस्",
-    "request": "अनुरोध गर्नुहोस्",
-    "check-name": "नाम जाँच गर्नुहोस्",
-    "sort": "क्रमबद्ध",
-    "create": "सिर्जना गर्नुहोस्",
-    "internal": "आन्तरिक",
-    "external": "बाह्य",
-    "male": "पुरुष",
-    "female": "महिला",
-    "others": "अरु",
-    "action": "कार्य",
-    "update": "अपडेट गर्नुहोस्",
-    "setting": "सेटिङ",
-    "copy": "लग हेर्नुहोस्",
-    "logout": "लगआउट",
-    "changePassword": "पासवर्ड परिवर्तन गर्नुहोस्",
-    "switch": "स्विच",
-    "moa": "MOA",
-    "aoa": "AOA",
-    "3mahale": "३ महले",
-    "next": "अर्को"
-  },
-  "months": {
-    "Baisakh": "वैशाख",
-    "Jestha": "जेठ",
-    "Asar": "असार",
-    "Shrawan": "श्रावण",
-    "Bhadau": "भदौ",
-    "Asoj": "असोज",
-    "Kartik": "कात्तिक",
-    "Mansir": "मंसिर",
-    "Poush": "पौष",
-    "Magh": "माघ",
-    "Falgun": "फागुन",
-    "Chaitra": "चैत"
-  },
-  "current-language": {
-    "en": "EN",
-    "ne": "नेप"
-  },
-  "confirm-dialog": {
-    "title": "पुष्टिकरण",
-    "subTitle": "के तपाइँ यो कार्यको साथ अगाडि बढ्न निश्चित हुनुहुन्छ? तपाईंले पुष्टि गरेपछि यसलाई पूर्ववत गर्न सक्नुहुन्न।"
-  },
-  "placeholder": {
-    "select": "चयन गर्नुहोस्..."
-  },
-  "toast-msg": {
-    "noPermission": "स्क्रिन पहुँच गर्न कुनै अनुमति छैन। कृपया आफ्नो प्रशासकलाई सम्पर्क गर्नुहोस्।"
-  },
-  "tabs": {
-    "submitted": "पेस गरिएका ",
-    "rejected": "अस्वीकृत गरिएका ",
-    "approved": "स्वीकृत गरिएका "
-  },
-  "heading": {
-    "logs": "लगहरू"
-  },
-  "companyDetails": {
-    "registrationNo": "दर्ता नम्बर",
-    "registeredDate": "दर्ता मिति",
-    "registeredDateBS": "दर्ता मिति (वि.सं)",
-    "registeredDateAD": "दर्ता मिति (ई.सं)",
-    "companyNameEn": "कम्पनीको नाम (अंग्रेजीमा)",
-    "companyNameNp": "कम्पनीको नाम (नेपालीमा)",
-    "companyType": "कम्पनी प्रकार",
-    "companyAddress": "कम्पनी ठेगाना",
-    "companyShareHolder": {
-      "title": "शेयरधनीको विवरण",
-      "shareholderName": "शेयरधनीको नाम",
-      "identificationDocType": "पहिचान कागजात प्रकार",
-      "identificationDocNo": "पहिचान कागजात नं."
-    }
-  },
-  "documents": {
-    "necessaryDocuments": "आवश्यक कागजातहरू",
-    "documentType": "कागजात प्रकार",
-    "file": "कागजात",
-    "noFiles": "कुनै फाइल अपलोड गरिएको छैन"
+    "update":"अपडेट गर्नुहोस्",
+    "setting":"सेटिङ"
   }
+
 }

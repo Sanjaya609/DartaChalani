@@ -5,7 +5,6 @@ export type Variant =
   | 'h4'
   | 'h5'
   | 'h6'
-  | 'h7'
   | 'subtitle1'
   | 'subtitle2'
   | 'subtitle3'
@@ -13,12 +12,8 @@ export type Variant =
   // | 'body2'
   // | 'button'
   | 'small'
-  | 'overline'
   | 'paragraph'
   | 'label'
-  | 'header'
-  | 'underline'
-  | 'badge'
 
 export type TextAs =
   | 'h1'
@@ -27,14 +22,20 @@ export type TextAs =
   | 'h4'
   | 'h5'
   | 'h6'
-  | 'h7'
   | 'span'
-  | 'small'
   | 'p'
+  | 'b'
+  | 'strong'
+  | 'i'
+  | 'em'
+  | 'mark'
+  | 'small'
+  | 'del'
+  | 'ins'
+  | 'sub'
+  | 'sup'
+  | 'code'
   | 'label'
-  | 'header'
-  | 'underline'
-  | 'badge'
 
 export type Align =
   | 'center'
@@ -52,37 +53,27 @@ export const VariantMapping: Record<Variant, TextAs> = {
   h4: 'h4',
   h5: 'h5',
   h6: 'h6',
-  h7: 'h7',
   subtitle1: 'h6',
   subtitle2: 'h6',
   subtitle3: 'h6',
   small: 'small',
-  overline: 'span',
   paragraph: 'p',
   label: 'label',
-  header: 'header',
-  underline: 'underline',
-  badge: 'badge',
 }
 
 export const VariantClassMapping: Record<Variant, string> = {
-  h1: 'text-5xl font-semibold leading-130',
-  h2: 'text-4xl font-semibold leading-130',
-  h3: 'text-2xl font-semibold leading-130',
-  h4: 'text-xl font-semibold leading-130',
-  h5: 'text-lg font-semibold leading-130',
-  h6: 'text-base font-semibold leading-130',
-  h7: 'text-base font-bold leading-4',
-  subtitle1: 'text-base font-semibold leading-5',
-  subtitle2: 'text-sm font-medium leading-6',
-  subtitle3: 'text-sm leading-4',
-  small: 'text-xs font-regular leading-6',
-  overline: 'text-sm uppercase leading-6',
-  paragraph: 'text-base font-normal',
-  label: 'text-sm font-normal leading-4',
-  header: 'text-lg font-bold leading-4',
-  underline: 'underline ',
-  badge: 'text-xs font-regular leading-3',
+  h1: 'text-5xl font-semibold leading-130', // font-size: 3rem/* 48px */;
+  h2: 'text-4xl font-semibold leading-130', // font-size: 2.25rem/* 36px */;
+  h3: 'text-2xl font-semibold leading-130', // font-size: 1.5rem/* 24px */;
+  h4: 'text-xl font-semibold leading-130', // font-size: 1.25rem/* 20px */;
+  h5: 'text-lg font-semibold leading-130', // font-size: 1.125rem/* 18px */;
+  h6: 'text-base font-semibold leading-130', // font-size: 1rem/* 16px */;
+  subtitle1: 'text-base font-semibold leading-5', // font-size: 1rem/* 16px */;
+  subtitle2: 'text-sm font-medium leading-6', // font-size: 0.875rem/* 14px */;
+  subtitle3: 'text-sm leading-4', // font-size: 0.875rem/* 14px */;
+  small: 'text-xs font-regular leading-6', // font-size: 0.75rem/* 12px */;
+  paragraph: 'text-base font-normal', // font-size: 1rem/* 16px */;
+  label: 'text-sm font-normal leading-4', // font-size: 0.875rem/* 14px */;
 }
 
 export const AlignClassMapping: Record<Align, string> = {

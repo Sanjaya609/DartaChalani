@@ -94,7 +94,7 @@ const NormalDataTable = <TData extends RowData>({
             },
             {
               id: 'Sn',
-              header: () => t('serial-number'),
+              header: () => t('sn'),
               cell: (prop) => prop.row.index + 1,
             },
             ...columns,
@@ -102,7 +102,7 @@ const NormalDataTable = <TData extends RowData>({
         : [
             {
               id: 'Sn',
-              header: () => t('serial-number'),
+              header: () => t('sn'),
               cell: (prop) => prop.row.index + 1,
             },
             ...columns,

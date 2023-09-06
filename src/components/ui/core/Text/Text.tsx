@@ -5,22 +5,24 @@ import {
   VariantMapping,
   Align,
   Variant,
+  TextAs,
 } from './Text.schema'
 import { Color, TypeFace } from '@/components/ui/types'
 import { getComputedClassNames } from '@/utility/tailwind/tailwind-utility'
 import { TypeFaceClassMapping } from '@/components/ui/schema'
 
-export type TextProps<AS extends React.ElementType = React.ElementType> =
-  PropsWithChildren &
-    ComponentPropsWithoutRef<AS> & {
-      variant?: Variant // the type of text
-      as?: AS // eg: h1, h2, p, small
-      align?: Align
-      typeface?: TypeFace
-      noWrap?: boolean
-      color?: Color<'text'> // tailwind text color class
-      className?: string
-    }
+export type TextProps<AS extends TextAs = TextAs> = Partial<
+  Omit<ComponentPropsWithoutRef<AS>, 'onCopyCapture' | 'onCopy'>
+> & {
+  variant?: Variant // the type of text
+  as?: AS // eg: h1, h2, p, small
+  align?: Align
+  typeface?: TypeFace
+  noWrap?: boolean
+  color?: Color<'text'> // tailwind text color class
+  className?: string
+  onCopy?: any
+}
 
 const Text = React.forwardRef<HTMLElement, TextProps>((props, ref) => {
   const {
@@ -44,7 +46,7 @@ const Text = React.forwardRef<HTMLElement, TextProps>((props, ref) => {
     className
   )
   return React.createElement(
-    as || VariantMapping[variant],
+    as || VariantMapping[variant] || 'p',
     { ...restProps, ref, className: computedClasses },
     children
   )
