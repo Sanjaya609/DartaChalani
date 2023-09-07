@@ -1,13 +1,22 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   mode: 'jit',
-  darkMode: 'class',
+  darkMode: ['class'],
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
+    container: {
+      center: true,
+      padding: '2rem',
+      screens: {
+        '2xl': '1400px',
+      },
+    },
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#2460B9',
+          DEFAULT: '#2f6fcf',
+          16: '#2460B9',
+          24: '#2659a6',
         },
         navy: {
           16: '#0D2344',
@@ -35,7 +44,7 @@ module.exports = {
           32: '#525252',
           48: '#7A7A7A',
           56: '#8F8F8F',
-          64: '#A3A3A3',
+          64: '#f2f7ff',
           72: '#B8B8B8',
           80: '#CCCCCC',
           88: '#E0E0E0',
@@ -44,6 +53,7 @@ module.exports = {
           96: '#F5F5F5',
         },
         green: {
+          DEFAULT: '#43a047',
           16: '#132C14',
           24: '#1F4921',
           32: '#2B662E',
@@ -108,11 +118,26 @@ module.exports = {
         20: '20rem',
         25: '25rem',
       },
+      keyframes: {
+        'accordion-down': {
+          from: { height: 0 },
+          to: { height: 'var(--radix-accordion-content-height)' },
+        },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: 0 },
+        },
+      },
+      animation: {
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
+      },
     },
   },
   plugins: [
     require('@tailwindcss/forms'),
     require('@tailwindcss/container-queries'),
+    require('tailwindcss-animate'),
   ],
   ...(process.env.NODE_ENV === 'production' ? { cssnano: {} } : {}),
 }

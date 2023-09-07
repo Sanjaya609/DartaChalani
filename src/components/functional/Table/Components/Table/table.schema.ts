@@ -1,12 +1,14 @@
-export const tableWrapper = 'h-full w-full'
+export const tableWrapper = ''
 export const tableBaseStyle =
-  'border border-solid border-gray-80 w-full relative h-full bg-white table-auto'
-export const tableMainStyle = 'w-full'
-export const tableHeaderBaseStyle = 'bg-gray-92 text-gray-16 sticky top-0 z-10'
+  'border border-solid border-gray-80 relative rounded-[0.25rem] overflow-x-auto'
+export const tableMainStyle =
+  'h-full w-full m-0 align-top border border-gray-64'
+export const tableHeaderBaseStyle =
+  'bg-gray-92 text-gray-16 align-bottom border-inherit'
 export const tableHeaderThStyle =
-  'p-3 text-sm font-semibold text-gray-16 text-left capitalize'
+  'p-[0.6rem] text-sm font-semibold text-gray-16 text-left capitalize border-b-current'
 
-export const tableRowBaseStyle = 'hover:bg-orange-88'
+export const tableRowBaseStyle = 'border-inherit '
 
 export const tableRowStyle = `border-t border-gray-90 hover:bg-orange-88 xxl:p-3 py-2 px-3 text-sm text-gray-32 font-semibold whitespace-nowrap text-gray-32 `
 

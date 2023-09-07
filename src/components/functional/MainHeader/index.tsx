@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next'
 const MainHeader = () => {
   const { t } = useTranslation()
   return (
-    <header className="flex min-h-[3.5rem] items-center bg-primary">
+    <header className="flex min-h-[3.5rem] items-center bg-navy-40">
       <Flexbox align="center" className="h-full">
         <MenuOverlay />
         <Link to="/">

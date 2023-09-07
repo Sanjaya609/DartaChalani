@@ -84,29 +84,14 @@ const NormalDataTable = <TData extends RowData>({
 
   const memorizedData = React.useMemo(() => data, [data])
   const memoizedColumns = React.useMemo(
-    () =>
-      isDraggable
-        ? [
-            {
-              id: 'draggable',
-              header: () => '',
-              cell: (prop) => prop.row.index + 1,
-            },
-            {
-              id: 'Sn',
-              header: () => t('sn'),
-              cell: (prop) => prop.row.index + 1,
-            },
-            ...columns,
-          ]
-        : [
-            {
-              id: 'Sn',
-              header: () => t('sn'),
-              cell: (prop) => prop.row.index + 1,
-            },
-            ...columns,
-          ],
+    () => [
+      {
+        id: 'Sn',
+        header: () => t('sn'),
+        cell: (prop) => prop.row.index + 1,
+      },
+      ...columns,
+    ],
     [columns, isDraggable, t]
   )
 
@@ -148,9 +133,6 @@ const NormalDataTable = <TData extends RowData>({
     onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: setGlobalFilter,
     enableGlobalFilter: true,
-    debugTable: true,
-    debugHeaders: true,
-    debugColumns: false,
   })
   const isNoDataFound = !isLoading && table.getRowModel().rows?.length === 0
   const tableContainerRef = React.useRef<HTMLDivElement>(null)
@@ -171,7 +153,7 @@ const NormalDataTable = <TData extends RowData>({
   const tableWrapperClassName = getComputedClassNames(tableWrapper, className)
 
   return (
-    <Flexbox direction="column" className={tableWrapperClassName}>
+    <Box className={'p-'}>
       {/* {showTableFilter && (
         <TableFilter
           tableHeaderBtnClick={tableHeaderBtnClick}
@@ -184,34 +166,28 @@ const NormalDataTable = <TData extends RowData>({
         />
       )} */}
       <Box className={tableBaseStyle}>
-        <AbsoluteLayout
-          scrollable
-          ref={tableContainerRef}
-          removeAbsolute={removeAbsolute}
-        >
-          <table className={tableMainStyle}>
-            <TableHeader headerGroup={table.getHeaderGroups} />
-            {isNoDataFound && <TableNoDataFound />}
-            {isLoading && <Box>Loading ....</Box>}
-            {!isNoDataFound && (
-              <TableBody
-                getRowModel={table.getRowModel}
-                tableData={rows}
-                paddingBottom={paddingBottom}
-                paddingTop={paddingTop}
-                handleRowClick={handleRowClick}
-                updateOrder={updateOrder}
-                updateOrderFunction={updateOrderFunction}
-              />
-            )}
-          </table>
-        </AbsoluteLayout>
+        <table className={tableMainStyle}>
+          <TableHeader headerGroup={table.getHeaderGroups} />
+          {isNoDataFound && <TableNoDataFound />}
+          {isLoading && <Box>Loading ....</Box>}
+          {!isNoDataFound && (
+            <TableBody
+              getRowModel={table.getRowModel}
+              tableData={rows}
+              paddingBottom={paddingBottom}
+              paddingTop={paddingTop}
+              handleRowClick={handleRowClick}
+              updateOrder={updateOrder}
+              updateOrderFunction={updateOrderFunction}
+            />
+          )}
+        </table>
       </Box>
       <TableFooter
         table={table}
         paginationRowsPerPageOptions={paginationRowsPerPageOptions}
       />
-    </Flexbox>
+    </Box>
     // </div>
   )
 }

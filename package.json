@@ -12,16 +12,19 @@
     "coverage": "vitest --coverage"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.0.4",
     "@tanstack/react-query": "^4.20.4",
     "@tanstack/react-table": "^8.7.9",
     "@types/react-select": "^5.0.1",
     "axios": "^1.2.1",
+    "class-variance-authority": "^0.7.0",
     "crypto-js": "^4.1.1",
     "date-fns": "^2.29.3",
     "i18n": "^0.15.1",
     "i18next": "^22.4.9",
     "i18next-browser-languagedetector": "^7.0.1",
     "i18next-http-backend": "^2.1.1",
+    "lucide-react": "^0.274.0",
     "phosphor-react": "^1.4.1",
     "react": "^18.2.0",
     "react-datepicker": "^4.10.0",
@@ -31,7 +34,8 @@
     "react-select": "^5.7.4",
     "react-toastify": "^9.1.1",
     "styled-components": "^6.0.7",
-    "tailwind-merge": "^1.8.1",
+    "tailwind-merge": "^1.14.0",
+    "tailwindcss-animate": "^1.0.7",
     "yup": "^0.32.11"
   },
   "engines": {
