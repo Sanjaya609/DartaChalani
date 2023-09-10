@@ -53,9 +53,28 @@ interface OptionType<T = any>
   label: string
   value: T
   labelNp?: string
-  labelEn?: string
 }
 
 type StringNumber = string | number
 
 type TAny = any
+
+interface IFieldArrayProps {
+  name: string
+  index: number
+  keyName: string
+}
+
+interface IBaseFormControlProps {
+  label?: string | React.ReactNode
+  touched?: FormikTouched<TAny>
+  errors?: FormikErrors<TAny>
+  isFieldArray?: IFieldArrayProps
+  errorClassName?: string
+  labelClassName?: string
+  id?: string
+  labelClassName?: string
+  label?: string
+  name?: string
+  showError?: boolean
+}

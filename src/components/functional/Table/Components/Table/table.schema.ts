@@ -1,19 +1,22 @@
 export const tableWrapper = ''
 export const tableBaseStyle =
-  'border border-solid border-gray-80 relative rounded-[0.25rem] overflow-x-auto'
-export const tableMainStyle =
-  'h-full w-full m-0 align-top border border-gray-64'
+  'w-full relative grow bg-white border border-gray-80 mt-4 flex flex-col'
+
+export const tableMainStyle = 'm-0 w-full'
 export const tableHeaderBaseStyle =
-  'bg-gray-92 text-gray-16 align-bottom border-inherit'
+  'bg-gray-92 text-gray-16 align-bottom border-inherit shadow-[0_-1px_0_0_#ccc_inset]'
+
 export const tableHeaderThStyle =
-  'p-[0.6rem] text-sm font-semibold text-gray-16 text-left capitalize border-b-current'
+  'p-3 text-base font-semibold text-gray-16 text-left capitalize'
 
-export const tableRowBaseStyle = 'border-inherit '
+export const tableHeaderThStickyStyle = 'sticky top-0 z-[2]'
 
-export const tableRowStyle = `border-t border-gray-90 hover:bg-orange-88 xxl:p-3 py-2 px-3 text-sm text-gray-32 font-semibold whitespace-nowrap text-gray-32 `
+export const tableBodyRowStyle = `shadow-[0_-1px_0_0_#ccc_inset] hover:bg-orange-88   text-base`
+
+export const tableBodyTdStyle = `p-3`
 
 export const tableFooterStyle =
-  'flex justify-between border-gray-80  px-4 py-3 border border-t-0 border-gray-80 bg-white w-full'
+  'flex justify-between border-gray-80  px-4 py-3 border border-t-0  bg-white w-full mb-6'
 
 export const tableFooterCountStyle =
   'mx-3 rounded-sm border-gray-300 text-sm py-1 pr-6'

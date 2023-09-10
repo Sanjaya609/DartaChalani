@@ -140,14 +140,14 @@ const TableFooter = <TData extends RowData>({
               &hellip;
             </button>
           ) : (
-            <Box key={pageNumber}>
+            <Box key={pageNumber} className="flex items-center">
               {pageNumber === table.getState().pagination.pageIndex + 1 ? (
                 <Button
                   type="button"
                   btnType="ghost"
                   size="sm"
                   variant="primary"
-                  className="bg-blue-40 cursor-pointer rounded py-1 text-white "
+                  className="cursor-pointer rounded bg-navy-40 py-1 text-white "
                 >
                   {pageNumber}
                 </Button>

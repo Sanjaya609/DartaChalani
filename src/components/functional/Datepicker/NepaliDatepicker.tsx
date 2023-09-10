@@ -1,8 +1,5 @@
 /* eslint-disable no-console */
 
-import { Box } from '@/components/ui/core/Box'
-import { Flexbox } from '@/components/ui/core/Flexbox'
-import { Icon } from '@/components/ui/core/Icon'
 import {
   ADToBS,
   BSToAD,
@@ -20,21 +17,25 @@ import {
   validateBsYear,
 } from '@/components/functional/Datepicker/datePickerUtils'
 import NepaliCalendar from '@/components/functional/Datepicker/NepaliCalendar'
+import { Flexbox } from '@/components/ui/core/Flexbox'
+import { Icon } from '@/components/ui/core/Icon'
 // import { TextInput } from '@/components/functional/FormFields/TextInput/TextInput'
 import { Calendar, X } from 'phosphor-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { inputRightLeftElementWrapper } from '../Form/Input/input.styles'
 
 interface ICalendarIconWithXProps {
   date: string
   handleOnChange: (changedDate: string) => void
-  hideRemoveIcon?: boolean
+  canClearDate?: boolean
+  toggleDatePicker: VoidFunction
 }
 
 const CalendarIconWithX = (props: ICalendarIconWithXProps) => {
-  const { date, handleOnChange, hideRemoveIcon = false } = props
+  const { date, handleOnChange, canClearDate = false, toggleDatePicker } = props
   return (
     <Flexbox align="center">
-      {date && !hideRemoveIcon && (
+      {date && canClearDate && (
         <Icon
           onClick={(event) => {
             event.stopPropagation()
@@ -44,10 +45,15 @@ const CalendarIconWithX = (props: ICalendarIconWithXProps) => {
           size="sm"
           role="button"
           type="button"
-          className="text-cool-600 mr-2"
+          className="mr-2 text-gray-48"
         />
       )}
-      <Calendar />
+      <Icon
+        onClick={toggleDatePicker}
+        size={24}
+        icon={Calendar}
+        className="cursor-pointer pr-1 text-gray-48"
+      />
     </Flexbox>
   )
 }
@@ -71,7 +77,7 @@ function NepaliDatepicker(props: INepaliDatePicker) {
     onBlur,
     right = true,
     setExactToday,
-    hideRemoveIcon,
+    canClearDate,
   } = props
 
   const [date, setDate] = useState<string>('')
@@ -207,34 +213,32 @@ function NepaliDatepicker(props: INepaliDatePicker) {
   }
 
   return (
-    <Box
-      className={`relative  ${wrapperClassName}`}
-      onClick={toggleDatePicker}
-      ref={nepaliDatePickerInput}
-    >
+    <span className={wrapperClassName} ref={nepaliDatePickerInput}>
       <input
+        onClick={toggleDatePicker}
         name={name}
         value={date ? convertEngToNepNumber(date) : date}
-        {...(!right
-          ? { leftIcon: <Calendar /> }
-          : {
-              rightIcon: (
-                <CalendarIconWithX
-                  date={date}
-                  handleOnChange={handleOnChange}
-                  hideRemoveIcon={hideRemoveIcon}
-                />
-              ),
-            })}
         placeholder=""
         readOnly
-        // containerClassName={className || ''}
         onBlur={onBlur}
         disabled={disabled}
         id={id}
         autoComplete="off"
-        className="pl-4"
+        className={className}
       />
+
+      {right && (
+        <span className={inputRightLeftElementWrapper}>
+          {
+            <CalendarIconWithX
+              date={date}
+              handleOnChange={handleOnChange}
+              canClearDate={canClearDate}
+              toggleDatePicker={toggleDatePicker}
+            />
+          }
+        </span>
+      )}
 
       {showDatePicker && (
         <NepaliCalendar
@@ -246,7 +250,7 @@ function NepaliDatepicker(props: INepaliDatePicker) {
           setExactToday={setExactToday}
         />
       )}
-    </Box>
+    </span>
   )
 }
 

@@ -1,7 +1,6 @@
 import {
   tableHeaderBaseStyle,
   tableHeaderThStyle,
-  tableRowBaseStyle,
 } from '@/components/functional/Table/Components/Table/table.schema'
 import { flexRender, HeaderGroup, RowData } from '@tanstack/react-table'
 
@@ -15,7 +14,7 @@ const TableHeader = <TData extends RowData>({
   return (
     <thead className={tableHeaderBaseStyle}>
       {headerGroup().map((headerContent) => (
-        <tr className={tableRowBaseStyle} key={headerContent.id}>
+        <tr key={headerContent.id}>
           {headerContent.headers.map((header) => {
             return (
               <th

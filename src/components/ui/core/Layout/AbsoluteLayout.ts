@@ -14,9 +14,7 @@ const AbsoluteLayout = forwardRef<HTMLElement, AbsoluteLayoutProps>(
     const computedClassNames = getComputedClassNames(
       { scrollbars: scrollable },
       className,
-      `${
-        removeAbsolute ? '' : 'absolute h-full'
-      } w-full top-0 bottom-0 left-0 right-0 border-inherit`
+      `${removeAbsolute ? '' : 'absolute h-full'} top-0 inset-0  w-full`
     )
 
     return React.createElement(

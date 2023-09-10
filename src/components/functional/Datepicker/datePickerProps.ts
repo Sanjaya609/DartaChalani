@@ -82,7 +82,8 @@ export interface INepaliDatePicker extends NepaliDatePickerOptions {
   disableColor?: boolean
   right?: boolean
   setExactToday?: boolean
-  hideRemoveIcon?: boolean
+  canClearDate?: boolean
+  showError?: boolean
 }
 
 export interface CalendarProps {
