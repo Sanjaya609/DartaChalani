@@ -33,7 +33,7 @@ function TableAction(props: ActionProps) {
           type="button"
           btnType="ghost"
           size="xs"
-          variant="warning"
+          variant="secondary"
           onClick={() => handleViewClick && handleViewClick()}
           className="group relative"
         >
@@ -49,7 +49,7 @@ function TableAction(props: ActionProps) {
           type="button"
           btnType="ghost"
           size="xs"
-          variant="warning"
+          variant="secondary"
           onClick={() => handleEditClick && handleEditClick()}
           className="group relative"
         >
@@ -68,7 +68,7 @@ function TableAction(props: ActionProps) {
           type="button"
           btnType="ghost"
           size="xs"
-          variant="warning"
+          variant="secondary"
           className="group relative"
           onClick={() => handleDeleteClick && handleDeleteClick()}
         >
@@ -83,8 +83,8 @@ function TableAction(props: ActionProps) {
         <Button
           type="button"
           btnType="ghost"
-          size="small"
-          variant="warning"
+          size="xs"
+          variant="secondary"
           className="group relative"
           onClick={() => handleConfigureClick && handleConfigureClick()}
         >

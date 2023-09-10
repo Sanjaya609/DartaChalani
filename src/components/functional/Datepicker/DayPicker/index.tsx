@@ -10,7 +10,10 @@ function DayPicker(props: DayPickerProps) {
       <thead>
         <tr>
           {calendarData.bsDays.map((weekDay: string) => (
-            <th className="overflow-hidden  p-2 font-normal" key={weekDay}>
+            <th
+              className="overflow-hidden  p-2 text-sm font-normal"
+              key={weekDay}
+            >
               {weekDay}
             </th>
           ))}

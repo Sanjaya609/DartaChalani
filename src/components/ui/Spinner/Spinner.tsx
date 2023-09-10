@@ -1,8 +1,8 @@
 export const spinnerSizes = {
   xs: '2',
-  small: '3',
-  regular: '4',
-  large: '5',
+  sm: '3',
+  md: '4',
+  lg: '5',
 }
 
 interface ISpinnerProps {
@@ -11,7 +11,7 @@ interface ISpinnerProps {
 }
 
 function Spinner(props: ISpinnerProps) {
-  const { size = 'regular', className } = props
+  const { size = 'md', className } = props
 
   return (
     <div className={`text-center ${className || ''}`}>

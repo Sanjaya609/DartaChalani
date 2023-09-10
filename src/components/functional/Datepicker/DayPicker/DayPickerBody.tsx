@@ -127,8 +127,8 @@ function DayPickerBody(props: DayPickerProps) {
             }
 
             const dayClassName = getComputedClassNames(
-              'block text-center rounded text-cool-gray-800 p-2 font-normal ',
-              { 'bg-blue-24  text-white ': dayInfo.isSelected },
+              'text-sm block text-center rounded text-cool-gray-800 p-2 font-normal ',
+              { 'bg-primary  text-white ': dayInfo.isSelected },
               { 'text-gray-300 ': !dayInfo.isCurrentMonth || dayDisabled },
               {
                 'hover:bg-gray-200 ': !(

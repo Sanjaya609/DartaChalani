@@ -11,7 +11,7 @@ import TableHeader from '@/components/functional/Table/Components/Table/TableHea
 import { TableHeaderProps } from '@/components/functional/Table/Components/TableFilter'
 
 import { fuzzyFilter } from '@/components/functional/Table/Utils/table-utils'
-import { Box, Flexbox } from '@/components/ui'
+import { Box, Flexbox, Layout } from '@/components/ui'
 import AbsoluteLayout from '@/components/ui/core/Layout/AbsoluteLayout'
 import {
   ColumnDef,
@@ -51,6 +51,23 @@ export interface ITableProps<TData extends RowData> extends TableHeaderProps {
   hasFilterBtn?: boolean
   hasSortingBtn?: boolean
   className?: string
+  withScrollable?: boolean
+}
+
+interface FixedHeightTableProps {
+  children: JSX.Element
+  withScrollable: boolean
+  forTableFooter?: boolean
+}
+const FixedHeightTable = ({
+  withScrollable,
+  children,
+}: FixedHeightTableProps) => {
+  return withScrollable ? (
+    <Layout.Absolute scrollable>{children}</Layout.Absolute>
+  ) : (
+    <>{children}</>
+  )
 }
 
 const NormalDataTable = <TData extends RowData>({
@@ -74,6 +91,7 @@ const NormalDataTable = <TData extends RowData>({
   updateOrderFunction,
   removeAbsolute = false,
   className,
+  withScrollable = true,
 }: ITableProps<TData>) => {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -84,29 +102,14 @@ const NormalDataTable = <TData extends RowData>({
 
   const memorizedData = React.useMemo(() => data, [data])
   const memoizedColumns = React.useMemo(
-    () =>
-      isDraggable
-        ? [
-            {
-              id: 'draggable',
-              header: () => '',
-              cell: (prop) => prop.row.index + 1,
-            },
-            {
-              id: 'Sn',
-              header: () => t('sn'),
-              cell: (prop) => prop.row.index + 1,
-            },
-            ...columns,
-          ]
-        : [
-            {
-              id: 'Sn',
-              header: () => t('sn'),
-              cell: (prop) => prop.row.index + 1,
-            },
-            ...columns,
-          ],
+    () => [
+      {
+        id: 'Sn',
+        header: () => t('sn'),
+        cell: (prop) => prop.row.index + 1,
+      },
+      ...columns,
+    ],
     [columns, isDraggable, t]
   )
 
@@ -148,16 +151,8 @@ const NormalDataTable = <TData extends RowData>({
     onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: setGlobalFilter,
     enableGlobalFilter: true,
-    debugTable: true,
-    debugHeaders: true,
-    debugColumns: false,
   })
   const isNoDataFound = !isLoading && table.getRowModel().rows?.length === 0
-  const tableContainerRef = React.useRef<HTMLDivElement>(null)
-  const { rows } = table.getRowModel()
-
-  const paddingTop = 0
-  const paddingBottom = 0
 
   useEffect(
     () =>
@@ -168,10 +163,8 @@ const NormalDataTable = <TData extends RowData>({
     [handleRowSelectedData, rowSelection, table]
   )
 
-  const tableWrapperClassName = getComputedClassNames(tableWrapper, className)
-
   return (
-    <Flexbox direction="column" className={tableWrapperClassName}>
+    <>
       {/* {showTableFilter && (
         <TableFilter
           tableHeaderBtnClick={tableHeaderBtnClick}
@@ -183,35 +176,24 @@ const NormalDataTable = <TData extends RowData>({
           hasSortingBtn={hasSortingBtn}
         />
       )} */}
-      <Box className={tableBaseStyle}>
-        <AbsoluteLayout
-          scrollable
-          ref={tableContainerRef}
-          removeAbsolute={removeAbsolute}
-        >
-          <table className={tableMainStyle}>
-            <TableHeader headerGroup={table.getHeaderGroups} />
-            {isNoDataFound && <TableNoDataFound />}
-            {isLoading && <Box>Loading ....</Box>}
-            {!isNoDataFound && (
-              <TableBody
-                getRowModel={table.getRowModel}
-                tableData={rows}
-                paddingBottom={paddingBottom}
-                paddingTop={paddingTop}
-                handleRowClick={handleRowClick}
-                updateOrder={updateOrder}
-                updateOrderFunction={updateOrderFunction}
-              />
-            )}
-          </table>
-        </AbsoluteLayout>
-      </Box>
-      <TableFooter
-        table={table}
-        paginationRowsPerPageOptions={paginationRowsPerPageOptions}
-      />
-    </Flexbox>
+
+      <Flexbox className="h-full flex-col ">
+        <Box className={tableBaseStyle}>
+          <FixedHeightTable withScrollable={withScrollable}>
+            <table className={tableMainStyle}>
+              <TableHeader headerGroup={table.getHeaderGroups} />
+              {isNoDataFound && <TableNoDataFound />}
+              {isLoading && <Box>Loading ....</Box>}
+              {!isNoDataFound && <TableBody getRowModel={table.getRowModel} />}
+            </table>
+          </FixedHeightTable>
+        </Box>
+        <TableFooter
+          table={table}
+          paginationRowsPerPageOptions={paginationRowsPerPageOptions}
+        />
+      </Flexbox>
+    </>
     // </div>
   )
 }

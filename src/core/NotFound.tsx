@@ -40,7 +40,7 @@ function NotFound({ children }: { children?: ReactElement }) {
                 <Image src={notfound} alt="not found image" className="py-6" />
                 <Box as="div">
                   <Button
-                    size="large"
+                    size="lg"
                     onClick={() => navigate(-1)}
                     variant="primary"
                     className="rounded-md px-16"

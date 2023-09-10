@@ -1,4 +1,5 @@
 import { Flexbox } from '@/components/ui'
+import { Text } from '@/components/ui/core/Text'
 import React from 'react'
 
 interface INoDataFound {
@@ -14,7 +15,7 @@ export const TableNoDataFound: React.FC<INoDataFound> = ({
         align="center"
         justify="center"
       >
-        {labelText}
+        <Text variant="paragraph">{labelText}</Text>
       </Flexbox>
     </tbody>
   )

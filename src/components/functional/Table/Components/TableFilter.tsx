@@ -33,8 +33,8 @@ function TableFilter(props: TableHeaderProps) {
       /> */}
       {hasFilterBtn && (
         <Button
-          variant="gray"
-          size="regular"
+          variant="secondary"
+          size="md"
           type="button"
           icons="icons"
           className="ml-4 border border-gray-80 bg-white"
@@ -46,7 +46,7 @@ function TableFilter(props: TableHeaderProps) {
       {hasHeaderBtn ? (
         <Button
           variant="success"
-          size="regular"
+          size="md"
           type="button"
           icons="icons"
           className="ml-4 whitespace-nowrap border border-gray-80"

@@ -211,7 +211,7 @@ function NepaliCalendar(props: CalendarProps) {
 
   return (
     <Box
-      className="absolute left-0 top-full z-20 h-auto w-full rounded-lg bg-white text-cool-gray-800 shadow-[0_8px_16px_rgba(0,0,0,0.04),0_4px_8px_rgba(0,0,0,0.08)]"
+      className="text-cool-gray-800 absolute left-0 top-full z-20 h-auto  w-full bg-white shadow-[0_8px_16px_rgba(0,0,0,0.04),0_4px_8px_rgba(0,0,0,0.08)]"
       onClick={(e: React.MouseEvent) => {
         e.stopPropagation()
       }}

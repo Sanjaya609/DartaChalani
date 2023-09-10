@@ -101,7 +101,7 @@ const TableFooter = <TData extends RowData>({
             onClick={() => table.setPageIndex(0)}
             disabled={!table.getCanPreviousPage()}
             btnType="ghost"
-            size="small"
+            size="sm"
             variant="primary"
             className={
               !table.getCanPreviousPage()
@@ -114,7 +114,7 @@ const TableFooter = <TData extends RowData>({
           <Button
             type="button"
             btnType="ghost"
-            size="small"
+            size="sm"
             variant="primary"
             onClick={() => table.previousPage()}
             className={
@@ -140,14 +140,14 @@ const TableFooter = <TData extends RowData>({
               &hellip;
             </button>
           ) : (
-            <Box key={pageNumber}>
+            <Box key={pageNumber} className="flex items-center">
               {pageNumber === table.getState().pagination.pageIndex + 1 ? (
                 <Button
                   type="button"
                   btnType="ghost"
-                  size="small"
+                  size="sm"
                   variant="primary"
-                  className="cursor-pointer rounded bg-blue-40 py-1 text-white "
+                  className="cursor-pointer rounded bg-navy-40 py-1 text-white "
                 >
                   {pageNumber}
                 </Button>
@@ -155,7 +155,7 @@ const TableFooter = <TData extends RowData>({
                 <Button
                   type="button"
                   btnType="ghost"
-                  size="small"
+                  size="sm"
                   variant="primary"
                   className={tableFooterButtonStyle}
                   onClick={() => table.setPageIndex((pageNumber as number) - 1)}
@@ -170,7 +170,7 @@ const TableFooter = <TData extends RowData>({
         <Button
           type="button"
           btnType="ghost"
-          size="small"
+          size="sm"
           variant="primary"
           onClick={() => table.nextPage()}
           className={
@@ -186,7 +186,7 @@ const TableFooter = <TData extends RowData>({
           type="button"
           btnType="ghost"
           variant="primary"
-          size="small"
+          size="sm"
           onClick={() => table.setPageIndex(table.getPageCount() - 1)}
           className={
             !table.getCanNextPage()

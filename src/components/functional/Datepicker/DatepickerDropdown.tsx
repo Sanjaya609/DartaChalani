@@ -40,7 +40,7 @@ function DatepickerDropdown(props: DatepickerDropdownProps) {
   useLayoutEffect(() => {
     if (listElementRef.current && listElementRef.current.length) {
       const elem = listElementRef.current.find((el) =>
-        el.classList.contains('bg-blue-24')
+        el.classList.contains('bg-primary')
       )
       if (elem && showDropdown) {
         elem.scrollIntoView({
@@ -60,14 +60,14 @@ function DatepickerDropdown(props: DatepickerDropdownProps) {
     <Box className="relative w-20" ref={input}>
       <Text
         onClick={() => setShowDropdown(!showDropdown)}
-        className="text-center text-cool-gray-800"
+        className="text-cool-gray-800 cursor-pointer text-center"
       >
         {inputValue?.toString()}
       </Text>
 
       {showDropdown && (
         <Box
-          className="absolute left-0 top-full h-auto max-h-48 w-full overflow-auto rounded-lg bg-white text-cool-gray-800  shadow-[0_8px_16px_rgba(0,0,0,0.04),0_4px_8px_rgba(0,0,0,0.08)]"
+          className="text-cool-gray-800 absolute left-0 top-full h-auto max-h-48 w-full overflow-auto rounded-lg bg-white  shadow-[0_8px_16px_rgba(0,0,0,0.04),0_4px_8px_rgba(0,0,0,0.08)]"
           onClick={(e: React.MouseEvent) => {
             e.stopPropagation()
           }}
@@ -82,9 +82,9 @@ function DatepickerDropdown(props: DatepickerDropdownProps) {
                     if (ref) listElementRef.current[index] = ref
                     else return null
                   }}
-                  className={`px-2.5 py-1 ${
-                    option.label === inputValue ? 'bg-blue-24 text-white ' : ''
-                  }`}
+                  className={`cursor-pointer px-2.5 py-1 text-sm ${
+                    option.label === inputValue ? 'bg-primary text-white ' : ''
+                  } ${option.label === inputValue ? '' : 'hover:bg-gray-200'}`}
                   onClick={() => option && onSelect(option)}
                 >
                   {option.label}

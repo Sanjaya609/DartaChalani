@@ -31,8 +31,8 @@ export interface ButtonProps extends React.ComponentPropsWithRef<'button'> {
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (props, ref) => {
     const {
-      variant = 'success',
-      size = 'regular',
+      variant = 'primary',
+      size = 'md',
       display = 'inline',
       btnType = 'solid',
       icons = 'default',

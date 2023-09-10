@@ -12,7 +12,6 @@ function Boundary() {
         <BaseLayout>
           <MainHeader />
           <FlexLayout direction="row">
-            <nav>sidebar</nav>
             <Outlet />
           </FlexLayout>
         </BaseLayout>
