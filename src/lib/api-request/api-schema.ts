@@ -19,8 +19,8 @@ import TokenService from '@/service/token/token.service'
 import { pathParamSanitizer } from '@/utility/sanitizer/sanitizer'
 
 export const basicAuth: AxiosBasicCredentials = {
-  username: 'my-username',
-  password: 'test',
+  username: 'recommendation-app-client',
+  password: 'Test@123',
 }
 
 interface TransformedRequestData {

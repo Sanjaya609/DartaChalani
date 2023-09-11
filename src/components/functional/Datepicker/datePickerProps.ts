@@ -69,7 +69,7 @@ export interface INepaliDatePicker extends NepaliDatePickerOptions {
   id?: string
   name?: string
   className?: HTMLAttributes<HTMLDivElement>['className']
-  wrapperClassName?: HTMLAttributes<HTMLInputElement>['className']
+  datePickerWrapperClassName?: HTMLAttributes<HTMLInputElement>['className']
   onChange?: (nepdate?: string, engdate?: Date | null) => void
   onBlur?: () => void
   onSelect?: (value: string) => void

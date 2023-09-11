@@ -4,11 +4,9 @@ import AbsoluteLayout from '@/components/ui/core/Layout/AbsoluteLayout'
 import FlexLayout from '@/components/ui/core/Layout/FlexLayout'
 import MainLayout from '@/components/ui/core/Layout/MainLayout'
 import { Text } from '@/components/ui/core/Text'
-import { Image } from '@/components/ui/core/Image'
-import { ReactElement, useEffect } from 'react'
 import { useAuth } from '@/providers'
 import { publicRoutePath, useNavigate } from '@/router'
-import notfound from '../assets/svg/notfound.svg'
+import { ReactElement, useEffect } from 'react'
 
 function NotFound({ children }: { children?: ReactElement }) {
   const navigate = useNavigate()
@@ -37,7 +35,7 @@ function NotFound({ children }: { children?: ReactElement }) {
                     We can’t seem to find the page you’re looking for
                   </Text>
                 )}
-                <Image src={notfound} alt="not found image" className="py-6" />
+                {/* <Image src={notfound} alt="not found image" className="py-6" /> */}
                 <Box as="div">
                   <Button
                     size="lg"

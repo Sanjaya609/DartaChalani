@@ -27,6 +27,7 @@ const CheckBox = (props: ICheckBoxProps) => {
     options,
     checkBoxInputWrapperClassName,
     checkBoxLabelClassName,
+    wrapperClassName,
     ...restProps
   } = props
 
@@ -46,6 +47,7 @@ const CheckBox = (props: ICheckBoxProps) => {
         name={name}
         labelClassName={labelClassName}
         label={label}
+        className={wrapperClassName}
       >
         <Box className={computedCheckBoxInputWrapperClassName}>
           {options.map((option, index) => {

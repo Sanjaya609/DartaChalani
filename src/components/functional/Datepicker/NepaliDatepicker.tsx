@@ -61,7 +61,7 @@ const CalendarIconWithX = (props: ICalendarIconWithXProps) => {
 function NepaliDatepicker(props: INepaliDatePicker) {
   const {
     value,
-    wrapperClassName,
+    datePickerWrapperClassName,
     className,
     disabled,
     onChange,
@@ -213,7 +213,7 @@ function NepaliDatepicker(props: INepaliDatePicker) {
   }
 
   return (
-    <span className={wrapperClassName} ref={nepaliDatePickerInput}>
+    <span className={datePickerWrapperClassName} ref={nepaliDatePickerInput}>
       <input
         onClick={toggleDatePicker}
         name={name}

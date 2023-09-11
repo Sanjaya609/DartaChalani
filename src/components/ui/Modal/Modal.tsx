@@ -9,6 +9,7 @@ import {
 import { getComputedClassNames } from '@/utility/tailwind/tailwind-utility'
 import { ModalSize } from './modal-schema'
 import { useMemo, PropsWithChildren } from 'react'
+import { Button } from '@/components/ui'
 
 interface IFooterBtnProps {
   show: boolean
@@ -113,17 +114,17 @@ const Modal = (props: IModalProps) => {
           ) : (
             <DialogFooter className={computedFooterClassName}>
               {showCancelBtn && (
-                <button
+                <Button
                   className={cancelBtnClassName}
                   onClick={cancelBtnAction}
                 >
                   {cancelBtnTitle}
-                </button>
+                </Button>
               )}
               {showSaveBtn && (
-                <button className={saveBtnClassName} onClick={saveBtnAction}>
+                <Button className={saveBtnClassName} onClick={saveBtnAction}>
                   {saveBtnTitle}
-                </button>
+                </Button>
               )}
             </DialogFooter>
           )

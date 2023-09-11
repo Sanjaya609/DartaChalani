@@ -31,6 +31,7 @@ function EnglishDatePickerInput(props: IFormEnglishDatepicker) {
     showError,
     isFieldArray,
     value,
+    wrapperClassName,
   } = props
 
   return (
@@ -44,6 +45,7 @@ function EnglishDatePickerInput(props: IFormEnglishDatepicker) {
       labelClassName={labelClassName}
       id={id}
       label={label}
+      className={wrapperClassName}
     >
       <EnglishDatePicker
         value={value}

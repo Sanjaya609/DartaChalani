@@ -53,5 +53,5 @@ export function FormikFieldArrayValidationError(props: Props): ReactElement {
     )
   }
 
-  return <span></span>
+  return <></>
 }

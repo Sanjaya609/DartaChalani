@@ -37,16 +37,20 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>((props, ref) => {
 
   const computedClassNames = getComputedClassNames(
     CardClassList,
-    className,
     {
       [`border border-solid ${borderColor}`]: bordered,
       [`${borderRadiusClass[borderRadius]}`]: !!borderRadius,
       [`hover:${hoverBackgroundColor}`]: !!hoverBackgroundColor,
     },
     backgroundColor,
+    className
   )
 
-  return React.createElement(Box, Object.assign(restProps, { ref, className: computedClassNames }), children)
+  return React.createElement(
+    Box,
+    Object.assign(restProps, { ref, className: computedClassNames }),
+    children
+  )
 })
 
 Card.displayName = 'Card'

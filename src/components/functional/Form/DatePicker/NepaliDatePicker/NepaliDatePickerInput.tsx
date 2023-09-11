@@ -34,6 +34,7 @@ function NepaliDatePickerInput(props: IFormEnglishDatepicker) {
     maxDateToday,
     minDateToday,
     onSelect,
+    datePickerWrapperClassName,
     wrapperClassName,
     className,
     onBlur,
@@ -42,7 +43,7 @@ function NepaliDatePickerInput(props: IFormEnglishDatepicker) {
   const inputWrapperClassName = getComputedClassNames(
     formCommonInputWrapperClass,
     inputWrapperClass,
-    wrapperClassName,
+    datePickerWrapperClassName,
     'relative',
     {
       [formErrorClass]: showError,
@@ -65,10 +66,11 @@ function NepaliDatePickerInput(props: IFormEnglishDatepicker) {
       labelClassName={labelClassName}
       id={id}
       label={label}
+      className={wrapperClassName}
     >
       <NepaliDatepicker
         value={value}
-        wrapperClassName={inputWrapperClassName}
+        datePickerWrapperClassName={inputWrapperClassName}
         className={computedInputElementClass}
         disabled={disabled}
         onChange={(date) => {

@@ -14,7 +14,7 @@ interface IDropdownProps extends DropdownMenuProps {
 const Dropdown = (props: IDropdownProps) => {
   const { triggerElement, children, ...restProps } = props
   return (
-    <DropdownMenu>
+    <DropdownMenu {...restProps}>
       <DropdownMenuTrigger className="focus-visible:outline-0">
         {triggerElement}
       </DropdownMenuTrigger>
