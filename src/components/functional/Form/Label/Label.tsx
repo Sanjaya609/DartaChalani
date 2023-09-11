@@ -14,18 +14,20 @@ const Label = (props: ILabelProps) => {
     className
   )
 
-  return !!label ? (
-    <div className="mb-1">
-      {typeof label === 'string' ? (
-        <label {...restProps} className={computedLabelClass} htmlFor={id}>
-          {label}
-        </label>
+  return (
+    <>
+      {label ? (
+        typeof label === 'string' ? (
+          <label {...restProps} className={computedLabelClass} htmlFor={id}>
+            {label}
+          </label>
+        ) : (
+          label
+        )
       ) : (
-        label
+        <></>
       )}
-    </div>
-  ) : (
-    <></>
+    </>
   )
 }
 

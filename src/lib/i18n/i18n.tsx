@@ -6,17 +6,21 @@ import { initReactI18next } from 'react-i18next'
 
 import commonEn from './translations/common/en.json'
 import commonNp from './translations/common/np.json'
+import sidebarEn from './translations/sidebar/en.json'
+import sidebarNp from './translations/sidebar/np.json'
 
 export const resources = {
   en: {
     translation: {
       ...commonEn,
+      sidebar: sidebarEn,
     },
   },
 
   ne: {
     translation: {
       ...commonNp,
+      sidebar: sidebarNp,
     },
   },
 }

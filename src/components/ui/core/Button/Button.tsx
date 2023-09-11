@@ -56,7 +56,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <button
-        type="button"
+        // type="button"
         ref={ref}
         {...buttonProps}
         className={classNames}

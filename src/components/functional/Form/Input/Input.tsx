@@ -35,6 +35,7 @@ const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
     errorClassName,
     labelClassName,
     className,
+    wrapperClassName,
     ...rest
   } = props
   const showError = getErrorStatus({
@@ -67,6 +68,7 @@ const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
       labelClassName={labelClassName}
       id={id}
       label={label}
+      className={wrapperClassName}
     >
       <span className={computedInputWrapperClass}>
         {leftIcon && (

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 interface ISidebarContext {
   isOpen: boolean
@@ -29,4 +29,8 @@ export const SidebarProvider = ({ children }: Props) => {
       {children}
     </SidebarContext.Provider>
   )
+}
+
+export const useSideBarData = () => {
+  return useContext(SidebarContext)
 }

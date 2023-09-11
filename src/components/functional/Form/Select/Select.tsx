@@ -17,6 +17,7 @@ const FormSelect = (props: ISelectInputProps) => {
     isFieldArray,
     errorClassName,
     labelClassName,
+    wrapperClassName,
     ...restProps
   } = props
   const showError = getErrorStatus({
@@ -37,6 +38,7 @@ const FormSelect = (props: ISelectInputProps) => {
       labelClassName={labelClassName}
       id={id}
       label={label}
+      className={wrapperClassName}
     >
       <Select {...restProps} errors={errors} touched={touched} />
     </FormWrapper>

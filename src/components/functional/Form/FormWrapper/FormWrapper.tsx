@@ -1,3 +1,4 @@
+import { getComputedClassNames } from '@/utility/tailwind/tailwind-utility'
 import {
   FormikFieldArrayValidationError,
   FormikValidationError,
@@ -6,7 +7,9 @@ import { Label } from '../Label/Label'
 
 interface IFormWrapperProps
   extends React.PropsWithChildren,
-    IBaseFormControlProps {}
+    Omit<IBaseFormControlProps, 'wrapperClassName'> {
+  className?: string
+}
 
 const FormWrapper = (props: IFormWrapperProps) => {
   const {
@@ -20,9 +23,13 @@ const FormWrapper = (props: IFormWrapperProps) => {
     errors,
     errorClassName,
     touched,
+    className,
   } = props
+
+  const computedClassName = getComputedClassNames(className)
+
   return (
-    <>
+    <div className={computedClassName}>
       <Label id={id} className={labelClassName} label={label} />
       {children}
       {showError && name ? (
@@ -46,7 +53,7 @@ const FormWrapper = (props: IFormWrapperProps) => {
       ) : (
         <></>
       )}
-    </>
+    </div>
   )
 }
 
