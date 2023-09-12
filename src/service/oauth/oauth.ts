@@ -1,4 +1,4 @@
-import { RequestMethod } from '@/lib/api-request'
+import { RequestBodyType, RequestMethod } from '@/lib/api-request'
 
 const prefix = '/auth'
 
@@ -12,6 +12,7 @@ const ouathAPI = {
     controllerName: 'oauth/token',
     queryKeyName: 'LOGIN',
     requestMethod: RequestMethod.POST,
+    requestBodyType: RequestBodyType.AUTH,
   },
 }
 

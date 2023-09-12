@@ -6,7 +6,6 @@ const MasterSetup = () => {
   return (
     <Layout.Flex>
       <Sidebar />
-
       <Outlet />
     </Layout.Flex>
   )

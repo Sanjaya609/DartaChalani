@@ -66,6 +66,7 @@ const MenuOverlay = () => {
             key={nav.path}
             className="group flex w-full cursor-pointer items-center px-3 py-4 transition-all hover:bg-primary"
             to={nav.path}
+            onClick={() => setIsOpen()}
           >
             <Icon
               className="mr-2 group-hover:text-navy-16"

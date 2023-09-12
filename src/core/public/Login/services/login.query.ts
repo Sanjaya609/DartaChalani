@@ -26,7 +26,6 @@ const useLogin = () => {
           TokenService.setToken(responseData.access_token)
           TokenService.setRefeshToken(responseData.refresh_token)
           setIsAuthenticated(true)
-          navigate(privateRoutePath.base)
         }
       },
     }

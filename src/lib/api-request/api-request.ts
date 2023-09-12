@@ -26,12 +26,12 @@ export interface InitApiRequest {
 Axios.interceptors.response.use(
   (value) => value,
   (error: AxiosError) => {
-    if (
-      error.response?.status === 401 &&
-      error.config?.url !== refreshTokenApiDetails.controllerName
-    ) {
-      return requestRefreshToken(error)
-    }
+    // if (
+    //   error.response?.status === 401 &&
+    //   error.config?.url !== refreshTokenApiDetails.controllerName
+    // ) {
+    //   return requestRefreshToken(error)
+    // }
     return Promise.reject(error)
   }
 )

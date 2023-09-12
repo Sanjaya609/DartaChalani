@@ -13,7 +13,9 @@ interface AuthProps {
 }
 
 const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = React.useState(true)
+  const [isAuthenticated, setIsAuthenticated] = React.useState(
+    TokenService.getAccessToken()
+  )
 
   // useEffect(() => {
   //   const storageData = TokenService.getAccessToken()
