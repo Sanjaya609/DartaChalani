@@ -10,7 +10,7 @@ import { Outlet } from 'react-router-dom'
 function Boundary() {
   return (
     <SidebarProvider>
-      <WrapperLayout>
+      <WrapperLayout className="bg-gray-96">
         <BaseLayout>
           <MainHeader />
           <FlexLayout direction="row">

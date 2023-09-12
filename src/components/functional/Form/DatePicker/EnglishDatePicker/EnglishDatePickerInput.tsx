@@ -1,10 +1,14 @@
 import { ADToBS } from '@/components/functional/Datepicker/dateConverter'
 import { Icon } from '@/components/ui'
+import { getErrorStatus } from '@/utility/inputUtils/input-error'
 import { X } from 'phosphor-react'
+import { ReactDatePickerProps } from 'react-datepicker'
 import { FormWrapper } from '../../FormWrapper/FormWrapper'
 import EnglishDatePicker from './EnglishDatePicker'
 
-interface IFormEnglishDatepicker extends IBaseFormControlProps {
+interface IFormEnglishDatepicker
+  extends IBaseFormControlProps,
+    Omit<ReactDatePickerProps, 'minDate' | 'maxDate' | 'onChange'> {
   onChange?: (engDate?: Date | string, nepdate?: string) => void
   readOnly?: boolean
   disabled?: boolean
@@ -16,23 +20,30 @@ interface IFormEnglishDatepicker extends IBaseFormControlProps {
 
 function EnglishDatePickerInput(props: IFormEnglishDatepicker) {
   const {
-    name,
+    id = props?.id || props?.name,
+    name = props?.name || props?.id,
     errors,
     onChange,
     readOnly = false,
     minDate,
     maxDate,
-    canClearDate = false,
+    canClearDate = true,
     touched,
     errorClassName,
     labelClassName,
     label,
-    id,
-    showError,
     isFieldArray,
     value,
     wrapperClassName,
+    ...datePickerProps
   } = props
+
+  const showError = getErrorStatus({
+    name: name || '',
+    errors,
+    touched,
+    isFieldArray,
+  })
 
   return (
     <FormWrapper
@@ -48,6 +59,9 @@ function EnglishDatePickerInput(props: IFormEnglishDatepicker) {
       className={wrapperClassName}
     >
       <EnglishDatePicker
+        {...datePickerProps}
+        id={id}
+        name={id}
         value={value}
         showError={showError}
         minDate={minDate ? new Date(minDate) : undefined}

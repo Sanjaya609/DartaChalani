@@ -1,4 +1,5 @@
 import { Box } from '@/components/ui'
+import { getErrorStatus } from '@/utility/inputUtils/input-error'
 import { getComputedClassNames } from '@/utility/tailwind/tailwind-utility'
 import React from 'react'
 import { FormWrapper } from '../FormWrapper/FormWrapper'
@@ -17,7 +18,6 @@ interface IRadioProps
 const Radio = (props: IRadioProps) => {
   const {
     touched,
-    showError,
     errorClassName,
     errors,
     isFieldArray,
@@ -30,6 +30,13 @@ const Radio = (props: IRadioProps) => {
     wrapperClassName,
     ...restProps
   } = props
+
+  const showError = getErrorStatus({
+    name: name || '',
+    errors,
+    touched,
+    isFieldArray,
+  })
 
   const computedRadioInputWrapperClassName = getComputedClassNames(
     'flex items-center',

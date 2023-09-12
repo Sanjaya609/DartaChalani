@@ -52,6 +52,7 @@ export interface ITableProps<TData extends RowData> extends TableHeaderProps {
   hasSortingBtn?: boolean
   className?: string
   withScrollable?: boolean
+  withSN?: boolean
 }
 
 interface FixedHeightTableProps {
@@ -92,6 +93,7 @@ const NormalDataTable = <TData extends RowData>({
   removeAbsolute = false,
   className,
   withScrollable = true,
+  withSN = false,
 }: ITableProps<TData>) => {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(

@@ -27,6 +27,7 @@ const EnglishDatePicker: React.FC<EnglishDatePickerProps> = (props) => {
     className,
     removeIconComp,
     showError,
+    ...restProps
   } = props
   const computedInputWrapperClass = getComputedClassNames(
     formCommonInputWrapperClass,
@@ -45,13 +46,14 @@ const EnglishDatePicker: React.FC<EnglishDatePickerProps> = (props) => {
   return (
     <span className={computedInputWrapperClass}>
       <DatePicker
+        {...restProps}
+        wrapperClassName="w-full"
         className={computedInputElementClass}
         dateFormat={dateFormat}
         showMonthDropdown={showMonthDropdown}
         showYearDropdown={showYearDropdown}
         popperClassName="!z-20"
         ref={datePickerRef}
-        {...props}
       />
       {removeIconComp}
 

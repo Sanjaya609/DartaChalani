@@ -78,6 +78,7 @@ function NepaliDatepicker(props: INepaliDatePicker) {
     right = true,
     setExactToday,
     canClearDate,
+    calendarClassName,
   } = props
 
   const [date, setDate] = useState<string>('')
@@ -248,6 +249,7 @@ function NepaliDatepicker(props: INepaliDatePicker) {
           minDate={minDateLimit}
           right={right}
           setExactToday={setExactToday}
+          className={calendarClassName}
         />
       )}
     </span>

@@ -9,6 +9,7 @@ interface IFormWrapperProps
   extends React.PropsWithChildren,
     Omit<IBaseFormControlProps, 'wrapperClassName'> {
   className?: string
+  showError?: boolean
 }
 
 const FormWrapper = (props: IFormWrapperProps) => {
