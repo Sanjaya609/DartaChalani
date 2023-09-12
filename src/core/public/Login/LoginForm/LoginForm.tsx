@@ -1,4 +1,5 @@
 import Form from '@/components/functional/Form/Form'
+import PasswordInput from '@/components/functional/PasswordInput'
 import { Button } from '@/components/ui'
 import { Card } from '@/components/ui/core/Card'
 import { Text } from '@/components/ui/core/Text'
@@ -24,18 +25,8 @@ const LoginForm = () => {
       </Text>
 
       <form onSubmit={handleSubmit}>
-        <Form.Input
-          label="Username"
-          className="w-full"
-          wrapperClassName="mb-4"
-        />
-        <Form.Input
-          wrapperClassName="mb-4"
-          label="Password"
-          type="password"
-          className="w-full"
-          // rightIcon={<Icon icon={Eye} />}
-        />
+        <Form.Input id="username" label="Username" wrapperClassName="mb-4" />
+        <PasswordInput />
 
         <Button loading={isLoading} className="w-full">
           Login
