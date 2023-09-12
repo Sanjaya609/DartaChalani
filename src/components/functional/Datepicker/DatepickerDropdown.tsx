@@ -57,7 +57,7 @@ function DatepickerDropdown(props: DatepickerDropdownProps) {
   }, [label])
 
   return (
-    <Box className="relative w-20" ref={input}>
+    <Box className="border-#eee relative w-20 border p-1" ref={input}>
       <Text
         onClick={() => setShowDropdown(!showDropdown)}
         className="text-cool-gray-800 cursor-pointer text-center"

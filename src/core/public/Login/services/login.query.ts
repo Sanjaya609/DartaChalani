@@ -1,16 +1,14 @@
-import { initApiRequest } from '@/lib/api-request'
-import { privateRoutePath, useNavigate } from '@/router'
-import { useMutation } from '@tanstack/react-query'
 import {
   ILoginPayload,
   ILoginResponse,
 } from '@/core/public/Login/interface/login.interface'
+import { initApiRequest } from '@/lib/api-request'
 import { useAuth } from '@/providers'
 import { apiDetails } from '@/service/api'
 import TokenService from '@/service/token/token.service'
+import { useMutation } from '@tanstack/react-query'
 
 const useLogin = () => {
-  const navigate = useNavigate()
   const { setIsAuthenticated } = useAuth()
   return useMutation(
     (requestData: ILoginPayload) => {

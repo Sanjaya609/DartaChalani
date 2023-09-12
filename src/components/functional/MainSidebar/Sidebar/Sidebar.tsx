@@ -1,6 +1,6 @@
 import { Icon } from '@/components/ui'
 import { Text } from '@/components/ui/core/Text'
-import { Link, privateRoutePath } from '@/router'
+import { Link } from '@/router'
 import { getComputedClassNames } from '@/utility/tailwind/tailwind-utility'
 import { CaretDown } from 'phosphor-react'
 import Collapse, {
@@ -18,24 +18,8 @@ interface ISidebarProps {
   sideBarItem: ISidebarItem[]
 }
 
-const sideBarItem: ISidebarItem[] = [
-  {
-    title: 'Master',
-    path: privateRoutePath.masterSetup.fiscalYear,
-    children: [
-      {
-        title: 'test',
-        path: privateRoutePath.masterSetup.fiscalYear,
-      },
-    ],
-  },
-  {
-    title: 'Test',
-    path: privateRoutePath.masterSetup.fiscalYear,
-  },
-]
-
-const Sidebar = () => {
+const Sidebar = (props: ISidebarProps) => {
+  const { sideBarItem } = props
   const computedSidebarLinkStyle = getComputedClassNames(sidebarLinkStyle)
   const computedCollapseSidebarLinkStyle =
     getComputedClassNames(sidebarLinkStyle)

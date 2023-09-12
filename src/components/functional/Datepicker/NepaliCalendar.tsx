@@ -20,6 +20,7 @@ import {
 } from '@/components/functional/Datepicker/dateConverter'
 import DayPicker from './DayPicker'
 import CalendarController from './CalendarController'
+import { getComputedClassNames } from '@/utility/tailwind/tailwind-utility'
 
 function NepaliCalendar(props: CalendarProps) {
   const {
@@ -30,6 +31,7 @@ function NepaliCalendar(props: CalendarProps) {
     disabled,
     right,
     setExactToday = false,
+    className,
   } = props
   const [selectedDate, setSelectedDate] = useState<ParsedDate>(
     parsedDateInitialValue
@@ -209,9 +211,15 @@ function NepaliCalendar(props: CalendarProps) {
     [events]
   )
 
+  const computedCalendarClassName = getComputedClassNames(
+    'text-cool-gray-800 absolute left-0 top-full z-20 h-auto  w-full bg-white shadow-[0_8px_16px_rgba(0,0,0,0.04),0_4px_8px_rgba(0,0,0,0.08)]',
+    'w-[250px]',
+    className
+  )
+
   return (
     <Box
-      className="text-cool-gray-800 absolute left-0 top-full z-20 h-auto  w-full bg-white shadow-[0_8px_16px_rgba(0,0,0,0.04),0_4px_8px_rgba(0,0,0,0.08)]"
+      className={computedCalendarClassName}
       onClick={(e: React.MouseEvent) => {
         e.stopPropagation()
       }}

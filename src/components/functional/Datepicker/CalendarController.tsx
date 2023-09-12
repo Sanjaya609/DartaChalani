@@ -57,7 +57,7 @@ function CalendarController(props: CalenderControllerProps) {
     <Flexbox
       justify="space-between"
       align="center"
-      className="mb-4 border-b-2 p-4"
+      className="mb-4 rounded-b-md border-b-2 p-4"
     >
       <Icon
         className={`${disablePrevious ? 'disabled' : ''}`}

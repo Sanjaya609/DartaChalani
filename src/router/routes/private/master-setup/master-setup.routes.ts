@@ -6,13 +6,19 @@ import { _RouteObject } from 'react-router-dom'
 const MasterSetup = React.lazy(
   () => import('@/core/private/MasterSetup/MasterSetup')
 )
+const FiscalYear = React.lazy(
+  () => import('@/core/private/MasterSetup/FiscalYear')
+)
 
 export const masterSetupRoutes: _RouteObject<'private'>[] = [
   createRoute({
     path: privateRoutePath.masterSetup.base,
     element: MasterSetup,
     children: [
-      //routes heere
+      createRoute({
+        path: privateRoutePath.masterSetup.fiscalYear,
+        element: FiscalYear,
+      }),
     ],
   }),
 ]

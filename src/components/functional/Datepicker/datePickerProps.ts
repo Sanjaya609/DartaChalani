@@ -83,6 +83,7 @@ export interface INepaliDatePicker extends NepaliDatePickerOptions {
   right?: boolean
   setExactToday?: boolean
   canClearDate?: boolean
+  calendarClassName?: string
   showError?: boolean
 }
 
@@ -94,6 +95,7 @@ export interface CalendarProps {
   disabled?: boolean
   right?: boolean
   setExactToday?: boolean
+  className?: string
 }
 
 export interface CalenderControllerProps {

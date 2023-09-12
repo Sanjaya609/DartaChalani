@@ -1,6 +1,7 @@
 import { BSToAD } from '@/components/functional/Datepicker/dateConverter'
 import { INepaliDatePicker } from '@/components/functional/Datepicker/datePickerProps'
 import NepaliDatepicker from '@/components/functional/Datepicker/NepaliDatepicker'
+import { getErrorStatus } from '@/utility/inputUtils/input-error'
 import { getComputedClassNames } from '@/utility/tailwind/tailwind-utility'
 import {
   formCommonInputElementClass,
@@ -10,24 +11,23 @@ import {
 import { FormWrapper } from '../../FormWrapper/FormWrapper'
 import { inputWrapperClass } from '../../Input/input.styles'
 
-interface IFormEnglishDatepicker
+interface IFormNepaliDatepicker
   extends IBaseFormControlProps,
     INepaliDatePicker {}
 
-function NepaliDatePickerInput(props: IFormEnglishDatepicker) {
+function NepaliDatePickerInput(props: IFormNepaliDatepicker) {
   const {
-    name,
+    id = props?.id || props?.name,
+    name = props?.name || props?.id,
     errors,
     onChange,
     minDate,
     maxDate,
-    canClearDate = false,
+    canClearDate = true,
     touched,
     errorClassName,
     labelClassName,
     label,
-    id,
-    showError,
     isFieldArray,
     value,
     disabled,
@@ -39,6 +39,13 @@ function NepaliDatePickerInput(props: IFormEnglishDatepicker) {
     className,
     onBlur,
   } = props
+
+  const showError = getErrorStatus({
+    name: name || '',
+    errors,
+    touched,
+    isFieldArray,
+  })
 
   const inputWrapperClassName = getComputedClassNames(
     formCommonInputWrapperClass,
@@ -76,6 +83,8 @@ function NepaliDatePickerInput(props: IFormEnglishDatepicker) {
         onChange={(date) => {
           if (date) {
             onChange?.(date, BSToAD(date))
+          } else {
+            onChange?.('', null)
           }
         }}
         onSelect={onSelect}

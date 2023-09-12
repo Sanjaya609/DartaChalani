@@ -76,6 +76,5 @@ interface IBaseFormControlProps {
   labelClassName?: string
   label?: string
   name?: string
-  showError?: boolean
   wrapperClassName?: string
 }

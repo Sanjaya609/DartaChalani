@@ -15,8 +15,8 @@ const ContainerLayout = forwardRef<HTMLElement, ContainerLayoutProps>(
         'h-full': stretch,
         'my-0 mx-auto w-app-max': centered,
       },
-      className,
-      `px-16 w-full`
+      `px-16 w-full py-6`,
+      className
     )
 
     return React.createElement(
