@@ -1,18 +1,25 @@
 import {
   tableHeaderBaseStyle,
+  tableHeaderThStickyStyle,
   tableHeaderThStyle,
 } from '@/components/functional/Table/Components/Table/table.schema'
+import { getComputedClassNames } from '@/utility/tailwind/tailwind-utility'
 import { flexRender, HeaderGroup, RowData } from '@tanstack/react-table'
 
 interface ITableHeaderProps<TData> {
   headerGroup: () => HeaderGroup<TData>[]
+  withScrollable?: boolean
 }
 
 const TableHeader = <TData extends RowData>({
   headerGroup,
+  withScrollable,
 }: ITableHeaderProps<TData>) => {
+  const computedHeaderBaseStyle = getComputedClassNames(tableHeaderBaseStyle, {
+    [tableHeaderThStickyStyle]: !!withScrollable,
+  })
   return (
-    <thead className={tableHeaderBaseStyle}>
+    <thead className={computedHeaderBaseStyle}>
       {headerGroup().map((headerContent) => (
         <tr key={headerContent.id}>
           {headerContent.headers.map((header) => {

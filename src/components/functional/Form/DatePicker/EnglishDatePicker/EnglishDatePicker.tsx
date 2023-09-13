@@ -1,4 +1,4 @@
-import { Icon } from '@/components/ui'
+import { Flexbox, Icon } from '@/components/ui'
 import { getComputedClassNames } from '@/utility/tailwind/tailwind-utility'
 import { Calendar } from 'phosphor-react'
 import React, { useRef } from 'react'
@@ -9,7 +9,10 @@ import {
   formCommonInputWrapperClass,
   formErrorClass,
 } from '../../form.classes'
-import { inputWrapperClass } from '../../Input/input.styles'
+import {
+  inputRightLeftElementWrapper,
+  inputWrapperClass,
+} from '../../Input/input.styles'
 
 interface EnglishDatePickerProps extends ReactDatePickerProps {
   label?: string
@@ -55,16 +58,21 @@ const EnglishDatePicker: React.FC<EnglishDatePickerProps> = (props) => {
         popperClassName="!z-20"
         ref={datePickerRef}
       />
-      {removeIconComp}
 
-      <Icon
-        onClick={() => {
-          datePickerRef?.current?.setOpen(true)
-        }}
-        size={24}
-        icon={Calendar}
-        className="cursor-pointer pr-1 text-gray-48"
-      />
+      <span className={inputRightLeftElementWrapper}>
+        <Flexbox align="center">
+          {removeIconComp}
+
+          <Icon
+            onClick={() => {
+              datePickerRef?.current?.setOpen(true)
+            }}
+            size={24}
+            icon={Calendar}
+            className="cursor-pointer pr-1 text-gray-48"
+          />
+        </Flexbox>
+      </span>
     </span>
   )
 }

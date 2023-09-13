@@ -1,4 +1,5 @@
 import { DataTable } from '@/components/functional/Table'
+import TableAction from '@/components/functional/Table/Components/Table/TableAction'
 import { Box } from '@/components/ui'
 import { ColumnDef } from '@tanstack/react-table'
 import React from 'react'
@@ -35,18 +36,16 @@ const FiscalYearTable = () => {
         accessorKey: 'endDateBs',
         header: 'End Date (BS)',
       },
+      {
+        header: 'Actions',
+        cell: () => <TableAction />,
+      },
     ],
     []
   )
 
   return (
-    <Box className="mt-4 h-full">
-      <DataTable
-        className="pb-4"
-        columns={columns}
-        data={fiscalYearData || []}
-      />
-    </Box>
+    <DataTable className="pb-4" columns={columns} data={fiscalYearData || []} />
   )
 }
 

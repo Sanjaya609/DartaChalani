@@ -179,11 +179,14 @@ const NormalDataTable = <TData extends RowData>({
         />
       )} */}
 
-      <Flexbox className="h-full flex-col ">
+      <Flexbox className="h-full w-full flex-col">
         <Box className={tableBaseStyle}>
           <FixedHeightTable withScrollable={withScrollable}>
             <table className={tableMainStyle}>
-              <TableHeader headerGroup={table.getHeaderGroups} />
+              <TableHeader
+                headerGroup={table.getHeaderGroups}
+                withScrollable={withScrollable}
+              />
               {isNoDataFound && <TableNoDataFound />}
               {isLoading && <Box>Loading ....</Box>}
               {!isNoDataFound && <TableBody getRowModel={table.getRowModel} />}

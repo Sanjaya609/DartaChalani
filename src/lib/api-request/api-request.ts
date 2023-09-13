@@ -3,6 +3,7 @@ import { Primitive } from 'type-fest'
 
 import {
   getAxiosParams,
+  handleLogout,
   manageErrorResponse,
   refreshTokenApiDetails,
   requestRefreshToken,
@@ -26,6 +27,9 @@ export interface InitApiRequest {
 Axios.interceptors.response.use(
   (value) => value,
   (error: AxiosError) => {
+    if (error.response?.status === 401) {
+      handleLogout()
+    }
     // if (
     //   error.response?.status === 401 &&
     //   error.config?.url !== refreshTokenApiDetails.controllerName
