@@ -9,8 +9,10 @@ const FiscalYearWrapper = () => {
   const [initialValues, setInitialValues] = useState(fiscalYearInitialValue)
   return (
     <ContainerLayout stretch>
-      <FiscalYearForm initialValues={initialValues} />
-      <FiscalYearTable />
+      <FlexLayout direction="column">
+        <FiscalYearForm initialValues={initialValues} />
+        <FiscalYearTable />
+      </FlexLayout>
     </ContainerLayout>
   )
 }
