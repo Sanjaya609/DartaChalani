@@ -7,15 +7,20 @@ import {
   IFiscalYearResponse,
 } from '../schema/fiscalyear.interface'
 
-const { getAllFiscalYear } = apiDetails
+const {
+  getAllFiscalYear,
+  changeFiscalYearStatus,
+  createFiscalYear,
+  switchCurrentFiscalYear,
+} = apiDetails
 
 const useCreateFiscalYear = () => {
   const queryClient = useQueryClient()
   return useMutation(
     (requestData: IFiscalYearInitialValue) => {
       return initApiRequest({
-        apiDetails: apiDetails.createFiscalYear,
-        requestData: { ...requestData },
+        apiDetails: createFiscalYear,
+        requestData,
       })
     },
     {
@@ -53,4 +58,43 @@ const useGetAllFiscalYear = <T = IFiscalYearResponse[]>(
   )
 }
 
-export { useCreateFiscalYear, useGetAllFiscalYear }
+const useChangeFiscalYearStatus = () => {
+  const queryClient = useQueryClient()
+  return useMutation(
+    (pathVariables: { fiscalYearId: number | string }) => {
+      return initApiRequest({
+        apiDetails: changeFiscalYearStatus,
+        pathVariables,
+      })
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries([getAllFiscalYear.controllerName])
+      },
+    }
+  )
+}
+
+const useSwitchCurrentFiscalYear = () => {
+  const queryClient = useQueryClient()
+  return useMutation(
+    (pathVariables: { fiscalYearId: number | string }) => {
+      return initApiRequest({
+        apiDetails: switchCurrentFiscalYear,
+        pathVariables,
+      })
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries([getAllFiscalYear.controllerName])
+      },
+    }
+  )
+}
+
+export {
+  useCreateFiscalYear,
+  useGetAllFiscalYear,
+  useChangeFiscalYearStatus,
+  useSwitchCurrentFiscalYear,
+}

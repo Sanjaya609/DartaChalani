@@ -1,19 +1,7 @@
 import { AxiosRequestConfig } from 'axios'
 import { JsonObject, Primitive } from 'type-fest'
 
-export interface RequestDataType {
-  [key: string]:
-    | ArrayBuffer
-    | ArrayBufferView
-    | File
-    | Blob
-    | string
-    | boolean
-    | number
-    | null
-    | Date
-    | Array<unknown>
-}
+export type RequestDataType = Record<string, TAny>
 
 export enum RequestMethod {
   GET = 'GET',

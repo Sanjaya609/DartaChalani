@@ -2,17 +2,26 @@ import Form from '@/components/functional/Form/Form'
 import { Box, Button, Grid } from '@/components/ui'
 import formatDate from '@/utility/date/dateFunction'
 import { useFormik } from 'formik'
+import { useTranslation } from 'react-i18next'
 import { IFiscalYearInitialValue } from '../schema/fiscalyear.interface'
-import { fiscalYearValidationSchema } from '../schema/fiscalyear.schema'
+import {
+  fiscalYearInitialValue,
+  fiscalYearValidationSchema,
+} from '../schema/fiscalyear.schema'
 import { useCreateFiscalYear } from '../services/fiscalyear.query'
 
 interface IFiscalYearFormProps {
   initialValues: IFiscalYearInitialValue
+  setInitialValues: React.Dispatch<
+    React.SetStateAction<IFiscalYearInitialValue>
+  >
 }
 
 const FiscalYearForm = (props: IFiscalYearFormProps) => {
-  const { initialValues } = props
+  const { initialValues, setInitialValues } = props
   const { mutate } = useCreateFiscalYear()
+
+  const { t } = useTranslation()
 
   const {
     values,
@@ -24,6 +33,7 @@ const FiscalYearForm = (props: IFiscalYearFormProps) => {
     handleSubmit,
   } = useFormik({
     initialValues,
+    enableReinitialize: true,
     validationSchema: fiscalYearValidationSchema,
     onSubmit: (value, { resetForm }) => {
       mutate(value, { onSuccess: () => resetForm() })
@@ -31,7 +41,7 @@ const FiscalYearForm = (props: IFiscalYearFormProps) => {
   })
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="w-full">
       <Grid sm={'sm:grid-cols-12'} gap="gap-4">
         <Grid.Col sm={'sm:col-span-3'}>
           <Form.Input
@@ -39,7 +49,7 @@ const FiscalYearForm = (props: IFiscalYearFormProps) => {
             errors={errors}
             touched={touched}
             name="fiscalYearNameEn"
-            label={'Fiscal Year Name (English)'}
+            label={t('masterSetup.fiscalYear.fiscalYearNameEn')}
             onChange={handleChange}
             onBlur={handleBlur}
           />
@@ -50,7 +60,7 @@ const FiscalYearForm = (props: IFiscalYearFormProps) => {
             errors={errors}
             touched={touched}
             name="fiscalYearNameNp"
-            label={'Fiscal Year Name (Nepali)'}
+            label={t('masterSetup.fiscalYear.fiscalYearNameNp')}
             onChange={handleChange}
             onBlur={handleBlur}
           />
@@ -61,7 +71,7 @@ const FiscalYearForm = (props: IFiscalYearFormProps) => {
             errors={errors}
             touched={touched}
             name="startDateBs"
-            label={'Start Date (Nepali)'}
+            label={t('masterSetup.fiscalYear.startDateBs')}
             onChange={(nepDate, engDate) => {
               setFieldValue('startDateAd', engDate ? formatDate(engDate) : '')
               setFieldValue('startDateBs', nepDate)
@@ -75,7 +85,7 @@ const FiscalYearForm = (props: IFiscalYearFormProps) => {
             touched={touched}
             value={values.startDateAd}
             name="startDateAd"
-            label={'Start Date (English)'}
+            label={t('masterSetup.fiscalYear.startDateAd')}
             onChange={(engDate, nepDate) => {
               setFieldValue('startDateAd', engDate ? formatDate(engDate) : '')
               setFieldValue('startDateBs', nepDate)
@@ -89,7 +99,7 @@ const FiscalYearForm = (props: IFiscalYearFormProps) => {
             errors={errors}
             touched={touched}
             name="endDateBs"
-            label={'End Date (Nepali)'}
+            label={t('masterSetup.fiscalYear.endDateBs')}
             onChange={(nepDate, engDate) => {
               setFieldValue('endDateAd', engDate ? formatDate(engDate) : '')
               setFieldValue('endDateBs', nepDate)
@@ -102,7 +112,7 @@ const FiscalYearForm = (props: IFiscalYearFormProps) => {
             touched={touched}
             value={values.endDateAd}
             name="endDateAd"
-            label={'End Date (English)'}
+            label={t('masterSetup.fiscalYear.endDateAd')}
             onChange={(engDate, nepDate) => {
               setFieldValue('endDateAd', engDate ? formatDate(engDate) : '')
               setFieldValue('endDateBs', nepDate)
@@ -112,7 +122,20 @@ const FiscalYearForm = (props: IFiscalYearFormProps) => {
       </Grid>
 
       <Box className="mt-4 text-right">
-        <Button className="ml-auto">Save</Button>
+        {initialValues?.id && (
+          <Button
+            type="button"
+            onClick={() => {
+              setInitialValues(fiscalYearInitialValue)
+            }}
+            btnType="outlined"
+            variant="secondary"
+            className="mr-3"
+          >
+            {t('btns.cancel')}
+          </Button>
+        )}
+        <Button className="ml-auto">{t('btns.save')}</Button>
       </Box>
     </form>
   )

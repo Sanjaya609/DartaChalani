@@ -5,6 +5,7 @@ import { NepaliDatePickerInput } from '@/components/functional/Form/DatePicker/N
 import { TextArea } from '@/components/functional/Form/TextArea/TextArea'
 import { CheckBox } from '@/components/functional/Form/CheckBox/CheckBox'
 import { FormSelect } from '@/components/functional/Form/Select/Select'
+import SwitchInput from './Switch/SwitchInput'
 
 const Form = {
   Input,
@@ -14,6 +15,7 @@ const Form = {
   TextArea,
   CheckBox,
   Select: FormSelect,
+  Switch: SwitchInput,
 }
 
 export default Form
