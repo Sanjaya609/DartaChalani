@@ -1,5 +1,5 @@
-import { IFiscalYearInitialValue } from './fiscalyear.interface'
 import * as Yup from 'yup'
+import { IFiscalYearInitialValue } from './fiscalyear.interface'
 
 export const fiscalYearInitialValue: IFiscalYearInitialValue = {
   endDateAd: '',
@@ -11,14 +11,18 @@ export const fiscalYearInitialValue: IFiscalYearInitialValue = {
 }
 
 export const fiscalYearValidationSchema = Yup.object({
-  endDateAd: Yup.string().required('End Date (AD) is required'),
-  endDateBs: Yup.string().required('End Date (BS) is required'),
+  endDateAd: Yup.string().required('masterSetup.fiscalYear.errors.endDateAd'),
+  endDateBs: Yup.string().required('masterSetup.fiscalYear.errors.endDateBs'),
   fiscalYearNameEn: Yup.string().required(
-    'Fiscal Year Name (English) is required'
+    'masterSetup.fiscalYear.errors.fiscalYearNameEn'
   ),
   fiscalYearNameNp: Yup.string().required(
-    'Fiscal Year Name (Nepali) is required'
+    'masterSetup.fiscalYear.errors.fiscalYearNameNp'
   ),
-  startDateAd: Yup.string().required('Start Date (AD) is required'),
-  startDateBs: Yup.string().required('Start Date (BS) is required'),
+  startDateAd: Yup.string().required(
+    'masterSetup.fiscalYear.errors.startDateAd'
+  ),
+  startDateBs: Yup.string().required(
+    'masterSetup.fiscalYear.errors.startDateBs'
+  ),
 })

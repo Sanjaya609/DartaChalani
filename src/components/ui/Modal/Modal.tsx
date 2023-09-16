@@ -6,16 +6,18 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/shadcn/Dialog/Dialog'
-import { getComputedClassNames } from '@/utility/tailwind/tailwind-utility'
-import { ModalSize } from './modal-schema'
-import { useMemo, PropsWithChildren } from 'react'
 import { Button } from '@/components/ui'
+import { getComputedClassNames } from '@/utility/tailwind/tailwind-utility'
+import { PropsWithChildren, useMemo } from 'react'
+import { ModalSize } from './modal-schema'
 
 interface IFooterBtnProps {
-  show: boolean
-  btnTitle: string
-  btnAction: VoidFunction
-  className: string
+  show?: boolean
+  btnTitle?: string
+  btnAction?: VoidFunction
+  className?: string
+  loading?: boolean
+  disabled?: boolean
 }
 
 interface IModalProps extends PropsWithChildren {
@@ -56,25 +58,41 @@ const Modal = (props: IModalProps) => {
     footerClassName,
   } = props
 
-  const { showCancelBtn, cancelBtnAction, cancelBtnClassName, cancelBtnTitle } =
-    useMemo(() => {
-      return {
-        showCancelBtn: cancelBtnProps?.show || true,
-        cancelBtnTitle: cancelBtnProps?.btnTitle || 'Cancel',
-        cancelBtnAction: cancelBtnProps?.btnAction,
-        cancelBtnClassName: getComputedClassNames(cancelBtnProps?.className),
-      }
-    }, [cancelBtnProps])
+  const {
+    showCancelBtn,
+    cancelBtnAction,
+    cancelBtnClassName,
+    cancelBtnTitle,
+    cancelBtnLoading,
+    cancelBtnDisabled,
+  } = useMemo(() => {
+    return {
+      showCancelBtn: cancelBtnProps?.show || true,
+      cancelBtnTitle: cancelBtnProps?.btnTitle || 'Cancel',
+      cancelBtnAction: cancelBtnProps?.btnAction,
+      cancelBtnClassName: getComputedClassNames(cancelBtnProps?.className),
+      cancelBtnLoading: cancelBtnProps?.loading,
+      cancelBtnDisabled: cancelBtnProps?.loading || saveBtnProps?.loading,
+    }
+  }, [cancelBtnProps, saveBtnProps?.loading])
 
-  const { showSaveBtn, saveBtnAction, saveBtnClassName, saveBtnTitle } =
-    useMemo(() => {
-      return {
-        showSaveBtn: saveBtnProps?.show || true,
-        saveBtnTitle: saveBtnProps?.btnTitle || 'Save',
-        saveBtnAction: saveBtnProps?.btnAction,
-        saveBtnClassName: getComputedClassNames(saveBtnProps?.className),
-      }
-    }, [saveBtnProps])
+  const {
+    showSaveBtn,
+    saveBtnAction,
+    saveBtnClassName,
+    saveBtnTitle,
+    saveBtnDisabled,
+    saveBtnLoading,
+  } = useMemo(() => {
+    return {
+      showSaveBtn: saveBtnProps?.show || true,
+      saveBtnTitle: saveBtnProps?.btnTitle || 'Save',
+      saveBtnAction: saveBtnProps?.btnAction,
+      saveBtnClassName: getComputedClassNames(saveBtnProps?.className),
+      saveBtnLoading: saveBtnProps?.loading,
+      saveBtnDisabled: saveBtnProps?.loading || cancelBtnProps?.loading,
+    }
+  }, [saveBtnProps, cancelBtnProps?.loading])
 
   const computedContentClassName = getComputedClassNames(
     ModalSize[size],
@@ -99,13 +117,13 @@ const Modal = (props: IModalProps) => {
           </DialogHeader>
         )}
         {!removeHeaderBorder && title && (
-          <hr className="w-full py-6 text-gray-56" />
+          <hr className="w-full  text-gray-56" />
         )}
 
         <div className={computedBodyClassName}>{children}</div>
 
         {!removeFooterBorder && !hideFooter && (
-          <hr className="py-6text-gray-56 w-full" />
+          <hr className="w-full  text-gray-56" />
         )}
 
         {!hideFooter ? (
@@ -115,14 +133,23 @@ const Modal = (props: IModalProps) => {
             <DialogFooter className={computedFooterClassName}>
               {showCancelBtn && (
                 <Button
+                  variant="secondary"
+                  btnType="outlined"
                   className={cancelBtnClassName}
                   onClick={cancelBtnAction}
+                  disabled={cancelBtnDisabled}
+                  loading={cancelBtnLoading}
                 >
                   {cancelBtnTitle}
                 </Button>
               )}
               {showSaveBtn && (
-                <Button className={saveBtnClassName} onClick={saveBtnAction}>
+                <Button
+                  className={saveBtnClassName}
+                  onClick={saveBtnAction}
+                  disabled={saveBtnDisabled}
+                  loading={saveBtnLoading}
+                >
                   {saveBtnTitle}
                 </Button>
               )}

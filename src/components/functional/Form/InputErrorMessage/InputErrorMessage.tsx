@@ -1,7 +1,9 @@
 import { Icon } from '@/components/ui'
 import { getComputedClassNames } from '@/utility/tailwind/tailwind-utility'
+import { TFuncKey } from 'i18next'
 import { Info } from 'phosphor-react'
 import { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
 
 interface Props {
   name: string
@@ -15,6 +17,7 @@ interface Props {
 
 export function FormikValidationError(props: Props): ReactElement {
   const { name, touched, errors, status, className } = props
+  const { t } = useTranslation()
 
   const computedClassName = getComputedClassNames(
     'flex items-center text-sm mt-0.5 text-red-48',
@@ -24,11 +27,11 @@ export function FormikValidationError(props: Props): ReactElement {
   return touched[name] && (!!errors[name] || !!status?.[name]) ? (
     <span className={computedClassName}>
       <Icon icon={Info} size={16} className="mr-1" />
-      {errors[name]
-        ? (errors[name] as string)
-        : status?.[name]
-        ? (status[name] as string)
-        : ''}
+      {
+        t(
+          errors[name] ? errors[name] : status?.[name] ? status[name] : ''
+        ) as TFuncKey
+      }
     </span>
   ) : (
     <></>
@@ -37,6 +40,7 @@ export function FormikValidationError(props: Props): ReactElement {
 
 export function FormikFieldArrayValidationError(props: Props): ReactElement {
   const { name, touched, errors, index, keyName, className } = props
+  const { t } = useTranslation()
 
   const computedClassName = getComputedClassNames(
     'flex items-center',
@@ -55,7 +59,7 @@ export function FormikFieldArrayValidationError(props: Props): ReactElement {
         {errors[keyName!][index!][name] && (
           <Icon icon={Info} size={16} className="mr-1" />
         )}
-        {errors[keyName!][index!][name] as string}
+        {t(errors[keyName!][index!][name] as TFuncKey)}
       </span>
     ) : (
       <></>

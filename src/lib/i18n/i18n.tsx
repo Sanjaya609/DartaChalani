@@ -8,12 +8,17 @@ import commonEn from './translations/common/en.json'
 import commonNp from './translations/common/np.json'
 import sidebarEn from './translations/sidebar/en.json'
 import sidebarNp from './translations/sidebar/np.json'
+import {
+  masterSetupEn,
+  masterSetupNp,
+} from '@/core/private/MasterSetup/translations'
 
 export const resources = {
   en: {
     translation: {
       ...commonEn,
       sidebar: sidebarEn,
+      masterSetup: masterSetupEn,
     },
   },
 
@@ -21,6 +26,7 @@ export const resources = {
     translation: {
       ...commonNp,
       sidebar: sidebarNp,
+      masterSetup: masterSetupNp,
     },
   },
 }

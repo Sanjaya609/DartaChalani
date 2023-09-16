@@ -20,6 +20,8 @@
     "close": "Close",
     "update":"Update",
     "setting":"Setting"
+  },
+  "yup": {
+    "required":"{{key}} is required"
   }
-  
 }
