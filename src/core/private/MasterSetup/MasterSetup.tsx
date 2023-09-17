@@ -22,6 +22,10 @@ const MasterSetup = () => {
         title: t('sidebar.masterSetup.serviceType'),
         path: privateRoutePath.masterSetup.serviceType,
       },
+      {
+        title: t('sidebar.masterSetup.documentType'),
+        path: privateRoutePath.masterSetup.documentType,
+      },
     ],
     [t]
   )

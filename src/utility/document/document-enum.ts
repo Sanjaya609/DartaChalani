@@ -90,3 +90,61 @@ export const previewBlobType: Record<string, MimeType> = {
   xls: MimeType.xls,
   xlsx: MimeType.xlsx,
 }
+
+enum ALLOWFILETYPEENUM {
+  PDF = 'PDF',
+  PNG = 'PNG',
+  JPEG = 'JPEG',
+  JPG = 'JPG',
+  DOCS = 'DOCS',
+  XLS = 'XLS',
+  XLSX = 'XLSX',
+}
+
+const allowFileTypeDisplayValue = {
+  PDF: { label: ALLOWFILETYPEENUM.PDF, value: MimeType.pdf },
+  JPG: { label: ALLOWFILETYPEENUM.JPG, value: MimeType.jpg },
+  JPEG: { label: ALLOWFILETYPEENUM.JPEG, value: MimeType.jpeg },
+  PNG: { label: ALLOWFILETYPEENUM.PNG, value: MimeType.png },
+  DOCS: { label: ALLOWFILETYPEENUM.DOCS, value: MimeType.docx },
+  XLS: { label: ALLOWFILETYPEENUM.XLS, value: MimeType.xls },
+  XLSX: { label: ALLOWFILETYPEENUM.XLSX, value: MimeType.xlsx },
+}
+
+export const allowedFileTypeOption = [
+  {
+    label: allowFileTypeDisplayValue.PDF.label,
+    value: allowFileTypeDisplayValue.PDF.label,
+  },
+  {
+    label: allowFileTypeDisplayValue.JPG.label,
+    value: allowFileTypeDisplayValue.JPG.label,
+  },
+  {
+    label: allowFileTypeDisplayValue.JPEG.label,
+    value: allowFileTypeDisplayValue.JPEG.label,
+  },
+  {
+    label: allowFileTypeDisplayValue.PNG.label,
+    value: allowFileTypeDisplayValue.PNG.label,
+  },
+  {
+    label: allowFileTypeDisplayValue.DOCS.label,
+    value: allowFileTypeDisplayValue.DOCS.label,
+  },
+
+  {
+    label: allowFileTypeDisplayValue.XLS.label,
+    value: allowFileTypeDisplayValue.XLS.label,
+  },
+  {
+    label: allowFileTypeDisplayValue.XLSX.label,
+    value: allowFileTypeDisplayValue.XLSX.label,
+  },
+]
+
+export enum DOCUMENTMODULENAME {
+  REGISTRATION_BOOK = 'REGISTRATION_BOOK',
+  DISPATCH_BOOK = 'DISPATCH_BOOK',
+  STANDING_LIST = 'STANDING_LIST',
+}

@@ -5,7 +5,7 @@ import { serviceTypeInitialValue } from '../schema/servicetype.schema'
 import ServiceTypeForm from './ServiceTypeForm'
 import ServiceTypeTable from './ServiceTypeTable'
 
-const SectorWrapper = () => {
+const ServiceTypeWrapper = () => {
   const [initialValues, setInitialValues] = useState(serviceTypeInitialValue)
   return (
     <ContainerLayout stretch>
@@ -23,4 +23,4 @@ const SectorWrapper = () => {
   )
 }
 
-export default SectorWrapper
+export default ServiceTypeWrapper
