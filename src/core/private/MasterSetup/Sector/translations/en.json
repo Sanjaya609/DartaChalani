@@ -1,0 +1,18 @@
+{
+  "title": "Sector",
+  "sectorNameEnglish": "Sector Name (English)",
+  "sectorNameNepali": "Sector Name (Nepali)",
+  "status": "Status",
+  "orderNumber": "Order Number",
+  "errors": {
+    "sectorNameEnglish": "Sector Name (English) is required",
+    "sectorNameNepali": "Sector Name (Nepali) is required",
+    "orderNumber": "Order Number is required"
+  },
+  "modal": {
+    "status": {
+      "title": "Change Status",
+      "description": "Are you sure you want to change the status?"
+    }
+  }
+}

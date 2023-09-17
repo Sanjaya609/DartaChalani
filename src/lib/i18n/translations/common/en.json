@@ -1,9 +1,10 @@
 {
   "projectTitle": "Darta Chalani",
   "sn": "S.N",
+  "actions": "Actions",
   "btns": {
     "login": "Login",
-    "logout":"Logout",
+    "logout": "Logout",
     "add": "Add",
     "cancel": "Cancel",
     "submit": "Submit",
@@ -18,10 +19,10 @@
     "reset": "Reset",
     "continue": "Continue",
     "close": "Close",
-    "update":"Update",
-    "setting":"Setting"
+    "update": "Update",
+    "setting": "Setting"
   },
   "yup": {
-    "required":"{{key}} is required"
+    "required": "{{key}} is required"
   }
 }

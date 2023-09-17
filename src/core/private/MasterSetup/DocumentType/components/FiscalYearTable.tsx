@@ -42,7 +42,7 @@ const FiscalYearTable = (props: IFiscalYearTableProps) => {
     null | number
   >(null)
   const { t } = useTranslation()
-  const { data: fiscalYearData, isFetching } = useGetAllFiscalYear()
+  const { data: fiscalYearData } = useGetAllFiscalYear()
   const {
     mutate: changeFiscalYearStatus,
     isLoading: changeFiscalYearStatusLoading,
@@ -108,8 +108,8 @@ const FiscalYearTable = (props: IFiscalYearTableProps) => {
       {
         header: () =>
           getTextByLanguage(
-            t('masterSetup.fiscalYear.fiscalYearNameEn'),
-            t('masterSetup.fiscalYear.fiscalYearNameNp')
+            'Fiscal Year Name (English)',
+            'Fiscal Year Name (Nepali)'
           ),
         accessorKey: getTextByLanguage('fiscalYearNameEn', 'fiscalYearNameNp'),
         cell: ({ row: { original } }) => {
@@ -122,9 +122,7 @@ const FiscalYearTable = (props: IFiscalYearTableProps) => {
                 )}
               </span>
               {original.isCurrentFiscalYear && (
-                <Badge className="ml-3">
-                  {t('masterSetup.fiscalYear.current')}
-                </Badge>
+                <Badge className="ml-3">Current</Badge>
               )}
             </Flexbox>
           )
@@ -132,23 +130,23 @@ const FiscalYearTable = (props: IFiscalYearTableProps) => {
       },
       {
         accessorKey: 'startDateAd',
-        header: t('masterSetup.fiscalYear.startDateAd'),
+        header: 'Start Date (AD)',
       },
       {
         accessorKey: 'startDateBs',
-        header: t('masterSetup.fiscalYear.startDateBs'),
+        header: 'Start Date (BS)',
       },
       {
         accessorKey: 'endDateAd',
-        header: t('masterSetup.fiscalYear.endDateAd'),
+        header: 'End Date (AD)',
       },
       {
         accessorKey: 'endDateBs',
-        header: t('masterSetup.fiscalYear.endDateBs'),
+        header: 'End Date (BS)',
       },
       {
         accessorKey: 'isActive',
-        header: t('masterSetup.fiscalYear.status'),
+        header: 'Status',
         cell: ({ row: { original } }) => (
           <Switch
             checked={original.isActive}
@@ -159,7 +157,7 @@ const FiscalYearTable = (props: IFiscalYearTableProps) => {
         ),
       },
       {
-        header: t('actions'),
+        header: 'Actions',
         cell: ({ row: { original } }) => (
           <TableAction
             handleEditClick={() => {
@@ -188,16 +186,12 @@ const FiscalYearTable = (props: IFiscalYearTableProps) => {
         ),
       },
     ],
-    [t]
+    []
   )
 
   return (
     <>
-      <DataTable
-        isLoading={isFetching}
-        columns={columns}
-        data={fiscalYearData || []}
-      />
+      <DataTable columns={columns} data={fiscalYearData || []} />
       <Modal
         open={!!currentSelectedId}
         toggleModal={setOrRemoveCurrentSelectedId}

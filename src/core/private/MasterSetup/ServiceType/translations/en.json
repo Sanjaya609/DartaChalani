@@ -1,0 +1,16 @@
+{
+  "title": "Service Type",
+  "nameEn": "Service Type Name (English)",
+  "nameNp": "Service Type Name (Nepali)",
+  "status": "Status",
+  "errors": {
+    "nameEn": "Service Type Name (English) is required",
+    "nameNp": "Service Type Name (Nepali) is required"
+  },
+  "modal": {
+    "status": {
+      "title": "Change Status",
+      "description": "Are you sure you want to change the status?"
+    }
+  }
+}

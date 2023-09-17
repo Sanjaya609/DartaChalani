@@ -1,4 +1,9 @@
 {
-  "masterSetup":"Master Setup",
-  "dashboard":"Dashboard"
+  "masterSetup": {
+    "title": "Master Setup",
+    "fiscalYear": "Fiscal Year",
+    "sector": "Sector",
+    "serviceType": "Service Type"
+  },
+  "dashboard": "Dashboard"
 }
