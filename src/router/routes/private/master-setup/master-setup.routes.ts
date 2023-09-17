@@ -13,6 +13,9 @@ const Sector = React.lazy(() => import('@/core/private/MasterSetup/Sector'))
 const ServiceType = React.lazy(
   () => import('@/core/private/MasterSetup/ServiceType')
 )
+const DocumentType = React.lazy(
+  () => import('@/core/private/MasterSetup/DocumentType')
+)
 
 export const masterSetupRoutes: _RouteObject<'private'>[] = [
   createRoute({
@@ -30,6 +33,10 @@ export const masterSetupRoutes: _RouteObject<'private'>[] = [
       createRoute({
         path: privateRoutePath.masterSetup.serviceType,
         element: ServiceType,
+      }),
+      createRoute({
+        path: privateRoutePath.masterSetup.documentType,
+        element: DocumentType,
       }),
     ],
   }),

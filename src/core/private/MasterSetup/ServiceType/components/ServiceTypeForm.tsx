@@ -9,14 +9,14 @@ import {
 } from '../schema/servicetype.schema'
 import { useCreateServiceType } from '../services/servicetype.query'
 
-interface ISectorFormProps {
+interface IServiceTypeProps {
   initialValues: IServiceTypeInitialValue
   setInitialValues: React.Dispatch<
     React.SetStateAction<IServiceTypeInitialValue>
   >
 }
 
-const SectorForm = (props: ISectorFormProps) => {
+const ServiceType = (props: IServiceTypeProps) => {
   const { initialValues, setInitialValues } = props
   const { mutate, isLoading } = useCreateServiceType()
 
@@ -83,4 +83,4 @@ const SectorForm = (props: ISectorFormProps) => {
   )
 }
 
-export default SectorForm
+export default ServiceType

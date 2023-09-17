@@ -14,14 +14,14 @@ import {
   useGetAllServiceType,
 } from '../services/servicetype.query'
 
-interface ISectorTableProps {
+interface IServiceTypeProps {
   initialValues: IServiceTypeInitialValue
   setInitialValues: React.Dispatch<
     React.SetStateAction<IServiceTypeInitialValue>
   >
 }
 
-const SectorTable = (props: ISectorTableProps) => {
+const ServiceType = (props: IServiceTypeProps) => {
   const { setInitialValues } = props
 
   const [currentSelectedId, setCurrentSelectedId] = useState<null | number>(
@@ -118,4 +118,4 @@ const SectorTable = (props: ISectorTableProps) => {
   )
 }
 
-export default SectorTable
+export default ServiceType

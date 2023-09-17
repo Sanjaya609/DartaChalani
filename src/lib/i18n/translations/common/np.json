@@ -2,6 +2,8 @@
   "projectTitle": "दर्ता चलानी",
   "sn": "क्र.सं",
   "actions": "कार्य",
+  "yes": "Yes",
+  "no": "No",
   "btns": {
     "login": "लग-इन",
     "logout": "लगआउट",

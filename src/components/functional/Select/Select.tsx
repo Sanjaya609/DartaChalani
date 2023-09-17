@@ -343,6 +343,7 @@ interface OnMultiCheckboxSelectProps {
   onMultiChange: (event: ValueType<OptionType, IsMulti>) => void
   options: OptionType[]
   showDefaultValueContainer: boolean
+  calculateValueOnChange?: boolean
 }
 /**
  * On Multiple Checkbox Select
@@ -353,6 +354,7 @@ const onMultiCheckboxSelect = ({
   onMultiChange,
   options,
   showDefaultValueContainer,
+  calculateValueOnChange,
 }: OnMultiCheckboxSelectProps) => {
   if (selected !== null && selected instanceof Array && selected.length > 0) {
     if (selected[selected.length - 1].value === allOption.value) {
@@ -514,12 +516,17 @@ function StyledSelect(props: StyledSelectProps) {
       return returnLabelByLanguageOptions as OptionsType<OptionType>
 
     let selectAll = { ...allOption }
-    if (returnLabelByLanguageOptions?.length === (calculateValue as [])?.length)
-      selectAll = { ...deSelectAllOptionsValue }
-    else selectAll.label = allOption.label
 
-    return [selectAll, ...options] as OptionsType<OptionType>
+    return returnLabelByLanguageOptions?.length ===
+      (calculateValue as [])?.length
+      ? returnLabelByLanguageOptions
+      : ([
+          selectAll,
+          ...returnLabelByLanguageOptions,
+        ] as OptionsType<OptionType>)
   }, [options, multiCheckbox, multi, calculateValue, language])
+
+  console.log({ computedOptions })
 
   const errorStatus = getErrorStatus({
     name: name || id || '',
@@ -535,7 +542,7 @@ function StyledSelect(props: StyledSelectProps) {
       ariaLabel={id || name}
       isMulti={multi || multiCheckbox}
       closeMenuOnSelect={!multiCheckbox}
-      // hideSelectedOptions={!multiCheckbox}
+      hideSelectedOptions={!multiCheckbox}
       menuPortalTarget={isPortal ? document.body : null}
       placeholder={
         placeholder || onInputChange ? placeholder : 'Choose Option....'
@@ -564,6 +571,7 @@ function StyledSelect(props: StyledSelectProps) {
             onMultiChange: (selected) => onChange({ name, value: selected }),
             options,
             showDefaultValueContainer,
+            calculateValueOnChange,
           })
         } else {
           onChange({

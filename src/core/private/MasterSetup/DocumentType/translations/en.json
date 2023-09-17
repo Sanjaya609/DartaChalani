@@ -1,28 +1,23 @@
 {
-  "title": "Fiscal Year",
-  "fiscalYearNameEn": "Fiscal Year Name (English)",
-  "fiscalYearNameNp": "Fiscal Year Name (Nepali)",
-  "startDateAd": "Start Date (A.D)",
-  "startDateBs": "Start Date (B.S)",
-  "endDateAd": "End Date (A.D)",
-  "endDateBs": "End Date (B.S)",
+  "title": "Document Type",
+  "documentTypeEn": "Document Type Name (English)",
+  "documentTypeNp": "Document Type Name (Nepali)",
+  "allowedFileTypes": "Allowed File Types",
+  "isMandatory": "Is Mandatory ?",
+  "maxFileSize": "Max File Size (In KB)",
+  "moduleName": "Module Name",
   "status": "Status",
   "errors": {
-    "fiscalYearNameEn": "Fiscal Year Name (English) is required",
-    "fiscalYearNameNp": "Fiscal Year Name (Nepali) is required",
-    "startDateAd": "Start Date (A.D) is required",
-    "startDateBs": "Start Date (B.S) is required",
-    "endDateAd": "End Date (A.D) is required",
-    "endDateBs": "End Date (B.S) is required"
+    "documentTypeEn": "Document Type Name (English) is required",
+    "documentTypeNp": "Document Type Name (Nepali) is required",
+    "allowedFileTypes": "Allowed File Types is required",
+    "maxFileSize": "Max File Size is required",
+    "moduleName": "Module Name is required"
   },
   "modal": {
     "status": {
       "title": "Change Status",
       "description": "Are you sure you want to change the status?"
-    },
-    "currentFiscalYear": {
-      "title": "Switch Current Fiscal Year",
-      "description": "Are you sure you want to switch this fiscal year to current ?"
     }
   }
 }
