@@ -189,7 +189,9 @@ const NormalDataTable = <TData extends RowData>({
               />
               {isNoDataFound && <TableNoDataFound />}
               {isLoading && <Box>Loading ....</Box>}
-              {!isNoDataFound && <TableBody getRowModel={table.getRowModel} />}
+              {!isNoDataFound && !isLoading && (
+                <TableBody getRowModel={table.getRowModel} />
+              )}
             </table>
           </FixedHeightTable>
         </Box>

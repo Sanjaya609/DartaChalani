@@ -1,4 +1,9 @@
 {
-  "masterSetup":"Master Setup",
-  "dashboard":"Dashboard"
+  "masterSetup": {
+    "title": "मास्टर सेटअप",
+    "fiscalYear": "आर्थिक वर्ष",
+    "sector": "क्षेत्र",
+    "serviceType": "सेवा प्रकार"
+  },
+  "dashboard": "ड्यासबोर्ड"
 }

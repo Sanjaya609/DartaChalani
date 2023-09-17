@@ -1,5 +1,6 @@
 import { getErrorStatus } from '@/utility/inputUtils/input-error'
 import { getComputedClassNames } from '@/utility/tailwind/tailwind-utility'
+import { convertToNepali } from '@/utility/unicodeMap'
 import { forwardRef } from 'react'
 import {
   formCommonInputElementClass,
@@ -19,6 +20,7 @@ interface IInputProps
   type?: 'number' | 'email' | 'password' | 'text'
   leftIcon?: React.ReactNode
   rightIcon?: React.ReactNode
+  isNepali?: boolean
 }
 
 const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
@@ -36,6 +38,8 @@ const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
     labelClassName,
     className,
     wrapperClassName,
+    isNepali,
+    onChange,
     ...rest
   } = props
   const showError = getErrorStatus({
@@ -76,12 +80,27 @@ const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
         )}
 
         <input
+          {...rest}
           className={computedInputElementClass}
           id={id || name}
           name={name || id}
           ref={ref}
           type={type}
-          {...rest}
+          onChange={(event) => {
+            if (onChange) {
+              if (isNepali) {
+                onChange({
+                  ...event,
+                  target: {
+                    ...event.target,
+                    id: id || name || '',
+                    name: name || id || '',
+                    value: convertToNepali(event.target.value),
+                  },
+                })
+              } else onChange(event)
+            }
+          }}
         />
 
         {rightIcon && (

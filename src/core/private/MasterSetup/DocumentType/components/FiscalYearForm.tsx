@@ -19,7 +19,7 @@ interface IFiscalYearFormProps {
 
 const FiscalYearForm = (props: IFiscalYearFormProps) => {
   const { initialValues, setInitialValues } = props
-  const { mutate, isLoading } = useCreateFiscalYear()
+  const { mutate } = useCreateFiscalYear()
 
   const { t } = useTranslation()
 
@@ -35,14 +35,10 @@ const FiscalYearForm = (props: IFiscalYearFormProps) => {
     initialValues,
     enableReinitialize: true,
     validationSchema: fiscalYearValidationSchema,
-    onSubmit: (value) => {
-      mutate(value, { onSuccess: () => resetFormValues() })
+    onSubmit: (value, { resetForm }) => {
+      mutate(value, { onSuccess: () => resetForm() })
     },
   })
-
-  const resetFormValues = () => {
-    setInitialValues(fiscalYearInitialValue)
-  }
 
   return (
     <form onSubmit={handleSubmit} className="w-full">
@@ -60,7 +56,6 @@ const FiscalYearForm = (props: IFiscalYearFormProps) => {
         </Grid.Col>
         <Grid.Col sm={'sm:col-span-3'}>
           <Form.Input
-            isNepali
             value={values.fiscalYearNameNp}
             errors={errors}
             touched={touched}
@@ -129,9 +124,10 @@ const FiscalYearForm = (props: IFiscalYearFormProps) => {
       <Box className="mt-4 text-right">
         {initialValues?.id && (
           <Button
-            disabled={isLoading}
             type="button"
-            onClick={resetFormValues}
+            onClick={() => {
+              setInitialValues(fiscalYearInitialValue)
+            }}
             btnType="outlined"
             variant="secondary"
             className="mr-3"
@@ -139,9 +135,7 @@ const FiscalYearForm = (props: IFiscalYearFormProps) => {
             {t('btns.cancel')}
           </Button>
         )}
-        <Button disabled={isLoading} loading={isLoading} className="ml-auto">
-          {t('btns.save')}
-        </Button>
+        <Button className="ml-auto">{t('btns.save')}</Button>
       </Box>
     </form>
   )

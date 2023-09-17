@@ -7,7 +7,6 @@
   "endDateAd": "End Date (A.D)",
   "endDateBs": "End Date (B.S)",
   "status": "Status",
-  "current": "Current",
   "errors": {
     "fiscalYearNameEn": "Fiscal Year Name (English) is required",
     "fiscalYearNameNp": "Fiscal Year Name (Nepali) is required",
