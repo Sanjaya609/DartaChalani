@@ -15,6 +15,10 @@ const MasterSetup = () => {
         path: privateRoutePath.masterSetup.fiscalYear,
       },
       {
+        title: 'Role Setup',
+        path: privateRoutePath.masterSetup.role,
+      },
+      {
         title: t('sidebar.masterSetup.sector'),
         path: privateRoutePath.masterSetup.sector,
       },
