@@ -14,9 +14,7 @@ const ServiceType = React.lazy(
   () => import('@/core/private/MasterSetup/ServiceType')
 )
 
-const RoleSetup = React.lazy(
-  () => import('@/core/private/MasterSetup/RoleSetup')
-)
+
 export const masterSetupRoutes: _RouteObject<'private'>[] = [
   createRoute({
     path: privateRoutePath.masterSetup.base,
@@ -33,10 +31,6 @@ export const masterSetupRoutes: _RouteObject<'private'>[] = [
       createRoute({
         path: privateRoutePath.masterSetup.serviceType,
         element: ServiceType,
-      }),
-      createRoute({
-        path: privateRoutePath.masterSetup.role,
-        element: RoleSetup,
       }),
     ],
   }),
