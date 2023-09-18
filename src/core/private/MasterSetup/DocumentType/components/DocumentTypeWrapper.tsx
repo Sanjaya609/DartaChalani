@@ -1,20 +1,20 @@
 import ContainerLayout from '@/components/ui/core/Layout/ContainerLayout'
 import FlexLayout from '@/components/ui/core/Layout/FlexLayout'
 import { useState } from 'react'
-import { fiscalYearInitialValue } from '../schema/fiscalyear.schema'
-import FiscalYearForm from './FiscalYearForm'
-import FiscalYearTable from './FiscalYearTable'
+import { documentTypeInitialValue } from '../schema/document-type.schema'
+import DocumentTypeForm from './DocumentTypeForm'
+import DocumentTypeTable from './DocumentTypeTable'
 
-const FiscalYearWrapper = () => {
-  const [initialValues, setInitialValues] = useState(fiscalYearInitialValue)
+const DocumentTypeWrapper = () => {
+  const [initialValues, setInitialValues] = useState(documentTypeInitialValue)
   return (
     <ContainerLayout stretch>
       <FlexLayout direction="column">
-        <FiscalYearForm
+        <DocumentTypeForm
           initialValues={initialValues}
           setInitialValues={setInitialValues}
         />
-        <FiscalYearTable
+        <DocumentTypeTable
           initialValues={initialValues}
           setInitialValues={setInitialValues}
         />
@@ -23,4 +23,4 @@ const FiscalYearWrapper = () => {
   )
 }
 
-export default FiscalYearWrapper
+export default DocumentTypeWrapper

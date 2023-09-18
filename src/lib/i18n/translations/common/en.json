@@ -2,6 +2,8 @@
   "projectTitle": "Darta Chalani",
   "sn": "S.N",
   "actions": "Actions",
+  "yes": "Yes",
+  "no": "No",
   "btns": {
     "login": "Login",
     "logout": "Logout",

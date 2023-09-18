@@ -3,7 +3,8 @@
     "title": "Master Setup",
     "fiscalYear": "Fiscal Year",
     "sector": "Sector",
-    "serviceType": "Service Type"
+    "serviceType": "Service Type",
+    "documentType": "Document Type"
   },
   "dashboard": "Dashboard",
   "security": "Security"

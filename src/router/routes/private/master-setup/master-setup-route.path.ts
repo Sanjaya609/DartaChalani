@@ -5,4 +5,5 @@ export const masterSetupRoutePath = {
   fiscalYear: `${baseRoute}/fiscalyear`,
   sector: `${baseRoute}/sector`,
   serviceType: `${baseRoute}/service-type`,
+  documentType: `${baseRoute}/document-type`,
 }

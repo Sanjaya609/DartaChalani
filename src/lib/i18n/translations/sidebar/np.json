@@ -3,7 +3,8 @@
     "title": "मास्टर सेटअप",
     "fiscalYear": "आर्थिक वर्ष",
     "sector": "क्षेत्र",
-    "serviceType": "सेवा प्रकार"
+    "serviceType": "सेवा प्रकार",
+    "documentType": "कागजात प्रकार"
   },
   "dashboard": "ड्यासबोर्ड",
   "security": "सुरक्षा"

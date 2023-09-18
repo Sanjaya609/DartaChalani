@@ -14,5 +14,3 @@ const ServiceType = () => {
 }
 
 export default ServiceType
-
-5449637 / 47
