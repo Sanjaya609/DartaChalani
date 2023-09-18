@@ -15,5 +15,6 @@ export const mapDataToStyledSelect = <TData>(
     value: data[id],
     label: data[name],
     labelNp: nameNp ? data[nameNp] : data[name],
+    ...data
   })) || []) as OptionType[]
 }

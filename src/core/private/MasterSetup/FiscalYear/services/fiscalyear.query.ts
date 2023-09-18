@@ -46,11 +46,11 @@ const useGetAllFiscalYear = <T = IFiscalYearResponse[]>(
         return (
           getDataWithPropsValue?.mapDatatoStyleSelect
             ? mapDataToStyledSelect({
-                arrayData: fiscalYearData,
-                id: 'id',
-                name: 'fiscalYearNameEn',
-                nameNp: 'fiscalYearNameNp',
-              })
+              arrayData: fiscalYearData,
+              id: 'id',
+              name: 'fiscalYearNameEn',
+              nameNp: 'fiscalYearNameNp',
+            })
             : fiscalYearData
         ) as T
       },

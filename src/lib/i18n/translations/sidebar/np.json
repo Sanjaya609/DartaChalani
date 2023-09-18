@@ -6,5 +6,6 @@
     "serviceType": "सेवा प्रकार",
     "documentType": "कागजात प्रकार"
   },
-  "dashboard": "ड्यासबोर्ड"
+  "dashboard": "ड्यासबोर्ड",
+  "security": "सुरक्षा"
 }

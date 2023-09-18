@@ -1,0 +1,18 @@
+{
+  "title": "क्षेत्र",
+  "sectorNameEnglish": "क्षेत्र नाम (अंग्रेजी)",
+  "sectorNameNepali": "क्षेत्र नाम (नेपाली)",
+  "status": "स्थिति",
+  "orderNumber": "अर्डर नम्बर",
+  "errors": {
+    "sectorNameEnglish": "क्षेत्र नाम (अंग्रेजी) आवश्यक छ",
+    "sectorNameNepali": "क्षेत्र नाम (नेपाली) आवश्यक छ",
+    "orderNumber": "अर्डर नम्बर आवश्यक छ"
+  },
+  "modal": {
+    "status": {
+      "title": "स्थिति परिवर्तन गर्नुहोस्",
+      "description": "के तपाईँ स्थिति परिवर्तन गर्न निश्चित हुनुहुन्छ?"
+    }
+  }
+}

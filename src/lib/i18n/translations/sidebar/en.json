@@ -6,5 +6,6 @@
     "serviceType": "Service Type",
     "documentType": "Document Type"
   },
-  "dashboard": "Dashboard"
+  "dashboard": "Dashboard",
+  "security": "Security"
 }

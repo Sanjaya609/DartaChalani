@@ -17,6 +17,7 @@ const DocumentType = React.lazy(
   () => import('@/core/private/MasterSetup/DocumentType')
 )
 
+
 export const masterSetupRoutes: _RouteObject<'private'>[] = [
   createRoute({
     path: privateRoutePath.masterSetup.base,

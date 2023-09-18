@@ -24,10 +24,10 @@ type ValPrimitive = string | number | boolean
 
 type ValueOf<Obj> = (
   Obj extends object
-    ? {
-        [K in keyof Obj]: Obj[K] extends object ? ValueOf<Obj[K]> : Obj[K]
-      }[keyof Obj]
-    : ''
+  ? {
+    [K in keyof Obj]: Obj[K] extends object ? ValueOf<Obj[K]> : Obj[K]
+  }[keyof Obj]
+  : ''
 ) extends infer Val
   ? Val
   : never

@@ -42,11 +42,11 @@ const useGetAllServiceType = <T = IServiceTypeResponse[]>(
         return (
           getDataWithPropsValue?.mapDatatoStyleSelect
             ? mapDataToStyledSelect({
-                arrayData: fiscalYearData,
-                id: 'id',
-                name: 'nameEn',
-                nameNp: 'nameNp',
-              })
+              arrayData: fiscalYearData,
+              id: 'id',
+              name: 'nameEn',
+              nameNp: 'nameNp',
+            })
             : fiscalYearData
         ) as T
       },
