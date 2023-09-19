@@ -526,8 +526,6 @@ function StyledSelect(props: StyledSelectProps) {
         ] as OptionsType<OptionType>)
   }, [options, multiCheckbox, multi, calculateValue, language])
 
-  console.log({ computedOptions })
-
   const errorStatus = getErrorStatus({
     name: name || id || '',
     error,

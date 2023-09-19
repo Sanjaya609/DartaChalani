@@ -9,7 +9,7 @@ const documentTypeAPI = {
     requestMethod: RequestMethod.POST,
   },
   getAllDocumentType: {
-    controllerName: `${prefix}/active-list`,
+    controllerName: `${prefix}`,
     queryKeyName: 'GET_ALL_DOCUMENT_TYPE',
     requestMethod: RequestMethod.GET,
   },
