@@ -7,27 +7,31 @@ import { useTranslation } from 'react-i18next'
 import { Outlet } from 'react-router-dom'
 
 const Security = () => {
-    const { t } = useTranslation()
-    const sideBarItem = useMemo<ISidebarItem[]>(
-        () => [
-            {
-                title: 'Role Setup',
-                path: privateRoutePath.security.roleSetup,
-            },
-            {
-                title: 'Module Setup',
-                path: privateRoutePath.security.moduleSetup,
-            },
-        ],
-        [t]
-    )
+  const { t } = useTranslation()
+  const sideBarItem = useMemo<ISidebarItem[]>(
+    () => [
+      {
+        title: 'Role Setup',
+        path: privateRoutePath.security.roleSetup,
+      },
+      {
+        title: 'Module Setup',
+        path: privateRoutePath.security.moduleSetup,
+      },
+      {
+        title: t('sidebar.security.email'),
+        path: privateRoutePath.security.emailSetup,
+      },
+    ],
+    [t]
+  )
 
-    return (
-        <Layout.Flex>
-            <Sidebar sideBarItem={sideBarItem} />
-            <Outlet />
-        </Layout.Flex>
-    )
+  return (
+    <Layout.Flex>
+      <Sidebar sideBarItem={sideBarItem} />
+      <Outlet />
+    </Layout.Flex>
+  )
 }
 
 export default Security

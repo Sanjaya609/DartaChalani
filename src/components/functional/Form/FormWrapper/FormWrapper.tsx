@@ -36,7 +36,7 @@ const FormWrapper = (props: IFormWrapperProps) => {
       {showError && name ? (
         isFieldArray ? (
           <FormikFieldArrayValidationError
-            name={name}
+            name={isFieldArray?.name}
             touched={touched}
             errors={errors}
             className={errorClassName}

@@ -43,7 +43,7 @@ export function FormikFieldArrayValidationError(props: Props): ReactElement {
   const { t } = useTranslation()
 
   const computedClassName = getComputedClassNames(
-    'flex items-center',
+    'flex items-center text-sm mt-0.5 text-red-48',
     className
   )
   if (

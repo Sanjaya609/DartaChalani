@@ -7,5 +7,8 @@
     "documentType": "कागजात प्रकार"
   },
   "dashboard": "ड्यासबोर्ड",
-  "security": "सुरक्षा"
+  "security": {
+    "title": "सुरक्षा",
+    "email": "इमेल सेटअप"
+  }
 }

@@ -25,6 +25,7 @@
     "setting": "सेटिङ"
   },
   "yup": {
-    "required": "{{key}} आवश्यक छ"
+    "required": "{{key}} आवश्यक छ",
+    "invalid-email": "कृपया मान्य इमेल राख्नुहोस्"
   }
 }

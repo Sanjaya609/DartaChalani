@@ -25,6 +25,6 @@ export const sidebarNavList: ISidebarNavList[] = [
   {
     icon: ServerCog,
     path: privateRoutePath.security.base,
-    title: 'sidebar.security',
+    title: 'sidebar.security.title',
   },
 ]
