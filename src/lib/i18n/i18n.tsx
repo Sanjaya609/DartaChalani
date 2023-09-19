@@ -12,6 +12,7 @@ import {
   masterSetupEn,
   masterSetupNp,
 } from '@/core/private/MasterSetup/translations'
+import { securityEn, securityNp } from '@/core/private/Security/translations'
 
 export const resources = {
   en: {
@@ -19,6 +20,7 @@ export const resources = {
       ...commonEn,
       sidebar: sidebarEn,
       masterSetup: masterSetupEn,
+      security: securityEn,
     },
   },
 
@@ -27,6 +29,7 @@ export const resources = {
       ...commonNp,
       sidebar: sidebarNp,
       masterSetup: masterSetupNp,
+      security: securityNp,
     },
   },
 }

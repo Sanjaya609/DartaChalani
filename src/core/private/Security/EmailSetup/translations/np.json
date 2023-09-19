@@ -1,0 +1,20 @@
+{
+  "title": "इमेल",
+  "email": "इमेल",
+  "password": "पासवर्ड",
+  "port": "पोर्ट",
+  "host": "होस्ट नाम",
+  "key": "key",
+  "value": "value",
+  "property":"Property",
+  "errors": {
+    "email": "इमेल आवश्यक छ",
+    "password": "पासवर्ड आवश्यक छ",
+    "port": "पोर्ट आवश्यक छ",
+    "host": "होस्ट नाम आवश्यक छ",
+    "key": "Key आवश्यक छ",
+    "value": "Value आवश्यक छ",
+    "atLeastProperties": "कम्तिमा एउटा कन्फिगरेसन आवश्यक छ",
+    "duplicateKey": "Key पहिले नै अवस्थित छ"
+  }
+}

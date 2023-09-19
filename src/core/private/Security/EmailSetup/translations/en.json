@@ -1,0 +1,20 @@
+{
+  "title": "Email",
+  "email": "Email",
+  "password": "Password",
+  "port": "Port",
+  "host": "Host",
+  "key": "Key",
+  "value": "Value",
+  "property": "Property",
+  "errors": {
+    "email": "Email is required",
+    "password": "Password is required",
+    "port": "Port is required",
+    "host": "Host is required",
+    "key": "Key is required",
+    "value": "Value is required",
+    "atLeastProperties": "At least one property is required",
+    "duplicateKey": "Duplicate key"
+  }
+}
