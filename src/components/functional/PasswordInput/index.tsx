@@ -1,16 +1,29 @@
 import { Icon } from '@/components/ui'
 import { useBoolean } from '@/hooks'
 import { Eye, EyeClosed } from 'phosphor-react'
+import { useTranslation } from 'react-i18next'
 import Form from '../Form/Form'
 
-const PasswordInput = () => {
+interface IPasswordInput
+  extends React.InputHTMLAttributes<HTMLInputElement>,
+    IBaseFormControlProps {}
+
+const PasswordInput = (props: IPasswordInput) => {
+  const { t } = useTranslation()
+  const {
+    wrapperClassName = 'mb-4',
+    id = 'password',
+    label = t('form.password'),
+    ...restProps
+  } = props
   const { value: showPassword, toggle: toggleShowPassword } = useBoolean(false)
 
   return (
     <Form.Input
-      id="password"
-      wrapperClassName="mb-4"
-      label="Password"
+      {...restProps}
+      id={id}
+      wrapperClassName={wrapperClassName}
+      label={label}
       type={showPassword ? 'text' : 'password'}
       rightIcon={
         <Icon

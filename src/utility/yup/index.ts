@@ -8,12 +8,6 @@ Yup.addMethod(
   'uniqueProperty',
   function (message, mapper = (a: { [key: string]: Primitive }) => a) {
     return this.test('uniqueProperty1', message, function (list: TAny) {
-      console.log({
-        list,
-        mapper: new Set(list?.map(mapper)),
-        unique: list?.length === new Set(list?.map(mapper))?.size,
-      })
-
       return list?.length === new Set(list?.map(mapper))?.size
     })
   }
