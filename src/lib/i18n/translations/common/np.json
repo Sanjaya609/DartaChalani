@@ -26,6 +26,10 @@
   },
   "yup": {
     "required": "{{key}} आवश्यक छ",
-    "invalid-email": "कृपया मान्य इमेल राख्नुहोस्"
+    "invalid-email": "कृपया मान्य इमेल राख्नुहोस्",
+    "password-required": "पासवर्ड आवश्यक छ"
+  },
+  "form": {
+    "password": "पासवर्ड"
   }
 }

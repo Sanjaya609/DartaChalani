@@ -31,6 +31,6 @@ export const emailValidationSchema = Yup.object({
     .min(1, 'security.email.errors.atLeastProperties')
     .uniqueProperty(
       'security.email.errors.duplicateKey',
-      (a: { code: string }) => a.code
+      (a: { key: string }) => a.key
     ),
 })
