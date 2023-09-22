@@ -499,8 +499,10 @@ function StyledSelect(props: StyledSelectProps) {
       )
     }
 
-    return (returnLabelByLanguageOptions as []).find(
-      (option: OptionType<Primitive>) => value === option.value
+    return (
+      (returnLabelByLanguageOptions as []).find(
+        (option: OptionType<Primitive>) => value === option.value
+      ) || null
     )
   }, [calculateValueOnChange, value, options, multi, multiCheckbox, language])
 

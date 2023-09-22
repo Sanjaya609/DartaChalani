@@ -7,7 +7,7 @@ export const documentTypeInitialValue: IDocumentTypeInitialValue = {
   documentTypeNp: '',
   isMandatory: true,
   maxFileSize: '',
-  moduleName: '',
+  moduleId: '',
 }
 
 export const documentTypeValidationSchema = Yup.object({
@@ -20,9 +20,7 @@ export const documentTypeValidationSchema = Yup.object({
   documentTypeNp: Yup.string().required(
     'masterSetup.documentType.errors.documentTypeNp'
   ),
-  moduleName: Yup.string().required(
-    'masterSetup.documentType.errors.moduleName'
-  ),
+  moduleId: Yup.string().required('masterSetup.documentType.errors.moduleName'),
   allowedFileTypes: Yup.array()
     .min(1, 'masterSetup.documentType.errors.allowedFileTypes')
     .nullable()

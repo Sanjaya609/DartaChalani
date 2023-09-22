@@ -1,12 +1,9 @@
 import Form from '@/components/functional/Form/Form'
 import { Box, Button, Grid } from '@/components/ui'
-import {
-  allowedFileTypeOption,
-  DOCUMENTMODULENAME,
-} from '@/utility/document/document-enum'
+import { useGetConfigurableModuleList } from '@/core/private/Security/ModuleSetup/services/moduleSetup.query'
+import { allowedFileTypeOption } from '@/utility/document/document-enum'
 import { inputChangeNumberOnly } from '@/utility/inputUtils/input-change-utils'
 import { useFormik } from 'formik'
-import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IDocumentTypeInitialValue } from '../schema/document-type.interface'
 import {
@@ -26,12 +23,11 @@ const DocumentTypeForm = (props: IDocumentTypeFormProps) => {
   const { initialValues, setInitialValues } = props
   const { mutate, isLoading } = useCreateDocumentType()
 
-  const documentModuleNameOption = useMemo(() => {
-    return Object.values(DOCUMENTMODULENAME).map((document) => ({
-      label: document,
-      value: document,
-    }))
-  }, [])
+  const { data: documentModuleNameOption = [] } = useGetConfigurableModuleList<
+    OptionType[]
+  >({
+    mapDatatoStyleSelect: true,
+  })
 
   const { t } = useTranslation()
 
@@ -56,7 +52,6 @@ const DocumentTypeForm = (props: IDocumentTypeFormProps) => {
         {
           ...value,
           maxFileSize: +values.maxFileSize,
-          moduleName: String(values.moduleName),
         },
         { onSuccess: () => resetFormValues() }
       )
@@ -132,13 +127,13 @@ const DocumentTypeForm = (props: IDocumentTypeFormProps) => {
           <Form.Select
             options={documentModuleNameOption}
             calculateValueOnChange
-            value={values.moduleName as unknown as OptionType[]}
+            value={values.moduleId}
             errors={errors}
             touched={touched}
-            name="moduleName"
+            name="moduleId"
             label={t('masterSetup.documentType.moduleName')}
             onChange={(event) => {
-              setFieldValue('moduleName', event?.main || '')
+              setFieldValue('moduleId', event?.main || '')
             }}
             onBlur={handleBlur}
           />
