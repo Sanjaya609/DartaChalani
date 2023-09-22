@@ -46,7 +46,7 @@ const DocumentType = (props: IDocumentTypeProps) => {
     documentTypeNp,
     isMandatory,
     maxFileSize,
-    moduleName,
+    moduleId,
   }: IDocumentTypeResponse) => {
     setInitialValues({
       id,
@@ -55,7 +55,7 @@ const DocumentType = (props: IDocumentTypeProps) => {
       documentTypeNp,
       isMandatory,
       maxFileSize,
-      moduleName,
+      moduleId,
     })
   }
 
@@ -83,7 +83,7 @@ const DocumentType = (props: IDocumentTypeProps) => {
       },
       {
         header: t('masterSetup.documentType.moduleName'),
-        accessorKey: 'moduleName',
+        accessorKey: getTextByLanguage('moduleNameEnglish', 'moduleNameNepali'),
       },
       {
         header: t('masterSetup.documentType.isMandatory'),

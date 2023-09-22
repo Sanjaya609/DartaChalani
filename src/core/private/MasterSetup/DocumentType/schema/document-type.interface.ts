@@ -5,7 +5,7 @@ export interface IDocumentTypeInitialValue {
   allowedFileTypes: string[]
   isMandatory: boolean
   maxFileSize: string | number
-  moduleName: string
+  moduleId: string | number
 }
 
 export interface IDocumentTypeResponse {
@@ -13,8 +13,15 @@ export interface IDocumentTypeResponse {
   documentTypeEn: string
   documentTypeNp: string
   allowedFileTypes: string[]
+  maxFileSize: number
   isMandatory: boolean
-  maxFileSize: string
-  moduleName: string
   isActive: boolean
+  moduleId: number
+  moduleNameEnglish: string
+  moduleNameNepali: string
+  moduleCode: string
+  moduleDescription: string
+  moduleUrl: string
+  isConfigurableModule: boolean
+  isActiveModule: boolean
 }
