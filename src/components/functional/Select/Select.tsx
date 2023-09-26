@@ -623,9 +623,9 @@ function StyledSelect(props: StyledSelectProps) {
       autoComplete="off"
       customStyles={
         errorStatus && customStyles
-          ? { customStyles, borderColor: red[24] }
+          ? { customStyles, borderColor: red[40] }
           : errorStatus
-          ? { borderColor: red[24] }
+          ? { borderColor: red[40] }
           : customStyles || {}
       }
       imageDivRef={imageDivRef}

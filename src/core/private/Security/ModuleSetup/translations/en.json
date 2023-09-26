@@ -1,14 +1,37 @@
 {
   "title": "Module Setup",
-  "sectorNameEnglish": "Module Name (English)",
-  "sectorNameNepali": "Module Name (Nepali)",
+  "moduleNameEnglish": "Module Name (English)",
+  "moduleNameNepali": "Module Name (Nepali)",
   "status": "Status",
   "orderNumber": "Order Number",
-  "errors": {
-    "sectorNameEnglish": "Module Name (English) is required",
-    "sectorNameNepali": "Module Name (Nepali) is required",
-    "orderNumber": "Order Number is required"
+  "isConfigurable": "Is Configurable ?",
+  "parentModuleName": "Parent Module Name",
+  "description": "Description",
+  "url": "URL",
+  "code": "Code",
+  "resource": "Resource",
+  "resourceRequestList": {
+    "httpMethod": "HTTP Method",
+    "privilege": "Privilege",
+    "resourceName": "Resource Name",
+    "url": "Resource URL"
   },
+  "errors": {
+    "moduleNameEnglish": "Module Name (English) is required",
+    "moduleNameNepali": "Module Name (Nepali) is required",
+    "orderNumber": "Order Number is required",
+    "description": "Description is required",
+    "url": "URL is required",
+    "resourceRequestList": {
+      "httpMethod": "HTTP Method is required",
+      "privilege": "Privilege is required",
+      "resourceName": "Resource Name is required",
+      "url": "Resource URL is required"
+    },
+    "code": "Code is required"
+  },
+  "addModule": "Add Module",
+  "editModule": "Edit Module",
   "modal": {
     "status": {
       "title": "Change Status",

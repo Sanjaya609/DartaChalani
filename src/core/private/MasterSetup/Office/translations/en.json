@@ -1,0 +1,20 @@
+{
+  "title": "Office",
+  "officeNameEn": "Office Name (English)",
+  "officeNameNP": "Office Name (Nepali)",
+  "status": "Status",
+  "addressEn": "Address (English)",
+  "addressNp": "Address (Nepali)",
+  "errors": {
+    "officeNameEn": "Office Name (English) is required",
+    "officeNameNP": "Office Name (Nepali) is required",
+    "addressEn": "Address (English) is required",
+    "addressNp": "Address (Nepali) is required"
+  },
+  "modal": {
+    "status": {
+      "title": "Change Status",
+      "description": "Are you sure you want to change the status?"
+    }
+  }
+}

@@ -14,6 +14,8 @@ const EmailSetup = React.lazy(
   () => import('@/core/private/Security/EmailSetup')
 )
 
+const UserSetup = React.lazy(() => import('@/core/private/Security/UserSetup'))
+
 export const securityRoutes: _RouteObject<'private'>[] = [
   createRoute({
     path: privateRoutePath.security.base,
@@ -30,6 +32,10 @@ export const securityRoutes: _RouteObject<'private'>[] = [
       createRoute({
         path: privateRoutePath.security.emailSetup,
         element: EmailSetup,
+      }),
+      createRoute({
+        path: privateRoutePath.security.userSetup,
+        element: UserSetup,
       }),
     ],
   }),

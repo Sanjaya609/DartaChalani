@@ -4,11 +4,15 @@
     "fiscalYear": "आर्थिक वर्ष",
     "sector": "क्षेत्र",
     "serviceType": "सेवा प्रकार",
-    "documentType": "कागजात प्रकार"
+    "documentType": "कागजात प्रकार",
+    "office": "कार्यालय"
   },
   "dashboard": "ड्यासबोर्ड",
   "security": {
     "title": "सुरक्षा",
-    "email": "इमेल सेटअप"
+    "email": "इमेल सेटअप",
+    "module": "मोड्युल सेटअप",
+    "role": "भूमिका सेटअप",
+    "user": "प्रयोगकर्ता सेटअप"
   }
 }

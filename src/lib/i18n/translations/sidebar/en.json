@@ -4,11 +4,15 @@
     "fiscalYear": "Fiscal Year",
     "sector": "Sector",
     "serviceType": "Service Type",
-    "documentType": "Document Type"
+    "documentType": "Document Type",
+    "office": "Office"
   },
   "dashboard": "Dashboard",
   "security": {
     "title": "Security",
-    "email": "Email Setup"
+    "email": "Email Setup",
+    "module": "Module Setup",
+    "role": "Role Setup",
+    "user": "User Setup"
   }
 }

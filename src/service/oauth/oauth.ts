@@ -2,7 +2,7 @@ import { RequestBodyType, RequestMethod } from '@/lib/api-request'
 
 const prefix = '/auth'
 
-const ouathAPI = {
+const oauthAPI = {
   getInit: {
     controllerName: `${prefix}/api/init`,
     queryKeyName: 'INIT',
@@ -16,4 +16,4 @@ const ouathAPI = {
   },
 }
 
-export default ouathAPI
+export default oauthAPI

@@ -11,11 +11,15 @@ const Security = () => {
   const sideBarItem = useMemo<ISidebarItem[]>(
     () => [
       {
-        title: 'Role Setup',
+        title: t('sidebar.security.role'),
         path: privateRoutePath.security.roleSetup,
       },
       {
-        title: 'Module Setup',
+        title: t('sidebar.security.user'),
+        path: privateRoutePath.security.userSetup,
+      },
+      {
+        title: t('sidebar.security.module'),
         path: privateRoutePath.security.moduleSetup,
       },
       {

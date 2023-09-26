@@ -2,8 +2,8 @@ import { initApiRequest } from '@/lib/api-request'
 import { apiDetails } from '@/service/api'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
-  ModuleSetupFormSchema,
-  ModuleSetupTableData,
+  IModuleSetupFormSchema,
+  IModuleSetupTableData,
 } from '../schema/moduleSetup.interface'
 import { mapDataToStyledSelect } from '@/utility/react-select-helper'
 
@@ -19,7 +19,7 @@ const {
 const useCreateModule = () => {
   const queryClient = useQueryClient()
   return useMutation(
-    (requestData: ModuleSetupFormSchema) => {
+    (requestData: IModuleSetupFormSchema) => {
       return initApiRequest({
         apiDetails: createModule,
         requestData: { ...requestData },
@@ -33,13 +33,13 @@ const useCreateModule = () => {
   )
 }
 
-const useGetAllModule = <T = ModuleSetupTableData[]>(
+const useGetAllModule = <T = IModuleSetupTableData[]>(
   getDataWithPropsValue?: IGetDataWithPropsVal
 ) => {
   return useQuery(
-    [getAllModule.controllerName],
+    [getAllModule.queryKeyName],
     () =>
-      initApiRequest<BackendSuccessResponse<ModuleSetupTableData[]>>({
+      initApiRequest<BackendSuccessResponse<IModuleSetupTableData[]>>({
         apiDetails: getAllModule,
       }),
     {
@@ -94,14 +94,14 @@ const useGetModuleById = (moduleId: string | number) => {
   )
 }
 
-const useGetModuleListByStatus = <T = ModuleSetupTableData[]>(
+const useGetModuleListByStatus = <T = IModuleSetupTableData[]>(
   isActive: boolean,
   getDataWithPropsValue?: IGetDataWithPropsVal
 ) => {
   return useQuery(
     [getModuleListByStatus.queryKeyName],
     () =>
-      initApiRequest<BackendSuccessResponse<ModuleSetupTableData[]>>({
+      initApiRequest<BackendSuccessResponse<IModuleSetupTableData[]>>({
         apiDetails: getModuleListByStatus,
         pathVariables: { isActive },
       }),
@@ -119,17 +119,21 @@ const useGetModuleListByStatus = <T = ModuleSetupTableData[]>(
             : moduleData
         ) as T
       },
+      enabled:
+        getDataWithPropsValue && 'enabled' in getDataWithPropsValue
+          ? getDataWithPropsValue.enabled
+          : true,
     }
   )
 }
 
-const useGetConfigurableModuleList = <T = ModuleSetupTableData[]>(
+const useGetConfigurableModuleList = <T = IModuleSetupTableData[]>(
   getDataWithPropsValue?: IGetDataWithPropsVal
 ) => {
   return useQuery(
     [getConfigurableModuleList.queryKeyName],
     () =>
-      initApiRequest<BackendSuccessResponse<ModuleSetupTableData[]>>({
+      initApiRequest<BackendSuccessResponse<IModuleSetupTableData[]>>({
         apiDetails: getConfigurableModuleList,
       }),
     {
