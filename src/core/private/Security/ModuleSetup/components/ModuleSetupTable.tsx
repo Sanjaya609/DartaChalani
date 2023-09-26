@@ -79,7 +79,7 @@ const ModuleSetupTable = () => {
             isConfigurable,
             orderNumber,
             parentModuleId,
-            resourceRequestList,
+            resourceResponses,
           } = original
           return (
             <TableAction
@@ -95,8 +95,16 @@ const ModuleSetupTable = () => {
                   isConfigurable,
                   orderNumber,
                   parentModuleId,
-                  resourceRequestList: resourceRequestList?.length
-                    ? resourceRequestList
+                  resourceRequestList: resourceResponses?.length
+                    ? resourceResponses.map(
+                        ({ httpMethod, privilege, resourceName, url, id }) => ({
+                          id,
+                          httpMethod,
+                          privilege,
+                          resourceName,
+                          url,
+                        })
+                      )
                     : [
                         {
                           httpMethod: '',
