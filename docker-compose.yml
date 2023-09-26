@@ -1,0 +1,19 @@
+version: '3.3'
+networks:
+  mtef:
+    external:
+      name: recommendation
+services:
+  mtef-front:
+    build: .
+    image: recommendation-front
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "3"
+        max-size: "1000m"
+    container_name: recommendation-front
+    network_mode: recommendation
+    restart: always
+    ports:
+      - 3500:3500
