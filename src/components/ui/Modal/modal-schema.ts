@@ -1,6 +1,6 @@
 export const ModalSize = {
-  sm: 'w-[26]',
+  sm: 'w-[26rem]',
   md: 'w-[46rem]',
-  lg: 'w-[68rem]',
-  xl: 'w-[78rem]',
+  lg: 'w-[60%]',
+  xl: 'w-[80%]',
 }

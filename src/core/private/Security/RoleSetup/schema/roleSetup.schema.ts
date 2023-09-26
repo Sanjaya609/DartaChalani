@@ -1,21 +1,20 @@
-import { RoleSetupFormSchema } from "./roleSetup.interface";
+import { RoleSetupFormSchema } from './roleSetup.interface'
 import * as Yup from 'yup'
 
 export const roleSetupIntialValues: RoleSetupFormSchema = {
-    roleNameEnglish: "",
-    roleNameNepali: "",
-    roleType: "",
-    description: ""
+  roleNameEnglish: '',
+  roleNameNepali: '',
+  roleType: '',
+  description: '',
 }
 
-
 export const roleSetupValidationSchema = Yup.object({
-    roleNameEnglish: Yup.string().required('This is required'),
-    roleNameNepali: Yup.string().required('This is required'),
-    roleType: Yup.string().required(
-        'This is required'
-    ),
-    description: Yup.string().required(
-        'This is required'
-    ),
+  roleNameEnglish: Yup.string().required(
+    'security.roleSetup.errors.roleNameEnglish'
+  ),
+  roleNameNepali: Yup.string().required(
+    'security.roleSetup.errors.roleNameNepali'
+  ),
+  roleType: Yup.string().required('security.roleSetup.errors.roleType'),
+  description: Yup.string().required('security.roleSetup.errors.description'),
 })

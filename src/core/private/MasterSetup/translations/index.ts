@@ -6,12 +6,15 @@ import serviceTypeEn from '@/core/private/MasterSetup/ServiceType/translations/e
 import serviceTypeNp from '@/core/private/MasterSetup/ServiceType/translations/np.json'
 import documentTypeEn from '@/core/private/MasterSetup/DocumentType/translations/en.json'
 import documentTypeNp from '@/core/private/MasterSetup/DocumentType/translations/np.json'
+import officeEn from '@/core/private/MasterSetup/Office/translations/en.json'
+import officeNp from '@/core/private/MasterSetup/Office/translations/np.json'
 
 const masterSetupEn = {
   fiscalYear: fiscalYearEn,
   sector: sectorEn,
   serviceType: serviceTypeEn,
   documentType: documentTypeEn,
+  office: officeEn,
 }
 
 const masterSetupNp = {
@@ -19,6 +22,7 @@ const masterSetupNp = {
   sector: sectorNp,
   serviceType: serviceTypeNp,
   documentType: documentTypeNp,
+  office: officeNp,
 }
 
 export { masterSetupEn, masterSetupNp }

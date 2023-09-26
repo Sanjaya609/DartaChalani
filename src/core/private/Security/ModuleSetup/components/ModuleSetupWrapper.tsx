@@ -5,17 +5,14 @@ import ModuleSetupForm from './ModuleSetupForm'
 import ModuleSetupTable from './ModuleSetupTable'
 import { moduleSetupInitialValues } from '../schema/moduleSetup.schema'
 
-
 const ModuleSetupWrapper = () => {
-    const [initialValues, setInitialValues] = useState(moduleSetupInitialValues)
-    return (
-        <ContainerLayout stretch>
-            <FlexLayout direction="column">
-                <ModuleSetupForm initialValues={initialValues} setInitialValues={setInitialValues} />
-                <ModuleSetupTable initialValues={initialValues} setInitialValues={setInitialValues} />
-            </FlexLayout>
-        </ContainerLayout>
-    )
+  return (
+    <ContainerLayout stretch>
+      <FlexLayout direction="column">
+        <ModuleSetupTable />
+      </FlexLayout>
+    </ContainerLayout>
+  )
 }
 
 export default ModuleSetupWrapper

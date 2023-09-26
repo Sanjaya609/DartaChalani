@@ -1,18 +1,16 @@
 import SectionHeader from '@/components/functional/SectionHeader'
-import ContainerLayout from '@/components/ui/core/Layout/ContainerLayout'
 import FlexLayout from '@/components/ui/core/Layout/FlexLayout'
-import React from 'react'
-import RoleSetupForm from './components/RoleSetupForm'
-import RoleSetupTable from './components/RoleSetupTable'
+import { useTranslation } from 'react-i18next'
 import RoleSetupWrapper from './components/RoleSetupWrapper'
 
 const index = () => {
-    return (
-        <FlexLayout direction='column'>
-            <SectionHeader title="RoleSetup" />
-            <RoleSetupWrapper />
-        </FlexLayout>
-    )
+  const { t } = useTranslation()
+  return (
+    <FlexLayout direction="column">
+      <SectionHeader title={t('security.roleSetup.title')} />
+      <RoleSetupWrapper />
+    </FlexLayout>
+  )
 }
 
 export default index

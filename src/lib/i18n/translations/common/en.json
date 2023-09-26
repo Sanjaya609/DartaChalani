@@ -22,7 +22,8 @@
     "continue": "Continue",
     "close": "Close",
     "update": "Update",
-    "setting": "Setting"
+    "setting": "Setting",
+    "search": "Search"
   },
   "yup": {
     "required": "{{key}} is required",

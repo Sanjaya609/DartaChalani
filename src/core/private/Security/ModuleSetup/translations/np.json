@@ -1,14 +1,37 @@
 {
-  "title": "क्षेत्र",
-  "sectorNameEnglish": "क्षेत्र नाम (अंग्रेजी)",
-  "sectorNameNepali": "क्षेत्र नाम (नेपाली)",
+  "title": "मोड्युल सेटअप",
+  "moduleNameEnglish": "मोड्युल नाम (अंग्रेजी)",
+  "moduleNameNepali": "मोड्युल नाम (नेपाली)",
   "status": "स्थिति",
   "orderNumber": "अर्डर नम्बर",
-  "errors": {
-    "sectorNameEnglish": "क्षेत्र नाम (अंग्रेजी) आवश्यक छ",
-    "sectorNameNepali": "क्षेत्र नाम (नेपाली) आवश्यक छ",
-    "orderNumber": "अर्डर नम्बर आवश्यक छ"
+  "isConfigurable": "Is Configurable ?",
+  "parentModuleName": "Parent मोड्युल नाम",
+  "description": "विवरण",
+  "url": "URL",
+  "code": "कोड",
+  "resource": "Resource",
+  "resourceRequestList": {
+    "httpMethod": "HTTP विधि",
+    "privilege": "Privilege",
+    "resourceName": "स्रोतको नाम",
+    "url": "स्रोतको URL"
   },
+  "errors": {
+    "moduleNameEnglish": "मोड्युल नाम (अंग्रेजी) आवश्यक छ",
+    "moduleNameNepali": "मोड्युल नाम (नेपाली) आवश्यक छ",
+    "orderNumber": "अर्डर नम्बर आवश्यक छ",
+    "description": "विवरण आवश्यक छ",
+    "url": "URL आवश्यक छ",
+    "code": "कोड आवश्यक छ",
+    "resourceRequestList": {
+      "httpMethod": "HTTP विधि आवश्यक छ",
+      "privilege": "Privilege आवश्यक छ",
+      "resourceName": "स्रोतको नाम आवश्यक छ",
+      "url": "स्रोतको URL आवश्यक छ"
+    }
+  },
+  "addModule": "मोड्युल थप्नुहोस्",
+  "editModule": "मोड्युल सम्पादन गर्नुहोस्",
   "modal": {
     "status": {
       "title": "स्थिति परिवर्तन गर्नुहोस्",

@@ -1,13 +1,15 @@
 {
-  "title": "Sector",
-  "sectorNameEnglish": "Sector Name (English)",
-  "sectorNameNepali": "Sector Name (Nepali)",
+  "title": "Role Setup",
+  "roleNameEnglish": "Role Name (English)",
+  "roleNameNepali": "Role Name (Nepali)",
   "status": "Status",
-  "orderNumber": "Order Number",
+  "roleType": "Role Type",
+  "description": "Description",
   "errors": {
-    "sectorNameEnglish": "Sector Name (English) is required",
-    "sectorNameNepali": "Sector Name (Nepali) is required",
-    "orderNumber": "Order Number is required"
+    "roleNameEnglish": "Role Name (English) is required",
+    "roleNameNepali": "Role Name (Nepali) is required",
+    "roleType": "Role Type is required",
+    "description": "Description is required"
   },
   "modal": {
     "status": {

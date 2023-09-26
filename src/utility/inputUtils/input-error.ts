@@ -9,6 +9,7 @@ interface IGetErrorStatus {
 
 export const getErrorStatus = (props: IGetErrorStatus) => {
   const { name, error, touched, errors, status, isFieldArray } = props
+
   if (
     isFieldArray &&
     errors &&

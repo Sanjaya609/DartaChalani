@@ -1,13 +1,16 @@
 {
-  "title": "क्षेत्र",
-  "sectorNameEnglish": "क्षेत्र नाम (अंग्रेजी)",
-  "sectorNameNepali": "क्षेत्र नाम (नेपाली)",
+  "title": "भूमिका सेटअप",
+  "roleNameEnglish": "भूमिका नाम (अंग्रेजी)",
+  "roleNameNepali": "भूमिका नाम (नेपाली)",
   "status": "स्थिति",
-  "orderNumber": "अर्डर नम्बर",
+  "roleType": "भूमिकाको प्रकार",
+  "description": "विवरण",
+
   "errors": {
-    "sectorNameEnglish": "क्षेत्र नाम (अंग्रेजी) आवश्यक छ",
-    "sectorNameNepali": "क्षेत्र नाम (नेपाली) आवश्यक छ",
-    "orderNumber": "अर्डर नम्बर आवश्यक छ"
+    "roleNameEnglish": "भूमिका नाम (अंग्रेजी) आवश्यक छ",
+    "roleNameNepali": "भूमिका नाम (नेपाली) आवश्यक छ",
+    "roleType": "भूमिकाको प्रकार आवश्यक छ",
+    "description": "विवरण आवश्यक छ"
   },
   "modal": {
     "status": {

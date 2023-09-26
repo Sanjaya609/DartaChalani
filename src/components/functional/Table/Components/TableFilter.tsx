@@ -1,37 +1,50 @@
 import { Button, Flexbox } from '@/components/ui'
+import { getComputedClassNames } from '@/utility/tailwind/tailwind-utility'
 import { TFuncKey } from 'i18next'
 import { CaretDown, Funnel, MagnifyingGlass, Plus } from 'phosphor-react'
 import { useTranslation } from 'react-i18next'
+import { Input } from '../../Form/Input/Input'
+
+interface IAddHeaderProps {
+  label?: string
+  handleAdd?: VoidFunction
+}
 
 export interface TableHeaderProps {
-  hasHeaderBtn?: boolean
-  tableHeaderBtnClick?: () => void
-  tableHeaderLabel?: string
-  hasFilterBtn?: boolean
+  addHeaderProps?: IAddHeaderProps
+  canSearch?: boolean
+  canFilter?: boolean
+  customTableFilter?: React.ReactNode
+  customAddFilter?: React.ReactNode
+  filterClassName?: string
 }
 
 function TableFilter(props: TableHeaderProps) {
   const { t } = useTranslation()
-  const { tableHeaderBtnClick, tableHeaderLabel, hasHeaderBtn, hasFilterBtn } =
-    props
+  const {
+    addHeaderProps,
+    canSearch,
+    canFilter,
+    customTableFilter,
+    customAddFilter,
+    filterClassName,
+  } = props
+  const computedClassName = getComputedClassNames('w-full', filterClassName)
+
   return (
-    <Flexbox align="center" justify="space-between" className="mb-4 w-full">
-      {/* <Button
-        variant="gray"
-        size="regular"
-        type="button"
-        icons="icons"
-        className="mr-4 border border-gray-80 bg-white"
-      >
-        <SortAscending size={16} />
-        {t('btns.sort')} <CaretDown size={16} />{' '}
-      </Button> */}
-      {/* <TextInput
-        containerClassName=""
-        leftIcon={<MagnifyingGlass size={16} className="mr-3" />}
-        placeholder={`${t('btns.search')}`}
-      /> */}
-      {hasFilterBtn && (
+    <Flexbox
+      align="center"
+      justify="space-between"
+      className={computedClassName}
+    >
+      {canSearch && (
+        <Input
+          wrapperClassName="flex-1"
+          leftIcon={<MagnifyingGlass size={16} />}
+          placeholder={t('btns.search')}
+        />
+      )}
+      {canFilter && (
         <Button
           variant="secondary"
           size="md"
@@ -43,23 +56,23 @@ function TableFilter(props: TableHeaderProps) {
           {t('btns.filter')} <CaretDown size={16} className="ml-2" />{' '}
         </Button>
       )}
-      {hasHeaderBtn ? (
+      {addHeaderProps && (
         <Button
-          variant="success"
           size="md"
           type="button"
           icons="icons"
           className="ml-4 whitespace-nowrap border border-gray-80"
-          onClick={tableHeaderBtnClick}
+          onClick={() => {
+            addHeaderProps?.handleAdd?.()
+          }}
         >
           <>
             <Plus className="mr-2" size={16} weight="bold" />
-            {tableHeaderLabel ? t(`${tableHeaderLabel as TFuncKey}`) : ''}
+            {addHeaderProps?.label || t('btns.add')}
           </>
         </Button>
-      ) : (
-        ''
       )}
+      {customAddFilter}
     </Flexbox>
   )
 }

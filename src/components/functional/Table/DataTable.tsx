@@ -32,6 +32,11 @@ import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { getComputedClassNames } from '@/utility/tailwind/tailwind-utility'
 
+interface IHeaderAdd {
+  title?: string
+  handleAdd?: VoidFunction
+}
+
 export interface ITableProps<TData extends RowData> extends TableHeaderProps {
   data: TData[]
   columns: ColumnDef<TData>[]
@@ -39,14 +44,12 @@ export interface ITableProps<TData extends RowData> extends TableHeaderProps {
   paginationRowsPerPageOptions?: number[]
   rowSelection?: RowSelectionState
   setRowSelection?: React.Dispatch<React.SetStateAction<RowSelectionState>>
-  showTableFilter?: boolean
   handleRowClick?: (data: Row<TData>) => void
   handleRowSelectedData?: (data: RowModel<TData>) => void
   customButtonComponent?: React.ReactElement
   isDraggable?: boolean
   updateOrder?: boolean
   removeAbsolute?: boolean
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   updateOrderFunction?: (updatedData: any) => void
   hasFilterBtn?: boolean
   hasSortingBtn?: boolean
@@ -78,10 +81,7 @@ const NormalDataTable = <TData extends RowData>({
   paginationRowsPerPageOptions,
   rowSelection,
   setRowSelection,
-  hasHeaderBtn = false,
-  tableHeaderBtnClick,
-  tableHeaderLabel = 'add',
-  showTableFilter = true,
+
   handleRowClick = () => {},
   handleRowSelectedData = () => {},
   customButtonComponent,
@@ -94,6 +94,13 @@ const NormalDataTable = <TData extends RowData>({
   className,
   withScrollable = true,
   withSN = false,
+
+  addHeaderProps,
+  canFilter,
+  canSearch,
+  customAddFilter,
+  customTableFilter,
+  filterClassName,
 }: ITableProps<TData>) => {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -165,19 +172,34 @@ const NormalDataTable = <TData extends RowData>({
     [handleRowSelectedData, rowSelection, table]
   )
 
+  const showTableFilter = React.useMemo(() => {
+    return (
+      !!canSearch ||
+      !!customAddFilter ||
+      !!canFilter ||
+      !!customAddFilter ||
+      !!customButtonComponent
+    )
+  }, [
+    canSearch,
+    customAddFilter,
+    canFilter,
+    customButtonComponent,
+    customAddFilter,
+  ])
+
   return (
     <>
-      {/* {showTableFilter && (
+      {showTableFilter && (
         <TableFilter
-          tableHeaderBtnClick={tableHeaderBtnClick}
-          hasHeaderBtn={hasHeaderBtn}
-          tableHeaderLabel={tableHeaderLabel}
-         
-          customButtonComponent={customButtonComponent}
-          hasFilterBtn={hasFilterBtn}
-          hasSortingBtn={hasSortingBtn}
+          filterClassName={filterClassName}
+          canFilter={canFilter}
+          canSearch={canSearch}
+          addHeaderProps={addHeaderProps}
+          customAddFilter={customAddFilter}
+          customTableFilter={customTableFilter}
         />
-      )} */}
+      )}
 
       <Flexbox className="h-full w-full flex-col">
         <Box className={tableBaseStyle}>

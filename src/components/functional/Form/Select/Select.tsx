@@ -40,7 +40,14 @@ const FormSelect = (props: ISelectInputProps) => {
       label={label}
       className={wrapperClassName}
     >
-      <Select {...restProps} errors={errors} touched={touched} />
+      <Select
+        {...restProps}
+        id={id}
+        name={name}
+        errors={errors}
+        touched={touched}
+        isFieldArray={isFieldArray}
+      />
     </FormWrapper>
   )
 }

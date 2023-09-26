@@ -9,6 +9,7 @@ import {
 import { Button } from '@/components/ui'
 import { getComputedClassNames } from '@/utility/tailwind/tailwind-utility'
 import { PropsWithChildren, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ModalSize } from './modal-schema'
 
 interface IFooterBtnProps {
@@ -36,6 +37,7 @@ interface IModalProps extends PropsWithChildren {
   saveBtnProps?: IFooterBtnProps
   bodyClassName?: string
   footerClassName?: string
+  centered?: boolean
 }
 
 const Modal = (props: IModalProps) => {
@@ -56,7 +58,10 @@ const Modal = (props: IModalProps) => {
     children,
     bodyClassName,
     footerClassName,
+    centered = true,
   } = props
+
+  const { t } = useTranslation()
 
   const {
     showCancelBtn,
@@ -68,7 +73,7 @@ const Modal = (props: IModalProps) => {
   } = useMemo(() => {
     return {
       showCancelBtn: cancelBtnProps?.show || true,
-      cancelBtnTitle: cancelBtnProps?.btnTitle || 'Cancel',
+      cancelBtnTitle: cancelBtnProps?.btnTitle || t('btns.cancel'),
       cancelBtnAction: cancelBtnProps?.btnAction,
       cancelBtnClassName: getComputedClassNames(cancelBtnProps?.className),
       cancelBtnLoading: cancelBtnProps?.loading,
@@ -86,7 +91,7 @@ const Modal = (props: IModalProps) => {
   } = useMemo(() => {
     return {
       showSaveBtn: saveBtnProps?.show || true,
-      saveBtnTitle: saveBtnProps?.btnTitle || 'Save',
+      saveBtnTitle: saveBtnProps?.btnTitle || t('btns.save'),
       saveBtnAction: saveBtnProps?.btnAction,
       saveBtnClassName: getComputedClassNames(saveBtnProps?.className),
       saveBtnLoading: saveBtnProps?.loading,
@@ -96,7 +101,10 @@ const Modal = (props: IModalProps) => {
 
   const computedContentClassName = getComputedClassNames(
     ModalSize[size],
-    contentClassName
+    contentClassName,
+    {
+      // 'top-[25%]': !centered,
+    }
   )
 
   const computedBodyClassName = getComputedClassNames('px-6', bodyClassName)
