@@ -57,11 +57,11 @@ export const moduleSetupValidationSchema = Yup.object().shape({
           })
         )
 
-        .min(1, 'security.module.errors.atLeastProperties')
-        .uniqueProperty(
-          'security.module.errors.duplicateKey',
-          (a: { key: string }) => a.key
-        ),
+        .min(1, 'security.module.errors.atLeastProperties'),
+    // .uniqueProperty(
+    //   'security.module.errors.duplicateKey',
+    //   (a: { key: string }) => a.key
+    // ),
   }),
   // otherwise: Yup.array,
 })

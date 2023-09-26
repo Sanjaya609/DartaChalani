@@ -32,6 +32,6 @@ export interface IModuleSetupTableData {
   isConfigurable: boolean
   orderNumber: StringNumber
   isActive: boolean
-  resourceRequestList: IResourceRequestList[]
+  resourceResponses: IResourceRequestList[]
   parentModuleId?: StringNumber
 }
