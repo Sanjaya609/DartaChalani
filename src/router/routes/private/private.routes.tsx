@@ -4,6 +4,7 @@ import React from 'react'
 import { _RouteObject } from 'react-router-dom'
 import { masterSetupRoutes } from './master-setup/master-setup.routes'
 import { securityRoutes } from './security/security.routes'
+import { registrationBookRoutes } from './registration-book/registration-book.routes'
 
 const Boundary = React.lazy(() => import('@/core/private/Boundary'))
 
@@ -16,7 +17,9 @@ export const privateRoutes: _RouteObject<'private'>[] = [
     type: 'bypass',
     children: [
       ...masterSetupRoutes,
-      ...securityRoutes],
+      ...securityRoutes,
+      ...registrationBookRoutes,
+    ],
   }),
 
   createRoute({

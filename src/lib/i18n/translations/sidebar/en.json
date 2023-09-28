@@ -14,5 +14,6 @@
     "module": "Module Setup",
     "role": "Role Setup",
     "user": "User Setup"
-  }
+  },
+  "registrationBook": "Registration Book"
 }

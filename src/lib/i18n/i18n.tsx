@@ -13,6 +13,8 @@ import {
   masterSetupNp,
 } from '@/core/private/MasterSetup/translations'
 import { securityEn, securityNp } from '@/core/private/Security/translations'
+import registrationBookEn from '@/core/private/RegistrationBook/translations/en.json'
+import registrationBookNp from '@/core/private/RegistrationBook/translations/np.json'
 
 export const resources = {
   en: {
@@ -21,6 +23,7 @@ export const resources = {
       sidebar: sidebarEn,
       masterSetup: masterSetupEn,
       security: securityEn,
+      registrationBook: registrationBookEn,
     },
   },
 
@@ -30,6 +33,7 @@ export const resources = {
       sidebar: sidebarNp,
       masterSetup: masterSetupNp,
       security: securityNp,
+      registrationBook: registrationBookNp,
     },
   },
 }
