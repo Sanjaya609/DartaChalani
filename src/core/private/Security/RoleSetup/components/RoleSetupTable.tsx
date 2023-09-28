@@ -83,7 +83,7 @@ const RoleSetupTable = ({
         },
       },
     ],
-    []
+    [t]
   )
   const setOrRemoveCurrentSelectedId = (id?: number) =>
     setCurrentSelectedId(id || null)

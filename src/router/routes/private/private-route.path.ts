@@ -1,4 +1,5 @@
 import { masterSetupRoutePath } from './master-setup/master-setup-route.path'
+import { registrationBookRoutePath } from './registration-book/registration-book.path'
 import { securityRoutePath } from './security/security-route.path'
 import { standingListRoutePath } from './standing-list/standing-list-route.path'
 
@@ -7,4 +8,5 @@ export const privateRoutePath = {
   masterSetup: masterSetupRoutePath,
   security: securityRoutePath,
   standingList: standingListRoutePath,
+  registrationBook: registrationBookRoutePath,
 } as const
