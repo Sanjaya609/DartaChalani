@@ -1,6 +1,6 @@
 import { privateRoutePath } from '@/router'
 import { TFuncKey } from 'i18next'
-import { LayoutDashboard, Settings, ServerCog } from 'lucide-react'
+import { LayoutDashboard, Settings, ServerCog, Library } from 'lucide-react'
 import { IconProps } from 'phosphor-react'
 
 interface ISidebarNavList {
@@ -26,5 +26,10 @@ export const sidebarNavList: ISidebarNavList[] = [
     icon: ServerCog,
     path: privateRoutePath.security.base,
     title: 'sidebar.security.title',
+  },
+  {
+    icon: Library,
+    path: privateRoutePath.standingList.base,
+    title: 'sidebar.standingList',
   },
 ]

@@ -1,0 +1,24 @@
+{
+  "title": "Standing List",
+  "fullNameEn": "Full Name (English)",
+  "fullNameNp": "Full Name (Nepali)",
+  "password": "Password",
+  "roleId": "Role",
+  "email": "Email",
+  "username": "Username",
+  "status": "Status",
+  "errors": {
+    "fullNameEn": "Full Name (English) is required",
+    "fullNameNp": "Full Name (Nepali) is required",
+    "password": "Password is required",
+    "roleId": "Role is required",
+    "email": "Email is required",
+    "username": "Username is required"
+  },
+  "modal": {
+    "status": {
+      "title": "Change Status",
+      "description": "Are you sure you want to change the status?"
+    }
+  }
+}

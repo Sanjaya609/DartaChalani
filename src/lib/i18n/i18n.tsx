@@ -13,6 +13,8 @@ import {
   masterSetupNp,
 } from '@/core/private/MasterSetup/translations'
 import { securityEn, securityNp } from '@/core/private/Security/translations'
+import standingListEn from '@/core/private/StandingList/translations/en.json'
+import standingListNp from '@/core/private/StandingList/translations/np.json'
 
 export const resources = {
   en: {
@@ -21,6 +23,7 @@ export const resources = {
       sidebar: sidebarEn,
       masterSetup: masterSetupEn,
       security: securityEn,
+      standingList: standingListEn,
     },
   },
 
@@ -30,6 +33,7 @@ export const resources = {
       sidebar: sidebarNp,
       masterSetup: masterSetupNp,
       security: securityNp,
+      standingList: standingListNp,
     },
   },
 }

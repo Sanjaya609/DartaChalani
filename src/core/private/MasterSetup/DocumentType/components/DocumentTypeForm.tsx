@@ -1,7 +1,8 @@
 import Form from '@/components/functional/Form/Form'
 import { Box, Button, Grid } from '@/components/ui'
 import { useGetConfigurableModuleList } from '@/core/private/Security/ModuleSetup/services/moduleSetup.query'
-import { allowedFileTypeOption } from '@/utility/document/document-enum'
+import { useGetEnumDataWithValue } from '@/service/generic/generic.query'
+import { APIENUM } from '@/utility/enums/api.enum'
 import { inputChangeNumberOnly } from '@/utility/inputUtils/input-change-utils'
 import { useFormik } from 'formik'
 import { useTranslation } from 'react-i18next'
@@ -26,6 +27,12 @@ const DocumentTypeForm = (props: IDocumentTypeFormProps) => {
   const { data: documentModuleNameOption = [] } = useGetConfigurableModuleList<
     OptionType[]
   >({
+    mapDatatoStyleSelect: true,
+  })
+
+  const { data: allowedFileTypeOption = [] } = useGetEnumDataWithValue<
+    OptionType[]
+  >(APIENUM.FILE_EXTENSION, {
     mapDatatoStyleSelect: true,
   })
 
@@ -56,12 +63,6 @@ const DocumentTypeForm = (props: IDocumentTypeFormProps) => {
         { onSuccess: () => resetFormValues() }
       )
     },
-  })
-
-  console.log({
-    allowedFiles: allowedFileTypeOption?.filter((fileType) =>
-      values?.allowedFileTypes.find((allowType) => allowType === fileType.value)
-    ),
   })
 
   return (

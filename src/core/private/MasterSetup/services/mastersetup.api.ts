@@ -3,6 +3,7 @@ import fiscalYearAPI from '@/core/private/MasterSetup/FiscalYear/services/fiscal
 import officeAPI from '@/core/private/MasterSetup/Office/services/office.api'
 import sectorAPI from '@/core/private/MasterSetup/Sector/services/sector.api'
 import serviceTypeAPI from '@/core/private/MasterSetup/ServiceType/services/servicetype.api'
+import locationAPI from '@/core/private/MasterSetup/Location/services/location.api'
 
 export const masterAPIs = {
   ...fiscalYearAPI,
@@ -10,4 +11,5 @@ export const masterAPIs = {
   ...serviceTypeAPI,
   ...documentTypeAPI,
   ...officeAPI,
+  ...locationAPI,
 }
