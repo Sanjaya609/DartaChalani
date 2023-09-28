@@ -2,6 +2,7 @@ import Switch from '@/components/functional/Form/Switch/Switch'
 import { DataTable } from '@/components/functional/Table'
 import TableAction from '@/components/functional/Table/Components/Table/TableAction'
 import Modal from '@/components/ui/Modal/Modal'
+import { getTextByLanguage } from '@/lib/i18n/i18n'
 import { ColumnDef } from '@tanstack/react-table'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -40,6 +41,7 @@ const SectorTable = (props: ISectorTableProps) => {
     fullNameNp,
     username,
     id,
+    roleId,
   }: IUserSetupResponse) => {
     setInitialValues({
       id,
@@ -47,7 +49,7 @@ const SectorTable = (props: ISectorTableProps) => {
       fullNameEn,
       fullNameNp,
       password: '',
-      roleId: '',
+      roleId,
       username,
     })
   }
@@ -85,7 +87,7 @@ const SectorTable = (props: ISectorTableProps) => {
       },
       {
         header: t('security.userSetup.roleId'),
-        accessorKey: 'roleId',
+        accessorKey: getTextByLanguage('roleNameEnglish', 'roleNameNepali'),
       },
       {
         header: t('security.userSetup.status'),

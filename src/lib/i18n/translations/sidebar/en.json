@@ -14,5 +14,7 @@
     "module": "Module Setup",
     "role": "Role Setup",
     "user": "User Setup"
-  }
+  },
+  "standingList": "Standing List",
+  "registrationBook": "Registration Book"
 }
