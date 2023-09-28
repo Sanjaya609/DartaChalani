@@ -2,13 +2,13 @@ import { initApiRequest } from '@/lib/api-request'
 import { apiDetails } from '@/service/api'
 import { APIENUM } from '@/utility/enums/api.enum'
 import { mapDataToStyledSelect } from '@/utility/react-select-helper'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import {
   IGenericEnumResWithKeyAndValue,
   IGenericEnumResWithKeyAndName,
 } from './generic.interface'
 
-const { getDataByEnumType } = apiDetails
+const { getDataByEnumType, uploadDocument } = apiDetails
 
 export const useGetEnumDataWithName = <T = IGenericEnumResWithKeyAndName[]>(
   enumType: APIENUM,
@@ -74,4 +74,13 @@ export const useGetEnumDataWithValue = <T = IGenericEnumResWithKeyAndValue[]>(
           : true,
     }
   )
+}
+
+export const useDocumentUpload = () => {
+  return useMutation((requestData: { file: Blob | MediaSource }) => {
+    return initApiRequest<BackendSuccessResponse<{ uuid: string }>>({
+      apiDetails: uploadDocument,
+      requestData,
+    })
+  })
 }

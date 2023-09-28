@@ -7,6 +7,9 @@ export type FileStateFile = Record<
     allowedFileTypes: string[]
     errors: string[]
     isMandatory: boolean
+    maxFileSize: number
+    documentTypeEn: string
+    documentTypeNp: string
   }
 >
 

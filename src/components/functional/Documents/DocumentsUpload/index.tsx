@@ -10,7 +10,14 @@ import {
 import { Gear, UploadSimple } from 'phosphor-react'
 import { Box } from '@/components/ui'
 import { ColumnDef } from '@tanstack/react-table'
-
+import { useGetAllDocumentListByModuleId } from '@/core/private/MasterSetup/DocumentType/services/document-type.query'
+import { useDocumentUpload } from '@/service/generic/generic.query'
+import { validateDocumentFile } from '@/utility/document/document-validations'
+import { IDocumentTypeResponse } from '@/core/private/MasterSetup/DocumentType/schema/document-type.interface'
+import toast, {
+  ToastType,
+} from '@/components/functional/ToastNotifier/ToastNotifier'
+import { getTextByLanguage } from '@/lib/i18n/i18n'
 interface IMockData {
   documentTypeId: number
   allowedFileTypes: string[]
@@ -36,33 +43,45 @@ const DocumentsUpload = () => {
     isRequiredFileUploaded: false,
   })
 
+  const { data: requiredDocumentList = [] } =
+    useGetAllDocumentListByModuleId('56')
+
+  const { mutate: uploadDocument } = useDocumentUpload()
+
   const structureFileState = () => {
-    const initialFileState = mockData.reduce<FileStateFile>(
-      (allFiles, currFile) => {
-        allFiles[currFile.documentTypeId] = {
-          documentTypeId: currFile.documentTypeId,
-          file: null,
-          guid: '',
-          allowedFileTypes: currFile.allowedFileTypes,
-          errors: [],
-          isMandatory: currFile.isMandatory,
-        }
-        return allFiles
-      },
-      {}
-    )
+    if (requiredDocumentList) {
+      const initialFileState = requiredDocumentList.reduce<FileStateFile>(
+        (allFiles, currFile) => {
+          allFiles[currFile.id] = {
+            documentTypeId: currFile.id,
+            file: null,
+            guid: '',
+            allowedFileTypes: currFile.allowedFileTypes,
+            errors: [],
+            isMandatory: currFile.isMandatory,
+            documentTypeEn: currFile.documentTypeEn,
+            documentTypeNp: currFile.documentTypeNp,
+            maxFileSize: currFile.maxFileSize,
+          }
+          return allFiles
+        },
+        {}
+      )
 
-    const isRequiredFileUploaded = mockData.some((file) => file.isMandatory)
+      const isRequiredFileUploaded = requiredDocumentList.some(
+        (file) => file.isMandatory
+      )
 
-    setFileState({
-      files: initialFileState,
-      isRequiredFileUploaded,
-    })
+      setFileState({
+        files: initialFileState,
+        isRequiredFileUploaded,
+      })
+    }
   }
 
   useEffect(() => {
     structureFileState()
-  }, [])
+  }, [requiredDocumentList])
 
   const validateFileChanges = (files: FileStateFile) => {
     const isRequiredFileUploaded = Object.values(files)
@@ -80,25 +99,47 @@ const DocumentsUpload = () => {
       const {
         target: { files, id },
       } = event
-      const updatedFileState = {
-        ...fileState,
-        files: {
-          ...fileState.files,
-          [id]: {
-            ...fileState.files[id],
-            file: files[0],
-          },
-        },
+
+      const validateFileMsg = validateDocumentFile({
+        file: files[0],
+        allowedFileTypes: fileState.files[id].allowedFileTypes,
+        maxFileSize: fileState.files[id].maxFileSize,
+      })
+
+      if (validateFileMsg.length) {
+        return toast({
+          message: getTextByLanguage(validateFileMsg[0], validateFileMsg[1]),
+          type: ToastType.error,
+        })
       }
 
-      setFileState(updatedFileState)
-      validateFileChanges(updatedFileState.files)
+      uploadDocument(
+        { file: files[0] },
+        {
+          onSuccess: (res) => {
+            const updatedFileState = {
+              ...fileState,
+              files: {
+                ...fileState.files,
+                [id]: {
+                  ...fileState.files[id],
+                  file: files[0],
+                  uuid: res?.data.data.uuid,
+                },
+              },
+            }
+
+            setFileState(updatedFileState)
+            validateFileChanges(updatedFileState.files)
+          },
+        }
+      )
     }
   }
 
   console.log({ fileState })
 
-  const columns = useMemo<ColumnDef<IMockData>[]>(
+  const columns = useMemo<ColumnDef<IDocumentTypeResponse>[]>(
     () => [
       {
         header: 'Document Name (English)',
@@ -119,14 +160,17 @@ const DocumentsUpload = () => {
       {
         header: 'Actions',
         cell: ({ row: { original } }) => {
-          const { documentTypeId } = original
+          const { id, allowedFileTypes } = original
+          const acceptProps = allowedFileTypes
+            .map((fileType) => `.${fileType.toLowerCase()}`)
+            .join(', ')
           return (
             <TableAction
               otherActionsComp={
                 <>
                   <li className={tableActionList}>
                     <span className="group relative">
-                      <label htmlFor={`${documentTypeId}`}>
+                      <label htmlFor={`${id}`}>
                         <UploadSimple
                           className={tableActionIcon}
                           weight="fill"
@@ -136,8 +180,9 @@ const DocumentsUpload = () => {
                         </Box>
                       </label>
                       <input
+                        // accept={acceptProps}
                         onChange={handleInputFileChange}
-                        id={`${documentTypeId}`}
+                        id={`${id}`}
                         type="file"
                         className="sr-only"
                       />
@@ -155,7 +200,7 @@ const DocumentsUpload = () => {
 
   return (
     <div className="h-full">
-      <DataTable data={mockData} columns={columns} />
+      <DataTable data={requiredDocumentList} columns={columns} />
     </div>
   )
 }
