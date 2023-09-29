@@ -1,8 +1,5 @@
 version: '3.3'
-networks:
-  recommendation:
-    external:
-      name: recommendation
+
 services:
   recommendation-front:
     build: .
@@ -13,7 +10,6 @@ services:
         max-file: "3"
         max-size: "1000m"
     container_name: recommendation-front
-    network_mode: recommendation
     restart: always
     ports:
       - 3500:3500
