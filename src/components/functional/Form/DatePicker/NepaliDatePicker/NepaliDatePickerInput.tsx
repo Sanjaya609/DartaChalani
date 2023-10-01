@@ -38,6 +38,7 @@ function NepaliDatePickerInput(props: IFormNepaliDatepicker) {
     wrapperClassName,
     className,
     onBlur,
+    readOnly,
   } = props
 
   const showError = getErrorStatus({
@@ -54,6 +55,7 @@ function NepaliDatePickerInput(props: IFormNepaliDatepicker) {
     'relative',
     {
       [formErrorClass]: showError,
+      'bg-gray-92': !!disabled || !!readOnly,
     }
   )
 
@@ -76,6 +78,7 @@ function NepaliDatePickerInput(props: IFormNepaliDatepicker) {
       className={wrapperClassName}
     >
       <NepaliDatepicker
+        readOnly={readOnly}
         value={value}
         datePickerWrapperClassName={inputWrapperClassName}
         className={computedInputElementClass}

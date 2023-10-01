@@ -1,5 +1,9 @@
 import { ChangeEvent, useEffect, useMemo, useState } from 'react'
-import { FileStateFile, IFileState } from './document-upload.interface'
+import {
+  FileData,
+  FileStateFile,
+  IFileState,
+} from './document-upload.interface'
 import { DataTable } from '../../Table'
 import TableAction from '../../Table/Components/Table/TableAction'
 import {
@@ -18,30 +22,30 @@ import toast, {
   ToastType,
 } from '@/components/functional/ToastNotifier/ToastNotifier'
 import { getTextByLanguage } from '@/lib/i18n/i18n'
+import { useTranslation } from 'react-i18next'
+import UploadedFiles from './UploadedFiles/UploadedFiles'
+import ViewUploadedFilesModal from './UploadedFiles/ViewUploadedFilesModal'
 interface IMockData {
   documentTypeId: number
   allowedFileTypes: string[]
   isMandatory: boolean
 }
 
-const mockData = [
-  {
-    documentTypeId: 1,
-    allowedFileTypes: ['PNG', 'JPG', 'JPEG'],
-    isMandatory: true,
-  },
-  {
-    documentTypeId: 2,
-    allowedFileTypes: ['PNG', 'JPG', 'JPEG'],
-    isMandatory: false,
-  },
-]
+interface IDocumentsUploadProps {
+  moduleId?: StringNumber
+  canUploadMultipleFile?: boolean
+}
 
-const DocumentsUpload = () => {
+const DocumentsUpload = (props: IDocumentsUploadProps) => {
+  const { moduleId, canUploadMultipleFile = false } = props
   const [fileState, setFileState] = useState<IFileState>({
     files: {},
     isRequiredFileUploaded: false,
   })
+
+  const [currentViewDocument, setCurrentViewDocument] = useState<StringNumber>()
+
+  const { t } = useTranslation()
 
   const { data: requiredDocumentList = [] } =
     useGetAllDocumentListByModuleId('56')
@@ -49,44 +53,51 @@ const DocumentsUpload = () => {
   const { mutate: uploadDocument } = useDocumentUpload()
 
   const structureFileState = () => {
-    if (requiredDocumentList) {
-      const initialFileState = requiredDocumentList.reduce<FileStateFile>(
-        (allFiles, currFile) => {
-          allFiles[currFile.id] = {
-            documentTypeId: currFile.id,
+    const initialFileState = requiredDocumentList.reduce<FileStateFile>(
+      (allFiles, currFile) => {
+        allFiles[currFile.id] = {
+          documentTypeId: currFile.id,
+          fileData: {
+            uuid: '',
             file: null,
-            guid: '',
-            allowedFileTypes: currFile.allowedFileTypes,
-            errors: [],
-            isMandatory: currFile.isMandatory,
-            documentTypeEn: currFile.documentTypeEn,
-            documentTypeNp: currFile.documentTypeNp,
-            maxFileSize: currFile.maxFileSize,
-          }
-          return allFiles
-        },
-        {}
-      )
+          },
+          allowedFileTypes: currFile.allowedFileTypes,
+          errors: [],
+          isMandatory: currFile.isMandatory,
+          documentTypeEn: currFile.documentTypeEn,
+          documentTypeNp: currFile.documentTypeNp,
+          maxFileSize: currFile.maxFileSize,
+          filesData: [],
+        }
+        return allFiles
+      },
+      {}
+    )
 
-      const isRequiredFileUploaded = requiredDocumentList.some(
-        (file) => file.isMandatory
-      )
+    const isRequiredFileUploaded = requiredDocumentList.some(
+      (file) => file.isMandatory
+    )
 
-      setFileState({
-        files: initialFileState,
-        isRequiredFileUploaded,
-      })
-    }
+    setFileState({
+      files: initialFileState,
+      isRequiredFileUploaded,
+    })
   }
 
   useEffect(() => {
-    structureFileState()
+    if (requiredDocumentList) {
+      structureFileState()
+    }
   }, [requiredDocumentList])
 
   const validateFileChanges = (files: FileStateFile) => {
     const isRequiredFileUploaded = Object.values(files)
       .filter((fileItem) => fileItem.isMandatory)
-      .every((fileItem) => !!fileItem.file)
+      .every((fileItem) =>
+        !canUploadMultipleFile
+          ? !!fileItem.fileData?.file
+          : fileItem?.filesData?.every((fileItem) => fileItem.file)
+      )
 
     setFileState((prevState) => ({
       ...prevState,
@@ -117,16 +128,35 @@ const DocumentsUpload = () => {
         { file: files[0] },
         {
           onSuccess: (res) => {
-            const updatedFileState = {
-              ...fileState,
-              files: {
-                ...fileState.files,
-                [id]: {
-                  ...fileState.files[id],
-                  file: files[0],
-                  uuid: res?.data.data.uuid,
+            let updatedFileState = {} as IFileState
+            if (!canUploadMultipleFile) {
+              updatedFileState = {
+                ...fileState,
+                files: {
+                  ...fileState.files,
+                  [id]: {
+                    ...fileState.files[id],
+                    fileData: {
+                      file: files[0],
+                      uuid: res?.data.data.uuid || '',
+                    },
+                  },
                 },
-              },
+              }
+            } else {
+              updatedFileState = {
+                ...fileState,
+                files: {
+                  ...fileState.files,
+                  [id]: {
+                    ...fileState.files[id],
+                    filesData: [
+                      ...fileState.files[id].filesData,
+                      { file: files[0], uuid: res?.data.data.uuid || '' },
+                    ],
+                  },
+                },
+              }
             }
 
             setFileState(updatedFileState)
@@ -137,25 +167,54 @@ const DocumentsUpload = () => {
     }
   }
 
-  console.log({ fileState })
+  const handleToggleFileView = (id?: StringNumber) => {
+    setCurrentViewDocument(id)
+  }
 
   const columns = useMemo<ColumnDef<IDocumentTypeResponse>[]>(
     () => [
       {
-        header: 'Document Name (English)',
-        accessorKey: 'subSectorNameEnglish',
+        header: t('document.documentTypeEn'),
+        accessorKey: 'documentTypeEn',
       },
       {
-        header: 'Document Name (Nepali)',
-        accessorKey: 'subSectorNameNepali',
+        header: t('document.documentTypeNp'),
+        accessorKey: 'documentTypeNp',
       },
       {
-        header: 'Required',
-        accessorKey: 'required',
+        header: t('document.isMandatory'),
+        accessorKey: 'isMandatory',
+        cell: ({ row: { original } }) =>
+          original.isMandatory ? t('yes') : t('no'),
       },
       {
-        header: 'Accepted Files',
-        accessorKey: 'accepted File Types',
+        header: t('document.allowedFileTypes'),
+        accessorKey: 'allowedFileTypes',
+      },
+      {
+        header: t('document.maxFileSize'),
+        accessorKey: 'maxFileSize',
+      },
+      {
+        header: t('document.uploadedFiles'),
+        cell: ({
+          row: {
+            original: { id },
+          },
+        }) => {
+          return (
+            <UploadedFiles
+              filesData={
+                !canUploadMultipleFile && fileState.files[id]?.fileData?.file
+                  ? ([fileState.files[id].fileData] as FileData[])
+                  : fileState.files[id]?.filesData || []
+              }
+              toggleFileView={() => {
+                handleToggleFileView(id)
+              }}
+            />
+          )
+        },
       },
       {
         header: 'Actions',
@@ -169,18 +228,18 @@ const DocumentsUpload = () => {
               otherActionsComp={
                 <>
                   <li className={tableActionList}>
-                    <span className="group relative">
-                      <label htmlFor={`${id}`}>
+                    <span className="group relative ">
+                      <label htmlFor={`${id}`} className="cursor-pointer">
                         <UploadSimple
                           className={tableActionIcon}
                           weight="fill"
                         />
                         <Box as="span" className={tableActionTooltip}>
-                          Upload
+                          {t('btns.upload')}
                         </Box>
                       </label>
                       <input
-                        // accept={acceptProps}
+                        accept={acceptProps}
                         onChange={handleInputFileChange}
                         id={`${id}`}
                         type="file"
@@ -195,12 +254,34 @@ const DocumentsUpload = () => {
         },
       },
     ],
-    [fileState.files]
+    [fileState.files, t]
   )
 
   return (
     <div className="h-full">
       <DataTable data={requiredDocumentList} columns={columns} />
+
+      <ViewUploadedFilesModal
+        isOpen={!!currentViewDocument}
+        filesData={
+          !canUploadMultipleFile &&
+          currentViewDocument &&
+          fileState.files[currentViewDocument]?.fileData?.file
+            ? ([fileState.files[currentViewDocument].fileData] as FileData[])
+            : currentViewDocument
+            ? fileState.files[currentViewDocument]?.filesData || []
+            : []
+        }
+        toggleFileViewModal={handleToggleFileView}
+        modalTitle={
+          currentViewDocument
+            ? getTextByLanguage(
+                fileState.files[currentViewDocument]?.documentTypeEn,
+                fileState.files[currentViewDocument]?.documentTypeNp
+              )
+            : ''
+        }
+      />
     </div>
   )
 }

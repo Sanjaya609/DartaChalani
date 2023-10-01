@@ -37,6 +37,7 @@ const EnglishDatePicker: React.FC<EnglishDatePickerProps> = (props) => {
     inputWrapperClass,
     {
       [formErrorClass]: showError,
+      'bg-gray-92': !!restProps?.disabled || !!restProps?.readOnly,
     }
   )
 
@@ -65,7 +66,9 @@ const EnglishDatePicker: React.FC<EnglishDatePickerProps> = (props) => {
 
           <Icon
             onClick={() => {
-              datePickerRef?.current?.setOpen(true)
+              if (!restProps?.disabled && !restProps?.readOnly) {
+                datePickerRef?.current?.setOpen(true)
+              }
             }}
             size={24}
             icon={Calendar}

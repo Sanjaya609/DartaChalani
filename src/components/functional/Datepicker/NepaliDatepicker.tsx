@@ -29,13 +29,24 @@ interface ICalendarIconWithXProps {
   handleOnChange: (changedDate: string) => void
   canClearDate?: boolean
   toggleDatePicker: VoidFunction
+  readOnly?: boolean
+  disabled?: boolean
 }
 
 const CalendarIconWithX = (props: ICalendarIconWithXProps) => {
-  const { date, handleOnChange, canClearDate = false, toggleDatePicker } = props
+  const {
+    date,
+    handleOnChange,
+    canClearDate = false,
+    toggleDatePicker,
+    readOnly,
+    disabled,
+  } = props
+  const canPickDate = !readOnly && !disabled
+
   return (
     <Flexbox align="center">
-      {date && canClearDate && (
+      {date && canClearDate && !readOnly && !disabled && (
         <Icon
           onClick={(event) => {
             event.stopPropagation()
@@ -49,7 +60,7 @@ const CalendarIconWithX = (props: ICalendarIconWithXProps) => {
         />
       )}
       <Icon
-        onClick={toggleDatePicker}
+        onClick={canPickDate ? toggleDatePicker : undefined}
         size={24}
         icon={Calendar}
         className="cursor-pointer pr-1 text-gray-48"
@@ -79,6 +90,7 @@ function NepaliDatepicker(props: INepaliDatePicker) {
     setExactToday,
     canClearDate,
     calendarClassName,
+    readOnly,
   } = props
 
   const [date, setDate] = useState<string>('')
@@ -236,6 +248,8 @@ function NepaliDatepicker(props: INepaliDatePicker) {
               handleOnChange={handleOnChange}
               canClearDate={canClearDate}
               toggleDatePicker={toggleDatePicker}
+              readOnly={readOnly}
+              disabled={disabled}
             />
           }
         </span>

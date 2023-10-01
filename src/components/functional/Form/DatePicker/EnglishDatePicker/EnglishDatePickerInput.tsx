@@ -77,7 +77,9 @@ function EnglishDatePickerInput(props: IFormEnglishDatepicker) {
         scrollableYearDropdown
         removeIconComp={
           canClearDate &&
-          !!value && (
+          !!value &&
+          !datePickerProps?.disabled &&
+          !readOnly && (
             <Icon
               onClick={(event) => {
                 event.stopPropagation()

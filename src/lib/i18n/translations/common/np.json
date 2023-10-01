@@ -32,5 +32,19 @@
   },
   "form": {
     "password": "पासवर्ड"
+  },
+  "document": {
+    "documentTypeEn": "कागजात नाम (अंग्रेजी)",
+    "documentTypeNp": "कागजात नाम (नेपाली)",
+    "allowedFileTypes": "स्वीकृत फाइल प्रकारहरू",
+    "isMandatory": "अनिवार्य छ ?",
+    "maxFileSize": "अधिकतम फाइल आकार (KB मा)",
+    "uploadedFiles": "अपलोड गरिएका फाइलहरू",
+    "noFilesUploaded": "कुनै फाइलहरू छैनन्",
+    "fileNumber": "{{number}} फाइल",
+    "modal": {
+      "title": "कागजातहरू हेर्नुहोस्",
+      "nameTitle": "{{name}} कागजातहरू"
+    }
   }
 }

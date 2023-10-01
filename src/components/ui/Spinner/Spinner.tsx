@@ -1,12 +1,22 @@
 export const spinnerSizes = {
-  xs: '2',
-  sm: '3',
-  md: '4',
-  lg: '5',
+  height: {
+    xs: 'h-2',
+    sm: 'h-3',
+    md: 'h-4',
+    lg: 'h-5',
+    xl: 'h-6',
+  },
+  width: {
+    xs: 'w-2',
+    sm: 'w-3',
+    md: 'w-4',
+    lg: 'w-5',
+    xl: 'w-6',
+  },
 }
 
-interface ISpinnerProps {
-  size?: keyof typeof spinnerSizes
+export interface ISpinnerProps {
+  size?: keyof typeof spinnerSizes.height | keyof typeof spinnerSizes.width
   className?: string
 }
 
@@ -18,7 +28,7 @@ function Spinner(props: ISpinnerProps) {
       <div role="status">
         <svg
           aria-hidden="true"
-          className={` inline h-${spinnerSizes[size]} w-${spinnerSizes[size]} animate-spin fill-blue-600`}
+          className={` inline ${spinnerSizes.height[size]} w-${spinnerSizes.width[size]} animate-spin fill-blue-600`}
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
