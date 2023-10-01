@@ -6,4 +6,6 @@ COPY public/ /DartaChalani/public
 COPY src/ /DartaChalani/src
 COPY package.json /DartaChalani/
 
+EXPOSE 4000
+
 CMD ["npm", "start"]
