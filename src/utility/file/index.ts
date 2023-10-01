@@ -2,6 +2,9 @@ import { previewBlobType } from '@/utility/document/document-enum'
 import downloadFile from '@/utility/document/fileDownloader'
 import { previewFile } from '@/utility/document/preview-file'
 
+export const isImageFile = (extension: string) =>
+  ['jpg', 'jpeg', 'png', 'bmp', 'pdf'].includes(extension?.toLowerCase())
+
 export const generateFileUrl = (fileUrl: string) => {
   let fullUrl
   if (fileUrl) {
@@ -37,7 +40,7 @@ interface IHandleViewOrDownload {
   fileProps: {
     file: Blob | MediaSource
     fileType: string
-    fileName: string
+    fileName?: string
   }
   action: 'download' | 'view'
 }

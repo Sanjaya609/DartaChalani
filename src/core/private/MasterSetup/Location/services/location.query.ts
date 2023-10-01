@@ -50,6 +50,7 @@ const useGetAllDistrictByProvinceId = <T = IDistrictList[]>(
     () =>
       initApiRequest<BackendSuccessResponse<IDistrictList[]>>({
         apiDetails: getDistrictListByProvinceId,
+        pathVariables: { provinceId },
       }),
     {
       select: (data) => {
@@ -65,7 +66,11 @@ const useGetAllDistrictByProvinceId = <T = IDistrictList[]>(
             : districtData
         ) as T
       },
-      enabled: !!provinceId,
+      enabled:
+        !!provinceId &&
+        (getDataWithPropsValue && 'enabled' in getDataWithPropsValue
+          ? getDataWithPropsValue.enabled
+          : true),
     }
   )
 }
@@ -79,6 +84,7 @@ const useGetAllLocalBodyByDistrictId = <T = ILocalBodyList[]>(
     () =>
       initApiRequest<BackendSuccessResponse<ILocalBodyList[]>>({
         apiDetails: getLocalBodyListByDistrictId,
+        pathVariables: { districtId },
       }),
     {
       select: (data) => {
@@ -94,7 +100,11 @@ const useGetAllLocalBodyByDistrictId = <T = ILocalBodyList[]>(
             : localBodyData
         ) as T
       },
-      enabled: !!districtId,
+      enabled:
+        !!districtId &&
+        (getDataWithPropsValue && 'enabled' in getDataWithPropsValue
+          ? getDataWithPropsValue.enabled
+          : true),
     }
   )
 }

@@ -1,3 +1,5 @@
+import { convertEngToNepNumber } from '@/components/functional/Datepicker/datePickerUtils'
+
 export interface LanguageItem {
   id?: number
   nameEnglish: string
@@ -38,4 +40,12 @@ export const getTruncatedFileNameByLength = (fileName: string, length = 33) => {
   return newFileName?.length > length
     ? `${truncate(newFileName, length)}.${extension}`
     : fileName
+}
+
+export const generateWardOption = (uptoNumber: number): OptionType[] => {
+  return [...Array(uptoNumber).keys()].map((ward) => ({
+    label: String(ward + 1),
+    labelNp: convertEngToNepNumber(ward + 1),
+    value: ward + 1,
+  }))
 }

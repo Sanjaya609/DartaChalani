@@ -24,7 +24,7 @@ interface IFooterBtnProps {
 interface IModalProps extends PropsWithChildren {
   open: boolean
   toggleModal: VoidFunction
-  contentClassName?: boolean
+  contentClassName?: string
   size?: keyof typeof ModalSize
   removeHeaderBorder?: boolean
   removeFooterBorder?: boolean

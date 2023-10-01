@@ -129,7 +129,7 @@ const selectStyles: Partial<Styles<TAny, boolean>> = {
       borderRadius: '4px',
     },
     '::-webkit-scrollbar-thumb': {
-      background: `${gray[24]}`,
+      background: `${base.primary}`,
       borderRadius: '4px',
     },
     '::-webkit-scrollbar-thumb:hover': {

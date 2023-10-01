@@ -24,7 +24,7 @@ const documentTypeAPI = {
     requestMethod: RequestMethod.GET,
   },
   getAllRequiredDocumentTypeModuleId: {
-    controllerName: `${prefix}/active-list`,
+    controllerName: `${prefix}/required/documents/{moduleId}`,
     queryKeyName: 'GET_ALL_REQUIRED_DOCUMENT_BY_MODULE_ID',
     requestMethod: RequestMethod.GET,
   },

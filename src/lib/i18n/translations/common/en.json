@@ -32,5 +32,19 @@
   },
   "form": {
     "password": "Password"
+  },
+  "document": {
+    "documentTypeEn": "Document Type Name (English)",
+    "documentTypeNp": "Document Type Name (Nepali)",
+    "allowedFileTypes": "Allowed File Types",
+    "isMandatory": "Is Mandatory ?",
+    "maxFileSize": "Max File Size (In KB)",
+    "uploadedFiles": "Uploaded Files",
+    "noFilesUploaded": "No Files",
+    "fileNumber": "{{number}} file",
+    "modal": {
+      "title": "View Documents",
+      "nameTitle": "{{name}} Documents"
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { HTMLAttributes } from 'react'
+import { FocusEvent, HTMLAttributes } from 'react'
 // eslint-disable-next-line import/no-cycle
 
 export interface ParsedDate {
@@ -71,7 +71,7 @@ export interface INepaliDatePicker extends NepaliDatePickerOptions {
   className?: HTMLAttributes<HTMLDivElement>['className']
   datePickerWrapperClassName?: HTMLAttributes<HTMLInputElement>['className']
   onChange?: (nepdate?: string, engdate?: Date | null) => void
-  onBlur?: () => void
+  onBlur?: (e: FocusEvent<TAny, Element>) => void
   onSelect?: (value: string) => void
   options?: NepaliDatepickerEvents
   maxDate?: string
@@ -79,6 +79,7 @@ export interface INepaliDatePicker extends NepaliDatePickerOptions {
   minDate?: string
   minDateToday?: boolean
   disabled?: boolean
+  readOnly?: boolean
   disableColor?: boolean
   right?: boolean
   setExactToday?: boolean

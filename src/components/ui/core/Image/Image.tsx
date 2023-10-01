@@ -29,7 +29,6 @@ const Image = React.forwardRef<React.MutableRefObject<HTMLImageElement>, Props>(
       src,
       variant = 'contain',
       className,
-      loading = 'lazy',
       fallbackImage,
       ...restProps
     } = props
@@ -44,7 +43,6 @@ const Image = React.forwardRef<React.MutableRefObject<HTMLImageElement>, Props>(
       ...imgSources,
       ref,
       className: computedClasses,
-      loading,
     })
   }
 )

@@ -53,6 +53,7 @@ const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
     inputWrapperClass,
     {
       [formErrorClass]: showError,
+      'bg-gray-92': !!rest?.disabled || !!rest?.readOnly,
     }
   )
 
