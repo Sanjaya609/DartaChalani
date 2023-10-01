@@ -118,7 +118,7 @@ const RoleSetupForm = ({
           {t('btns.cancel')}
         </Button>
         <Button type="submit" className="ml-auto">
-          Save
+          {t('btns.save')}
         </Button>
       </Box>
     </form>
