@@ -11,8 +11,8 @@ const Security = () => {
   const sideBarItem = useMemo<ISidebarItem[]>(
     () => [
       {
-        title: t('sidebar.security.role'),
-        path: privateRoutePath.security.roleSetup,
+        title: t('sidebar.security.roleManagement'),
+        path: privateRoutePath.security.roleManagement,
       },
       {
         title: t('sidebar.security.user'),
