@@ -10,6 +10,7 @@ import {
   RoleSetupTableData,
 } from '../schema/roleSetup.interface'
 import { useChangeRoleStatus, useGetAllRole } from '../services/roleSetup.query'
+import { privateRoutePath, useNavigate } from '@/router'
 
 interface RoleSetupTableProps {
   initialValues: RoleSetupFormSchema
@@ -21,6 +22,7 @@ const ActionComponent = (
   setInitialValues: React.Dispatch<React.SetStateAction<RoleSetupFormSchema>>
 ) => {
   const { id, roleNameEnglish, roleNameNepali, roleType, description } = row
+  const navigate = useNavigate();
   return (
     <TableAction
       handleEditClick={() => {
@@ -31,6 +33,9 @@ const ActionComponent = (
           roleType,
           description,
         })
+      }}
+      handleConfigureClick={() => {
+        navigate(privateRoutePath.security.roleModuleMapping)
       }}
     />
   )

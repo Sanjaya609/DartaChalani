@@ -1,6 +1,11 @@
-FROM nginx:alpine
-RUN rm /etc/nginx/conf.d/default.conf
-COPY ng.conf /etc/nginx/conf.d
-# copy the build folder from react to the root of nginx (www)
-COPY ./build/.  /usr/share/nginx/html/.
-# expose port
+FROM node:18-alpine
+
+WORKDIR /DartaChalani/
+
+COPY public/ /DartaChalani/public
+COPY src/ /DartaChalani/src
+COPY package.json /DartaChalani/
+
+EXPOSE 4000
+
+CMD ["npm", "start"]

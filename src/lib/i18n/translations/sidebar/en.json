@@ -13,7 +13,8 @@
     "email": "Email Setup",
     "module": "Module Setup",
     "role": "Role Setup",
-    "user": "User Setup"
+    "user": "User Setup",
+    "roleManagement": "Role Management"
   },
   "standingList": "Standing List",
   "registrationBook": "Registration Book"
