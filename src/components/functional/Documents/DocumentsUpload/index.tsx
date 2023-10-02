@@ -1,7 +1,15 @@
-import { ChangeEvent, useEffect, useMemo, useState } from 'react'
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import {
   FileData,
   FileStateFile,
+  IDocumentPayload,
   IFileState,
 } from './document-upload.interface'
 import { DataTable } from '../../Table'
@@ -25,19 +33,32 @@ import { getTextByLanguage } from '@/lib/i18n/i18n'
 import { useTranslation } from 'react-i18next'
 import UploadedFiles from './UploadedFiles/UploadedFiles'
 import ViewUploadedFilesModal from './UploadedFiles/ViewUploadedFilesModal'
-interface IMockData {
-  documentTypeId: number
-  allowedFileTypes: string[]
-  isMandatory: boolean
-}
 
 interface IDocumentsUploadProps {
   moduleId?: StringNumber
   canUploadMultipleFile?: boolean
+  setIsAllRequiredDocumentUploaded: Dispatch<SetStateAction<boolean>>
+  setUploadedDocumentData?: Dispatch<SetStateAction<IDocumentPayload[]>>
+}
+
+const flatDocDataForPayload = (files: FileStateFile) => {
+  return Object.values(files)
+    .map(({ filesData, documentTypeId }) =>
+      filesData.map((doc) => ({
+        guid: doc.guid || '',
+        documentTypeId: +documentTypeId,
+      }))
+    )
+    .flat(1)
 }
 
 const DocumentsUpload = (props: IDocumentsUploadProps) => {
-  const { moduleId, canUploadMultipleFile = false } = props
+  const {
+    moduleId,
+    canUploadMultipleFile = false,
+    setIsAllRequiredDocumentUploaded,
+    setUploadedDocumentData,
+  } = props
   const [fileState, setFileState] = useState<IFileState>({
     files: {},
     isRequiredFileUploaded: false,
@@ -58,7 +79,7 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
         allFiles[currFile.id] = {
           documentTypeId: currFile.id,
           fileData: {
-            uuid: '',
+            guid: '',
             file: null,
           },
           allowedFileTypes: currFile.allowedFileTypes,
@@ -82,6 +103,7 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
       files: initialFileState,
       isRequiredFileUploaded,
     })
+    setIsAllRequiredDocumentUploaded(!isRequiredFileUploaded)
   }
 
   useEffect(() => {
@@ -91,18 +113,42 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
   }, [requiredDocumentList])
 
   const validateFileChanges = (files: FileStateFile) => {
-    const isRequiredFileUploaded = Object.values(files)
-      .filter((fileItem) => fileItem.isMandatory)
-      .every((fileItem) =>
-        !canUploadMultipleFile
-          ? !!fileItem.fileData?.file
-          : fileItem?.filesData?.every((fileItem) => fileItem.file)
+    const mandatoryFiles = Object.values(files).filter(
+      (fileItem) => fileItem.isMandatory
+    )
+
+    let isRequiredFileUploaded = false
+    if (canUploadMultipleFile) {
+      isRequiredFileUploaded = mandatoryFiles
+        .map((doc) => doc)
+        .every((doc) => !!doc.filesData?.length)
+    } else {
+      isRequiredFileUploaded = mandatoryFiles.every(
+        (file) => !!file.fileData?.file
       )
+    }
 
     setFileState((prevState) => ({
       ...prevState,
       isRequiredFileUploaded,
     }))
+
+    if (setUploadedDocumentData) {
+      const allDocumentData = canUploadMultipleFile
+        ? flatDocDataForPayload(files)
+        : [
+            ...Object.values(files).map((doc) => ({
+              guid: doc?.fileData?.guid || '',
+              documentTypeId: +doc.documentTypeId,
+            })),
+          ]
+
+      if (canUploadMultipleFile) {
+        setUploadedDocumentData(allDocumentData)
+      }
+
+      setIsAllRequiredDocumentUploaded(isRequiredFileUploaded)
+    }
   }
 
   const handleInputFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -138,7 +184,7 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
                     ...fileState.files[id],
                     fileData: {
                       file: files[0],
-                      uuid: res?.data.data.uuid || '',
+                      guid: res?.data.data.uuid || '',
                     },
                   },
                 },
@@ -152,7 +198,7 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
                     ...fileState.files[id],
                     filesData: [
                       ...fileState.files[id].filesData,
-                      { file: files[0], uuid: res?.data.data.uuid || '' },
+                      { file: files[0], guid: res?.data.data.uuid || '' },
                     ],
                   },
                 },

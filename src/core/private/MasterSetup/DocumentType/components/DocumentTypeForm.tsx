@@ -54,13 +54,18 @@ const DocumentTypeForm = (props: IDocumentTypeFormProps) => {
     initialValues,
     enableReinitialize: true,
     validationSchema: documentTypeValidationSchema,
-    onSubmit: (value) => {
+    onSubmit: (value, { resetForm }) => {
       mutate(
         {
           ...value,
           maxFileSize: +values.maxFileSize,
         },
-        { onSuccess: () => resetFormValues() }
+        {
+          onSuccess: () => {
+            resetFormValues()
+            resetForm()
+          },
+        }
       )
     },
   })

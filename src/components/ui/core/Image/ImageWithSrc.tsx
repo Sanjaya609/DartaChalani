@@ -1,5 +1,5 @@
-import PreviewUnavailable from '@/assets/image/preview-unavailable.jpg'
-import React, { CSSProperties, InputHTMLAttributes, useState } from 'react'
+import PreviewUnavailable from '@/assets/img/preview-unavailable.jpg'
+import React, { InputHTMLAttributes, useState } from 'react'
 import { Image } from './Image'
 import Spinner, { ISpinnerProps } from '../../Spinner/Spinner'
 import { getComputedClassNames } from '@/utility/tailwind/tailwind-utility'

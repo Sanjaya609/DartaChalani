@@ -38,16 +38,16 @@ const useGetAllServiceType = <T = IServiceTypeResponse[]>(
       }),
     {
       select: (data) => {
-        const fiscalYearData = data?.data?.data?.length ? data.data.data : []
+        const serviceTypeData = data?.data?.data?.length ? data.data.data : []
         return (
           getDataWithPropsValue?.mapDatatoStyleSelect
             ? mapDataToStyledSelect({
-              arrayData: fiscalYearData,
-              id: 'id',
-              name: 'nameEn',
-              nameNp: 'nameNp',
-            })
-            : fiscalYearData
+                arrayData: serviceTypeData,
+                id: 'id',
+                name: 'nameEn',
+                nameNp: 'nameNp',
+              })
+            : serviceTypeData
         ) as T
       },
     }
