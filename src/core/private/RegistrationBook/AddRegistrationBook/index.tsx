@@ -1,8 +1,12 @@
 import { ADToBS } from '@/components/functional/Datepicker/dateConverter'
 import DocumentsUpload from '@/components/functional/Documents/DocumentsUpload'
+import { IDocumentPayload } from '@/components/functional/Documents/DocumentsUpload/document-upload.interface'
 import Form from '@/components/functional/Form/Form'
 import SectionHeader from '@/components/functional/SectionHeader'
-import { Box, Button, Grid, Layout } from '@/components/ui'
+import toast, {
+  ToastType,
+} from '@/components/functional/ToastNotifier/ToastNotifier'
+import { Box, Button, Grid } from '@/components/ui'
 import ContainerLayout from '@/components/ui/core/Layout/ContainerLayout'
 import { Text } from '@/components/ui/core/Text'
 import { generateWardOption } from '@/utility/utility'
@@ -17,23 +21,82 @@ import {
 } from '../../MasterSetup/Location/services/location.query'
 import { useGetAllSector } from '../../MasterSetup/Sector/services/sector.query'
 import {
+  IAddRegistrationBookInitialValue,
+  IAddRegistrationBookPayload,
+} from './schema/add-registration-book.interface'
+import {
   addRegistrationBookInitialValues,
   addRegistrationBookValidationSchema,
 } from './schema/add-registration-book.schema'
+import { useCreateRegistrationBook } from './services/add-registration-book.query'
 
 const AddRegistrationBook = () => {
   const { t } = useTranslation()
-
   const [wardOption, setWardOption] = useState<OptionType[]>([])
+  const [isAllRequiredDocumentUploaded, setIsAllRequiredDocumentUploaded] =
+    useState(false)
+  const [uploadedDocumentData, setUploadedDocumentData] = useState<
+    IDocumentPayload[]
+  >([])
+
+  const { mutate: createRegistrationBook } = useCreateRegistrationBook()
 
   const { data: provinceList = [], isFetching: provinceListFetching } =
     useGetAllProvince<OptionType[]>({
       mapDatatoStyleSelect: true,
     })
+
   const { data: sectorList = [], isFetching: sectorListFetching } =
     useGetAllSector<OptionType[]>({
       mapDatatoStyleSelect: true,
     })
+
+  const handleAddRegistrationBook = (
+    values: IAddRegistrationBookInitialValue
+  ) => {
+    if (!isAllRequiredDocumentUploaded) {
+      return toast({
+        type: ToastType.error,
+        message: 'Please upload all required documents.',
+      })
+    }
+
+    const {
+      applicationDate,
+      letterDispatchDate,
+      letterDispatchNumber,
+      letterLinks,
+      letterSenderName,
+      letterToPerson,
+      localBodyId,
+      physicalAddress,
+      remarks,
+      sectorId,
+      subjectOfLetter,
+      wardNumber,
+      registrationNumber,
+    } = values
+
+    const reqData: IAddRegistrationBookPayload = {
+      applicationDate,
+      letterDispatchDate,
+      letterDispatchNumber,
+      letterLinks,
+      letterSenderName,
+      letterToPerson,
+      localBodyId,
+      physicalAddress,
+      registrationNumber,
+      remarks,
+      sectorId,
+      subjectOfLetter,
+      wardNumber,
+      documents: uploadedDocumentData,
+      moduleId: 56,
+    }
+
+    createRegistrationBook(reqData)
+  }
 
   const {
     values,
@@ -47,24 +110,18 @@ const AddRegistrationBook = () => {
     initialValues: addRegistrationBookInitialValues,
     enableReinitialize: true,
     validationSchema: addRegistrationBookValidationSchema,
-    onSubmit: (value) => {
-      // mutate(
-      //   {
-      //     ...value,
-      //     maxFileSize: +values.maxFileSize,
-      //   },
-      //   { onSuccess: () => resetFormValues() }
-      // )
+    onSubmit: (values) => {
+      handleAddRegistrationBook(values)
     },
   })
 
   const { data: districtList = [], isFetching: districtListFetching } =
-    useGetAllDistrictByProvinceId<OptionType[]>(values?.provinceId, {
+    useGetAllDistrictByProvinceId<OptionType[]>(values?.provinceId || '', {
       mapDatatoStyleSelect: true,
     })
 
   const { data: localBodyList = [], isFetching: localBodyListFetching } =
-    useGetAllLocalBodyByDistrictId<OptionType[]>(values?.districtId, {
+    useGetAllLocalBodyByDistrictId<OptionType[]>(values?.districtId || '', {
       mapDatatoStyleSelect: true,
     })
 
@@ -77,7 +134,7 @@ const AddRegistrationBook = () => {
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.NepaliDatePicker
                 disabled
-                value={ADToBS(values.applicationDate)}
+                value={values.applicationDate}
                 errors={errors}
                 touched={touched}
                 name="applicationDate"
@@ -95,7 +152,7 @@ const AddRegistrationBook = () => {
                 label={t('registrationBook.registrationNumber')}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                disabled
+                // disabled
               />
             </Grid.Col>
             <Grid.Col sm={'sm:col-span-3'}>
@@ -301,7 +358,11 @@ const AddRegistrationBook = () => {
           </Grid>
         </form>
 
-        <DocumentsUpload canUploadMultipleFile />
+        <DocumentsUpload
+          canUploadMultipleFile
+          setIsAllRequiredDocumentUploaded={setIsAllRequiredDocumentUploaded}
+          setUploadedDocumentData={setUploadedDocumentData}
+        />
       </ContainerLayout>
       {/* </Layout.Absolute> */}
 
@@ -315,7 +376,11 @@ const AddRegistrationBook = () => {
           >
             {t('btns.cancel')}
           </Button>
-          <Button onClick={() => handleSubmit()} className="ml-auto">
+          <Button
+            type="submit"
+            onClick={() => handleSubmit()}
+            className="ml-auto"
+          >
             Save
           </Button>
         </ContainerLayout>

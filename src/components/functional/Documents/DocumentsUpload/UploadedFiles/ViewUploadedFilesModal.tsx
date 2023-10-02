@@ -49,7 +49,7 @@ const ViewUploadedFilesModal = (props: IViewUploadedFilesModalProps) => {
           const fileExt = fileData.file?.name.split('.').pop() || ''
           return (
             <Grid.Col
-              key={fileData.uuid}
+              key={fileData.guid}
               className={`${
                 imgWidthWithLength?.[
                   filesData.length as keyof typeof imgWidthWithLength

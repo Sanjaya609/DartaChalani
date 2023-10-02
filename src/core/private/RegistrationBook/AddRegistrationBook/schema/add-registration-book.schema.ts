@@ -1,23 +1,25 @@
-import formatDate from '@/utility/date/dateFunction'
+import { ADToBS } from '@/components/functional/Datepicker/dateConverter'
 import * as Yup from 'yup'
+import { IAddRegistrationBookInitialValue } from './add-registration-book.interface'
 
-export const addRegistrationBookInitialValues = {
-  applicationDate: new Date(),
-  letterDispatchDate: '',
-  letterDispatchNumber: '',
-  letterLinks: '',
-  letterSenderName: '',
-  letterToPerson: '',
-  localBodyId: '',
-  physicalAddress: '',
-  registrationNumber: '',
-  remarks: '',
-  sectorId: '',
-  subjectOfLetter: '',
-  wardNumber: '',
-  provinceId: '',
-  districtId: '',
-}
+export const addRegistrationBookInitialValues: IAddRegistrationBookInitialValue =
+  {
+    applicationDate: ADToBS(new Date()),
+    letterDispatchDate: '',
+    letterDispatchNumber: '',
+    letterLinks: '',
+    letterSenderName: '',
+    letterToPerson: '',
+    localBodyId: '',
+    physicalAddress: '',
+    registrationNumber: '',
+    remarks: '',
+    sectorId: '',
+    subjectOfLetter: '',
+    wardNumber: '',
+    provinceId: '',
+    districtId: '',
+  }
 
 export const addRegistrationBookValidationSchema = Yup.object({
   letterDispatchDate: Yup.string().required(
@@ -37,4 +39,7 @@ export const addRegistrationBookValidationSchema = Yup.object({
     'registrationBook.errors.subjectOfLetter'
   ),
   wardNumber: Yup.string().required('registrationBook.errors.wardNumber'),
+  registrationNumber: Yup.string().required(
+    'registrationBook.errors.registrationNumber'
+  ),
 })

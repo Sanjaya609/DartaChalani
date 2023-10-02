@@ -1,5 +1,5 @@
 export type FileData = {
-  uuid: string
+  guid: string
   file: Blob | null
 }
 
@@ -20,4 +20,9 @@ export type FileStateFile = Record<string, IFileStateFileValue>
 export interface IFileState {
   files: FileStateFile
   isRequiredFileUploaded: boolean
+}
+
+export interface IDocumentPayload {
+  guid: string
+  documentTypeId: number
 }
