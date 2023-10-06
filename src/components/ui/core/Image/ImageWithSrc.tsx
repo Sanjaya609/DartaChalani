@@ -1,4 +1,3 @@
-import PreviewUnavailable from '@/assets/img/preview-unavailable.jpg'
 import React, { InputHTMLAttributes, useState } from 'react'
 import { Image } from './Image'
 import Spinner, { ISpinnerProps } from '../../Spinner/Spinner'
@@ -41,12 +40,12 @@ const ImageWithSrc = React.forwardRef<
         onLoad={() => setLoading(false)}
         {...restProps}
         ref={ref}
-        src={src || PreviewUnavailable}
+        src={src || ""}
         alt="profile"
         className={computedClassName}
         onError={(event) => {
-          ;(event.target as HTMLImageElement).src =
-            noImageContent || PreviewUnavailable
+          ; (event.target as HTMLImageElement).src =
+            noImageContent || ""
         }}
         onClick={onClick}
       />
