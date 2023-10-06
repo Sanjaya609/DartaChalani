@@ -7,22 +7,24 @@ import { ColumnDef } from '@tanstack/react-table'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
-  IDocumentTypeInitialValue,
-  IDocumentTypeResponse,
-} from '../schema/document-type.interface'
+  IModuleDocumentMappingInitialValue,
+  IModuleDocumentMappingResponse,
+} from '../schema/module-document-mapping.interface'
 import {
-  useChangeDocumentTypeStatus,
-  useGetAllDocumentType,
-} from '../services/document-type.query'
+  useChangeModuleDocumentMappingStatus,
+  useGetAllModuleDocumentMapping,
+} from '../services/module-document-mapping.query'
 
-interface IDocumentTypeProps {
-  initialValues: IDocumentTypeInitialValue
+interface IModuleDocumentMappingTableProps {
+  initialValues: IModuleDocumentMappingInitialValue
   setInitialValues: React.Dispatch<
-    React.SetStateAction<IDocumentTypeInitialValue>
+    React.SetStateAction<IModuleDocumentMappingInitialValue>
   >
 }
 
-const DocumentType = (props: IDocumentTypeProps) => {
+const ModuleDocumentMappingTable = (
+  props: IModuleDocumentMappingTableProps
+) => {
   const { setInitialValues } = props
 
   const [currentSelectedId, setCurrentSelectedId] = useState<null | number>(
@@ -30,28 +32,27 @@ const DocumentType = (props: IDocumentTypeProps) => {
   )
 
   const { t } = useTranslation()
-  const { data: documentTypeData, isFetching } = useGetAllDocumentType()
+  const { data: documentTypeData, isFetching } =
+    useGetAllModuleDocumentMapping()
   const {
     mutate: changeDocumentTypeStatus,
     isLoading: changeDocumentTypeStatusLoading,
-  } = useChangeDocumentTypeStatus()
+  } = useChangeModuleDocumentMappingStatus()
 
   const setOrRemoveCurrentSelectedId = (id?: number) =>
     setCurrentSelectedId(id || null)
 
   const handleEditClick = ({
     id,
-    allowedFileTypes,
-    documentTypeEn,
-    documentTypeNp,
-    maxFileSize,
-  }: IDocumentTypeResponse) => {
+    isMandatory,
+    moduleResponse: { id: moduleId },
+    documentTypeResponse: { id: documentTypeId },
+  }: IModuleDocumentMappingResponse) => {
     setInitialValues({
       id,
-      allowedFileTypes,
-      documentTypeEn,
-      documentTypeNp,
-      maxFileSize,
+      isMandatory,
+      moduleId,
+      documentTypeId,
     })
   }
 
@@ -68,36 +69,43 @@ const DocumentType = (props: IDocumentTypeProps) => {
     }
   }
 
-  const columns = React.useMemo<ColumnDef<IDocumentTypeResponse>[]>(
+  const columns = React.useMemo<ColumnDef<IModuleDocumentMappingResponse>[]>(
     () => [
       {
         header: t('masterSetup.documentType.documentTypeEn'),
-        accessorKey: 'documentTypeEn',
+        accessorKey: 'documentTypeResponse.documentTypeEn',
       },
       {
         header: t('masterSetup.documentType.documentTypeNp'),
-        accessorKey: 'documentTypeNp',
+        accessorKey: 'documentTypeResponse.documentTypeNp',
       },
       {
-        header: t('masterSetup.documentType.maxFileSize'),
-        accessorKey: 'maxFileSize',
+        header: t('security.module.moduleNameEnglish'),
+        accessorKey: 'moduleResponse.moduleNameEnglish',
       },
       {
-        header: t('masterSetup.documentType.allowedFileTypes'),
-        accessorKey: 'allowedFileTypes',
+        header: t('security.module.moduleNameNepali'),
+        accessorKey: 'moduleResponse.moduleNameNepali',
       },
       {
-        header: t('masterSetup.documentType.status'),
-        accessorKey: 'isActive',
-        cell: ({ row: { original } }) => (
-          <Switch
-            checked={original.isActive}
-            onChange={() => {
-              setOrRemoveCurrentSelectedId(original.id)
-            }}
-          />
-        ),
+        header: t('masterSetup.documentType.isMandatory'),
+        accessorKey: 'isMandatory',
+        cell: ({ row: { original } }) =>
+          original.isMandatory ? t('yes') : t('no'),
       },
+
+      // {
+      //   header: t('masterSetup.documentType.status'),
+      //   accessorKey: 'isActive',
+      //   cell: ({ row: { original } }) => (
+      //     <Switch
+      //       checked={original.isActive}
+      //       onChange={() => {
+      //         setOrRemoveCurrentSelectedId(original.id)
+      //       }}
+      //     />
+      //   ),
+      // },
       {
         header: t('actions'),
         cell: ({ row: { original } }) => (
@@ -135,4 +143,4 @@ const DocumentType = (props: IDocumentTypeProps) => {
   )
 }
 
-export default DocumentType
+export default ModuleDocumentMappingTable

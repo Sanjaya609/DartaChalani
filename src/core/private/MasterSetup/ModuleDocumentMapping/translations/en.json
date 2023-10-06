@@ -1,0 +1,17 @@
+{
+  "title": "Document Type Module Mapping",
+  "documentTypeId": "Document Type Name",
+  "isMandatory": "Is Mandatory ?",
+  "moduleId": "Module Name",
+  "status": "Status",
+  "errors": {
+    "documentTypeId": "Document Type is required",
+    "moduleId": "Module Name is required"
+  },
+  "modal": {
+    "status": {
+      "title": "Change Status",
+      "description": "Are you sure you want to change the status?"
+    }
+  }
+}

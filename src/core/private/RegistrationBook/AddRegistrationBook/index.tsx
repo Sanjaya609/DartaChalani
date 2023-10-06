@@ -86,7 +86,7 @@ const AddRegistrationBook = () => {
       letterToPerson,
       localBodyId,
       physicalAddress,
-      registrationNumber,
+      registrationNumber: registrationNumber || undefined,
       remarks,
       sectorId,
       subjectOfLetter,
@@ -143,18 +143,7 @@ const AddRegistrationBook = () => {
                 onBlur={handleBlur}
               />
             </Grid.Col>
-            <Grid.Col sm={'sm:col-span-3'}>
-              <Form.Input
-                value={values.registrationNumber}
-                errors={errors}
-                touched={touched}
-                name="registrationNumber"
-                label={t('registrationBook.registrationNumber')}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                // disabled
-              />
-            </Grid.Col>
+
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Select
                 options={provinceList}

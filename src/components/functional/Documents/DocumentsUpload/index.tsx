@@ -33,6 +33,8 @@ import { getTextByLanguage } from '@/lib/i18n/i18n'
 import { useTranslation } from 'react-i18next'
 import UploadedFiles from './UploadedFiles/UploadedFiles'
 import ViewUploadedFilesModal from './UploadedFiles/ViewUploadedFilesModal'
+import { useGetAllModuleDocumentMappingByModuleId } from '@/core/private/MasterSetup/ModuleDocumentMapping/services/module-document-mapping.query'
+import { IModuleDocumentMappingResponse } from '@/core/private/MasterSetup/ModuleDocumentMapping/schema/module-document-mapping.interface'
 
 interface IDocumentsUploadProps {
   moduleId?: StringNumber
@@ -69,7 +71,7 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
   const { t } = useTranslation()
 
   const { data: requiredDocumentList = [] } =
-    useGetAllDocumentListByModuleId('56')
+    useGetAllModuleDocumentMappingByModuleId('56')
 
   const { mutate: uploadDocument } = useDocumentUpload()
 
@@ -82,12 +84,12 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
             guid: '',
             file: null,
           },
-          allowedFileTypes: currFile.allowedFileTypes,
+          allowedFileTypes: currFile.documentTypeResponse.allowedFileTypes,
           errors: [],
           isMandatory: currFile.isMandatory,
-          documentTypeEn: currFile.documentTypeEn,
-          documentTypeNp: currFile.documentTypeNp,
-          maxFileSize: currFile.maxFileSize,
+          documentTypeEn: currFile.documentTypeResponse.documentTypeEn,
+          documentTypeNp: currFile.documentTypeResponse.documentTypeNp,
+          maxFileSize: currFile.documentTypeResponse.maxFileSize,
           filesData: [],
         }
         return allFiles
@@ -217,15 +219,15 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
     setCurrentViewDocument(id)
   }
 
-  const columns = useMemo<ColumnDef<IDocumentTypeResponse>[]>(
+  const columns = useMemo<ColumnDef<IModuleDocumentMappingResponse>[]>(
     () => [
       {
         header: t('document.documentTypeEn'),
-        accessorKey: 'documentTypeEn',
+        accessorKey: 'documentTypeResponse.documentTypeEn',
       },
       {
         header: t('document.documentTypeNp'),
-        accessorKey: 'documentTypeNp',
+        accessorKey: 'documentTypeResponse.documentTypeNp',
       },
       {
         header: t('document.isMandatory'),
@@ -235,11 +237,11 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
       },
       {
         header: t('document.allowedFileTypes'),
-        accessorKey: 'allowedFileTypes',
+        accessorKey: 'documentTypeResponse.allowedFileTypes',
       },
       {
         header: t('document.maxFileSize'),
-        accessorKey: 'maxFileSize',
+        accessorKey: 'documentTypeResponse.maxFileSize',
       },
       {
         header: t('document.uploadedFiles'),
@@ -265,7 +267,10 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
       {
         header: 'Actions',
         cell: ({ row: { original } }) => {
-          const { id, allowedFileTypes } = original
+          const {
+            id,
+            documentTypeResponse: { allowedFileTypes },
+          } = original
           const acceptProps = allowedFileTypes
             .map((fileType) => `.${fileType.toLowerCase()}`)
             .join(', ')
@@ -304,8 +309,12 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
   )
 
   return (
-    <div className="h-full">
-      <DataTable data={requiredDocumentList} columns={columns} />
+    <div className="">
+      <DataTable
+        data={requiredDocumentList}
+        columns={columns}
+        withScrollable={false}
+      />
 
       <ViewUploadedFilesModal
         isOpen={!!currentViewDocument}
