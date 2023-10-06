@@ -5,7 +5,8 @@
     "sector": "क्षेत्र",
     "serviceType": "सेवा प्रकार",
     "documentType": "कागजात प्रकार",
-    "office": "कार्यालय"
+    "office": "कार्यालय",
+    "moduleDocumentMapping": "कागजात प्रकार मोड्युल म्यापिङ"
   },
   "dashboard": "ड्यासबोर्ड",
   "security": {

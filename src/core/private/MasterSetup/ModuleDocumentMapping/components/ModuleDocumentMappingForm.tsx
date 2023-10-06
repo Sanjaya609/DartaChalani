@@ -1,33 +1,41 @@
 import Form from '@/components/functional/Form/Form'
 import { Box, Button, Grid } from '@/components/ui'
+import { useGetConfigurableModuleList } from '@/core/private/Security/ModuleSetup/services/moduleSetup.query'
 import { useGetEnumDataWithValue } from '@/service/generic/generic.query'
 import { APIENUM } from '@/utility/enums/api.enum'
 import { inputChangeNumberOnly } from '@/utility/inputUtils/input-change-utils'
 import { useFormik } from 'formik'
 import { useTranslation } from 'react-i18next'
-import { IDocumentTypeInitialValue } from '../schema/document-type.interface'
+import { useGetAllDocumentType } from '../../DocumentType/services/document-type.query'
+import { IModuleDocumentMappingInitialValue } from '../schema/module-document-mapping.interface'
 import {
   documentTypeInitialValue,
   documentTypeValidationSchema,
-} from '../schema/document-type.schema'
-import { useCreateDocumentType } from '../services/document-type.query'
+} from '../schema/module-document-mapping.schema'
+import { useCreateModuleDocumentMapping } from '../services/module-document-mapping.query'
 
-interface IDocumentTypeFormProps {
-  initialValues: IDocumentTypeInitialValue
+interface IModuleDocumentMappingFormProps {
+  initialValues: IModuleDocumentMappingInitialValue
   setInitialValues: React.Dispatch<
-    React.SetStateAction<IDocumentTypeInitialValue>
+    React.SetStateAction<IModuleDocumentMappingInitialValue>
   >
 }
 
-const DocumentTypeForm = (props: IDocumentTypeFormProps) => {
+const ModuleDocumentMappingForm = (props: IModuleDocumentMappingFormProps) => {
   const { initialValues, setInitialValues } = props
-  const { mutate, isLoading } = useCreateDocumentType()
+  const { mutate, isLoading } = useCreateModuleDocumentMapping()
 
-  const { data: allowedFileTypeOption = [] } = useGetEnumDataWithValue<
-    OptionType[]
-  >(APIENUM.FILE_EXTENSION, {
+  const {
+    data: documentModuleNameOption = [],
+    isFetching: moduleNameFetching,
+  } = useGetConfigurableModuleList<OptionType[]>({
     mapDatatoStyleSelect: true,
   })
+
+  const { data: documentTypeData = [], isFetching: documentTypeDataFetching } =
+    useGetAllDocumentType<OptionType[]>({
+      mapDatatoStyleSelect: true,
+    })
 
   const { t } = useTranslation()
 
@@ -51,7 +59,6 @@ const DocumentTypeForm = (props: IDocumentTypeFormProps) => {
       mutate(
         {
           ...value,
-          maxFileSize: +values.maxFileSize,
         },
         {
           onSuccess: () => {
@@ -67,66 +74,49 @@ const DocumentTypeForm = (props: IDocumentTypeFormProps) => {
     <form onSubmit={handleSubmit} className="w-full">
       <Grid sm={'sm:grid-cols-12'} gap="gap-4">
         <Grid.Col sm={'sm:col-span-4'}>
-          <Form.Input
-            value={values.documentTypeEn}
+          <Form.Select
+            isLoading={moduleNameFetching}
+            options={documentModuleNameOption}
+            calculateValueOnChange
+            value={values.moduleId}
             errors={errors}
             touched={touched}
-            name="documentTypeEn"
-            label={t('masterSetup.documentType.documentTypeEn')}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-        </Grid.Col>
-        <Grid.Col sm={'sm:col-span-4'}>
-          <Form.Input
-            isNepali
-            value={values.documentTypeNp}
-            errors={errors}
-            touched={touched}
-            name="documentTypeNp"
-            label={t('masterSetup.documentType.documentTypeNp')}
-            onChange={handleChange}
+            name="moduleId"
+            label={t('masterSetup.documentType.moduleName')}
+            onChange={(event) => {
+              setFieldValue(event.name, event?.main || '')
+            }}
             onBlur={handleBlur}
           />
         </Grid.Col>
 
         <Grid.Col sm={'sm:col-span-4'}>
           <Form.Select
-            options={allowedFileTypeOption}
-            multiCheckbox
-            value={
-              (allowedFileTypeOption?.filter((fileType) =>
-                values?.allowedFileTypes.find(
-                  (allowType) => allowType === fileType.value
-                )
-              ) || []) as unknown as OptionType[]
-            }
+            isLoading={documentTypeDataFetching}
+            options={documentTypeData}
+            calculateValueOnChange
+            value={values.documentTypeId}
             errors={errors}
             touched={touched}
-            name="allowedFileTypes"
-            label={t('masterSetup.documentType.allowedFileTypes')}
-            onChange={(e) => {
-              setFieldValue(
-                'allowedFileTypes',
-                e.value?.map((file: OptionType) => file.value) || []
-              )
+            name="documentTypeId"
+            label={t('masterSetup.moduleDocumentMapping.documentTypeId')}
+            onChange={(event) => {
+              setFieldValue(event.name, event?.main || '')
             }}
             onBlur={handleBlur}
           />
         </Grid.Col>
 
         <Grid.Col sm={'sm:col-span-2'}>
-          <Form.Input
-            value={values.maxFileSize}
+          <Form.Switch
+            className="inline"
+            checked={values.isMandatory}
             errors={errors}
             touched={touched}
-            name="maxFileSize"
-            label={t('masterSetup.documentType.maxFileSize')}
-            onChange={(event) => {
-              inputChangeNumberOnly({
-                event,
-                handleChange,
-              })
+            name="isMandatory"
+            label={t('masterSetup.documentType.isMandatory')}
+            onChange={() => {
+              setFieldValue('isMandatory', !values.isMandatory)
             }}
             onBlur={handleBlur}
           />
@@ -154,4 +144,4 @@ const DocumentTypeForm = (props: IDocumentTypeFormProps) => {
   )
 }
 
-export default DocumentTypeForm
+export default ModuleDocumentMappingForm

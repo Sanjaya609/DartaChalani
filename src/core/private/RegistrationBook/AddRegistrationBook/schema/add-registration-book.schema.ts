@@ -39,7 +39,4 @@ export const addRegistrationBookValidationSchema = Yup.object({
     'registrationBook.errors.subjectOfLetter'
   ),
   wardNumber: Yup.string().required('registrationBook.errors.wardNumber'),
-  registrationNumber: Yup.string().required(
-    'registrationBook.errors.registrationNumber'
-  ),
 })

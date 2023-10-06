@@ -7,4 +7,5 @@ export const masterSetupRoutePath = {
   serviceType: `${baseRoute}/service-type`,
   documentType: `${baseRoute}/document-type`,
   office: `${baseRoute}/office`,
+  moduleDocumentMapping: `${baseRoute}/document-module-mapping`,
 }

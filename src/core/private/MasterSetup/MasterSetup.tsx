@@ -30,6 +30,10 @@ const MasterSetup = () => {
         title: t('sidebar.masterSetup.documentType'),
         path: privateRoutePath.masterSetup.documentType,
       },
+      {
+        title: t('sidebar.masterSetup.moduleDocumentMapping'),
+        path: privateRoutePath.masterSetup.moduleDocumentMapping,
+      },
     ],
     [t]
   )

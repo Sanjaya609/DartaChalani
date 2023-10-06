@@ -17,6 +17,9 @@ const DocumentType = React.lazy(
   () => import('@/core/private/MasterSetup/DocumentType')
 )
 const Office = React.lazy(() => import('@/core/private/MasterSetup/Office'))
+const ModuleDocumentMapping = React.lazy(
+  () => import('@/core/private/MasterSetup/ModuleDocumentMapping')
+)
 
 export const masterSetupRoutes: _RouteObject<'private'>[] = [
   createRoute({
@@ -42,6 +45,10 @@ export const masterSetupRoutes: _RouteObject<'private'>[] = [
       createRoute({
         path: privateRoutePath.masterSetup.office,
         element: Office,
+      }),
+      createRoute({
+        path: privateRoutePath.masterSetup.moduleDocumentMapping,
+        element: ModuleDocumentMapping,
       }),
     ],
   }),

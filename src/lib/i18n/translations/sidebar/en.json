@@ -5,7 +5,8 @@
     "sector": "Sector",
     "serviceType": "Service Type",
     "documentType": "Document Type",
-    "office": "Office"
+    "office": "Office",
+    "moduleDocumentMapping": "Document Type Module Mapping"
   },
   "dashboard": "Dashboard",
   "security": {
