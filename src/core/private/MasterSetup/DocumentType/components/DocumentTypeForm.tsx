@@ -47,19 +47,20 @@ const DocumentTypeForm = (props: IDocumentTypeFormProps) => {
     initialValues,
     enableReinitialize: true,
     validationSchema: documentTypeValidationSchema,
-    onSubmit: (value, { resetForm }) => {
-      mutate(
-        {
-          ...value,
-          maxFileSize: +values.maxFileSize,
+    onSubmit: (values, { resetForm }) => {
+      const reqVal = {
+        ...values,
+        maxFileSize: +values.maxFileSize,
+        allowedFileTypes: values?.allowedFileTypes.filter(
+          (fileType) => fileType !== '*'
+        ),
+      }
+      mutate(reqVal, {
+        onSuccess: () => {
+          resetFormValues()
+          resetForm()
         },
-        {
-          onSuccess: () => {
-            resetFormValues()
-            resetForm()
-          },
-        }
-      )
+      })
     },
   })
 

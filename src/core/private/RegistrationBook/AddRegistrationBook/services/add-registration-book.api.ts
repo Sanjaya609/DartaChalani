@@ -18,6 +18,11 @@ const addRegistrationBookAPI = {
     queryKeyName: 'CHANGE_REGISTRATION_BOOK_STATUS',
     requestMethod: RequestMethod.PUT,
   },
+  getRegistrationBookById: {
+    controllerName: `${prefix}/{id}`,
+    queryKeyName: 'GET_REGISTRATION_BOOK_DETAIL_BY_ID',
+    requestMethod: RequestMethod.GET,
+  },
 }
 
 export default addRegistrationBookAPI

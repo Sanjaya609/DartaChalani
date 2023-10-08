@@ -2,6 +2,7 @@ import Switch from '@/components/functional/Form/Switch/Switch'
 import { DataTable } from '@/components/functional/Table'
 import TableAction from '@/components/functional/Table/Components/Table/TableAction'
 import Modal from '@/components/ui/Modal/Modal'
+import { getTextByLanguage } from '@/lib/i18n/i18n'
 import { ColumnDef } from '@tanstack/react-table'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -71,6 +72,11 @@ const Office = (props: IOfficeProps) => {
         header: t('masterSetup.office.addressNp'),
 
         accessorKey: 'addressNp',
+      },
+      {
+        header: t('masterSetup.office.wardNo'),
+
+        accessorKey: getTextByLanguage('wardNo', 'wardNoNp'),
       },
 
       {

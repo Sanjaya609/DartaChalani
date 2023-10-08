@@ -1,13 +1,15 @@
 import { initApiRequest } from '@/lib/api-request'
 import { apiDetails } from '@/service/api'
-import { mapDataToStyledSelect } from '@/utility/react-select-helper'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { IAddRegistrationBookInitialValue } from '../schema/add-registration-book.interface'
+import {
+  IAddRegistrationBookInitialValue,
+  IRegistrationBookResponse,
+} from '../schema/add-registration-book.interface'
 
 const {
   createRegistrationBook,
   getAllRegistrationBook,
-  changeRegistrationBookStatus,
+  getRegistrationBookById,
 } = apiDetails
 
 const useCreateRegistrationBook = () => {
@@ -27,15 +29,11 @@ const useCreateRegistrationBook = () => {
   )
 }
 
-const useGetAllRegistrationBook = <T = IAddRegistrationBookInitialValue[]>(
-  getDataWithPropsValue?: IGetDataWithPropsVal
-) => {
+const useGetAllRegistrationBook = <T = IRegistrationBookResponse[]>() => {
   return useQuery(
     [getAllRegistrationBook.controllerName],
     () =>
-      initApiRequest<
-        BackendSuccessResponse<IAddRegistrationBookInitialValue[]>
-      >({
+      initApiRequest<BackendSuccessResponse<IRegistrationBookResponse[]>>({
         apiDetails: getAllRegistrationBook,
       }),
     {
@@ -44,36 +42,32 @@ const useGetAllRegistrationBook = <T = IAddRegistrationBookInitialValue[]>(
           ? data.data.data
           : []
         return registrationBookData as T
-        // return (
-        //   getDataWithPropsValue?.mapDatatoStyleSelect
-        //     ? mapDataToStyledSelect({
-        //         arrayData: fiscalYearData,
-        //         id: 'id',
-        //         name: 'nameEn',
-        //         nameNp: 'nameNp',
-        //       })
-        //     : fiscalYearData
-        // ) as T
       },
     }
   )
 }
 
-// const useChangeServiceTypeStatus = () => {
-//   const queryClient = useQueryClient()
-//   return useMutation(
-//     (pathVariables: { serviceTypeId: number | string }) => {
-//       return initApiRequest({
-//         apiDetails: changeServiceTypeStatus,
-//         pathVariables,
-//       })
-//     },
-//     {
-//       onSuccess: () => {
-//         queryClient.invalidateQueries([getAllServiceType.controllerName])
-//       },
-//     }
-//   )
-// }
+const useGetRegistrationBookDetailById = (id: string | number | null) => {
+  return useQuery(
+    [getRegistrationBookById.controllerName, id],
+    () =>
+      initApiRequest<BackendSuccessResponse<IRegistrationBookResponse>>({
+        apiDetails: getRegistrationBookById,
+        pathVariables: {
+          id,
+        },
+      }),
+    {
+      select: (data) => {
+        return data?.data?.data
+      },
+      enabled: !!id,
+    }
+  )
+}
 
-export { useCreateRegistrationBook, useGetAllRegistrationBook }
+export {
+  useCreateRegistrationBook,
+  useGetAllRegistrationBook,
+  useGetRegistrationBookDetailById,
+}

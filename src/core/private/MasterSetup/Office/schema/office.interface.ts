@@ -5,6 +5,8 @@ export interface IOfficeInitialValue {
   addressNp: string
   id?: number
   isActive: boolean
+  wardNo: number | string
+  wardNoNp: string
 }
 
 export interface IOfficeListResponse {
@@ -14,4 +16,6 @@ export interface IOfficeListResponse {
   addressNp: string
   id: number
   isActive: boolean
+  wardNo: number | string
+  wardNoNp: string
 }

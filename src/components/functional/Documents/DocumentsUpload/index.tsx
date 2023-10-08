@@ -1,3 +1,14 @@
+import toast, {
+  ToastType,
+} from '@/components/functional/ToastNotifier/ToastNotifier'
+import { Box } from '@/components/ui'
+import { IModuleDocumentMappingResponse } from '@/core/private/MasterSetup/ModuleDocumentMapping/schema/module-document-mapping.interface'
+import { useGetAllModuleDocumentMappingByModuleId } from '@/core/private/MasterSetup/ModuleDocumentMapping/services/module-document-mapping.query'
+import { getTextByLanguage } from '@/lib/i18n/i18n'
+import { useDocumentUpload } from '@/service/generic/generic.query'
+import { validateDocumentFile } from '@/utility/document/document-validations'
+import { ColumnDef } from '@tanstack/react-table'
+import { UploadSimple } from 'phosphor-react'
 import {
   ChangeEvent,
   Dispatch,
@@ -6,35 +17,22 @@ import {
   useMemo,
   useState,
 } from 'react'
+import { useTranslation } from 'react-i18next'
+import { DataTable } from '../../Table'
+import {
+  tableActionIcon,
+  tableActionList,
+  tableActionTooltip,
+} from '../../Table/Components/Table/table.schema'
+import TableAction from '../../Table/Components/Table/TableAction'
 import {
   FileData,
   FileStateFile,
   IDocumentPayload,
   IFileState,
 } from './document-upload.interface'
-import { DataTable } from '../../Table'
-import TableAction from '../../Table/Components/Table/TableAction'
-import {
-  tableActionIcon,
-  tableActionList,
-  tableActionTooltip,
-} from '../../Table/Components/Table/table.schema'
-import { Gear, UploadSimple } from 'phosphor-react'
-import { Box } from '@/components/ui'
-import { ColumnDef } from '@tanstack/react-table'
-import { useGetAllDocumentListByModuleId } from '@/core/private/MasterSetup/DocumentType/services/document-type.query'
-import { useDocumentUpload } from '@/service/generic/generic.query'
-import { validateDocumentFile } from '@/utility/document/document-validations'
-import { IDocumentTypeResponse } from '@/core/private/MasterSetup/DocumentType/schema/document-type.interface'
-import toast, {
-  ToastType,
-} from '@/components/functional/ToastNotifier/ToastNotifier'
-import { getTextByLanguage } from '@/lib/i18n/i18n'
-import { useTranslation } from 'react-i18next'
 import UploadedFiles from './UploadedFiles/UploadedFiles'
 import ViewUploadedFilesModal from './UploadedFiles/ViewUploadedFilesModal'
-import { useGetAllModuleDocumentMappingByModuleId } from '@/core/private/MasterSetup/ModuleDocumentMapping/services/module-document-mapping.query'
-import { IModuleDocumentMappingResponse } from '@/core/private/MasterSetup/ModuleDocumentMapping/schema/module-document-mapping.interface'
 
 interface IDocumentsUploadProps {
   moduleId?: StringNumber
@@ -78,8 +76,8 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
   const structureFileState = () => {
     const initialFileState = requiredDocumentList.reduce<FileStateFile>(
       (allFiles, currFile) => {
-        allFiles[currFile.id] = {
-          documentTypeId: currFile.id,
+        allFiles[currFile.documentTypeResponse.id] = {
+          documentTypeId: currFile.documentTypeResponse.id,
           fileData: {
             guid: '',
             file: null,
@@ -247,7 +245,9 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
         header: t('document.uploadedFiles'),
         cell: ({
           row: {
-            original: { id },
+            original: {
+              documentTypeResponse: { id },
+            },
           },
         }) => {
           return (
@@ -268,8 +268,7 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
         header: 'Actions',
         cell: ({ row: { original } }) => {
           const {
-            id,
-            documentTypeResponse: { allowedFileTypes },
+            documentTypeResponse: { allowedFileTypes, id },
           } = original
           const acceptProps = allowedFileTypes
             .map((fileType) => `.${fileType.toLowerCase()}`)
