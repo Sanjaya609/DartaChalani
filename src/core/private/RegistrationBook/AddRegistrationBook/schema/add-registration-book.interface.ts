@@ -1,4 +1,5 @@
 export interface IAddRegistrationBookInitialValue {
+  id?: number
   applicationDate: string
   letterDispatchDate: string
   letterDispatchNumber: string
@@ -25,4 +26,22 @@ export interface IAddRegistrationBookPayload
   extends Omit<IAddRegistrationBookInitialValue, 'provinceId' | 'districtId'> {
   moduleId: StringNumber
   documents: IDocument[]
+}
+
+export interface IRegistrationBookResponse {
+  id: number
+  registrationNumber: string
+  applicationDate: string
+  letterSenderName: string
+  letterDispatchDate: string
+  letterDispatchNumber: string
+  wardNumber: number
+  subjectOfLetter: string
+  letterToPerson: string
+  physicalAddress: string
+  remarks: string
+  letterLinks: string
+  sectorId: number
+  sectorNameNepali: string
+  sectorNameEnglish: string
 }

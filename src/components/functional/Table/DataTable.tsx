@@ -115,7 +115,8 @@ const NormalDataTable = <TData extends RowData>({
       {
         id: 'Sn',
         header: () => t('sn'),
-        cell: (prop) => prop.row.index + 1,
+        show: !!withSN,
+        cell: (prop: TAny) => prop.row.index + 1,
       },
       ...columns,
     ],

@@ -1,5 +1,7 @@
+import { convertEngToNepNumber } from '@/components/functional/Datepicker/datePickerUtils'
 import Form from '@/components/functional/Form/Form'
 import { Box, Button, Grid } from '@/components/ui'
+import { inputChangeNumberOnly } from '@/utility/inputUtils/input-change-utils'
 import { useFormik } from 'formik'
 import { useTranslation } from 'react-i18next'
 import { IOfficeInitialValue } from '../schema/office.interface'
@@ -28,6 +30,7 @@ const OfficeForm = (props: IOfficeFormProps) => {
     handleBlur,
     handleSubmit,
     resetForm,
+    setFieldValue,
   } = useFormik({
     initialValues,
     enableReinitialize: true,
@@ -90,6 +93,31 @@ const OfficeForm = (props: IOfficeFormProps) => {
             name="addressNp"
             label={t('masterSetup.office.addressNp')}
             onChange={handleChange}
+            onBlur={handleBlur}
+          />
+        </Grid.Col>
+
+        <Grid.Col sm={'sm:col-span-3'}>
+          <Form.Input
+            value={values.wardNo}
+            errors={errors}
+            touched={touched}
+            name="wardNo"
+            label={t('masterSetup.office.wardNo')}
+            onChange={(event) => {
+              inputChangeNumberOnly({
+                event,
+                handleChange,
+                afterChangeFunction: (event) => {
+                  setFieldValue(
+                    'wardNoNp',
+                    event.target?.value
+                      ? convertEngToNepNumber(event.target.value)
+                      : ''
+                  )
+                },
+              })
+            }}
             onBlur={handleBlur}
           />
         </Grid.Col>

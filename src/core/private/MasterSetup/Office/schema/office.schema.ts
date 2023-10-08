@@ -7,6 +7,8 @@ export const officeInitialValue: IOfficeInitialValue = {
   isActive: true,
   officeNameEn: '',
   officeNameNP: '',
+  wardNo: '',
+  wardNoNp: '',
 }
 
 export const officeValidationSchema = Yup.object({
@@ -14,4 +16,5 @@ export const officeValidationSchema = Yup.object({
   officeNameNP: Yup.string().required('masterSetup.office.errors.officeNameNP'),
   addressNp: Yup.string().required('masterSetup.office.errors.addressNp'),
   addressEn: Yup.string().required('masterSetup.office.errors.addressEn'),
+  wardNo: Yup.string().required('masterSetup.office.errors.wardNo'),
 })

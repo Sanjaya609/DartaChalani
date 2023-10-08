@@ -9,9 +9,11 @@ import toast, {
 import { Box, Button, Grid } from '@/components/ui'
 import ContainerLayout from '@/components/ui/core/Layout/ContainerLayout'
 import { Text } from '@/components/ui/core/Text'
+import { privateRoutePath, useLocation, useNavigate, useParams } from '@/router'
+import { decodeParams } from '@/utility/route-params'
 import { generateWardOption } from '@/utility/utility'
 import { useFormik } from 'formik'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ILocalBodyList } from '../../MasterSetup/Location/schema/location.interface'
 import {
@@ -28,18 +30,30 @@ import {
   addRegistrationBookInitialValues,
   addRegistrationBookValidationSchema,
 } from './schema/add-registration-book.schema'
-import { useCreateRegistrationBook } from './services/add-registration-book.query'
+import {
+  useCreateRegistrationBook,
+  useGetRegistrationBookDetailById,
+} from './services/add-registration-book.query'
 
 const AddRegistrationBook = () => {
   const { t } = useTranslation()
   const [wardOption, setWardOption] = useState<OptionType[]>([])
+  const [initialRegistrationBookValue, setInitialRegistrationBookValue] =
+    useState(addRegistrationBookInitialValues)
   const [isAllRequiredDocumentUploaded, setIsAllRequiredDocumentUploaded] =
     useState(false)
   const [uploadedDocumentData, setUploadedDocumentData] = useState<
     IDocumentPayload[]
   >([])
 
+  const navigate = useNavigate()
+  const params = useParams()
+  const registrationBookId = decodeParams<string>(params?.id)
+
   const { mutate: createRegistrationBook } = useCreateRegistrationBook()
+
+  const { data: registrationBookDetails } =
+    useGetRegistrationBookDetailById(registrationBookId)
 
   const { data: provinceList = [], isFetching: provinceListFetching } =
     useGetAllProvince<OptionType[]>({
@@ -50,6 +64,48 @@ const AddRegistrationBook = () => {
     useGetAllSector<OptionType[]>({
       mapDatatoStyleSelect: true,
     })
+
+  useEffect(() => {
+    if (registrationBookDetails) {
+      const {
+        id,
+        applicationDate,
+        letterDispatchDate,
+        letterDispatchNumber,
+        letterLinks,
+        letterSenderName,
+        letterToPerson,
+        physicalAddress,
+        registrationNumber,
+        remarks,
+        sectorId,
+        subjectOfLetter,
+        wardNumber,
+      } = registrationBookDetails
+      setInitialRegistrationBookValue({
+        id,
+        applicationDate,
+        letterDispatchDate,
+        letterDispatchNumber,
+        letterLinks,
+        letterSenderName,
+        letterToPerson,
+        physicalAddress,
+        registrationNumber,
+        remarks,
+        sectorId,
+        subjectOfLetter,
+        wardNumber,
+        localBodyId: '',
+        districtId: '',
+        provinceId: '',
+      })
+    }
+  }, [registrationBookDetails])
+
+  const navigateToBookList = () => {
+    navigate(privateRoutePath.registrationBook.base)
+  }
 
   const handleAddRegistrationBook = (
     values: IAddRegistrationBookInitialValue
@@ -75,6 +131,7 @@ const AddRegistrationBook = () => {
       subjectOfLetter,
       wardNumber,
       registrationNumber,
+      id,
     } = values
 
     const reqData: IAddRegistrationBookPayload = {
@@ -93,9 +150,14 @@ const AddRegistrationBook = () => {
       wardNumber,
       documents: uploadedDocumentData,
       moduleId: 56,
+      id: id || undefined,
     }
 
-    createRegistrationBook(reqData)
+    createRegistrationBook(reqData, {
+      onSuccess: () => {
+        navigateToBookList()
+      },
+    })
   }
 
   const {
@@ -107,7 +169,7 @@ const AddRegistrationBook = () => {
     handleSubmit,
     setFieldValue,
   } = useFormik({
-    initialValues: addRegistrationBookInitialValues,
+    initialValues: initialRegistrationBookValue,
     enableReinitialize: true,
     validationSchema: addRegistrationBookValidationSchema,
     onSubmit: (values) => {
@@ -127,8 +189,11 @@ const AddRegistrationBook = () => {
 
   return (
     <>
-      <SectionHeader title={t('registrationBook.title')} />
-      <ContainerLayout className="scrollbars grow pb-4">
+      <SectionHeader
+        title={t('registrationBook.title')}
+        backAction={navigateToBookList}
+      />
+      <ContainerLayout className="scrollbars grow ">
         <form>
           <Grid sm={'sm:grid-cols-12'} gap="gap-4">
             <Grid.Col sm={'sm:col-span-3'}>
@@ -353,15 +418,15 @@ const AddRegistrationBook = () => {
           setUploadedDocumentData={setUploadedDocumentData}
         />
       </ContainerLayout>
-      {/* </Layout.Absolute> */}
 
-      <Box className="w-full border-2 pt-3 text-right">
+      <Box className="mb-6 w-full border-2 pb-6 text-right">
         <ContainerLayout>
           <Button
             type="button"
             btnType="outlined"
             variant="secondary"
             className="mr-3"
+            onClick={navigateToBookList}
           >
             {t('btns.cancel')}
           </Button>
@@ -370,7 +435,7 @@ const AddRegistrationBook = () => {
             onClick={() => handleSubmit()}
             className="ml-auto"
           >
-            Save
+            {registrationBookId ? t('btns.update') : t('btns.save')}
           </Button>
         </ContainerLayout>
       </Box>
