@@ -1,5 +1,5 @@
 export type FileData = {
-  guid: string
+  uuid: string
   file: Blob | null
 }
 
@@ -23,6 +23,6 @@ export interface IFileState {
 }
 
 export interface IDocumentPayload {
-  guid: string
+  uuid: string
   documentTypeId: number
 }

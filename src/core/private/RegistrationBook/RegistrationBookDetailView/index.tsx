@@ -9,6 +9,7 @@ import { privateRoutePath, useNavigate, useParams } from '@/router'
 import { decodeParams } from '@/utility/route-params'
 import { useTranslation } from 'react-i18next'
 import { useGetRegistrationBookDetailById } from '../AddRegistrationBook/services/add-registration-book.query'
+import DocumentsUpload from '@/components/functional/Documents/DocumentsUpload'
 
 const RegistrationBookDetailView = () => {
   const { t } = useTranslation()
@@ -41,6 +42,37 @@ const RegistrationBookDetailView = () => {
               value={registrationBookDetails?.applicationDate || '-'}
               label={t('registrationBook.applicationDate')}
             />
+
+            <GridColDetailByLabelAndValue
+              value={getTextByLanguage(
+                registrationBookDetails?.locationDataResponse?.provinceNameEn ||
+                  '-',
+                registrationBookDetails?.locationDataResponse?.provinceNameNp ||
+                  '-'
+              )}
+              label={t('registrationBook.provinceId')}
+            />
+
+            <GridColDetailByLabelAndValue
+              value={getTextByLanguage(
+                registrationBookDetails?.locationDataResponse?.districtNameEn ||
+                  '-',
+                registrationBookDetails?.locationDataResponse?.districtNameNp ||
+                  '-'
+              )}
+              label={t('registrationBook.provinceId')}
+            />
+
+            <GridColDetailByLabelAndValue
+              value={getTextByLanguage(
+                registrationBookDetails?.locationDataResponse
+                  ?.localBodyNameEn || '-',
+                registrationBookDetails?.locationDataResponse
+                  ?.localBodyNameNp || '-'
+              )}
+              label={t('registrationBook.provinceId')}
+            />
+
             <GridColDetailByLabelAndValue
               value={registrationBookDetails?.wardNumber || '-'}
               label={t('registrationBook.wardNumber')}
@@ -98,6 +130,7 @@ const RegistrationBookDetailView = () => {
               label={t('registrationBook.remarks')}
             />
           </Grid>
+          <DocumentsUpload moduleId={'56'} viewOnly canUploadMultipleFile />
         </Card>
       </ContainerLayout>
     </>

@@ -34,6 +34,7 @@
     "password": "Password"
   },
   "document": {
+    "title": "Documents",
     "documentTypeEn": "Document Type Name (English)",
     "documentTypeNp": "Document Type Name (Nepali)",
     "allowedFileTypes": "Allowed File Types",

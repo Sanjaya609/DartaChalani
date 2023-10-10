@@ -14,6 +14,9 @@ const StandingListTable = React.lazy(
 const AddStandingList = React.lazy(
   () => import('@/core/private/StandingList/AddStandingList')
 )
+const StandingListDetailView = React.lazy(
+  () => import('@/core/private/StandingList/StandingListDetailView')
+)
 
 export const standingListRoutes: _RouteObject<'private'>[] = [
   createRoute({
@@ -26,6 +29,14 @@ export const standingListRoutes: _RouteObject<'private'>[] = [
       }),
       createRoute({
         path: privateRoutePath.standingList.add,
+        element: AddStandingList,
+      }),
+      createRoute({
+        path: privateRoutePath.standingList.view,
+        element: StandingListDetailView,
+      }),
+      createRoute({
+        path: privateRoutePath.standingList.edit,
         element: AddStandingList,
       }),
     ],

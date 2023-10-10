@@ -81,6 +81,12 @@ const AddRegistrationBook = () => {
         sectorId,
         subjectOfLetter,
         wardNumber,
+        locationDataResponse: {
+          districtId,
+          localBodyId,
+          provinceId,
+          totalWards,
+        },
       } = registrationBookDetails
       setInitialRegistrationBookValue({
         id,
@@ -96,10 +102,12 @@ const AddRegistrationBook = () => {
         sectorId,
         subjectOfLetter,
         wardNumber,
-        localBodyId: '',
-        districtId: '',
-        provinceId: '',
+        localBodyId,
+        districtId,
+        provinceId,
       })
+
+      setWardOption(generateWardOption(+totalWards))
     }
   }, [registrationBookDetails])
 
@@ -413,6 +421,7 @@ const AddRegistrationBook = () => {
         </form>
 
         <DocumentsUpload
+          moduleId={'56'}
           canUploadMultipleFile
           setIsAllRequiredDocumentUploaded={setIsAllRequiredDocumentUploaded}
           setUploadedDocumentData={setUploadedDocumentData}
