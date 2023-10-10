@@ -28,21 +28,82 @@ const StandingListDetailView = () => {
   return (
     <>
       <SectionHeader
-        title={t('registrationBook.title')}
+        title={t('standingList.title')}
         backAction={navigateToBookList}
       />
       <ContainerLayout className="scrollbars grow ">
         <Card className="h-full">
-          <Grid sm={'sm:grid-cols-12'} gap="gap-4">
-            <GridColDetailByLabelAndValue
-              value={registrationBookDetails?.registrationNumber || '-'}
-              label={t('registrationBook.registrationNumber')}
-            />
+          <Grid sm={'sm:grid-cols-12'} gap="gap-6">
             <GridColDetailByLabelAndValue
               value={registrationBookDetails?.applicationDate || '-'}
-              label={t('registrationBook.applicationDate')}
+              label={t('standingList.applicationDate')}
             />
-
+            <GridColDetailByLabelAndValue
+              value={registrationBookDetails?.letter_no || '-'}
+              label={t('standingList.letter_no')}
+            />
+            <Grid.Col sm={'sm:col-span-12'}>
+              <hr className="mb-4" />
+              <Text variant="h5" typeface="semibold">
+                {t('standingList.firmDetails')}
+              </Text>
+            </Grid.Col>
+            <GridColDetailByLabelAndValue
+              value={registrationBookDetails?.personOrFirmName || '-'}
+              label={t('standingList.personOrFirmName')}
+            />
+            <GridColDetailByLabelAndValue
+              value={getTextByLanguage(
+                registrationBookDetails?.serviceTypeNameEn || '-',
+                registrationBookDetails?.serviceTypeNameNp || '-'
+              )}
+              label={t('standingList.serviceTypeId')}
+            />
+            <GridColDetailByLabelAndValue
+              value={registrationBookDetails?.firmRegistrationNumber || '-'}
+              label={t('standingList.firmRegistrationNumber')}
+            />
+            <GridColDetailByLabelAndValue
+              value={registrationBookDetails?.contactPersonName || '-'}
+              label={t('standingList.contactPersonName')}
+            />
+            <GridColDetailByLabelAndValue
+              value={registrationBookDetails?.contactNumber || '-'}
+              label={t('standingList.contactNumber')}
+            />
+            <GridColDetailByLabelAndValue
+              value={registrationBookDetails?.firmRegistrationNumber || '-'}
+              label={t('standingList.firmRegistrationNumber')}
+            />
+            <GridColDetailByLabelAndValue
+              value={registrationBookDetails?.panOrVatNumber || '-'}
+              label={t('standingList.panOrVatNumber')}
+            />
+            <GridColDetailByLabelAndValue
+              value={registrationBookDetails?.panOrVatRegistrationDate || '-'}
+              label={t('standingList.panOrVatRegistrationDate')}
+            />
+            <GridColDetailByLabelAndValue
+              value={registrationBookDetails?.taxClearanceDate || '-'}
+              label={t('standingList.taxClearanceDate')}
+            />
+            <GridColDetailByLabelAndValue
+              value={
+                registrationBookDetails?.taxClearanceDateExtendedDate || '-'
+              }
+              label={t('standingList.taxClearanceDateExtendedDate')}
+            />
+            <GridColDetailByLabelAndValue
+              value={registrationBookDetails?.workingSectorDetails || '-'}
+              label={t('standingList.workingSectorDetails')}
+            />
+            \
+            <Grid.Col sm={'sm:col-span-12'}>
+              <hr className="mb-4" />
+              <Text variant="h5" typeface="semibold">
+                {t('standingList.locationDetails')}
+              </Text>
+            </Grid.Col>
             <GridColDetailByLabelAndValue
               value={getTextByLanguage(
                 registrationBookDetails?.locationDataResponse?.provinceNameEn ||
@@ -50,9 +111,8 @@ const StandingListDetailView = () => {
                 registrationBookDetails?.locationDataResponse?.provinceNameNp ||
                   '-'
               )}
-              label={t('registrationBook.provinceId')}
+              label={t('standingList.provinceId')}
             />
-
             <GridColDetailByLabelAndValue
               value={getTextByLanguage(
                 registrationBookDetails?.locationDataResponse?.districtNameEn ||
@@ -60,9 +120,8 @@ const StandingListDetailView = () => {
                 registrationBookDetails?.locationDataResponse?.districtNameNp ||
                   '-'
               )}
-              label={t('registrationBook.provinceId')}
+              label={t('standingList.provinceId')}
             />
-
             <GridColDetailByLabelAndValue
               value={getTextByLanguage(
                 registrationBookDetails?.locationDataResponse
@@ -70,67 +129,18 @@ const StandingListDetailView = () => {
                 registrationBookDetails?.locationDataResponse
                   ?.localBodyNameNp || '-'
               )}
-              label={t('registrationBook.provinceId')}
+              label={t('standingList.provinceId')}
             />
-
             <GridColDetailByLabelAndValue
               value={registrationBookDetails?.wardNumber || '-'}
-              label={t('registrationBook.wardNumber')}
-            />
-
-            <Grid.Col sm={'sm:col-span-12'}>
-              <hr className="mb-4" />
-              <Text variant="h5" typeface="semibold">
-                Letter Details
-              </Text>
-            </Grid.Col>
-
-            <GridColDetailByLabelAndValue
-              value={registrationBookDetails?.letterDispatchDate || '-'}
-              label={t('registrationBook.letterDispatchDate')}
+              label={t('standingList.wardNumber')}
             />
             <GridColDetailByLabelAndValue
-              value={registrationBookDetails?.letterDispatchNumber || '-'}
-              label={t('registrationBook.letterDispatchNumber')}
-            />
-            <GridColDetailByLabelAndValue
-              value={registrationBookDetails?.letterLinks || '-'}
-              label={t('registrationBook.letterLinks')}
-            />
-            <GridColDetailByLabelAndValue
-              value={registrationBookDetails?.letterSenderName || '-'}
-              label={t('registrationBook.letterSenderName')}
-            />
-            <GridColDetailByLabelAndValue
-              value={registrationBookDetails?.letterToPerson || '-'}
-              label={t('registrationBook.letterToPerson')}
-            />
-            <GridColDetailByLabelAndValue
-              value={registrationBookDetails?.physicalAddress || '-'}
-              label={t('registrationBook.physicalAddress')}
-            />
-            <GridColDetailByLabelAndValue
-              value={getTextByLanguage(
-                registrationBookDetails?.sectorNameEnglish || '-',
-                registrationBookDetails?.sectorNameNepali || '-'
-              )}
-              label={t('registrationBook.wardNumber')}
-            />
-            <GridColDetailByLabelAndValue
-              sm="sm:col-span-12"
-              md="md:col-span-12"
-              lg="lg:col-span-12"
-              value={registrationBookDetails?.subjectOfLetter || '-'}
-              label={t('registrationBook.subjectOfLetter')}
-            />
-            <GridColDetailByLabelAndValue
-              md="md:col-span-6"
-              lg="lg:col-span-6"
-              value={registrationBookDetails?.remarks || '-'}
-              label={t('registrationBook.remarks')}
+              value={registrationBookDetails?.address || '-'}
+              label={t('standingList.address')}
             />
           </Grid>
-          <DocumentsUpload viewOnly canUploadMultipleFile />
+          <DocumentsUpload moduleId={'68'} viewOnly canUploadMultipleFile />
         </Card>
       </ContainerLayout>
     </>

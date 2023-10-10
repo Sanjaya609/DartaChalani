@@ -22,7 +22,7 @@ export interface IStandingListInitialValue {
 
 interface IDocument {
   documentTypeId: StringNumber
-  guid: string
+  uuid: string
 }
 
 export interface IStandingListPayload
@@ -33,27 +33,31 @@ export interface IStandingListPayload
 
 export interface IStandingListResponse {
   id: number
-  registrationNumber: string
+  letter_no: number
+  registrationDate: string
+  personOrFirmName: string
+  address: string
+  contactPersonName: string
+  contactNumber: string
   applicationDate: string
-  letterSenderName: string
-  letterDispatchDate: string
-  letterDispatchNumber: string
-  wardNumber: number
-  subjectOfLetter: string
-  letterToPerson: string
-  physicalAddress: string
-  remarks: string
-  letterLinks: string
-  sectorId: number
-  sectorNameNepali: string
-  sectorNameEnglish: string
+  firmRegistrationNumber: string
+  panOrVatNumber: string
+  workingSectorDetails: string
+  panOrVatRegistrationDate: string
+  taxClearanceDate: string
+  taxClearanceDateExtendedDate: string
+  serviceTypeId: number
+  serviceTypeNameNp: string
+  serviceTypeNameEn: string
+  isActiveServiceType: boolean
+  standingListDocumentResponseDtoList: IStandingListDocumentResponseDtoList[]
   locationDataResponse: ILocationDataResponse
-  StandingListDocumentResponseDtoList: IStandingListDocumentResponseDtoList[]
+  wardNumber: StringNumber
 }
 
 interface IStandingListDocumentResponseDtoList {
   id: number
-  StandingListId: number
+  standingListId: number
   documentTypeId: number
   documentName: string
   uuid: string

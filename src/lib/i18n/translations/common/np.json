@@ -34,6 +34,7 @@
     "password": "पासवर्ड"
   },
   "document": {
+    "title": "Documents",
     "documentTypeEn": "कागजात नाम (अंग्रेजी)",
     "documentTypeNp": "कागजात नाम (नेपाली)",
     "allowedFileTypes": "स्वीकृत फाइल प्रकारहरू",

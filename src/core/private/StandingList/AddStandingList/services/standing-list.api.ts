@@ -9,7 +9,7 @@ const standingListAPI = {
     requestMethod: RequestMethod.POST,
   },
   getAllStandingList: {
-    controllerName: `${prefix}/list`,
+    controllerName: `${prefix}`,
     queryKeyName: 'GET_ALL_STANDING_LIST',
     requestMethod: RequestMethod.GET,
   },

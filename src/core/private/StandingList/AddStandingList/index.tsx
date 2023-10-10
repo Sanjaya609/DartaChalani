@@ -7,6 +7,7 @@ import toast, {
 } from '@/components/functional/ToastNotifier/ToastNotifier'
 import { Box, Button, Grid } from '@/components/ui'
 import ContainerLayout from '@/components/ui/core/Layout/ContainerLayout'
+import { Text } from '@/components/ui/core/Text'
 import { privateRoutePath, useNavigate, useParams } from '@/router'
 import { decodeParams } from '@/utility/route-params'
 import { generateWardOption } from '@/utility/utility'
@@ -20,7 +21,10 @@ import {
   useGetAllProvince,
 } from '../../MasterSetup/Location/services/location.query'
 import { useGetAllServiceType } from '../../MasterSetup/ServiceType/services/servicetype.query'
-import { IStandingListInitialValue } from './schema/standing-list.interface'
+import {
+  IStandingListInitialValue,
+  IStandingListPayload,
+} from './schema/standing-list.interface'
 import {
   addStandingListInitialValues,
   addStandingListValidationSchema,
@@ -63,45 +67,48 @@ const StandingList = () => {
   useEffect(() => {
     if (registrationBookDetails) {
       const {
-        id,
         applicationDate,
-        letterDispatchDate,
-        letterDispatchNumber,
-        letterLinks,
-        letterSenderName,
-        letterToPerson,
-        physicalAddress,
-        registrationNumber,
-        remarks,
-        sectorId,
-        subjectOfLetter,
-        wardNumber,
+        address,
+        contactNumber,
+        contactPersonName,
+        firmRegistrationNumber,
         locationDataResponse: {
-          districtId,
           localBodyId,
           provinceId,
+          districtId,
           totalWards,
         },
+        letter_no,
+        panOrVatNumber,
+        serviceTypeId,
+        panOrVatRegistrationDate,
+        wardNumber,
+        personOrFirmName,
+        registrationDate,
+        taxClearanceDate,
+        taxClearanceDateExtendedDate,
+        workingSectorDetails,
       } = registrationBookDetails
-      // setInitialRegistrationBookValue({
-      //   id,
-      //   applicationDate,
-      //   letterDispatchDate,
-      //   letterDispatchNumber,
-      //   letterLinks,
-      //   letterSenderName,
-      //   letterToPerson,
-      //   physicalAddress,
-      //   registrationNumber,
-      //   remarks,
-      //   sectorId,
-      //   subjectOfLetter,
-      //   wardNumber,
-      //   localBodyId,
-      //   districtId,
-      //   provinceId,
-      // })
-
+      setInitialRegistrationBookValue({
+        applicationDate,
+        address,
+        contactNumber,
+        contactPersonName,
+        firmRegistrationNumber,
+        localBodyId,
+        letter_no,
+        panOrVatNumber,
+        serviceTypeId,
+        panOrVatRegistrationDate,
+        wardNumber,
+        provinceId,
+        districtId,
+        personOrFirmName,
+        registrationDate,
+        taxClearanceDate,
+        taxClearanceDateExtendedDate,
+        workingSectorDetails,
+      })
       setWardOption(generateWardOption(+totalWards))
     }
   }, [registrationBookDetails])
@@ -118,47 +125,53 @@ const StandingList = () => {
       })
     }
 
-    // const {
-    //   applicationDate,
-    //   letterDispatchDate,
-    //   letterDispatchNumber,
-    //   letterLinks,
-    //   letterSenderName,
-    //   letterToPerson,
-    //   localBodyId,
-    //   physicalAddress,
-    //   remarks,
-    //   sectorId,
-    //   subjectOfLetter,
-    //   wardNumber,
-    //   registrationNumber,
-    //   id,
-    // } = values
+    const {
+      applicationDate,
+      address,
+      contactNumber,
+      contactPersonName,
+      firmRegistrationNumber,
+      id,
+      letter_no,
+      localBodyId,
+      panOrVatNumber,
+      panOrVatRegistrationDate,
+      personOrFirmName,
+      registrationDate,
+      serviceTypeId,
+      taxClearanceDate,
+      taxClearanceDateExtendedDate,
+      wardNumber,
+      workingSectorDetails,
+    } = values
 
-    // const reqData: IStandingListPayload = {
-    //   applicationDate,
-    //   letterDispatchDate,
-    //   letterDispatchNumber,
-    //   letterLinks,
-    //   letterSenderName,
-    //   letterToPerson,
-    //   localBodyId,
-    //   physicalAddress,
-    //   registrationNumber: registrationNumber || undefined,
-    //   remarks,
-    //   sectorId,
-    //   subjectOfLetter,
-    //   wardNumber,
-    //   documents: uploadedDocumentData,
-    //   moduleId: 56,
-    //   id: id || undefined,
-    // }
+    const reqData: IStandingListPayload = {
+      applicationDate,
+      wardNumber,
+      documents: uploadedDocumentData,
+      moduleId: 68,
+      id: id || undefined,
+      address,
+      contactNumber,
+      contactPersonName,
+      firmRegistrationNumber,
+      letter_no,
+      localBodyId,
+      panOrVatNumber,
+      panOrVatRegistrationDate,
+      personOrFirmName,
+      registrationDate,
+      serviceTypeId,
+      taxClearanceDate,
+      taxClearanceDateExtendedDate,
+      workingSectorDetails,
+    }
 
-    // createStandingList(reqData, {
-    //   onSuccess: () => {
-    //     navigateToBookList()
-    //   },
-    // })
+    createStandingList(reqData, {
+      onSuccess: () => {
+        navigateToBookList()
+      },
+    })
   }
 
   const {
@@ -205,11 +218,8 @@ const StandingList = () => {
                 touched={touched}
                 name="applicationDate"
                 label={t('standingList.applicationDate')}
-                onChange={handleChange}
-                onBlur={handleBlur}
               />
             </Grid.Col>
-
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Input
                 value={values.letter_no}
@@ -220,8 +230,12 @@ const StandingList = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
+            </Grid.Col>{' '}
+            <Grid.Col sm={'sm:col-span-12'}>
+              <Text variant="h5" typeface="semibold">
+                {t('standingList.firmDetails')}
+              </Text>
             </Grid.Col>
-
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Select
                 options={serviceTypeList}
@@ -238,7 +252,6 @@ const StandingList = () => {
                 onBlur={handleBlur}
               />
             </Grid.Col>
-
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Input
                 value={values.personOrFirmName}
@@ -250,7 +263,6 @@ const StandingList = () => {
                 onBlur={handleBlur}
               />
             </Grid.Col>
-
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Input
                 value={values.firmRegistrationNumber}
@@ -262,20 +274,19 @@ const StandingList = () => {
                 onBlur={handleBlur}
               />
             </Grid.Col>
-
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.NepaliDatePicker
-                disabled
                 value={values.registrationDate}
                 errors={errors}
                 touched={touched}
                 name="registrationDate"
                 label={t('standingList.registrationDate')}
-                onChange={handleChange}
+                onChange={(nepDate) => {
+                  setFieldValue('registrationDate', nepDate)
+                }}
                 onBlur={handleBlur}
               />
             </Grid.Col>
-
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Input
                 value={values.panOrVatNumber}
@@ -287,20 +298,19 @@ const StandingList = () => {
                 onBlur={handleBlur}
               />
             </Grid.Col>
-
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.NepaliDatePicker
-                disabled
                 value={values.panOrVatRegistrationDate}
                 errors={errors}
                 touched={touched}
                 name="panOrVatRegistrationDate"
                 label={t('standingList.panOrVatRegistrationDate')}
-                onChange={handleChange}
+                onChange={(nepDate) => {
+                  setFieldValue('panOrVatRegistrationDate', nepDate)
+                }}
                 onBlur={handleBlur}
               />
             </Grid.Col>
-
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Input
                 value={values.contactPersonName}
@@ -323,33 +333,48 @@ const StandingList = () => {
                 onBlur={handleBlur}
               />
             </Grid.Col>
-
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.NepaliDatePicker
-                disabled
                 value={values.taxClearanceDate}
                 errors={errors}
                 touched={touched}
                 name="taxClearanceDate"
                 label={t('standingList.taxClearanceDate')}
-                onChange={handleChange}
+                onChange={(nepDate) => {
+                  setFieldValue('taxClearanceDate', nepDate)
+                }}
                 onBlur={handleBlur}
               />
             </Grid.Col>
-
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.NepaliDatePicker
-                disabled
                 value={values.taxClearanceDateExtendedDate}
                 errors={errors}
                 touched={touched}
                 name="taxClearanceDateExtendedDate"
                 label={t('standingList.taxClearanceDateExtendedDate')}
+                onChange={(nepDate) => {
+                  setFieldValue('taxClearanceDateExtendedDate', nepDate)
+                }}
+                onBlur={handleBlur}
+              />
+            </Grid.Col>
+            <Grid.Col sm={'sm:col-span-6'}>
+              <Form.TextArea
+                value={values.workingSectorDetails}
+                errors={errors}
+                touched={touched}
+                name="workingSectorDetails"
+                label={t('standingList.workingSectorDetails')}
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
             </Grid.Col>
-
+            <Grid.Col sm={'sm:col-span-12'}>
+              <Text variant="h5" typeface="semibold">
+                {t('standingList.locationDetails')}
+              </Text>
+            </Grid.Col>
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Select
                 options={provinceList}
@@ -417,7 +442,6 @@ const StandingList = () => {
                 onBlur={handleBlur}
               />
             </Grid.Col>
-
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Select
                 options={wardOption}
@@ -434,7 +458,6 @@ const StandingList = () => {
                 onBlur={handleBlur}
               />
             </Grid.Col>
-
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Input
                 value={values.address}
@@ -446,22 +469,11 @@ const StandingList = () => {
                 onBlur={handleBlur}
               />
             </Grid.Col>
-
-            <Grid.Col sm={'sm:col-span-6'}>
-              <Form.TextArea
-                value={values.workingSectorDetails}
-                errors={errors}
-                touched={touched}
-                name="workingSectorDetails"
-                label={t('standingList.workingSectorDetails')}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Grid.Col>
           </Grid>
         </form>
 
         <DocumentsUpload
+          moduleId={'68'}
           canUploadMultipleFile
           setIsAllRequiredDocumentUploaded={setIsAllRequiredDocumentUploaded}
           setUploadedDocumentData={setUploadedDocumentData}

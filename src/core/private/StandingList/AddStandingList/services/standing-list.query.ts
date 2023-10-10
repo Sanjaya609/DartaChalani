@@ -2,7 +2,8 @@ import { initApiRequest } from '@/lib/api-request'
 import { apiDetails } from '@/service/api'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
-  IAddStandingListInitialValue,
+  IStandingListInitialValue,
+  IStandingListPayload,
   IStandingListResponse,
 } from '../schema/standing-list.interface'
 
@@ -12,7 +13,7 @@ const { createStandingList, getAllStandingList, getStandingListById } =
 const useCreateStandingList = () => {
   const queryClient = useQueryClient()
   return useMutation(
-    (requestData: IAddStandingListInitialValue) => {
+    (requestData: IStandingListPayload) => {
       return initApiRequest({
         apiDetails: createStandingList,
         requestData,

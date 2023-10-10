@@ -21,33 +21,33 @@ const StandingListTable = () => {
   const columns = useMemo<ColumnDef<IStandingListResponse>[]>(
     () => [
       {
-        accessorKey: 'registrationNumber',
-        header: t('registrationBook.registrationNumber'),
+        accessorKey: 'letter_no',
+        header: t('standingList.letter_no'),
       },
       {
         accessorKey: 'applicationDate',
-        header: t('registrationBook.applicationDate'),
+        header: t('standingList.applicationDate'),
       },
       {
-        accessorKey: 'letterDispatchDate',
-        header: t('registrationBook.letterDispatchDate'),
+        accessorKey: 'personOrFirmName',
+        header: t('standingList.personOrFirmName'),
       },
       {
-        accessorKey: 'letterDispatchNumber',
-        header: t('registrationBook.letterDispatchNumber'),
+        accessorKey: 'registrationDate',
+        header: t('standingList.registrationDate'),
       },
       {
-        accessorKey: getTextByLanguage('sectorNameEnglish', 'sectorNameNepali'),
-        header: t('registrationBook.sectorId'),
+        accessorKey: getTextByLanguage(
+          'serviceTypeNameNp',
+          'serviceTypeNameEn'
+        ),
+        header: t('standingList.serviceTypeId'),
       },
       {
-        accessorKey: 'letterSenderName',
-        header: t('registrationBook.letterSenderName'),
+        accessorKey: 'firmRegistrationNumber',
+        header: t('standingList.firmRegistrationNumber'),
       },
-      {
-        accessorKey: 'letterToPerson',
-        header: t('registrationBook.letterToPerson'),
-      },
+
       {
         header: t('actions'),
         cell: ({

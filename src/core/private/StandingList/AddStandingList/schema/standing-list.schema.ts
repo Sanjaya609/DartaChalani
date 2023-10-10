@@ -24,36 +24,34 @@ export const addStandingListInitialValues: IStandingListInitialValue = {
 }
 
 export const addStandingListValidationSchema = Yup.object({
-  address: Yup.string().required('registrationBook.errors.address'),
-  contactNumber: Yup.string().required('registrationBook.errors.contactNumber'),
+  address: Yup.string().required('standingList.errors.address'),
+  contactNumber: Yup.string().required('standingList.errors.contactNumber'),
   contactPersonName: Yup.string().required(
-    'registrationBook.errors.contactPersonName'
+    'standingList.errors.contactPersonName'
   ),
   firmRegistrationNumber: Yup.string().required(
-    'registrationBook.errors.firmRegistrationNumber'
+    'standingList.errors.firmRegistrationNumber'
   ),
-  letter_no: Yup.string().required('registrationBook.errors.letter_no'),
-  localBodyId: Yup.string().required('registrationBook.errors.localBodyId'),
-  provinceId: Yup.string().required('registrationBook.errors.provinceId'),
-  districtId: Yup.string().required('registrationBook.errors.districtId'),
-  serviceTypeId: Yup.string().required('registrationBook.errors.serviceTypeId'),
-  panOrVatNumber: Yup.string().required(
-    'registrationBook.errors.panOrVatNumber'
-  ),
+  letter_no: Yup.string().required('standingList.errors.letter_no'),
+  localBodyId: Yup.string().required('standingList.errors.localBodyId'),
+  provinceId: Yup.string().required('standingList.errors.provinceId'),
+  districtId: Yup.string().required('standingList.errors.districtId'),
+  serviceTypeId: Yup.string().required('standingList.errors.serviceTypeId'),
+  panOrVatNumber: Yup.string().required('standingList.errors.panOrVatNumber'),
   panOrVatRegistrationDate: Yup.string().required(
-    'registrationBook.errors.panOrVatRegistrationDate'
+    'standingList.errors.panOrVatRegistrationDate'
   ),
   personOrFirmName: Yup.string().required(
-    'registrationBook.errors.personOrFirmName'
+    'standingList.errors.personOrFirmName'
   ),
   registrationDate: Yup.string().required(
-    'registrationBook.errors.registrationDate'
+    'standingList.errors.registrationDate'
   ),
-  wardNumber: Yup.string().required('registrationBook.errors.wardNumber'),
+  wardNumber: Yup.string().required('standingList.errors.wardNumber'),
   taxClearanceDate: Yup.string().required(
-    'registrationBook.errors.taxClearanceDate'
+    'standingList.errors.taxClearanceDate'
   ),
   taxClearanceDateExtendedDate: Yup.string().required(
-    'registrationBook.errors.taxClearanceDateExtendedDate'
+    'standingList.errors.taxClearanceDateExtendedDate'
   ),
 })

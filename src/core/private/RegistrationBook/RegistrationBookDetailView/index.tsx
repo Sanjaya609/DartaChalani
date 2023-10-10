@@ -130,7 +130,7 @@ const RegistrationBookDetailView = () => {
               label={t('registrationBook.remarks')}
             />
           </Grid>
-          <DocumentsUpload viewOnly canUploadMultipleFile />
+          <DocumentsUpload moduleId={'56'} viewOnly canUploadMultipleFile />
         </Card>
       </ContainerLayout>
     </>

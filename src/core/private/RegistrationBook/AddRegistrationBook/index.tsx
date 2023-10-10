@@ -421,6 +421,7 @@ const AddRegistrationBook = () => {
         </form>
 
         <DocumentsUpload
+          moduleId={'56'}
           canUploadMultipleFile
           setIsAllRequiredDocumentUploaded={setIsAllRequiredDocumentUploaded}
           setUploadedDocumentData={setUploadedDocumentData}

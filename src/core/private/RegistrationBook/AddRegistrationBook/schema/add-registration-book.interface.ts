@@ -19,7 +19,7 @@ export interface IAddRegistrationBookInitialValue {
 
 interface IDocument {
   documentTypeId: StringNumber
-  guid: string
+  uuid: string
 }
 
 export interface IAddRegistrationBookPayload
