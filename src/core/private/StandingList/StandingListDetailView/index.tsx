@@ -8,10 +8,10 @@ import { getTextByLanguage } from '@/lib/i18n/i18n'
 import { privateRoutePath, useNavigate, useParams } from '@/router'
 import { decodeParams } from '@/utility/route-params'
 import { useTranslation } from 'react-i18next'
-import { useGetRegistrationBookDetailById } from '../AddRegistrationBook/services/add-registration-book.query'
+import { useGetStandingListDetailById } from '../AddStandingList/services/standing-list.query'
 import DocumentsUpload from '@/components/functional/Documents/DocumentsUpload'
 
-const RegistrationBookDetailView = () => {
+const StandingListDetailView = () => {
   const { t } = useTranslation()
 
   const navigate = useNavigate()
@@ -19,10 +19,10 @@ const RegistrationBookDetailView = () => {
   const registrationBookId = decodeParams<string>(params?.id)
 
   const { data: registrationBookDetails } =
-    useGetRegistrationBookDetailById(registrationBookId)
+    useGetStandingListDetailById(registrationBookId)
 
   const navigateToBookList = () => {
-    navigate(privateRoutePath.registrationBook.base)
+    navigate(privateRoutePath.standingList.base)
   }
 
   return (
@@ -137,4 +137,4 @@ const RegistrationBookDetailView = () => {
   )
 }
 
-export default RegistrationBookDetailView
+export default StandingListDetailView

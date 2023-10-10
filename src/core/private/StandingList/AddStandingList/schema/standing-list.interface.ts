@@ -1,20 +1,23 @@
-export interface IAddRegistrationBookInitialValue {
-  id?: number
+export interface IStandingListInitialValue {
+  address: string
   applicationDate: string
-  letterDispatchDate: string
-  letterDispatchNumber: string
-  letterLinks: string
-  letterSenderName: string
-  letterToPerson: string
+  contactNumber: string
+  contactPersonName: string
+  firmRegistrationNumber: string
+  id?: number
+  letter_no: StringNumber
   localBodyId: StringNumber
-  physicalAddress: string
-  registrationNumber?: string
-  remarks: string
-  sectorId: StringNumber
-  subjectOfLetter: string
+  provinceId: StringNumber
+  districtId: StringNumber
+  panOrVatNumber: string
+  panOrVatRegistrationDate: string
+  personOrFirmName: string
+  registrationDate: string
+  serviceTypeId: StringNumber
+  taxClearanceDate: string
+  taxClearanceDateExtendedDate: string
   wardNumber: StringNumber
-  provinceId?: StringNumber
-  districtId?: StringNumber
+  workingSectorDetails: string
 }
 
 interface IDocument {
@@ -22,13 +25,13 @@ interface IDocument {
   guid: string
 }
 
-export interface IAddRegistrationBookPayload
-  extends Omit<IAddRegistrationBookInitialValue, 'provinceId' | 'districtId'> {
+export interface IStandingListPayload
+  extends Omit<IStandingListInitialValue, 'provinceId' | 'districtId'> {
   moduleId: StringNumber
   documents: IDocument[]
 }
 
-export interface IRegistrationBookResponse {
+export interface IStandingListResponse {
   id: number
   registrationNumber: string
   applicationDate: string
@@ -45,12 +48,12 @@ export interface IRegistrationBookResponse {
   sectorNameNepali: string
   sectorNameEnglish: string
   locationDataResponse: ILocationDataResponse
-  registrationBookDocumentResponseDtoList: IRegistrationBookDocumentResponseDtoList[]
+  StandingListDocumentResponseDtoList: IStandingListDocumentResponseDtoList[]
 }
 
-interface IRegistrationBookDocumentResponseDtoList {
+interface IStandingListDocumentResponseDtoList {
   id: number
-  registrationBookId: number
+  StandingListId: number
   documentTypeId: number
   documentName: string
   uuid: string

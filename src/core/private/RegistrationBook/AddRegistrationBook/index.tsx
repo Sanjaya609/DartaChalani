@@ -81,6 +81,12 @@ const AddRegistrationBook = () => {
         sectorId,
         subjectOfLetter,
         wardNumber,
+        locationDataResponse: {
+          districtId,
+          localBodyId,
+          provinceId,
+          totalWards,
+        },
       } = registrationBookDetails
       setInitialRegistrationBookValue({
         id,
@@ -96,10 +102,12 @@ const AddRegistrationBook = () => {
         sectorId,
         subjectOfLetter,
         wardNumber,
-        localBodyId: '',
-        districtId: '',
-        provinceId: '',
+        localBodyId,
+        districtId,
+        provinceId,
       })
+
+      setWardOption(generateWardOption(+totalWards))
     }
   }, [registrationBookDetails])
 

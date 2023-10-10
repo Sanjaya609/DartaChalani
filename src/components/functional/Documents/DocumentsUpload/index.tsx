@@ -37,8 +37,9 @@ import ViewUploadedFilesModal from './UploadedFiles/ViewUploadedFilesModal'
 interface IDocumentsUploadProps {
   moduleId?: StringNumber
   canUploadMultipleFile?: boolean
-  setIsAllRequiredDocumentUploaded: Dispatch<SetStateAction<boolean>>
+  setIsAllRequiredDocumentUploaded?: Dispatch<SetStateAction<boolean>>
   setUploadedDocumentData?: Dispatch<SetStateAction<IDocumentPayload[]>>
+  viewOnly?: boolean
 }
 
 const flatDocDataForPayload = (files: FileStateFile) => {
@@ -58,6 +59,7 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
     canUploadMultipleFile = false,
     setIsAllRequiredDocumentUploaded,
     setUploadedDocumentData,
+    viewOnly = false,
   } = props
   const [fileState, setFileState] = useState<IFileState>({
     files: {},
@@ -103,7 +105,7 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
       files: initialFileState,
       isRequiredFileUploaded,
     })
-    setIsAllRequiredDocumentUploaded(!isRequiredFileUploaded)
+    setIsAllRequiredDocumentUploaded?.(!isRequiredFileUploaded)
   }
 
   useEffect(() => {
@@ -111,6 +113,8 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
       structureFileState()
     }
   }, [requiredDocumentList])
+
+  console.log({ fileState })
 
   const validateFileChanges = (files: FileStateFile) => {
     const mandatoryFiles = Object.values(files).filter(
@@ -143,11 +147,9 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
             })),
           ]
 
-      if (canUploadMultipleFile) {
-        setUploadedDocumentData(allDocumentData)
-      }
+      setUploadedDocumentData(allDocumentData)
 
-      setIsAllRequiredDocumentUploaded(isRequiredFileUploaded)
+      setIsAllRequiredDocumentUploaded?.(isRequiredFileUploaded)
     }
   }
 
@@ -302,6 +304,7 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
             />
           )
         },
+        show: !viewOnly,
       },
     ],
     [fileState.files, t]

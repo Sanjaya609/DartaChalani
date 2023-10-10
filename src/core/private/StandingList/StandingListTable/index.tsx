@@ -1,117 +1,86 @@
 import SectionHeader from '@/components/functional/SectionHeader'
 import { DataTable } from '@/components/functional/Table'
+import TableAction from '@/components/functional/Table/Components/Table/TableAction'
 import ContainerLayout from '@/components/ui/core/Layout/ContainerLayout'
 import FlexLayout from '@/components/ui/core/Layout/FlexLayout'
+import { getTextByLanguage } from '@/lib/i18n/i18n'
 import { privateRoutePath, useNavigate } from '@/router'
+import { encodeParams } from '@/utility/route-params'
 import { ColumnDef } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
+import { IStandingListResponse } from '../AddStandingList/schema/standing-list.interface'
+import { useGetAllStandingList } from '../AddStandingList/services/standing-list.query'
 
 const StandingListTable = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const { data: allStandingList = [], isFetching: allStandingListFetching } =
+    useGetAllStandingList()
 
-  const columns = useMemo<ColumnDef<TAny>[]>(
+  const columns = useMemo<ColumnDef<IStandingListResponse>[]>(
     () => [
       {
-        accessorKey: 'code',
-        header: t('security.module.code'),
+        accessorKey: 'registrationNumber',
+        header: t('registrationBook.registrationNumber'),
       },
       {
-        accessorKey: 'moduleNameEnglish',
-        header: t('security.module.moduleNameEnglish'),
-      },
-
-      {
-        accessorKey: 'moduleNameNepali',
-        header: t('security.module.moduleNameNepali'),
+        accessorKey: 'applicationDate',
+        header: t('registrationBook.applicationDate'),
       },
       {
-        accessorKey: 'parentModule',
-        header: t('security.module.parentModuleName'),
+        accessorKey: 'letterDispatchDate',
+        header: t('registrationBook.letterDispatchDate'),
       },
       {
-        accessorKey: 'orderNumber',
-        header: t('security.module.orderNumber'),
+        accessorKey: 'letterDispatchNumber',
+        header: t('registrationBook.letterDispatchNumber'),
       },
-      // {
-      //   accessorKey: 'isActive',
-      //   header: 'is Active?',
-      //   cell: ({ row: { original } }) => (
-      //     <Switch
-      //       checked={original.isActive}
-      //       onChange={() => {
-      //         setOrRemoveCurrentSelectedId(original.id)
-      //       }}
-      //     />
-      //   ),
-      // },
-
-      // {
-      //   header: 'Actions',
-      //   cell: ({ row: { original } }) => {
-      //     const {
-      //       id,
-      //       moduleNameEnglish,
-      //       moduleNameNepali,
-      //       description,
-      //       code,
-      //       url,
-      //       iconClass,
-      //       isConfigurable,
-      //       orderNumber,
-      //       parentModuleId,
-      //       resourceResponses,
-      //     } = original
-      //     return (
-      //       <TableAction
-      //         handleEditClick={() => {
-      //           setInitialValues({
-      //             id,
-      //             moduleNameEnglish,
-      //             moduleNameNepali,
-      //             description,
-      //             code,
-      //             url,
-      //             iconClass,
-      //             isConfigurable,
-      //             orderNumber,
-      //             parentModuleId,
-      //             resourceRequestList: resourceResponses?.length
-      //               ? resourceResponses.map(
-      //                   ({ httpMethod, privilege, resourceName, url, id }) => ({
-      //                     id,
-      //                     httpMethod,
-      //                     privilege,
-      //                     resourceName,
-      //                     url,
-      //                   })
-      //                 )
-      //               : [
-      //                   {
-      //                     httpMethod: '',
-      //                     privilege: '',
-      //                     resourceName: '',
-      //                     url: '',
-      //                   },
-      //                 ],
-      //           })
-      //           toggleAddEditModal()
-      //         }}
-      //       />
-      //     )
-      //   },
-      // },
+      {
+        accessorKey: getTextByLanguage('sectorNameEnglish', 'sectorNameNepali'),
+        header: t('registrationBook.sectorId'),
+      },
+      {
+        accessorKey: 'letterSenderName',
+        header: t('registrationBook.letterSenderName'),
+      },
+      {
+        accessorKey: 'letterToPerson',
+        header: t('registrationBook.letterToPerson'),
+      },
+      {
+        header: t('actions'),
+        cell: ({
+          row: {
+            original: { id },
+          },
+        }) => (
+          <TableAction
+            handleViewClick={() => {
+              navigate(privateRoutePath.standingList.view, {
+                params: { id: encodeParams(id) },
+              })
+            }}
+            handleEditClick={() => {
+              navigate(privateRoutePath.standingList.edit, {
+                params: { id: encodeParams(id) },
+              })
+            }}
+          />
+        ),
+      },
     ],
     [t]
   )
-
   return (
-    <FlexLayout direction="column">
+    <>
       <SectionHeader title={t('standingList.title')} />
+
       <ContainerLayout stretch>
         <FlexLayout direction="column">
           <DataTable
+            withSN={false}
+            isLoading={allStandingListFetching}
             canSearch
             addHeaderProps={{
               handleAdd: () => {
@@ -120,11 +89,11 @@ const StandingListTable = () => {
             }}
             className="pb-4"
             columns={columns}
-            data={[]}
+            data={allStandingList}
           />
         </FlexLayout>
       </ContainerLayout>
-    </FlexLayout>
+    </>
   )
 }
 

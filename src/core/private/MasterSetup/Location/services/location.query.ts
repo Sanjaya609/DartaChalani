@@ -93,7 +93,7 @@ const useGetAllLocalBodyByDistrictId = <T = ILocalBodyList[]>(
           getDataWithPropsValue?.mapDatatoStyleSelect
             ? mapDataToStyledSelect({
                 arrayData: localBodyData,
-                id: 'id',
+                id: 'localBodyId',
                 name: 'localBodyNameEn',
                 nameNp: 'localBodyNameNp',
               })

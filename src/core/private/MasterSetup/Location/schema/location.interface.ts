@@ -14,7 +14,7 @@ export interface IDistrictList {
 }
 
 export interface ILocalBodyList {
-  id: number
+  localBodyId: number
   districtId: number
   districtNameEn: string
   districtNameNp: string
