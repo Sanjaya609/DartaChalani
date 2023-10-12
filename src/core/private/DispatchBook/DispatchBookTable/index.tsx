@@ -9,46 +9,50 @@ import { encodeParams } from '@/utility/route-params'
 import { ColumnDef } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { IRegistrationBookResponse } from '../AddRegistrationBook/schema/add-registration-book.interface'
-import { useGetAllRegistrationBook } from '../AddRegistrationBook/services/add-registration-book.query'
+import { IDispatchBookResponse } from '../AddDispatchBook/schema/add-dispatch-book.interface'
+import { useGetAllDispatchBook } from '../AddDispatchBook/services/add-dispatch-book.query'
 
-const RegistrationBookTable = () => {
+const DispatchBookTable = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const {
     data: allRegistrationBookList = [],
     isFetching: allRegistrationBookFetching,
-  } = useGetAllRegistrationBook()
+  } = useGetAllDispatchBook()
 
-  const columns = useMemo<ColumnDef<IRegistrationBookResponse>[]>(
+  const columns = useMemo<ColumnDef<IDispatchBookResponse>[]>(
     () => [
       {
-        accessorKey: 'registrationNumber',
-        header: t('registrationBook.registrationNumber'),
+        accessorKey: 'dispatchDate',
+        header: t('dispatchBook.dispatchDate'),
       },
       {
-        accessorKey: 'applicationDate',
-        header: t('registrationBook.applicationDate'),
+        accessorKey: 'dispatchNumber',
+        header: t('dispatchBook.dispatchNumber'),
       },
       {
-        accessorKey: 'letterDispatchDate',
-        header: t('registrationBook.letterDispatchDate'),
+        accessorKey: 'letterDate',
+        header: t('dispatchBook.letterDate'),
       },
       {
-        accessorKey: 'letterDispatchNumber',
-        header: t('registrationBook.letterDispatchNumber'),
+        accessorKey: 'letterReceiverName',
+        header: t('dispatchBook.letterReceiverName'),
       },
       {
-        accessorKey: getTextByLanguage('sectorNameEnglish', 'sectorNameNepali'),
-        header: t('registrationBook.sectorId'),
+        accessorKey: 'letterReceiverEmail',
+        header: t('dispatchBook.letterReceiverEmail'),
       },
       {
-        accessorKey: 'letterSenderName',
-        header: t('registrationBook.letterSenderName'),
+        accessorKey: 'letterReceiverAddress',
+        header: t('dispatchBook.letterReceiverAddress'),
       },
       {
-        accessorKey: 'letterToPerson',
-        header: t('registrationBook.letterToPerson'),
+        accessorKey: 'letterCarrierName',
+        header: t('dispatchBook.letterCarrierName'),
+      },
+      {
+        accessorKey: 'letterCarrierContact',
+        header: t('dispatchBook.letterCarrierContact'),
       },
       {
         header: t('actions'),
@@ -59,12 +63,12 @@ const RegistrationBookTable = () => {
         }) => (
           <TableAction
             handleViewClick={() => {
-              navigate(privateRoutePath.registrationBook.view, {
+              navigate(privateRoutePath.dispatchBook.view, {
                 params: { id: encodeParams(id) },
               })
             }}
             handleEditClick={() => {
-              navigate(privateRoutePath.registrationBook.edit, {
+              navigate(privateRoutePath.dispatchBook.edit, {
                 params: { id: encodeParams(id) },
               })
             }}
@@ -76,7 +80,7 @@ const RegistrationBookTable = () => {
   )
   return (
     <>
-      <SectionHeader title={t('registrationBook.title')} />
+      <SectionHeader title={t('dispatchBook.title')} />
 
       <ContainerLayout stretch>
         <FlexLayout direction="column">
@@ -86,7 +90,7 @@ const RegistrationBookTable = () => {
             canSearch
             addHeaderProps={{
               handleAdd: () => {
-                navigate(privateRoutePath.registrationBook.add)
+                navigate(privateRoutePath.dispatchBook.add)
               },
             }}
             className="pb-4"
@@ -99,4 +103,4 @@ const RegistrationBookTable = () => {
   )
 }
 
-export default RegistrationBookTable
+export default DispatchBookTable

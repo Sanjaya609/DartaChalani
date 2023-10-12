@@ -3,39 +3,37 @@ import { createRoute } from '../../create-route'
 import { privateRoutePath } from '../private-route.path'
 import React from 'react'
 
-const RegistrationBook = React.lazy(
-  () => import('@/core/private/RegistrationBook')
+const DispatchBook = React.lazy(() => import('@/core/private/DispatchBook'))
+const DispatchBookTable = React.lazy(
+  () => import('@/core/private/DispatchBook/DispatchBookTable')
 )
-const RegistrationBookTable = React.lazy(
-  () => import('@/core/private/RegistrationBook/RegistrationBookTable')
+const AddDispatchBook = React.lazy(
+  () => import('@/core/private/DispatchBook/AddDispatchBook')
 )
-const AddRegistrationBook = React.lazy(
-  () => import('@/core/private/RegistrationBook/AddRegistrationBook')
-)
-const RegistrationBookDetailView = React.lazy(
-  () => import('@/core/private/RegistrationBook/RegistrationBookDetailView')
+const DispatchBookDetailView = React.lazy(
+  () => import('@/core/private/DispatchBook/DispatchBookDetailView')
 )
 
-export const registrationBookRoutes: _RouteObject<'private'>[] = [
+export const dispatchBookRoutes: _RouteObject<'private'>[] = [
   createRoute({
     path: privateRoutePath.dispatchBook.base,
-    element: RegistrationBook,
+    element: DispatchBook,
     children: [
       createRoute({
         path: privateRoutePath.dispatchBook.base,
-        element: RegistrationBookTable,
+        element: DispatchBookTable,
       }),
       createRoute({
         path: privateRoutePath.dispatchBook.add,
-        element: AddRegistrationBook,
+        element: AddDispatchBook,
       }),
       createRoute({
         path: privateRoutePath.dispatchBook.view,
-        element: RegistrationBookDetailView,
+        element: DispatchBookDetailView,
       }),
       createRoute({
         path: privateRoutePath.dispatchBook.edit,
-        element: AddRegistrationBook,
+        element: AddDispatchBook,
       }),
     ],
   }),

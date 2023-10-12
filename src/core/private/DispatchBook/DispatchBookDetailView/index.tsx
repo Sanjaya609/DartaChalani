@@ -8,126 +8,141 @@ import { getTextByLanguage } from '@/lib/i18n/i18n'
 import { privateRoutePath, useNavigate, useParams } from '@/router'
 import { decodeParams } from '@/utility/route-params'
 import { useTranslation } from 'react-i18next'
-import { useGetRegistrationBookDetailById } from '../AddRegistrationBook/services/add-registration-book.query'
+import { useGetDispatchBookDetailById } from '../AddDispatchBook/services/add-dispatch-book.query'
 import DocumentsUpload from '@/components/functional/Documents/DocumentsUpload'
 
-const RegistrationBookDetailView = () => {
+const DispatchBookDetailView = () => {
   const { t } = useTranslation()
 
   const navigate = useNavigate()
   const params = useParams()
-  const registrationBookId = decodeParams<string>(params?.id)
+  const dispatchBookId = decodeParams<string>(params?.id)
 
-  const { data: registrationBookDetails } =
-    useGetRegistrationBookDetailById(registrationBookId)
+  const { data: dispatchBookDetails } =
+    useGetDispatchBookDetailById(dispatchBookId)
 
   const navigateToBookList = () => {
-    navigate(privateRoutePath.registrationBook.base)
+    navigate(privateRoutePath.dispatchBook.base)
   }
 
   return (
     <>
       <SectionHeader
-        title={t('registrationBook.title')}
+        title={t('dispatchBook.title')}
         backAction={navigateToBookList}
       />
       <ContainerLayout className="scrollbars grow ">
         <Card className="h-full">
           <Grid sm={'sm:grid-cols-12'} gap="gap-4">
             <GridColDetailByLabelAndValue
-              value={registrationBookDetails?.registrationNumber || '-'}
-              label={t('registrationBook.registrationNumber')}
+              value={dispatchBookDetails?.dispatchNumber || '-'}
+              label={t('dispatchBook.dispatchNumber')}
             />
             <GridColDetailByLabelAndValue
-              value={registrationBookDetails?.applicationDate || '-'}
-              label={t('registrationBook.applicationDate')}
-            />
-
-            <GridColDetailByLabelAndValue
-              value={getTextByLanguage(
-                registrationBookDetails?.locationDataResponse?.provinceNameEn ||
-                  '-',
-                registrationBookDetails?.locationDataResponse?.provinceNameNp ||
-                  '-'
-              )}
-              label={t('registrationBook.provinceId')}
-            />
-
-            <GridColDetailByLabelAndValue
-              value={getTextByLanguage(
-                registrationBookDetails?.locationDataResponse?.districtNameEn ||
-                  '-',
-                registrationBookDetails?.locationDataResponse?.districtNameNp ||
-                  '-'
-              )}
-              label={t('registrationBook.provinceId')}
-            />
-
-            <GridColDetailByLabelAndValue
-              value={getTextByLanguage(
-                registrationBookDetails?.locationDataResponse
-                  ?.localBodyNameEn || '-',
-                registrationBookDetails?.locationDataResponse
-                  ?.localBodyNameNp || '-'
-              )}
-              label={t('registrationBook.provinceId')}
-            />
-
-            <GridColDetailByLabelAndValue
-              value={registrationBookDetails?.wardNumber || '-'}
-              label={t('registrationBook.wardNumber')}
+              value={dispatchBookDetails?.dispatchDate || '-'}
+              label={t('dispatchBook.dispatchDate')}
             />
 
             <Grid.Col sm={'sm:col-span-12'}>
               <hr className="mb-4" />
               <Text variant="h5" typeface="semibold">
-                Letter Details
+                {t('dispatchBook.letterDetails')}
               </Text>
             </Grid.Col>
 
             <GridColDetailByLabelAndValue
-              value={registrationBookDetails?.letterDispatchDate || '-'}
-              label={t('registrationBook.letterDispatchDate')}
+              value={dispatchBookDetails?.letterNumber || '-'}
+              label={t('dispatchBook.letterNumber')}
             />
             <GridColDetailByLabelAndValue
-              value={registrationBookDetails?.letterDispatchNumber || '-'}
-              label={t('registrationBook.letterDispatchNumber')}
-            />
-            <GridColDetailByLabelAndValue
-              value={registrationBookDetails?.letterLinks || '-'}
-              label={t('registrationBook.letterLinks')}
-            />
-            <GridColDetailByLabelAndValue
-              value={registrationBookDetails?.letterSenderName || '-'}
-              label={t('registrationBook.letterSenderName')}
-            />
-            <GridColDetailByLabelAndValue
-              value={registrationBookDetails?.letterToPerson || '-'}
-              label={t('registrationBook.letterToPerson')}
-            />
-            <GridColDetailByLabelAndValue
-              value={registrationBookDetails?.physicalAddress || '-'}
-              label={t('registrationBook.physicalAddress')}
-            />
-            <GridColDetailByLabelAndValue
-              value={getTextByLanguage(
-                registrationBookDetails?.sectorNameEnglish || '-',
-                registrationBookDetails?.sectorNameNepali || '-'
-              )}
-              label={t('registrationBook.wardNumber')}
+              value={dispatchBookDetails?.letterDate || '-'}
+              label={t('dispatchBook.letterDate')}
             />
             <GridColDetailByLabelAndValue
               sm="sm:col-span-12"
               md="md:col-span-12"
               lg="lg:col-span-12"
-              value={registrationBookDetails?.subjectOfLetter || '-'}
-              label={t('registrationBook.subjectOfLetter')}
+              value={dispatchBookDetails?.subjectOfLetter || '-'}
+              label={t('dispatchBook.subjectOfLetter')}
             />
+            <GridColDetailByLabelAndValue
+              value={dispatchBookDetails?.letterReceiverName || '-'}
+              label={t('dispatchBook.letterReceiverName')}
+            />
+            <GridColDetailByLabelAndValue
+              value={dispatchBookDetails?.letterReceiverEmail || '-'}
+              label={t('dispatchBook.letterReceiverEmail')}
+            />
+            <GridColDetailByLabelAndValue
+              value={dispatchBookDetails?.letterReceiverAddress || '-'}
+              label={t('dispatchBook.letterReceiverAddress')}
+            />
+
+            <GridColDetailByLabelAndValue
+              value={dispatchBookDetails?.letterCarrierName || '-'}
+              label={t('dispatchBook.letterCarrierName')}
+            />
+
+            <GridColDetailByLabelAndValue
+              value={dispatchBookDetails?.letterCarrierContact || '-'}
+              label={t('dispatchBook.letterCarrierContact')}
+            />
+
+            <GridColDetailByLabelAndValue
+              value={dispatchBookDetails?.letterToSection || '-'}
+              label={t('dispatchBook.letterCarrierContact')}
+            />
+
+            <GridColDetailByLabelAndValue
+              value={dispatchBookDetails?.physicalFileLocation || '-'}
+              label={t('dispatchBook.physicalFileLocation')}
+            />
+
             <GridColDetailByLabelAndValue
               md="md:col-span-6"
               lg="lg:col-span-6"
-              value={registrationBookDetails?.remarks || '-'}
-              label={t('registrationBook.remarks')}
+              value={dispatchBookDetails?.remarks || '-'}
+              label={t('dispatchBook.remarks')}
+            />
+
+            <Grid.Col sm={'sm:col-span-12'}>
+              <hr className="mb-4" />
+              <Text variant="h5" typeface="semibold">
+                {t('dispatchBook.locationDetails')}
+              </Text>
+            </Grid.Col>
+
+            <GridColDetailByLabelAndValue
+              value={getTextByLanguage(
+                dispatchBookDetails?.locationDataResponse?.provinceNameEn ||
+                  '-',
+                dispatchBookDetails?.locationDataResponse?.provinceNameNp || '-'
+              )}
+              label={t('dispatchBook.provinceId')}
+            />
+
+            <GridColDetailByLabelAndValue
+              value={getTextByLanguage(
+                dispatchBookDetails?.locationDataResponse?.districtNameEn ||
+                  '-',
+                dispatchBookDetails?.locationDataResponse?.districtNameNp || '-'
+              )}
+              label={t('dispatchBook.provinceId')}
+            />
+
+            <GridColDetailByLabelAndValue
+              value={getTextByLanguage(
+                dispatchBookDetails?.locationDataResponse?.localBodyNameEn ||
+                  '-',
+                dispatchBookDetails?.locationDataResponse?.localBodyNameNp ||
+                  '-'
+              )}
+              label={t('dispatchBook.provinceId')}
+            />
+
+            <GridColDetailByLabelAndValue
+              value={dispatchBookDetails?.wardNumber || '-'}
+              label={t('dispatchBook.wardNumber')}
             />
           </Grid>
           <DocumentsUpload moduleId={'56'} viewOnly canUploadMultipleFile />
@@ -137,4 +152,4 @@ const RegistrationBookDetailView = () => {
   )
 }
 
-export default RegistrationBookDetailView
+export default DispatchBookDetailView
