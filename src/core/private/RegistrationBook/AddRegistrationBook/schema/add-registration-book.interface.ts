@@ -1,6 +1,6 @@
 export interface IAddRegistrationBookInitialValue {
   id?: number
-  applicationDate: string
+  // applicationDate: string
   letterDispatchDate: string
   letterDispatchNumber: string
   letterLinks: string
@@ -8,7 +8,7 @@ export interface IAddRegistrationBookInitialValue {
   letterToPerson: string
   localBodyId: StringNumber
   physicalAddress: string
-  registrationNumber?: string
+  // registrationNumber?: string
   remarks: string
   sectorId: StringNumber
   subjectOfLetter: string

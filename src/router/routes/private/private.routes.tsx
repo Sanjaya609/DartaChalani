@@ -6,6 +6,7 @@ import { masterSetupRoutes } from './master-setup/master-setup.routes'
 import { securityRoutes } from './security/security.routes'
 import { standingListRoutes } from './standing-list/standing-list.routes'
 import { registrationBookRoutes } from './registration-book/registration-book.routes'
+import { dispatchBookRoutes } from './dispatch-book/dispatch-book.routes'
 
 const Boundary = React.lazy(() => import('@/core/private/Boundary'))
 const NotFound = React.lazy(() => import('@/core/NotFound'))
@@ -20,6 +21,7 @@ export const privateRoutes: _RouteObject<'private'>[] = [
       ...securityRoutes,
       ...standingListRoutes,
       ...registrationBookRoutes,
+      ...dispatchBookRoutes,
     ],
   }),
 

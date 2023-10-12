@@ -69,14 +69,12 @@ const AddRegistrationBook = () => {
     if (registrationBookDetails) {
       const {
         id,
-        applicationDate,
         letterDispatchDate,
         letterDispatchNumber,
         letterLinks,
         letterSenderName,
         letterToPerson,
         physicalAddress,
-        registrationNumber,
         remarks,
         sectorId,
         subjectOfLetter,
@@ -90,14 +88,12 @@ const AddRegistrationBook = () => {
       } = registrationBookDetails
       setInitialRegistrationBookValue({
         id,
-        applicationDate,
         letterDispatchDate,
         letterDispatchNumber,
         letterLinks,
         letterSenderName,
         letterToPerson,
         physicalAddress,
-        registrationNumber,
         remarks,
         sectorId,
         subjectOfLetter,
@@ -126,7 +122,6 @@ const AddRegistrationBook = () => {
     }
 
     const {
-      applicationDate,
       letterDispatchDate,
       letterDispatchNumber,
       letterLinks,
@@ -138,12 +133,10 @@ const AddRegistrationBook = () => {
       sectorId,
       subjectOfLetter,
       wardNumber,
-      registrationNumber,
       id,
     } = values
 
     const reqData: IAddRegistrationBookPayload = {
-      applicationDate,
       letterDispatchDate,
       letterDispatchNumber,
       letterLinks,
@@ -151,7 +144,6 @@ const AddRegistrationBook = () => {
       letterToPerson,
       localBodyId,
       physicalAddress,
-      registrationNumber: registrationNumber || undefined,
       remarks,
       sectorId,
       subjectOfLetter,
@@ -204,18 +196,20 @@ const AddRegistrationBook = () => {
       <ContainerLayout className="scrollbars grow ">
         <form>
           <Grid sm={'sm:grid-cols-12'} gap="gap-4">
-            <Grid.Col sm={'sm:col-span-3'}>
-              <Form.NepaliDatePicker
-                disabled
-                value={values.applicationDate}
-                errors={errors}
-                touched={touched}
-                name="applicationDate"
-                label={t('registrationBook.applicationDate')}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Grid.Col>
+            {registrationBookDetails?.applicationDate && (
+              <Grid.Col sm={'sm:col-span-3'}>
+                <Form.NepaliDatePicker
+                  disabled
+                  value={registrationBookDetails.applicationDate}
+                  errors={errors}
+                  touched={touched}
+                  name="applicationDate"
+                  label={t('registrationBook.applicationDate')}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </Grid.Col>
+            )}
 
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Select

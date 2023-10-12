@@ -4,7 +4,6 @@ import { IAddRegistrationBookInitialValue } from './add-registration-book.interf
 
 export const addRegistrationBookInitialValues: IAddRegistrationBookInitialValue =
   {
-    applicationDate: ADToBS(new Date()),
     letterDispatchDate: '',
     letterDispatchNumber: '',
     letterLinks: '',
@@ -12,7 +11,6 @@ export const addRegistrationBookInitialValues: IAddRegistrationBookInitialValue 
     letterToPerson: '',
     localBodyId: '',
     physicalAddress: '',
-    registrationNumber: '',
     remarks: '',
     sectorId: '',
     subjectOfLetter: '',
