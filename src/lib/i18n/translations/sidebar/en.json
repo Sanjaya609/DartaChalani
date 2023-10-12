@@ -18,5 +18,6 @@
     "roleManagement": "Role Management"
   },
   "standingList": "Standing List",
-  "registrationBook": "Registration Book"
+  "registrationBook": "Registration Book",
+  "dispatchBook": "Dispatch Book"
 }

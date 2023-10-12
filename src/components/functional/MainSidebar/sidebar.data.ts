@@ -37,4 +37,9 @@ export const sidebarNavList: ISidebarNavList[] = [
     path: privateRoutePath.registrationBook.base,
     title: 'sidebar.registrationBook',
   },
+  {
+    icon: Notebook,
+    path: privateRoutePath.dispatchBook.base,
+    title: 'sidebar.dispatchBook',
+  },
 ]

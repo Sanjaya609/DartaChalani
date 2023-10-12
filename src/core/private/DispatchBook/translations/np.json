@@ -1,0 +1,41 @@
+{
+  "title": "दर्ता किताब",
+  "applicationDate": "आवेदन मिति",
+  "letterDispatchDate": "पत्र पठाउने मिति",
+  "letterDispatchNumber": "पत्र डिस्प्याच नम्बर",
+  "letterLinks": "पत्र लिङ्क",
+  "letterSenderName": "पत्र प्रेषकको नाम",
+  "letterToPerson": "पत्र प्राप्त गर्ने व्यक्ति",
+  "localBodyId": "स्थानीय निकाय",
+  "physicalAddress": "पत्र राखिएको ठाउँ",
+  "registrationNumber": "दर्ता नम्बर",
+  "remarks": "टिप्पणी",
+  "sectorId": "क्षेत्र",
+  "subjectOfLetter": "पत्रको विषय",
+  "wardNumber": "वडा नम्बर",
+  "districtId": "जिल्ला",
+  "provinceId": "प्रदेश",
+  "errors": {
+    "applicationDate": "आवेदन मिति आवश्यक छ",
+    "letterDispatchDate": "पत्र पठाउने मिति आवश्यक छ",
+    "letterDispatchNumber": "पत्र डिस्प्याच नम्बर आवश्यक छ",
+    "letterLinks": "पत्र लिङ्क आवश्यक छ",
+    "letterSenderName": "पत्र प्रेषकको नाम आवश्यक छ",
+    "letterToPerson": "पत्र प्राप्त गर्ने व्यक्ति आवश्यक छ",
+    "localBodyId": "स्थानीय निकाय आवश्यक छ",
+    "physicalAddress": "पत्र राखिएको ठाउँ आवश्यक छ",
+    "registrationNumber": "दर्ता नम्बर आवश्यक छ",
+    "remarks": "टिप्पणी आवश्यक छ",
+    "sectorId": "क्षेत्र आवश्यक छ",
+    "subjectOfLetter": "पत्रको विषय आवश्यक छ",
+    "wardNumber": "वडा नम्बर आवश्यक छ",
+    "districtId": "जिल्ला आवश्यक छ",
+    "provinceId": "प्रदेश आवश्यक छ"
+  },
+  "modal": {
+    "status": {
+      "title": "स्थिति परिवर्तन गर्नुहोस्",
+      "description": "के तपाईँ स्थिति परिवर्तन गर्न निश्चित हुनुहुन्छ?"
+    }
+  }
+}

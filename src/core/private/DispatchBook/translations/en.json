@@ -1,0 +1,41 @@
+{
+  "title": "Registration Book",
+  "applicationDate": "Application Date",
+  "letterDispatchDate": "Letter Dispatch Date",
+  "letterDispatchNumber": "Letter Dispatch Number",
+  "letterLinks": "Letter Links",
+  "letterSenderName": "Letter Sender Name",
+  "letterToPerson": "Letter to Person",
+  "localBodyId": "Local Body",
+  "physicalAddress": "Physical Address",
+  "registrationNumber": "Registration Number",
+  "remarks": "Remarks",
+  "sectorId": "Sector",
+  "subjectOfLetter": "Subject Of Letter",
+  "wardNumber": "Ward Number",
+  "districtId": "District",
+  "provinceId": "Province",
+  "errors": {
+    "applicationDate": "Application Date is required",
+    "letterDispatchDate": "Letter Dispatch Date is required",
+    "letterDispatchNumber": "Letter Dispatch Number is required",
+    "letterLinks": "Letter Links is required",
+    "letterSenderName": "Letter Sender Name is required",
+    "letterToPerson": "Letter to Person is required",
+    "localBodyId": "Local Body is required",
+    "physicalAddress": "Physical Address is required",
+    "registrationNumber": "Registration Number is required",
+    "remarks": "Remarks is required",
+    "sectorId": "Sector is required",
+    "subjectOfLetter": "Subject Of Letter is required",
+    "wardNumber": "Ward Number is required",
+    "districtId": "District is required",
+    "provinceId": "Province is required"
+  },
+  "modal": {
+    "status": {
+      "title": "Change Status",
+      "description": "Are you sure you want to change the status?"
+    }
+  }
+}
