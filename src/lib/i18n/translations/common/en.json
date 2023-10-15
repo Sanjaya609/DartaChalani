@@ -46,6 +46,7 @@
     "modal": {
       "title": "View Documents",
       "nameTitle": "{{name}} Documents"
-    }
+    },
+    "confirmRemove": "Confirm Remove"
   }
 }
