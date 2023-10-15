@@ -2,8 +2,8 @@ import Logo from '@/assets/img/logo.png'
 import { Flexbox, Icon, Image } from '@/components/ui'
 import { Text } from '@/components/ui/core/Text'
 import { useSideBarData } from '@/providers/SidebarProvider'
-import { Link } from '@/router'
-import { TFuncKey, TFuncReturn } from 'i18next'
+import { Link, useLocation } from '@/router'
+import { TFuncKey } from 'i18next'
 import { useTranslation } from 'react-i18next'
 import { sidebarNavList } from '../sidebar.data'
 import { menuOverlayAside } from './menuoverlay.styles'
@@ -27,6 +27,7 @@ const OverLayIcon = () => (
 
 const MenuOverlay = () => {
   const { t } = useTranslation()
+  const location = useLocation()
   const { isOpen, setIsOpen } = useSideBarData()
 
   const asideRef = useRef<HTMLElement>(null)
@@ -61,25 +62,30 @@ const MenuOverlay = () => {
           </Text>
         </Flexbox>
 
-        {sidebarNavList.map((nav) => (
-          <Link
-            key={nav.path}
-            className="group flex w-full cursor-pointer items-center px-3 py-4 transition-all hover:bg-primary"
-            to={nav.path}
-            onClick={() => setIsOpen()}
-          >
-            <Icon
-              className="mr-2 group-hover:text-navy-16"
-              icon={nav.icon}
-              size={24}
-              color={'text-white'}
-            />
+        {sidebarNavList.map((nav) => {
+          const isActive = location.pathname.includes(nav.path)
+          return (
+            <Link
+              key={nav.path}
+              className={`group flex w-full cursor-pointer items-center px-3 py-4 transition-all hover:bg-primary ${
+                isActive ? 'bg-primary' : ''
+              }`}
+              to={nav.path}
+              onClick={() => setIsOpen()}
+            >
+              <Icon
+                className="mr-2 group-hover:text-navy-16"
+                icon={nav.icon}
+                size={24}
+                color={'text-white'}
+              />
 
-            <Text className="text-sm text-white">
-              {t(nav.title) as TFuncKey<'translation'>}
-            </Text>
-          </Link>
-        ))}
+              <Text className="text-sm text-white">
+                {t(nav.title) as TFuncKey<'translation'>}
+              </Text>
+            </Link>
+          )
+        })}
       </aside>
     </>
   )

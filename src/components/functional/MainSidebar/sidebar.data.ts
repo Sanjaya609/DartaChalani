@@ -14,7 +14,7 @@ interface ISidebarNavList {
 export const sidebarNavList: ISidebarNavList[] = [
   {
     icon: LayoutDashboard,
-    path: privateRoutePath.base,
+    path: privateRoutePath.dashboard,
     title: 'sidebar.dashboard',
   },
   {

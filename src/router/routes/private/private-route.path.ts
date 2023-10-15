@@ -6,6 +6,7 @@ import { standingListRoutePath } from './standing-list/standing-list-route.path'
 
 export const privateRoutePath = {
   base: '/',
+  dashboard: '/dashboard',
   masterSetup: masterSetupRoutePath,
   security: securityRoutePath,
   standingList: standingListRoutePath,
