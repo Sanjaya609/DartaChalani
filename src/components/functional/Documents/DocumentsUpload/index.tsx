@@ -5,6 +5,7 @@ import { Box } from '@/components/ui'
 import { Text } from '@/components/ui/core/Text'
 import { IModuleDocumentMappingResponse } from '@/core/private/MasterSetup/ModuleDocumentMapping/schema/module-document-mapping.interface'
 import { useGetAllModuleDocumentMappingByModuleId } from '@/core/private/MasterSetup/ModuleDocumentMapping/services/module-document-mapping.query'
+import { useBoolean } from '@/hooks'
 import { getTextByLanguage } from '@/lib/i18n/i18n'
 import { useDocumentUpload } from '@/service/generic/generic.query'
 import { validateDocumentFile } from '@/utility/document/document-validations'
@@ -34,6 +35,7 @@ import {
 } from './document-upload.interface'
 import UploadedFiles from './UploadedFiles/UploadedFiles'
 import ViewUploadedFilesModal from './UploadedFiles/ViewUploadedFilesModal'
+import Modal from '@/components/ui/Modal/Modal'
 
 interface IDocumentsUploadProps {
   moduleId: StringNumber
@@ -68,6 +70,8 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
   })
 
   const [currentViewDocument, setCurrentViewDocument] = useState<StringNumber>()
+  const { value: removeFileModal, toggle: toggleRemoveFileModal } =
+    useBoolean(false)
 
   const { t } = useTranslation()
 
@@ -114,8 +118,6 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
       structureFileState()
     }
   }, [requiredDocumentList])
-
-  console.log({ fileState })
 
   const validateFileChanges = (files: FileStateFile) => {
     const mandatoryFiles = Object.values(files).filter(
@@ -311,6 +313,38 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
     [fileState.files, t]
   )
 
+  const removeFileAction = (file: FileData) => {
+    if (currentViewDocument) {
+      const currentFileState = { ...fileState }
+      const updatedFileState = {
+        ...currentFileState.files[currentViewDocument],
+        filesData: currentFileState.files[currentViewDocument].filesData.filter(
+          (currFile) => currFile.uuid !== file.uuid
+        ),
+      }
+
+      const newFileState = canUploadMultipleFile
+        ? {
+            ...currentFileState,
+            files: {
+              ...currentFileState.files,
+              [currentViewDocument]: updatedFileState,
+            },
+          }
+        : { ...currentFileState, file: { uuid: '', file: null } }
+
+      if (canUploadMultipleFile && !updatedFileState.filesData.length) {
+        setCurrentViewDocument('')
+      }
+      if (!canUploadMultipleFile) {
+        setCurrentViewDocument('')
+      }
+
+      setFileState(newFileState)
+      validateFileChanges(newFileState.files)
+    }
+  }
+
   return (
     <div className="">
       <div className="mt-4">
@@ -346,6 +380,7 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
               )
             : ''
         }
+        removeFileAction={removeFileAction}
       />
     </div>
   )

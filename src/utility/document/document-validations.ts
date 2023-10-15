@@ -31,7 +31,6 @@ interface IValidateDocumentFile {
 export const validateDocumentFile = (props: IValidateDocumentFile) => {
   const { file, maxFileSize, allowedFileTypes } = props
   const maxSizeInByte = maxFileSize * 1024
-  console.log({ props })
 
   const mimeTypeAllowedFileType = allowedFileTypes?.map(
     (fileType) => MimeType[fileType.toLowerCase() as keyof typeof MimeType]
