@@ -71,7 +71,7 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
 
   const { t } = useTranslation()
 
-  const { data: requiredDocumentList = [] } =
+  const { data: requiredDocumentList = [], isLoading: documentLoading } =
     useGetAllModuleDocumentMappingByModuleId(moduleId)
 
   const { mutate: uploadDocument } = useDocumentUpload()
@@ -322,6 +322,7 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
       <DataTable
         data={requiredDocumentList}
         columns={columns}
+        isLoading={documentLoading}
         withScrollable={false}
       />
 

@@ -31,6 +31,7 @@ import * as React from 'react'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { getComputedClassNames } from '@/utility/tailwind/tailwind-utility'
+import DataLoading from './Components/DataLoading'
 
 interface IHeaderAdd {
   title?: string
@@ -211,7 +212,9 @@ const NormalDataTable = <TData extends RowData>({
                 withScrollable={withScrollable}
               />
               {isNoDataFound && <TableNoDataFound />}
-              {isLoading && <Box>Loading ....</Box>}
+              {isLoading && (
+                <DataLoading columnCount={memoizedColumns.length} />
+              )}
               {!isNoDataFound && !isLoading && (
                 <TableBody getRowModel={table.getRowModel} />
               )}

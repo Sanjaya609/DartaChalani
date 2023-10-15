@@ -7,7 +7,7 @@
   "endDateAd": "अन्त्य मिति (ई.सं.)",
   "endDateBs": "अन्त्य मिति (वि.सं.)",
   "status": "स्थिति",
-  "current": "सक्रिय",
+  "current": "चालु",
   "errors": {
     "fiscalYearNameEn": "आर्थिक वर्ष नाम (अंग्रेजी) आवश्यक छ",
     "fiscalYearNameNp": "आर्थिक वर्ष नाम (नेपाली) आवश्यक छ",

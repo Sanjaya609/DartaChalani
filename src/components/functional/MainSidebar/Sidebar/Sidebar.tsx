@@ -1,6 +1,6 @@
 import { Icon } from '@/components/ui'
 import { Text } from '@/components/ui/core/Text'
-import { Link } from '@/router'
+import { Link, useLocation } from '@/router'
 import { getComputedClassNames } from '@/utility/tailwind/tailwind-utility'
 import { CaretDown } from 'phosphor-react'
 import Collapse, {
@@ -24,9 +24,13 @@ const Sidebar = (props: ISidebarProps) => {
   const computedCollapseSidebarLinkStyle =
     getComputedClassNames(sidebarLinkStyle)
 
+  const location = useLocation()
+
   return (
     <aside className={sideBarAsideWrapper}>
       {sideBarItem.map((sidebar) => {
+        const isActive = location.pathname.includes(sidebar.path)
+
         if (sidebar?.children?.length) {
           return (
             <Collapse className={computedCollapseSidebarLinkStyle}>
@@ -50,7 +54,12 @@ const Sidebar = (props: ISidebarProps) => {
           )
         }
         return (
-          <Link className={computedSidebarLinkStyle} to={sidebar.path}>
+          <Link
+            className={`${computedSidebarLinkStyle} ${
+              isActive ? 'bg-navy-24' : ''
+            }`}
+            to={sidebar.path}
+          >
             <Text variant="subtitle2" className="text-white">
               {sidebar.title}
             </Text>
