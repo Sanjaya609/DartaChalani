@@ -2,6 +2,7 @@ import { createRoute } from '@/router/routes/create-route'
 import { privateRoutePath } from '@/router/routes/private/private-route.path'
 import React from 'react'
 import { _RouteObject } from 'react-router-dom'
+import { dropdownConfigRoutes } from './dropdown-config/dropdown-config.routes'
 
 const MasterSetup = React.lazy(
   () => import('@/core/private/MasterSetup/MasterSetup')
@@ -50,6 +51,7 @@ export const masterSetupRoutes: _RouteObject<'private'>[] = [
         path: privateRoutePath.masterSetup.moduleDocumentMapping,
         element: ModuleDocumentMapping,
       }),
+      ...dropdownConfigRoutes,
     ],
   }),
 ]

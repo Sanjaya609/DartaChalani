@@ -1,0 +1,18 @@
+{
+  "title": "Sector",
+  "dropDownDescriptionEn": "Dropdown Description (English)",
+  "dropDownDescriptionNp": "Dropdown Description (Nepali)",
+  "status": "Status",
+  "orderNumber": "Order Number",
+  "errors": {
+    "dropDownDescriptionEn": "Dropdown Description (English) is required",
+    "dropDownDescriptionNp": "Dropdown Description (Nepali) is required",
+    "orderNumber": "Order Number is required"
+  },
+  "modal": {
+    "status": {
+      "title": "Change Status",
+      "description": "Are you sure you want to change the status?"
+    }
+  }
+}

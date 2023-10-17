@@ -8,4 +8,9 @@ export const masterSetupRoutePath = {
   documentType: `${baseRoute}/document-type`,
   office: `${baseRoute}/office`,
   moduleDocumentMapping: `${baseRoute}/document-module-mapping`,
+  dropdownConfig: {
+    base: `${baseRoute}/drop-down-config`,
+    add: `${baseRoute}/drop-down-config/add`,
+    edit: `${baseRoute}/drop-down-config/edit/:id`,
+  },
 }

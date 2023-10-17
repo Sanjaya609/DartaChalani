@@ -1,12 +1,6 @@
 import Form from '@/components/functional/Form/Form'
-import { Box, Button, Flexbox, Grid, Icon } from '@/components/ui'
-import {
-  ArrayHelpers,
-  FieldArray,
-  Formik,
-  FormikTouched,
-  useFormik,
-} from 'formik'
+import { Button, Flexbox, Grid, Icon } from '@/components/ui'
+import { ArrayHelpers, FieldArray, Formik } from 'formik'
 import { useTranslation } from 'react-i18next'
 import { IModuleSetupFormSchema } from '../schema/moduleSetup.interface'
 import {
@@ -19,16 +13,16 @@ import {
   useGetModuleListByStatus,
 } from '../services/moduleSetup.query'
 
-import Modal from '@/components/ui/Modal/Modal'
+import { FormikValidationError } from '@/components/functional/Form/InputErrorMessage/InputErrorMessage'
 import { Label } from '@/components/functional/Form/Label/Label'
 import { Text } from '@/components/ui/core/Text'
-import { Plus, Trash } from 'phosphor-react'
-import { FormikValidationError } from '@/components/functional/Form/InputErrorMessage/InputErrorMessage'
+import Modal from '@/components/ui/Modal/Modal'
 import { useGetEnumDataWithName } from '@/service/generic/generic.query'
 import { APIENUM } from '@/utility/enums/api.enum'
 import { inputChangeNumberOnly } from '@/utility/inputUtils/input-change-utils'
-import { useMemo } from 'react'
 import { mapDataToStyledSelect } from '@/utility/react-select-helper'
+import { Plus, Trash } from 'phosphor-react'
+import { useMemo } from 'react'
 
 interface IModuleSetupFormProps {
   initialValues: IModuleSetupFormSchema
@@ -69,7 +63,7 @@ const ModuleSetupForm = ({
       resourceRequestList: values?.isConfigurable
         ? values?.resourceRequestList
         : [],
-      orderNumber: +values?.orderNumber,  
+      orderNumber: +values?.orderNumber,
     }
     createModule(payload, {
       onSuccess: () => {
