@@ -5,7 +5,13 @@ export const dropdownConfigInitialValue: IDropdownConfigInitialValue = {
   dropDownDescriptionEn: '',
   dropDownDescriptionNp: '',
   isActive: true,
-  listOfDropDownDetailRequestDto: [],
+  listOfDropDownDetailRequestDto: [
+    {
+      descriptionEn: '',
+      descriptionNp: '',
+      isActive: true,
+    },
+  ],
 }
 
 export const dropdownConfigSchema = Yup.object({

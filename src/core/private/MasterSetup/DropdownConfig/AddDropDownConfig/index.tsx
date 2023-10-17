@@ -1,4 +1,5 @@
 import Form from '@/components/functional/Form/Form'
+import { FormikValidationError } from '@/components/functional/Form/InputErrorMessage/InputErrorMessage'
 import SectionHeader from '@/components/functional/SectionHeader'
 import { Box, Button, Grid } from '@/components/ui'
 import ContainerLayout from '@/components/ui/core/Layout/ContainerLayout'
@@ -47,7 +48,7 @@ const AddDropDownConfig = () => {
             <ContainerLayout className="scrollbars grow">
               <form>
                 <Grid sm={'sm:grid-cols-12'} gap="gap-4">
-                  <Grid.Col sm={'sm:col-span-4'}>
+                  <Grid.Col sm={'sm:col-span-3'}>
                     <Form.Input
                       value={values.dropDownDescriptionEn}
                       errors={errors}
@@ -61,7 +62,7 @@ const AddDropDownConfig = () => {
                     />
                   </Grid.Col>
 
-                  <Grid.Col sm={'sm:col-span-4'}>
+                  <Grid.Col sm={'sm:col-span-3'}>
                     <Form.Input
                       value={values.dropDownDescriptionNp}
                       errors={errors}
@@ -75,143 +76,86 @@ const AddDropDownConfig = () => {
                     />
                   </Grid.Col>
 
-                  <Grid.Col sm="sm:col-span-12">
+                  <Grid.Col sm="sm:col-span-10">
                     <FieldArray
                       name="listOfDropDownDetailRequestDto"
                       render={(arrayHelpers: ArrayHelpers) => {
                         return (
                           <>
                             {values?.listOfDropDownDetailRequestDto?.map(
-                              (ropDownDetailRequest, index) => (
-                                <Grid
-                                  className="mb-4"
-                                  key={`resourceRequestList-${index}`}
-                                  sm={'sm:grid-cols-12'}
-                                  gap="gap-4"
-                                >
-                                  <Grid.Col sm={'sm:col-span-3'}>
-                                    <Form.Input
-                                      isFieldArray={{
-                                        keyName: 'resourceRequestList',
-                                        index,
-                                        name: 'resourceName',
-                                      }}
-                                      value={
-                                        values.resourceRequestList[index]
-                                          .resourceName
-                                      }
-                                      id={`resourceRequestList[${index}].resourceName`}
-                                      name={`resourceRequestList[${index}].resourceName`}
-                                      onChange={handleChange}
-                                      errors={errors}
-                                      onBlur={handleBlur}
-                                      touched={touched}
-                                    />
-                                  </Grid.Col>
-
-                                  <Grid.Col sm={'sm:col-span-3'}>
-                                    <Form.Input
-                                      isFieldArray={{
-                                        keyName: 'resourceRequestList',
-                                        index,
-                                        name: 'url',
-                                      }}
-                                      value={
-                                        values.resourceRequestList[index].url
-                                      }
-                                      id={`resourceRequestList[${index}].url`}
-                                      name={`resourceRequestList[${index}].url`}
-                                      onChange={handleChange}
-                                      errors={errors}
-                                      onBlur={handleBlur}
-                                      touched={touched}
-                                    />
-                                  </Grid.Col>
-
-                                  <Grid.Col sm={'sm:col-span-2'}>
-                                    <Form.Select
-                                      options={HTTPMethodOption}
-                                      calculateValueOnChange
-                                      isFieldArray={{
-                                        keyName: 'resourceRequestList',
-                                        index,
-                                        name: 'httpMethod',
-                                      }}
-                                      value={
-                                        values.resourceRequestList[index]
-                                          .httpMethod
-                                      }
-                                      id={`resourceRequestList[${index}].httpMethod`}
-                                      name={`resourceRequestList[${index}].httpMethod`}
-                                      onChange={(event) => {
-                                        setFieldValue(event.name, event.main)
-                                      }}
-                                      errors={errors}
-                                      onBlur={handleBlur}
-                                      touched={touched}
-                                    />
-                                  </Grid.Col>
-
-                                  <Grid.Col sm={'sm:col-span-2'}>
-                                    <Form.Select
-                                      calculateValueOnChange
-                                      options={privilegeData}
-                                      isFieldArray={{
-                                        keyName: 'resourceRequestList',
-                                        index,
-                                        name: 'privilege',
-                                      }}
-                                      value={
-                                        values.resourceRequestList[index]
-                                          .privilege
-                                      }
-                                      id={`resourceRequestList[${index}].privilege`}
-                                      name={`resourceRequestList[${index}].privilege`}
-                                      onChange={(event) => {
-                                        setFieldValue(event.name, event.main)
-                                      }}
-                                      errors={errors}
-                                      onBlur={handleBlur}
-                                      touched={touched}
-                                    />
-                                  </Grid.Col>
-
-                                  <Grid.Col>
-                                    <Flexbox>
-                                      {index > 0 && (
-                                        <Button
-                                          type="button"
-                                          className="mr-3"
-                                          variant="danger"
-                                          onClick={() =>
-                                            arrayHelpers.remove(index)
-                                          }
-                                        >
-                                          <Icon icon={Trash} />
-                                        </Button>
-                                      )}
-                                      <Button
-                                        type="button"
-                                        onClick={() => {
-                                          arrayHelpers.push({
-                                            httpMethod: '',
-                                            privilege: '',
-                                            resourceName: '',
-                                            url: '',
-                                          })
+                              (dropDownDetailRequest, index) => (
+                                <>
+                                  <Grid
+                                    className="mb-4"
+                                    key={`dropDownDetailRequest-${index}`}
+                                    sm={'sm:grid-cols-12'}
+                                    gap="gap-4"
+                                  >
+                                    <Grid.Col sm={'sm:col-span-3'}>
+                                      <Form.Input
+                                        label={t(
+                                          'masterSetup.dropdownConfig.descriptionEn'
+                                        )}
+                                        isFieldArray={{
+                                          keyName:
+                                            'listOfDropDownDetailRequestDto',
+                                          index,
+                                          name: 'descriptionEn',
                                         }}
-                                      >
-                                        <Icon fill="#fff" icon={Plus} />
-                                      </Button>
-                                    </Flexbox>
+                                        value={
+                                          values.listOfDropDownDetailRequestDto[
+                                            index
+                                          ].descriptionEn
+                                        }
+                                        id={`listOfDropDownDetailRequestDto[${index}].descriptionEn`}
+                                        name={`listOfDropDownDetailRequestDto[${index}].descriptionEn`}
+                                        onChange={handleChange}
+                                        errors={errors}
+                                        onBlur={handleBlur}
+                                        touched={touched}
+                                      />
+                                    </Grid.Col>
+
+                                    <Grid.Col sm={'sm:col-span-3'}>
+                                      <Form.Input
+                                        label={t(
+                                          'masterSetup.dropdownConfig.descriptionNp'
+                                        )}
+                                        isFieldArray={{
+                                          keyName:
+                                            'listOfDropDownDetailRequestDto',
+                                          index,
+                                          name: 'descriptionNp',
+                                        }}
+                                        value={
+                                          values.listOfDropDownDetailRequestDto[
+                                            index
+                                          ].descriptionNp
+                                        }
+                                        id={`listOfDropDownDetailRequestDto[${index}].descriptionNp`}
+                                        name={`listOfDropDownDetailRequestDto[${index}].descriptionNp`}
+                                        onChange={handleChange}
+                                        errors={errors}
+                                        onBlur={handleBlur}
+                                        touched={touched}
+                                      />
+                                    </Grid.Col>
+                                  </Grid>
+                                  <Grid.Col sm="sm:col-span-12">
+                                    <Button
+                                      variant="secondary"
+                                      btnType="outlined"
+                                    >
+                                      Add Extra Description
+                                    </Button>
                                   </Grid.Col>
-                                </Grid>
+                                </>
                               )
                             )}
 
                             {errors &&
-                              errors?.resourceRequestList &&
-                              typeof errors.resourceRequestList ===
+                              errors?.listOfDropDownDetailRequestDto &&
+                              typeof errors.listOfDropDownDetailRequestDto ===
                                 'string' && (
                                 <Grid
                                   className="mb-4"

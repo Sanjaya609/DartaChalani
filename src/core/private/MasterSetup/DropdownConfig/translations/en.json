@@ -2,6 +2,8 @@
   "title": "Sector",
   "dropDownDescriptionEn": "Dropdown Description (English)",
   "dropDownDescriptionNp": "Dropdown Description (Nepali)",
+  "descriptionEn": "Description (Nepali)",
+  "descriptionNp": "Description (Nepali)",
   "status": "Status",
   "orderNumber": "Order Number",
   "errors": {

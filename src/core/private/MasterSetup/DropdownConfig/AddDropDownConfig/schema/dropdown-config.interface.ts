@@ -10,16 +10,16 @@ interface IListOfDropDownDetailRequestDto {
   descriptionEn: string
   descriptionNp: string
   dropDownId?: number
-  field1: string
-  field2: string
-  field3: string
-  field4: string
+  field1?: string
+  field2?: string
+  field3?: string
+  field4?: string
   id?: number
   isActive: boolean
-  value1: string
-  value2: string
-  value3: string
-  value4: string
+  value1?: string
+  value2?: string
+  value3?: string
+  value4?: string
 }
 
 export interface IDropdownConfigResponse {
