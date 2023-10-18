@@ -34,6 +34,10 @@ const MasterSetup = () => {
         title: t('sidebar.masterSetup.moduleDocumentMapping'),
         path: privateRoutePath.masterSetup.moduleDocumentMapping,
       },
+      {
+        title: t('sidebar.masterSetup.dropdownConfig'),
+        path: privateRoutePath.masterSetup.dropdownConfig.base,
+      },
     ],
     [t]
   )

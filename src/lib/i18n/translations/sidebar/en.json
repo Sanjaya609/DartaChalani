@@ -6,7 +6,8 @@
     "serviceType": "Service Type",
     "documentType": "Document Type",
     "office": "Office",
-    "moduleDocumentMapping": "Document Type Module Mapping"
+    "moduleDocumentMapping": "Document Type Module Mapping",
+    "dropdownConfig": "Dropdown Configuration"
   },
   "dashboard": "Dashboard",
   "security": {

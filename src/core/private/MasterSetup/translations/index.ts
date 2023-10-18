@@ -10,6 +10,8 @@ import officeEn from '@/core/private/MasterSetup/Office/translations/en.json'
 import officeNp from '@/core/private/MasterSetup/Office/translations/np.json'
 import moduleDocumentMappingEn from '@/core/private/MasterSetup/ModuleDocumentMapping/translations/en.json'
 import moduleDocumentMappingNp from '@/core/private/MasterSetup/ModuleDocumentMapping/translations/np.json'
+import dropdownConfigEn from '@/core/private/MasterSetup/DropdownConfig/translations/en.json'
+import dropdownConfigNp from '@/core/private/MasterSetup/DropdownConfig/translations/np.json'
 
 const masterSetupEn = {
   fiscalYear: fiscalYearEn,
@@ -18,6 +20,7 @@ const masterSetupEn = {
   documentType: documentTypeEn,
   office: officeEn,
   moduleDocumentMapping: moduleDocumentMappingEn,
+  dropdownConfig: dropdownConfigEn,
 }
 
 const masterSetupNp = {
@@ -27,6 +30,7 @@ const masterSetupNp = {
   documentType: documentTypeNp,
   office: officeNp,
   moduleDocumentMapping: moduleDocumentMappingNp,
+  dropdownConfig: dropdownConfigNp,
 }
 
 export { masterSetupEn, masterSetupNp }

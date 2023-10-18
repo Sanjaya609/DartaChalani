@@ -64,6 +64,9 @@ interface IFieldArrayProps {
   name: string
   index: number
   keyName: string
+  levelFirstNested?: {
+    parentKey: string
+  }
 }
 
 interface IBaseFormControlProps {

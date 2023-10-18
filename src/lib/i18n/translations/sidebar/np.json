@@ -6,7 +6,8 @@
     "serviceType": "सेवा प्रकार",
     "documentType": "कागजात प्रकार",
     "office": "कार्यालय",
-    "moduleDocumentMapping": "कागजात प्रकार मोड्युल म्यापिङ"
+    "moduleDocumentMapping": "कागजात प्रकार मोड्युल म्यापिङ",
+    "dropdownConfig": "ड्रपडाउन कन्फिगरेसन"
   },
   "dashboard": "ड्यासबोर्ड",
   "security": {
