@@ -10,6 +10,22 @@ interface IGetErrorStatus {
 export const getErrorStatus = (props: IGetErrorStatus) => {
   const { name, error, touched, errors, status, isFieldArray } = props
 
+  // if (
+  //   isFieldArray &&
+  //   isFieldArray?.levelFirstNested?.parentKey &&
+  //   errors &&
+  //   touched &&
+  //   isFieldArray?.keyName in
+  //     errors[isFieldArray?.levelFirstNested?.parentKey] &&
+  //   isFieldArray?.keyName in
+  //     touched[isFieldArray?.levelFirstNested?.parentKey] &&
+  //   isFieldArray?.index >= 0
+  // ) {
+  //   debugger
+  //   return !!errors[isFieldArray.keyName!][isFieldArray.index!]?.[
+  //     isFieldArray?.name
+  //   ]
+  // }
   if (
     isFieldArray &&
     errors &&

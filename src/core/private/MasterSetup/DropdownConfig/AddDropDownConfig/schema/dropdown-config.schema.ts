@@ -1,7 +1,21 @@
 import * as Yup from 'yup'
-import { IDropdownConfigInitialValue } from './dropdown-config.interface'
 
-export const dropdownConfigInitialValue: IDropdownConfigInitialValue = {
+export interface IDropdownFieldConfigInitialValue {
+  id?: number
+  dropDownDescriptionEn: string
+  dropDownDescriptionNp: string
+  isActive: boolean
+  listOfDropDownDetailRequestDto: {
+    descriptionEn: string
+    descriptionNp: string
+    isActive: boolean
+    fieldValues?: { field: string; value: string }[]
+    dropDownId?: number
+    id?: number
+  }[]
+}
+
+export const dropdownConfigInitialValue: IDropdownFieldConfigInitialValue = {
   dropDownDescriptionEn: '',
   dropDownDescriptionNp: '',
   isActive: true,
@@ -34,34 +48,20 @@ export const dropdownConfigSchema = Yup.object({
             'masterSetup.dropdownConfig.errors.resourceRequestList.privilege'
           )
           .nullable(),
-        field1: Yup.string()
-          .required(
-            'masterSetup.dropdownConfig.errors.resourceRequestList.resourceName'
-          )
-          .nullable(),
-        field2: Yup.string()
-          .required('masterSetup.dropdownConfig.errors.resourceRequestList.url')
-          .nullable(),
-        field3: Yup.string()
-          .required('masterSetup.dropdownConfig.errors.resourceRequestList.url')
-          .nullable(),
-        field4: Yup.string()
-          .required('masterSetup.dropdownConfig.errors.resourceRequestList.url')
-          .nullable(),
-        value1: Yup.string()
-          .required(
-            'masterSetup.dropdownConfig.errors.resourceRequestList.resourceName'
-          )
-          .nullable(),
-        value2: Yup.string()
-          .required('masterSetup.dropdownConfig.errors.resourceRequestList.url')
-          .nullable(),
-        value3: Yup.string()
-          .required('masterSetup.dropdownConfig.errors.resourceRequestList.url')
-          .nullable(),
-        value4: Yup.string()
-          .required('masterSetup.dropdownConfig.errors.resourceRequestList.url')
-          .nullable(),
+        fieldValues: Yup.array().of(
+          Yup.object().shape({
+            field: Yup.string()
+              .required(
+                'masterSetup.dropdownConfig.errors.resourceRequestList.httpMethod'
+              )
+              .nullable(),
+            value: Yup.string()
+              .required(
+                'masterSetup.dropdownConfig.errors.resourceRequestList.privilege'
+              )
+              .nullable(),
+          })
+        ),
       })
     )
     .min(1, 'masterSetup.dropdownConfig.errors.atLeastProperties'),
