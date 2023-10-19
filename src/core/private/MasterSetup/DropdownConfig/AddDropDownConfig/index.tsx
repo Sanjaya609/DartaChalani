@@ -6,11 +6,16 @@ import { Card } from '@/components/ui/core/Card'
 import ContainerLayout from '@/components/ui/core/Layout/ContainerLayout'
 import { Text } from '@/components/ui/core/Text'
 import Dropdown from '@/components/ui/Dropdown/Dropdown'
-import { privateRoutePath, useNavigate } from '@/router'
+import { privateRoutePath, useNavigate, useParams } from '@/router'
+import { decodeParams } from '@/utility/route-params'
 import { ArrayHelpers, FieldArray, Formik } from 'formik'
 import { DotsThreeOutlineVertical, Plus, Trash } from 'phosphor-react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useCreateDropdownConfig } from '../services/dropdown-config.query'
+import {
+  useCreateDropdownConfig,
+  useGetDropdownConfigById,
+} from '../services/dropdown-config.query'
 import { IDropdownConfigInitialValue } from './schema/dropdown-config.interface'
 import {
   dropdownConfigInitialValue,
@@ -20,13 +25,45 @@ import {
 
 const AddDropDownConfig = () => {
   const { t } = useTranslation()
+  const [dropdownInitialValueState, setDropdownInitialValueState] = useState(
+    dropdownConfigInitialValue
+  )
   const navigate = useNavigate()
+
+  const params = useParams()
+  const dropdownId = decodeParams<string>(params?.id)
+
+  const { mutate: createDropDownConfig } = useCreateDropdownConfig()
+  const { data: dropdownConfigDetails } = useGetDropdownConfigById(dropdownId)
+
+  useEffect(() => {
+    if (dropdownConfigDetails) {
+      const {
+        dropDownDescriptionEn,
+        dropDownDescriptionNp,
+        dropDownDetailResponseDtoList,
+        isActive,
+        id,
+      } = dropdownConfigDetails
+      setDropdownInitialValueState({
+        id,
+        dropDownDescriptionEn,
+        dropDownDescriptionNp,
+        isActive,
+        listOfDropDownDetailRequestDto: dropDownDetailResponseDtoList?.map(
+          (dropDown) => ({
+            descriptionEn: dropDown.descriptionEn,
+            descriptionNp: dropDown.descriptionNp,
+            isActive: dropDown.isActive,
+          })
+        ),
+      })
+    }
+  }, [dropdownConfigDetails])
 
   const navigateToList = () => {
     navigate(privateRoutePath.masterSetup.dropdownConfig.base)
   }
-
-  const { mutate: createDropDownConfig } = useCreateDropdownConfig()
 
   const handleSaveDropDown = (values: IDropdownFieldConfigInitialValue) => {
     const listOfDropDownDetailRequestDto =
@@ -67,7 +104,7 @@ const AddDropDownConfig = () => {
     <Formik
       validateOnChange
       enableReinitialize
-      initialValues={dropdownConfigInitialValue}
+      initialValues={dropdownInitialValueState}
       validationSchema={dropdownConfigSchema}
       onSubmit={(values, { setSubmitting }) => {
         setSubmitting(false)
@@ -81,12 +118,11 @@ const AddDropDownConfig = () => {
         handleChange,
         handleSubmit,
         handleBlur,
-        setFieldValue,
       }) => {
         return (
           <>
             <SectionHeader
-              title={t('dispatchBook.title')}
+              title={t('masterSetup.dropdownConfig.addDropDown')}
               backAction={navigateToList}
             />
             <ContainerLayout className="scrollbars grow">
@@ -132,8 +168,8 @@ const AddDropDownConfig = () => {
                                 index,
                                 currDropDownList
                               ) => (
-                                <Grid.Col sm="sm:col-span-6">
-                                  <Card className="relative">
+                                <Grid.Col sm="sm:col-span-6" className="h-full">
+                                  <Card className="relative h-full">
                                     <Box className="ml-auto">
                                       <Dropdown
                                         triggerElement={
@@ -154,12 +190,19 @@ const AddDropDownConfig = () => {
                                             }}
                                             className="cursor-pointer hover:bg-red-88"
                                           >
-                                            <Flexbox align="center">
+                                            <Flexbox
+                                              align="center"
+                                              className="text-primary"
+                                            >
                                               <Icon
                                                 icon={Plus}
                                                 className="mr-2"
                                               />
-                                              <Text>Add More</Text>
+                                              <Text>
+                                                {t(
+                                                  'masterSetup.dropdownConfig.addmore'
+                                                )}
+                                              </Text>
                                             </Flexbox>
                                           </Dropdown.DropdownMenuItem>
                                         )}
@@ -170,12 +213,19 @@ const AddDropDownConfig = () => {
                                             }}
                                             className="cursor-pointer hover:bg-red-88"
                                           >
-                                            <Flexbox align="center">
+                                            <Flexbox
+                                              align="center"
+                                              className="text-red-600"
+                                            >
                                               <Icon
                                                 icon={Trash}
                                                 className="mr-2"
                                               />
-                                              <Text>Delete</Text>
+                                              <Text>
+                                                {t(
+                                                  'masterSetup.dropdownConfig.remove'
+                                                )}
+                                              </Text>
                                             </Flexbox>
                                           </Dropdown.DropdownMenuItem>
                                         )}
@@ -252,7 +302,7 @@ const AddDropDownConfig = () => {
                                               ]?.fieldValues?.length && (
                                                 <Grid.Col sm="sm:col-span-12">
                                                   <span
-                                                    className="flex cursor-pointer items-center hover:opacity-50"
+                                                    className="flex cursor-pointer items-center text-primary hover:opacity-50"
                                                     onClick={() => {
                                                       nestedDropDownDetails.push(
                                                         {
@@ -265,8 +315,10 @@ const AddDropDownConfig = () => {
                                                     <Icon
                                                       icon={Plus}
                                                       className="mr-2"
-                                                    />{' '}
-                                                    Add Extra Description
+                                                    />
+                                                    {t(
+                                                      'masterSetup.dropdownConfig.addExtraDescription'
+                                                    )}
                                                   </span>
                                                 </Grid.Col>
                                               )}
@@ -421,8 +473,7 @@ const AddDropDownConfig = () => {
                   }}
                   className="ml-auto"
                 >
-                  {t('btns.save')}
-                  {/* {dispatchBookId ? t('btns.update') : t('btns.save')} */}
+                  {dropdownId ? t('btns.update') : t('btns.save')}
                 </Button>
               </ContainerLayout>
             </Box>

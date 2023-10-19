@@ -21,16 +21,27 @@ const DropdownConfigTable = () => {
   const columns = React.useMemo<ColumnDef<IDropdownConfigResponse>[]>(
     () => [
       {
-        header: t('masterSetup.sector.sectorNameEnglish'),
-        accessorKey: 'subSectorNameEnglish',
+        header: t('masterSetup.dropdownConfig.dropDownCode'),
+        accessorKey: 'dropDownCode',
       },
       {
-        header: t('masterSetup.sector.sectorNameEnglish'),
-        accessorKey: 'subSectorNameNepali',
+        header: t('masterSetup.dropdownConfig.dropDownDescriptionEn'),
+        accessorKey: 'dropDownDescriptionEn',
       },
       {
-        header: t('masterSetup.sector.orderNumber'),
-        accessorKey: 'orderNumber',
+        header: t('masterSetup.dropdownConfig.dropDownDescriptionNp'),
+        accessorKey: 'dropDownDescriptionNp',
+      },
+      {
+        header: t('masterSetup.dropdownConfig.numberOfValue'),
+        accessorKey: 'dropDownDetailResponseDtoList',
+        cell: ({
+          row: {
+            original: { dropDownDetailResponseDtoList },
+          },
+        }) => {
+          return dropDownDetailResponseDtoList.length
+        },
       },
       {
         header: t('actions'),

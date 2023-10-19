@@ -54,7 +54,7 @@ const useGetAllDropdownConfig = <T = IDropdownConfigResponse[]>(
   )
 }
 
-const useGetDropdownConfigById = (dropdownConfigId?: string | number) => {
+const useGetDropdownConfigById = (dropdownConfigId: StringNumber | null) => {
   return useQuery(
     [getDropdownConfigById.controllerName],
     () =>
