@@ -30,35 +30,27 @@ export const dropdownConfigInitialValue: IDropdownFieldConfigInitialValue = {
 
 export const dropdownConfigSchema = Yup.object({
   dropDownDescriptionEn: Yup.string().required(
-    'masterSetup.dropdownConfig.errors.sectorNameEnglish'
+    'masterSetup.dropdownConfig.errors.dropDownDescriptionEn'
   ),
   dropDownDescriptionNp: Yup.string().required(
-    'masterSetup.dropdownConfig.errors.sectorNameNepali'
+    'masterSetup.dropdownConfig.errors.dropDownDescriptionEn'
   ),
   listOfDropDownDetailRequestDto: Yup.array()
     .of(
       Yup.object().shape({
         descriptionEn: Yup.string()
-          .required(
-            'masterSetup.dropdownConfig.errors.resourceRequestList.httpMethod'
-          )
+          .required('masterSetup.dropdownConfig.errors.descriptionEn')
           .nullable(),
         descriptionNp: Yup.string()
-          .required(
-            'masterSetup.dropdownConfig.errors.resourceRequestList.privilege'
-          )
+          .required('masterSetup.dropdownConfig.errors.descriptionNp')
           .nullable(),
         fieldValues: Yup.array().of(
           Yup.object().shape({
             field: Yup.string()
-              .required(
-                'masterSetup.dropdownConfig.errors.resourceRequestList.httpMethod'
-              )
+              .required('masterSetup.dropdownConfig.errors.field')
               .nullable(),
             value: Yup.string()
-              .required(
-                'masterSetup.dropdownConfig.errors.resourceRequestList.privilege'
-              )
+              .required('masterSetup.dropdownConfig.errors.field')
               .nullable(),
           })
         ),

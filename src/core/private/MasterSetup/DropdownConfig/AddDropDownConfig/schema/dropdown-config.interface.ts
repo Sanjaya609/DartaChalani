@@ -27,5 +27,5 @@ export interface IDropdownConfigResponse {
   dropDownDescriptionNp: string
   id: number
   isActive: boolean
-  listOfDropDownDetailRequestDto: IListOfDropDownDetailRequestDto[]
+  dropDownDetailResponseDtoList: IListOfDropDownDetailRequestDto[]
 }
