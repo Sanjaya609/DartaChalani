@@ -3,7 +3,7 @@ import downloadFile from '@/utility/document/fileDownloader'
 import { previewFile } from '@/utility/document/preview-file'
 
 export const isImageFile = (extension: string) =>
-  ['jpg', 'jpeg', 'png', 'bmp', 'pdf'].includes(extension?.toLowerCase())
+  ['jpg', 'jpeg', 'png', 'bmp'].includes(extension?.toLowerCase())
 
 export const generateFileUrl = (fileUrl: string) => {
   let fullUrl

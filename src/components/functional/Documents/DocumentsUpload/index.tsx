@@ -5,7 +5,6 @@ import { Box } from '@/components/ui'
 import { Text } from '@/components/ui/core/Text'
 import { IModuleDocumentMappingResponse } from '@/core/private/MasterSetup/ModuleDocumentMapping/schema/module-document-mapping.interface'
 import { useGetAllModuleDocumentMappingByModuleId } from '@/core/private/MasterSetup/ModuleDocumentMapping/services/module-document-mapping.query'
-import { useBoolean } from '@/hooks'
 import { getTextByLanguage } from '@/lib/i18n/i18n'
 import { useDocumentUpload } from '@/service/generic/generic.query'
 import { validateDocumentFile } from '@/utility/document/document-validations'
@@ -21,21 +20,21 @@ import {
 } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DataTable } from '../../Table'
+import TableAction from '../../Table/Components/Table/TableAction'
 import {
   tableActionIcon,
   tableActionList,
   tableActionTooltip,
 } from '../../Table/Components/Table/table.schema'
-import TableAction from '../../Table/Components/Table/TableAction'
+import UploadedFiles from './UploadedFiles/UploadedFiles'
+import ViewUploadedFilesModal from './UploadedFiles/ViewUploadedFilesModal'
 import {
   FileData,
   FileStateFile,
   IDocumentPayload,
   IFileState,
 } from './document-upload.interface'
-import UploadedFiles from './UploadedFiles/UploadedFiles'
-import ViewUploadedFilesModal from './UploadedFiles/ViewUploadedFilesModal'
-import Modal from '@/components/ui/Modal/Modal'
+import { IDocumentResponse } from '@/shared/shared.interface'
 
 interface IDocumentsUploadProps {
   moduleId: StringNumber
@@ -43,6 +42,7 @@ interface IDocumentsUploadProps {
   setIsAllRequiredDocumentUploaded?: Dispatch<SetStateAction<boolean>>
   setUploadedDocumentData?: Dispatch<SetStateAction<IDocumentPayload[]>>
   viewOnly?: boolean
+  documentList?: IDocumentResponse[]
 }
 
 const flatDocDataForPayload = (files: FileStateFile) => {
@@ -63,15 +63,16 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
     setIsAllRequiredDocumentUploaded,
     setUploadedDocumentData,
     viewOnly = false,
+    documentList,
   } = props
   const [fileState, setFileState] = useState<IFileState>({
     files: {},
     isRequiredFileUploaded: false,
   })
 
+  const [isUpdateStatePrepared, setIsUpdateStatePrepared] = useState(false)
+
   const [currentViewDocument, setCurrentViewDocument] = useState<StringNumber>()
-  const { value: removeFileModal, toggle: toggleRemoveFileModal } =
-    useBoolean(false)
 
   const { t } = useTranslation()
 
@@ -155,6 +156,48 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
       setIsAllRequiredDocumentUploaded?.(isRequiredFileUploaded)
     }
   }
+
+  useEffect(() => {
+    if (
+      Object.keys(fileState?.files)?.length &&
+      documentList?.length &&
+      !isUpdateStatePrepared
+    ) {
+      const newFileStates = { ...fileState.files }
+      for (let documentTypeId in newFileStates) {
+        newFileStates[documentTypeId] = {
+          ...newFileStates[documentTypeId],
+          ...(canUploadMultipleFile && {
+            filesData:
+              documentList
+                ?.find((document) => document.id === +documentTypeId)
+                ?.documents?.map((doc) => ({
+                  fileUrl: doc.url,
+                  uuid: doc.uuid,
+                  file: null,
+                })) || [],
+          }),
+          ...(!canUploadMultipleFile && {
+            fileData: documentList
+              ?.find((document) => document.id === +documentTypeId)
+              ?.documents?.map((doc) => ({
+                fileUrl: doc.url,
+                uuid: doc.uuid,
+                file: null,
+              }))[0] || {
+              file: null,
+              uuid: '',
+            },
+          }),
+        }
+      }
+      setFileState((prevState) => ({
+        ...prevState,
+        files: newFileStates,
+      }))
+      setIsUpdateStatePrepared(true)
+    }
+  }, [documentList, fileState?.files, isUpdateStatePrepared])
 
   const handleInputFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files?.[0]) {

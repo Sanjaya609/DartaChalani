@@ -1,3 +1,4 @@
+import ViewUploadedFiles from '@/components/functional/Documents/DocumentsUpload/ViewUploadedFiles'
 import GridColDetailByLabelAndValue from '@/components/functional/GridColDetailByLabelAndValue/GridColDetailByLabelAndValue'
 import SectionHeader from '@/components/functional/SectionHeader'
 import { Grid } from '@/components/ui'
@@ -9,7 +10,6 @@ import { privateRoutePath, useNavigate, useParams } from '@/router'
 import { decodeParams } from '@/utility/route-params'
 import { useTranslation } from 'react-i18next'
 import { useGetRegistrationBookDetailById } from '../AddRegistrationBook/services/add-registration-book.query'
-import DocumentsUpload from '@/components/functional/Documents/DocumentsUpload'
 
 const RegistrationBookDetailView = () => {
   const { t } = useTranslation()
@@ -32,7 +32,7 @@ const RegistrationBookDetailView = () => {
         backAction={navigateToBookList}
       />
       <ContainerLayout className="scrollbars grow ">
-        <Card className="h-full">
+        <Card>
           <Grid sm={'sm:grid-cols-12'} gap="gap-4">
             <GridColDetailByLabelAndValue
               value={registrationBookDetails?.registrationNumber || '-'}
@@ -130,7 +130,9 @@ const RegistrationBookDetailView = () => {
               label={t('registrationBook.remarks')}
             />
           </Grid>
-          <DocumentsUpload moduleId={'56'} viewOnly canUploadMultipleFile />
+          <ViewUploadedFiles
+            documentList={registrationBookDetails?.documentList || []}
+          />
         </Card>
       </ContainerLayout>
     </>
