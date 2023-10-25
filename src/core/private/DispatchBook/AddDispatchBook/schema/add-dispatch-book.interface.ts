@@ -1,3 +1,5 @@
+import { IDocumentResponse } from '@/shared/shared.interface'
+
 export interface IAddDispatchBookInitialValue {
   id?: number
   letterNumber: string
@@ -45,7 +47,7 @@ export interface IDispatchBookResponse {
   remarks: string
   locationDataResponse: ILocationDataResponse
   wardNumber: number
-  dispatchBookDocumentResponseDtoList: IDispatchBookDocumentResponseDtoList[]
+  documentList: IDocumentResponse[]
 }
 
 interface IDispatchBookDocumentResponseDtoList {

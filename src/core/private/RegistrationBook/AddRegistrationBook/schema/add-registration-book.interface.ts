@@ -1,3 +1,5 @@
+import { IDocumentResponse } from '@/shared/shared.interface'
+
 export interface IAddRegistrationBookInitialValue {
   id?: number
   // applicationDate: string
@@ -45,7 +47,7 @@ export interface IRegistrationBookResponse {
   sectorNameNepali: string
   sectorNameEnglish: string
   locationDataResponse: ILocationDataResponse
-  registrationBookDocumentResponseDtoList: IRegistrationBookDocumentResponseDtoList[]
+  documentList: IDocumentResponse[]
 }
 
 interface IRegistrationBookDocumentResponseDtoList {

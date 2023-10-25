@@ -9,6 +9,7 @@ import { Eye, X } from 'phosphor-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FileData } from '../document-upload.interface'
+import { IDocumentResponse } from '@/shared/shared.interface'
 
 const imgWidthWithLength = {
   1: 'sm:col-span-12',
@@ -18,7 +19,7 @@ const imgWidthWithLength = {
 interface IViewUploadedFilesModalProps {
   filesData: FileData[]
   isOpen: boolean
-  toggleFileViewModal: (id?: StringNumber) => void
+  toggleFileViewModal: Function
   modalTitle?: string
   removeFileAction?: (file: FileData) => void
 }
@@ -39,7 +40,7 @@ const ViewUploadedFilesModal = (props: IViewUploadedFilesModalProps) => {
   const fileWithObjectSrc = useMemo(() => {
     return filesData.map((data) => ({
       ...data,
-      fileSrc: URL.createObjectURL(data.file!),
+      fileSrc: data.file ? URL.createObjectURL(data.file!) : data.fileUrl,
     }))
   }, [filesData])
 
@@ -65,12 +66,6 @@ const ViewUploadedFilesModal = (props: IViewUploadedFilesModalProps) => {
       <Grid sm={'sm:grid-cols-12'} gap="gap-4" className="w-full">
         {fileWithObjectSrc.map((fileData) => {
           const fileExt = fileData.file?.name.split('.').pop() || ''
-
-          console.log({
-            fileData,
-            currentDeleteId,
-          })
-
           return (
             <Grid.Col
               key={fileData.uuid}

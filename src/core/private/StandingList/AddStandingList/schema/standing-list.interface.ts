@@ -1,3 +1,5 @@
+import { IDocumentResponse } from '@/shared/shared.interface'
+
 export interface IStandingListInitialValue {
   address: string
   applicationDate: string
@@ -50,7 +52,7 @@ export interface IStandingListResponse {
   serviceTypeNameNp: string
   serviceTypeNameEn: string
   isActiveServiceType: boolean
-  standingListDocumentResponseDtoList: IStandingListDocumentResponseDtoList[]
+  documentList: IDocumentResponse[]
   locationDataResponse: ILocationDataResponse
   wardNumber: StringNumber
 }

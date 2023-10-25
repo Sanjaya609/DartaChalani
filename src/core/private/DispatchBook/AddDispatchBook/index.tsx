@@ -463,6 +463,7 @@ const AddRegistrationBook = () => {
           canUploadMultipleFile
           setIsAllRequiredDocumentUploaded={setIsAllRequiredDocumentUploaded}
           setUploadedDocumentData={setUploadedDocumentData}
+          documentList={dispatchBookDetails?.documentList}
         />
       </ContainerLayout>
 
