@@ -1,6 +1,6 @@
 {
   "projectTitle": "दर्ता चलानी",
-  "sn": "क्र.सं",
+  "sn": "क्र.सं.",
   "actions": "कार्य",
   "yes": "Yes",
   "no": "No",
@@ -26,7 +26,7 @@
     "search": "खोज्नुहोस्"
   },
   "yup": {
-    "required": "{{key}} आवश्यक छ",
+    "required": "{{key}} अनिवार्य छ",
     "invalid-email": "कृपया मान्य इमेल राख्नुहोस्",
     "password-required": "पासवर्ड आवश्यक छ"
   },
