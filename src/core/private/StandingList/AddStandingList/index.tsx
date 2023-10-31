@@ -477,6 +477,7 @@ const StandingList = () => {
           canUploadMultipleFile
           setIsAllRequiredDocumentUploaded={setIsAllRequiredDocumentUploaded}
           setUploadedDocumentData={setUploadedDocumentData}
+          documentList={registrationBookDetails?.documentList}
         />
       </ContainerLayout>
 
