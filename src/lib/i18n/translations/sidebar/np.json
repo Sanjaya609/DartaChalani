@@ -2,16 +2,16 @@
   "masterSetup": {
     "title": "मास्टर सेटअप",
     "fiscalYear": "आर्थिक वर्ष",
-    "sector": "क्षेत्र",
-    "serviceType": "सेवा प्रकार",
-    "documentType": "कागजात प्रकार",
+    "sector": "बिषयक्षेत्र",
+    "serviceType": "सेवाको प्रकार",
+    "documentType": "कागजातको प्रकार",
     "office": "कार्यालय",
-    "moduleDocumentMapping": "कागजात प्रकार मोड्युल म्यापिङ",
+    "moduleDocumentMapping": "कागजातको प्रकार र मोड्युल म्यापिङ",
     "dropdownConfig": "ड्रपडाउन कन्फिगरेसन"
   },
   "dashboard": "ड्यासबोर्ड",
   "security": {
-    "title": "सुरक्षा",
+    "title": "सेक्युरिटी",
     "email": "इमेल सेटअप",
     "module": "मोड्युल सेटअप",
     "role": "भूमिका सेटअप",
