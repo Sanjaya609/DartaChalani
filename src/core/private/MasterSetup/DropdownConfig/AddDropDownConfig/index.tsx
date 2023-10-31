@@ -97,7 +97,12 @@ const AddDropDownConfig = () => {
       isActive: true,
       listOfDropDownDetailRequestDto,
     } as IDropdownConfigInitialValue
-    createDropDownConfig(reqData)
+    createDropDownConfig(reqData, {
+      onSuccess: () => {
+        setDropdownInitialValueState(dropdownConfigInitialValue)
+        navigateToList()
+      },
+    })
   }
 
   return (

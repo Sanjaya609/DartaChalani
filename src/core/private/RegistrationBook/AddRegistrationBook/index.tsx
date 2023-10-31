@@ -79,12 +79,7 @@ const AddRegistrationBook = () => {
         sectorId,
         subjectOfLetter,
         wardNumber,
-        locationDataResponse: {
-          districtId,
-          localBodyId,
-          provinceId,
-          totalWards,
-        },
+        locationDataResponse,
       } = registrationBookDetails
       setInitialRegistrationBookValue({
         id,
@@ -98,12 +93,14 @@ const AddRegistrationBook = () => {
         sectorId,
         subjectOfLetter,
         wardNumber,
-        localBodyId,
-        districtId,
-        provinceId,
+        localBodyId: locationDataResponse?.localBodyId,
+        districtId: locationDataResponse?.districtId,
+        provinceId: locationDataResponse?.provinceId,
       })
 
-      setWardOption(generateWardOption(+totalWards))
+      if (locationDataResponse?.totalWards) {
+        setWardOption(generateWardOption(+locationDataResponse.totalWards))
+      }
     }
   }, [registrationBookDetails])
 
@@ -419,6 +416,7 @@ const AddRegistrationBook = () => {
           canUploadMultipleFile
           setIsAllRequiredDocumentUploaded={setIsAllRequiredDocumentUploaded}
           setUploadedDocumentData={setUploadedDocumentData}
+          documentList={registrationBookDetails?.documentList}
         />
       </ContainerLayout>
 
