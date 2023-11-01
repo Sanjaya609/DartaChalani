@@ -1,73 +1,109 @@
 import { initApiRequest } from '@/lib/api-request'
 import { apiDetails } from '@/service/api'
-import { mapDataToStyledSelect } from '@/utility/react-select-helper'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
-  RoleSetupFormSchema,
-  RoleSetupTableData,
+  IModuleSetupTableData,
+  IResourceRequestList,
+} from '../../ModuleSetup/schema/moduleSetup.interface'
+import {
+  IRoleMappingCreate,
+  IRoleMappingDelete,
 } from '../schema/roleModuleMapping.interface'
 
-const { createRole, getAllRole, changeRoleStatus } = apiDetails
+const {
+  createRoleMapping,
+  getAssignedModulesForRole,
+  getResourceListByModuleAndRole,
+  deleteRoleMapping,
+} = apiDetails
 
-const useCreateRole = () => {
+const useCreateRoleMapping = () => {
   const queryClient = useQueryClient()
   return useMutation(
-    (requestData: RoleSetupFormSchema) => {
+    (requestData: IRoleMappingCreate) => {
       return initApiRequest({
-        apiDetails: createRole,
+        apiDetails: createRoleMapping,
         requestData: { ...requestData },
       })
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries([getAllRole.queryKeyName])
+        queryClient.invalidateQueries([getAssignedModulesForRole.queryKeyName])
+        queryClient.invalidateQueries([
+          getResourceListByModuleAndRole.queryKeyName,
+        ])
       },
     }
   )
 }
 
-const useGetAllRole = <T = RoleSetupTableData[]>(
-  getDataWithPropsValue?: IGetDataWithPropsVal
-) => {
+interface IGetAssignedModulesForRole {
+  roleId?: string | number
+}
+
+const useGetAssignedModulesForRole = ({
+  roleId,
+}: IGetAssignedModulesForRole) => {
   return useQuery(
-    [getAllRole.queryKeyName],
+    [getAssignedModulesForRole.queryKeyName, roleId],
     () =>
-      initApiRequest<BackendSuccessResponse<RoleSetupTableData[]>>({
-        apiDetails: getAllRole,
+      initApiRequest<BackendSuccessResponse<IModuleSetupTableData[]>>({
+        apiDetails: getAssignedModulesForRole,
+        pathVariables: { roleId },
       }),
     {
-      select: (data) => {
-        const roleData = data?.data?.data?.length ? data.data.data : []
-        return (
-          getDataWithPropsValue?.mapDatatoStyleSelect
-            ? mapDataToStyledSelect({
-              arrayData: roleData,
-              id: 'id',
-              name: 'roleNameEnglish',
-              nameNp: 'roleNameNepali',
-            })
-            : roleData
-        ) as T
-      },
+      select: (data) => data?.data?.data || [],
+      enabled: !!roleId,
     }
   )
 }
 
-const useChangeRoleStatus = () => {
+interface IGetResourceListByModuleAndRole {
+  roleId?: string | number
+  moduleId?: string | number
+}
+
+const useGetResourceListByModuleAndRole = ({
+  roleId,
+  moduleId,
+}: IGetResourceListByModuleAndRole) => {
+  return useQuery(
+    [getResourceListByModuleAndRole.queryKeyName, roleId, moduleId],
+    () =>
+      initApiRequest<BackendSuccessResponse<IResourceRequestList[]>>({
+        apiDetails: getResourceListByModuleAndRole,
+        pathVariables: { roleId, moduleId },
+      }),
+    {
+      select: (data) => data?.data?.data || [],
+      enabled: !!roleId && !!moduleId,
+    }
+  )
+}
+
+const useDeleteRoleMapping = () => {
   const queryClient = useQueryClient()
   return useMutation(
-    (pathVariables: { roleId: number | string }) => {
+    (params: IRoleMappingDelete) => {
       return initApiRequest({
-        apiDetails: changeRoleStatus,
-        pathVariables,
+        apiDetails: deleteRoleMapping,
+        params: { ...params },
       })
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries([getAllRole.queryKeyName])
+        queryClient.invalidateQueries([getAssignedModulesForRole.queryKeyName])
+        queryClient.invalidateQueries([
+          getResourceListByModuleAndRole.queryKeyName,
+        ])
       },
     }
   )
 }
 
-export { useGetAllRole, useCreateRole, useChangeRoleStatus }
+export {
+  useGetAssignedModulesForRole,
+  useCreateRoleMapping,
+  useGetResourceListByModuleAndRole,
+  useDeleteRoleMapping,
+}
