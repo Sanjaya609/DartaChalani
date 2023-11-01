@@ -1,16 +1,13 @@
-export interface RoleSetupFormSchema {
-    id?: number
-    roleNameEnglish: string
-    roleNameNepali: string
-    roleType: string
-    description: string
+export interface IRoleMappingCreate {
+  moduleId: number
+  resourceId: number
+  roleId: number
+  showModuleOnMenu: boolean
 }
 
-export interface RoleSetupTableData {
-    id: number
-    roleNameEnglish: string
-    roleNameNepali: string
-    description: string
-    isActive: boolean
-    roleType: string
+export interface IRoleMappingDelete {
+  moduleId: StringNumber
+  removeModuleAlso: boolean
+  resourceId?: StringNumber
+  roleId: StringNumber
 }
