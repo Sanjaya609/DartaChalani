@@ -1,6 +1,6 @@
 import FallbackLoader from '@/components/FallbackLoader'
 import Switch from '@/components/functional/Form/Switch/Switch'
-import { Flexbox, Grid } from '@/components/ui'
+import { Flexbox, Grid, Layout } from '@/components/ui'
 import { Card } from '@/components/ui/core/Card'
 import { Text } from '@/components/ui/core/Text'
 import { getTextByLanguage } from '@/lib/i18n/i18n'
@@ -95,42 +95,62 @@ const RoleModuleResourceList = ({
           )}
         </Flexbox>
 
-        <Card className="h-full w-full">
-          <Flexbox className="h-full gap-4">
-            {!resourceListFetching && !selectedModule ? (
-              <>{t('security.roleModuleMapping.noModuleSelect')}</>
-            ) : resourceListFetching ? (
-              <FallbackLoader />
-            ) : resourceListByModuleAndRole?.length ? (
-              resourceListByModuleAndRole?.map((resource) => (
-                <Card borderColor="border-gray-96" bordered>
-                  <Flexbox align="center">
-                    <Text variant="h6" typeface="semibold" className="mr-2">
-                      {resource.resourceName}
-                    </Text>
-                    <Switch
-                      checked={!!resource.isAssignedToRole}
-                      size={5}
-                      onChange={() => {
-                        if (!resource.isAssignedToRole) {
-                          handleRoleMappingCreateDelete(
-                            !resource.isAssignedToRole,
-                            true,
-                            resource
-                          )
-                        } else {
-                          deleteRoleMappingCreateDelete(resource)
-                        }
-                      }}
-                    />
-                  </Flexbox>
-                </Card>
-              ))
-            ) : (
-              <>{t('security.roleModuleMapping.noResourceList')}</>
-            )}
-          </Flexbox>
-        </Card>
+        <div className="relative h-full w-full">
+          <Layout.Absolute scrollable>
+            <Card className="h-full w-full">
+              <div className="h-full">
+                {!resourceListFetching && !selectedModule ? (
+                  <>{t('security.roleModuleMapping.noModuleSelect')}</>
+                ) : resourceListFetching ? (
+                  <FallbackLoader />
+                ) : resourceListByModuleAndRole?.length ? (
+                  <Grid gap={'gap-4'} sm={'sm:grid-cols-12'} className="w-full">
+                    {resourceListByModuleAndRole?.map((resource) => (
+                      <Grid.Col
+                        sm="sm:col-span-4"
+                        className="h-full"
+                        key={`${resource.id}-${selectedModule?.id}`}
+                      >
+                        <Card
+                          borderColor="border-gray-96"
+                          bordered
+                          className="h-full"
+                        >
+                          <Flexbox justify="space-between" align="center">
+                            <Text
+                              variant="h6"
+                              typeface="semibold"
+                              className="mr-2"
+                            >
+                              {resource.resourceName}
+                            </Text>
+                            <Switch
+                              checked={!!resource.isAssignedToRole}
+                              size={5}
+                              onChange={() => {
+                                if (!resource.isAssignedToRole) {
+                                  handleRoleMappingCreateDelete(
+                                    !resource.isAssignedToRole,
+                                    true,
+                                    resource
+                                  )
+                                } else {
+                                  deleteRoleMappingCreateDelete(resource)
+                                }
+                              }}
+                            />
+                          </Flexbox>
+                        </Card>
+                      </Grid.Col>
+                    ))}
+                  </Grid>
+                ) : (
+                  <>{t('security.roleModuleMapping.noResourceList')}</>
+                )}
+              </div>
+            </Card>
+          </Layout.Absolute>
+        </div>
       </Flexbox>
     </Grid.Col>
   )
