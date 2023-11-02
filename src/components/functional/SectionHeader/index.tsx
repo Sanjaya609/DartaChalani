@@ -1,21 +1,28 @@
 import { Button, Flexbox } from '@/components/ui'
 import { Text } from '@/components/ui/core/Text'
+import { getComputedClassNames } from '@/utility/tailwind/tailwind-utility'
 import { ArrowArcLeft, ArrowLeft } from 'phosphor-react'
 import { useTranslation } from 'react-i18next'
 
 interface ISectionHeaderProps {
   title: string | React.ReactNode
   backAction?: VoidFunction
+  className?: string
 }
 
 const SectionHeader = (props: ISectionHeaderProps) => {
-  const { title, backAction } = props
+  const { title, backAction, className } = props
   const { t } = useTranslation()
+  const computedClassName = getComputedClassNames(
+    'w-full bg-white px-16 py-3',
+    className
+  )
+
   return (
     <Flexbox
       align="center"
       justify="space-between"
-      className="w-full bg-white px-16 py-3 "
+      className={computedClassName}
     >
       {title ? (
         typeof title === 'string' ? (

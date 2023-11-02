@@ -5,6 +5,7 @@ export interface IResourceRequestList {
   privilege: string
   resourceName: string
   url: string
+  isAssignedToRole?: boolean
 }
 
 export interface IModuleSetupFormSchema {
@@ -34,4 +35,5 @@ export interface IModuleSetupTableData {
   isActive: boolean
   resourceResponses: IResourceRequestList[]
   parentModuleId?: StringNumber
+  showModuleOnMenu?: boolean
 }

@@ -28,7 +28,10 @@ interface IDocument {
 }
 
 export interface IStandingListPayload
-  extends Omit<IStandingListInitialValue, 'provinceId' | 'districtId'> {
+  extends Omit<
+    IStandingListInitialValue,
+    'provinceId' | 'districtId' | 'applicationDate' | 'registrationDate'
+  > {
   moduleId: StringNumber
   documents: IDocument[]
 }

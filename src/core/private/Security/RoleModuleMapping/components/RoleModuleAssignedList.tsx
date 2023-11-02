@@ -1,21 +1,25 @@
 import Form from '@/components/functional/Form/Form'
 import { Box, Flexbox, Grid, Layout } from '@/components/ui'
-import { Search, Trash2 } from 'lucide-react'
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react'
-import { useGetModuleById } from '../../ModuleSetup/services/moduleSetup.query'
-import { useGetConfigurableModuleList } from '@/core/private/Security/ModuleSetup/services/moduleSetup.query'
 import { Text } from '@/components/ui/core/Text'
-import { useGetAssignedModulesForRole } from '../services/roleModuleMapping.query'
-import { useParams } from 'react-router-dom'
-import { decodeParams } from '@/utility/route-params'
+import { useGetConfigurableModuleList } from '@/core/private/Security/ModuleSetup/services/moduleSetup.query'
 import { getTextByLanguage } from '@/lib/i18n/i18n'
+import { Trash2 } from 'lucide-react'
+import {
+  Dispatch,
+  MouseEventHandler,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { IModuleSetupTableData } from '../../ModuleSetup/schema/moduleSetup.interface'
-
-export interface IRoleDataParams {
-  id: string | number
-  roleNameEnglish: string
-  roleNameNepali: string
-}
+import {
+  useDeleteRoleMapping,
+  useGetAssignedModulesForRole,
+} from '../services/roleModuleMapping.query'
+import useGetRoleMappingParamsData from './useGetRoleMappingParamsData'
+import { useTranslation } from 'react-i18next'
+import Modal from '@/components/ui/Modal/Modal'
 
 interface IRoleModuleAssignedListProps {
   setSelectedModule: Dispatch<SetStateAction<IModuleSetupTableData | undefined>>
@@ -26,16 +30,15 @@ const RoleModuleAssignedList = ({
   setSelectedModule,
   selectedModule,
 }: IRoleModuleAssignedListProps) => {
+  const { t } = useTranslation()
   const [assignedModuleListData, setAssignedModuleListData] = useState<
     IModuleSetupTableData[]
   >([])
-
-  const params = useParams()
-  const roleData = useMemo<IRoleDataParams>(
-    () => (decodeParams(params.roleData) as IRoleDataParams) || null,
-    []
+  const [currentSelectedId, setCurrentSelectedId] = useState<null | number>(
+    null
   )
 
+  const roleData = useGetRoleMappingParamsData()
   const { data: moduleList = [] } = useGetConfigurableModuleList<OptionType[]>({
     mapDatatoStyleSelect: true,
   })
@@ -44,9 +47,18 @@ const RoleModuleAssignedList = ({
     roleId: roleData?.id,
   })
 
+  const { mutate: deleteRoleMapping, isLoading: deleteRoleMappingLoading } =
+    useDeleteRoleMapping({ invalidateResourceList: false })
+
   useEffect(() => {
     if (assignedModuleList) {
       setAssignedModuleListData(assignedModuleList as IModuleSetupTableData[])
+
+      if (selectedModule && assignedModuleList?.length) {
+        setSelectedModule(
+          assignedModuleList?.find((module) => selectedModule.id === module.id)
+        )
+      }
     }
   }, [assignedModuleList])
 
@@ -61,11 +73,41 @@ const RoleModuleAssignedList = ({
     [assignedModuleListData]
   )
 
+  const setOrRemoveCurrentSelectedId = (id?: number) =>
+    setCurrentSelectedId(id || null)
+
+  const deleteRoleMappingCreateDelete = () => {
+    if (roleData?.id && currentSelectedId) {
+      deleteRoleMapping(
+        {
+          moduleId: +currentSelectedId,
+          roleId: roleData?.id,
+          removeModuleAlso: true,
+        },
+        {
+          onSuccess: () => {
+            setSelectedModule(undefined)
+            setCurrentSelectedId(null)
+          },
+        }
+      )
+    }
+  }
+
+  const removeFromModuleList = (id: number) => {
+    if (selectedModule && id === selectedModule.id) {
+      setSelectedModule(undefined)
+    }
+    setAssignedModuleListData(
+      assignedModuleListData.filter((module) => module.id !== id)
+    )
+  }
+
   return (
-    <Grid.Col sm={'sm:col-span-3'} className="bg-white">
+    <Grid.Col sm={'sm:col-span-3'}>
       <Flexbox className="h-full p-4" direction="column">
         <Text variant="h5" typeface="semibold" className="mb-2">
-          Modules
+          {t('security.roleModuleMapping.modules')}
         </Text>
 
         <Form.Select
@@ -84,35 +126,67 @@ const RoleModuleAssignedList = ({
         />
         <Flexbox className="relative w-full grow">
           <Layout.Absolute scrollable>
-            {assignedModuleListData?.map((module) => {
-              return (
-                <Box
-                  onClick={() => {
-                    setSelectedModule(module)
-                  }}
-                  className={`my-1 flex  cursor-pointer items-center justify-between rounded-[2px] bg-gray-96 p-2 hover:bg-gray-88 ${
-                    selectedModule?.id === module.id ? 'bg-gray-88' : ''
-                  } `}
-                >
-                  <Text variant="h6">
-                    {getTextByLanguage(
-                      module?.moduleNameEnglish,
-                      module?.moduleNameNepali
-                    )}
-                  </Text>
-
-                  <Box className="group cursor-pointer rounded p-2 transition-colors hover:bg-red-40 hover:stroke-white">
-                    <Trash2
-                      className="text-red-40 group-hover:text-white"
-                      size={18}
-                    />
+            {assignedModuleListData?.length ? (
+              assignedModuleListData?.map((module) => {
+                return (
+                  <Box
+                    onClick={() => {
+                      setSelectedModule(module)
+                    }}
+                    className={`my-1 flex  cursor-pointer items-center justify-between rounded-[2px] bg-gray-96 p-2 ${
+                      selectedModule && +selectedModule.id !== +module.id
+                        ? 'hover:bg-gray-88'
+                        : ''
+                    } ${
+                      selectedModule && +selectedModule?.id === +module.id
+                        ? 'bg-white'
+                        : ''
+                    }`}
+                  >
+                    <Text variant="h6">
+                      {getTextByLanguage(
+                        module?.moduleNameEnglish,
+                        module?.moduleNameNepali
+                      )}
+                    </Text>
+                    <Box
+                      onClick={(event: any) => {
+                        event.stopPropagation()
+                        if ('showModuleOnMenu' in module) {
+                          setCurrentSelectedId(module.id)
+                        } else {
+                          removeFromModuleList(module.id)
+                        }
+                      }}
+                      className="group cursor-pointer rounded p-2 transition-colors hover:bg-red-40 "
+                    >
+                      <Trash2
+                        onClick={(e) => {}}
+                        className="text-red-40 group-hover:text-white"
+                        size={18}
+                      />
+                    </Box>
                   </Box>
-                </Box>
-              )
-            })}
+                )
+              })
+            ) : (
+              <>{t('security.roleModuleMapping.noAssignedModule')}</>
+            )}
           </Layout.Absolute>
         </Flexbox>
       </Flexbox>
+      <Modal
+        open={!!currentSelectedId}
+        toggleModal={setOrRemoveCurrentSelectedId}
+        size="md"
+        title={t('security.roleModuleMapping.removeModule')}
+        saveBtnProps={{
+          btnAction: deleteRoleMappingCreateDelete,
+          loading: deleteRoleMappingLoading,
+        }}
+      >
+        {t('security.roleModuleMapping.unassignedModule')}
+      </Modal>
     </Grid.Col>
   )
 }
