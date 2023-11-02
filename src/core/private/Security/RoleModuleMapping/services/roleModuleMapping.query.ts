@@ -20,18 +20,20 @@ const {
 const useCreateRoleMapping = () => {
   const queryClient = useQueryClient()
   return useMutation(
-    (requestData: IRoleMappingCreate) => {
+    ({ refetchResourceList, ...requestData }: IRoleMappingCreate) => {
       return initApiRequest({
         apiDetails: createRoleMapping,
         requestData: { ...requestData },
       })
     },
     {
-      onSuccess: () => {
+      onSuccess: (data, variables) => {
         queryClient.invalidateQueries([getAssignedModulesForRole.queryKeyName])
-        queryClient.invalidateQueries([
-          getResourceListByModuleAndRole.queryKeyName,
-        ])
+        if (variables?.refetchResourceList) {
+          queryClient.invalidateQueries([
+            getResourceListByModuleAndRole.queryKeyName,
+          ])
+        }
       },
     }
   )
@@ -81,7 +83,13 @@ const useGetResourceListByModuleAndRole = ({
   )
 }
 
-const useDeleteRoleMapping = () => {
+const useDeleteRoleMapping = ({
+  invalidateAssignedModule = true,
+  invalidateResourceList = true,
+}: {
+  invalidateResourceList?: boolean
+  invalidateAssignedModule?: boolean
+}) => {
   const queryClient = useQueryClient()
   return useMutation(
     (params: IRoleMappingDelete) => {
@@ -92,10 +100,16 @@ const useDeleteRoleMapping = () => {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries([getAssignedModulesForRole.queryKeyName])
-        queryClient.invalidateQueries([
-          getResourceListByModuleAndRole.queryKeyName,
-        ])
+        if (invalidateAssignedModule) {
+          queryClient.invalidateQueries([
+            getAssignedModulesForRole.queryKeyName,
+          ])
+        }
+        if (invalidateResourceList) {
+          queryClient.invalidateQueries([
+            getResourceListByModuleAndRole.queryKeyName,
+          ])
+        }
       },
     }
   )

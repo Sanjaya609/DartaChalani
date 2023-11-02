@@ -67,6 +67,7 @@ const StandingList = () => {
   useEffect(() => {
     if (registrationBookDetails) {
       const {
+        id,
         applicationDate,
         address,
         contactNumber,
@@ -108,6 +109,7 @@ const StandingList = () => {
         taxClearanceDate,
         taxClearanceDateExtendedDate,
         workingSectorDetails,
+        id,
       })
       setWardOption(generateWardOption(+totalWards))
     }
@@ -126,7 +128,7 @@ const StandingList = () => {
     }
 
     const {
-      applicationDate,
+      // applicationDate,
       address,
       contactNumber,
       contactPersonName,
@@ -137,7 +139,7 @@ const StandingList = () => {
       panOrVatNumber,
       panOrVatRegistrationDate,
       personOrFirmName,
-      registrationDate,
+      // registrationDate,
       serviceTypeId,
       taxClearanceDate,
       taxClearanceDateExtendedDate,
@@ -146,7 +148,7 @@ const StandingList = () => {
     } = values
 
     const reqData: IStandingListPayload = {
-      applicationDate,
+      // applicationDate,
       wardNumber,
       documents: uploadedDocumentData,
       moduleId: 68,
@@ -160,7 +162,7 @@ const StandingList = () => {
       panOrVatNumber,
       panOrVatRegistrationDate,
       personOrFirmName,
-      registrationDate,
+      // registrationDate,
       serviceTypeId,
       taxClearanceDate,
       taxClearanceDateExtendedDate,

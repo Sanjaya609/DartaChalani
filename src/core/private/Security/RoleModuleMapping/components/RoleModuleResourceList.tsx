@@ -3,12 +3,15 @@ import Switch from '@/components/functional/Form/Switch/Switch'
 import { Flexbox, Grid } from '@/components/ui'
 import { Card } from '@/components/ui/core/Card'
 import { Text } from '@/components/ui/core/Text'
+import { getTextByLanguage } from '@/lib/i18n/i18n'
+import { useTranslation } from 'react-i18next'
 import {
   IModuleSetupTableData,
   IResourceRequestList,
 } from '../../ModuleSetup/schema/moduleSetup.interface'
 import {
   useCreateRoleMapping,
+  useDeleteRoleMapping,
   useGetResourceListByModuleAndRole,
 } from '../services/roleModuleMapping.query'
 import useGetRoleMappingParamsData from './useGetRoleMappingParamsData'
@@ -20,6 +23,7 @@ interface IRoleModuleResourceListProps {
 const RoleModuleResourceList = ({
   selectedModule,
 }: IRoleModuleResourceListProps) => {
+  const { t } = useTranslation()
   const roleData = useGetRoleMappingParamsData()
 
   const {
@@ -32,13 +36,33 @@ const RoleModuleResourceList = ({
 
   const { mutate: createRoleMapping } = useCreateRoleMapping()
 
-  const handleRoleMappingCreateDelete = (resource: IResourceRequestList) => {
-    if (roleData?.id && selectedModule?.id && resource.id) {
+  const { mutate: deleteRoleMapping } = useDeleteRoleMapping({
+    invalidateAssignedModule: false,
+  })
+
+  const handleRoleMappingCreateDelete = (
+    showModuleOnMenu: boolean,
+    refetchResourceList = true,
+    resource?: IResourceRequestList
+  ) => {
+    if (roleData?.id && selectedModule?.id) {
       createRoleMapping({
         moduleId: selectedModule.id,
-        resourceId: +resource.id,
-        showModuleOnMenu: true,
+        resourceId: resource?.id ? +resource.id : undefined,
+        showModuleOnMenu,
         roleId: +roleData.id,
+        refetchResourceList,
+      })
+    }
+  }
+
+  const deleteRoleMappingCreateDelete = (resource: IResourceRequestList) => {
+    if (roleData?.id && selectedModule?.id) {
+      deleteRoleMapping({
+        moduleId: +selectedModule.id,
+        roleId: roleData?.id,
+        removeModuleAlso: true,
+        resourceId: resource.id,
       })
     }
   }
@@ -46,14 +70,35 @@ const RoleModuleResourceList = ({
   return (
     <Grid.Col sm={'sm:col-span-9'}>
       <Flexbox className="h-full p-4" direction="column">
-        <Text variant="h5" typeface="semibold" className="mb-2">
-          Resource List
-        </Text>
+        <Flexbox align="center" className="mb-3 ">
+          <Text variant="h5" typeface="semibold" className="mr-3">
+            {t('security.roleModuleMapping.resourcesList')}{' '}
+            {selectedModule
+              ? `(${getTextByLanguage(
+                  selectedModule.moduleNameEnglish,
+                  selectedModule.moduleNameNepali
+                )})`
+              : ''}
+          </Text>
+
+          {selectedModule && (
+            <Switch
+              checked={!!selectedModule?.showModuleOnMenu}
+              size={5}
+              onChange={() => {
+                handleRoleMappingCreateDelete(
+                  !selectedModule?.showModuleOnMenu,
+                  false
+                )
+              }}
+            />
+          )}
+        </Flexbox>
 
         <Card className="h-full w-full">
           <Flexbox className="h-full gap-4">
             {!resourceListFetching && !selectedModule ? (
-              <>No Module Selected</>
+              <>{t('security.roleModuleMapping.noModuleSelect')}</>
             ) : resourceListFetching ? (
               <FallbackLoader />
             ) : resourceListByModuleAndRole?.length ? (
@@ -64,16 +109,25 @@ const RoleModuleResourceList = ({
                       {resource.resourceName}
                     </Text>
                     <Switch
+                      checked={!!resource.isAssignedToRole}
                       size={5}
                       onChange={() => {
-                        handleRoleMappingCreateDelete(resource)
+                        if (!resource.isAssignedToRole) {
+                          handleRoleMappingCreateDelete(
+                            !resource.isAssignedToRole,
+                            true,
+                            resource
+                          )
+                        } else {
+                          deleteRoleMappingCreateDelete(resource)
+                        }
                       }}
                     />
                   </Flexbox>
                 </Card>
               ))
             ) : (
-              <>No Resource found</>
+              <>{t('security.roleModuleMapping.noResourceList')}</>
             )}
           </Flexbox>
         </Card>

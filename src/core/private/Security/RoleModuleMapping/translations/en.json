@@ -1,15 +1,11 @@
 {
   "title": "Role Module Mapping",
-  "errors": {
-    "roleNameEnglish": "Role Name (English) is required",
-    "roleNameNepali": "Role Name (Nepali) is required",
-    "roleType": "Role Type is required",
-    "description": "Description is required"
-  },
-  "modal": {
-    "status": {
-      "title": "Change Status",
-      "description": "Are you sure you want to change the status?"
-    }
-  }
+  "modules": "Modules",
+  "resourcesList": "Resource List",
+  "selectModule": "Select Module...",
+  "noAssignedModule": "No Added Module found.",
+  "noModuleSelect": "No Module Selected. Select a module first.",
+  "noResourceList": "No Resources found",
+  "unassignedModule": "Are you sure you want to remove this module ?",
+  "removeModule": "Remove Module"
 }
