@@ -1,21 +1,21 @@
 import Form from '@/components/functional/Form/Form'
 import { Box, Flexbox, Grid, Layout } from '@/components/ui'
-import { Search, Trash2 } from 'lucide-react'
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react'
-import { useGetModuleById } from '../../ModuleSetup/services/moduleSetup.query'
-import { useGetConfigurableModuleList } from '@/core/private/Security/ModuleSetup/services/moduleSetup.query'
 import { Text } from '@/components/ui/core/Text'
-import { useGetAssignedModulesForRole } from '../services/roleModuleMapping.query'
-import { useParams } from 'react-router-dom'
-import { decodeParams } from '@/utility/route-params'
+import { useGetConfigurableModuleList } from '@/core/private/Security/ModuleSetup/services/moduleSetup.query'
 import { getTextByLanguage } from '@/lib/i18n/i18n'
+import { Trash2 } from 'lucide-react'
+import {
+  Dispatch,
+  MouseEventHandler,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { IModuleSetupTableData } from '../../ModuleSetup/schema/moduleSetup.interface'
-
-export interface IRoleDataParams {
-  id: string | number
-  roleNameEnglish: string
-  roleNameNepali: string
-}
+import { useGetAssignedModulesForRole } from '../services/roleModuleMapping.query'
+import useGetRoleMappingParamsData from './useGetRoleMappingParamsData'
+import { e } from 'vitest/dist/index-5aad25c1'
 
 interface IRoleModuleAssignedListProps {
   setSelectedModule: Dispatch<SetStateAction<IModuleSetupTableData | undefined>>
@@ -30,12 +30,7 @@ const RoleModuleAssignedList = ({
     IModuleSetupTableData[]
   >([])
 
-  const params = useParams()
-  const roleData = useMemo<IRoleDataParams>(
-    () => (decodeParams(params.roleData) as IRoleDataParams) || null,
-    []
-  )
-
+  const roleData = useGetRoleMappingParamsData()
   const { data: moduleList = [] } = useGetConfigurableModuleList<OptionType[]>({
     mapDatatoStyleSelect: true,
   })
@@ -62,7 +57,7 @@ const RoleModuleAssignedList = ({
   )
 
   return (
-    <Grid.Col sm={'sm:col-span-3'} className="bg-white">
+    <Grid.Col sm={'sm:col-span-3'}>
       <Flexbox className="h-full p-4" direction="column">
         <Text variant="h5" typeface="semibold" className="mb-2">
           Modules
@@ -91,7 +86,9 @@ const RoleModuleAssignedList = ({
                     setSelectedModule(module)
                   }}
                   className={`my-1 flex  cursor-pointer items-center justify-between rounded-[2px] bg-gray-96 p-2 hover:bg-gray-88 ${
-                    selectedModule?.id === module.id ? 'bg-gray-88' : ''
+                    selectedModule && +selectedModule?.id === +module.id
+                      ? 'bg-white'
+                      : ''
                   } `}
                 >
                   <Text variant="h6">
@@ -101,8 +98,14 @@ const RoleModuleAssignedList = ({
                     )}
                   </Text>
 
-                  <Box className="group cursor-pointer rounded p-2 transition-colors hover:bg-red-40 hover:stroke-white">
+                  <Box
+                    onClick={(event: any) => {
+                      event.stopPropagation()
+                    }}
+                    className="group cursor-pointer rounded p-2 transition-colors hover:bg-red-40 "
+                  >
                     <Trash2
+                      onClick={(e) => {}}
                       className="text-red-40 group-hover:text-white"
                       size={18}
                     />

@@ -3,10 +3,6 @@ import Switch from '@/components/functional/Form/Switch/Switch'
 import { Flexbox, Grid } from '@/components/ui'
 import { Card } from '@/components/ui/core/Card'
 import { Text } from '@/components/ui/core/Text'
-import { Spinner } from '@/components/ui/Spinner'
-import { decodeParams } from '@/utility/route-params'
-import { useMemo } from 'react'
-import { useParams } from 'react-router-dom'
 import {
   IModuleSetupTableData,
   IResourceRequestList,
@@ -15,7 +11,7 @@ import {
   useCreateRoleMapping,
   useGetResourceListByModuleAndRole,
 } from '../services/roleModuleMapping.query'
-import { IRoleDataParams } from './RoleModuleAssignedList'
+import useGetRoleMappingParamsData from './useGetRoleMappingParamsData'
 
 interface IRoleModuleResourceListProps {
   selectedModule: IModuleSetupTableData | undefined
@@ -24,11 +20,8 @@ interface IRoleModuleResourceListProps {
 const RoleModuleResourceList = ({
   selectedModule,
 }: IRoleModuleResourceListProps) => {
-  const params = useParams()
-  const roleData = useMemo<IRoleDataParams>(
-    () => (decodeParams(params.roleData) as IRoleDataParams) || null,
-    []
-  )
+  const roleData = useGetRoleMappingParamsData()
+
   const {
     data: resourceListByModuleAndRole = [],
     isFetching: resourceListFetching,
@@ -54,16 +47,18 @@ const RoleModuleResourceList = ({
     <Grid.Col sm={'sm:col-span-9'}>
       <Flexbox className="h-full p-4" direction="column">
         <Text variant="h5" typeface="semibold" className="mb-2">
-          Modules
+          Resource List
         </Text>
 
         <Card className="h-full w-full">
           <Flexbox className="h-full gap-4">
-            {resourceListFetching ? (
+            {!resourceListFetching && !selectedModule ? (
+              <>No Module Selected</>
+            ) : resourceListFetching ? (
               <FallbackLoader />
-            ) : (
+            ) : resourceListByModuleAndRole?.length ? (
               resourceListByModuleAndRole?.map((resource) => (
-                <Card>
+                <Card borderColor="border-gray-96" bordered>
                   <Flexbox align="center">
                     <Text variant="h6" typeface="semibold" className="mr-2">
                       {resource.resourceName}
@@ -77,6 +72,8 @@ const RoleModuleResourceList = ({
                   </Flexbox>
                 </Card>
               ))
+            ) : (
+              <>No Resource found</>
             )}
           </Flexbox>
         </Card>
