@@ -7,6 +7,7 @@ import {
   IGenericEnumResWithKeyAndValue,
   IGenericEnumResWithKeyAndName,
 } from './generic.interface'
+import { Dispatch, SetStateAction } from 'react'
 
 const { getDataByEnumType, uploadDocument } = apiDetails
 
@@ -76,11 +77,18 @@ export const useGetEnumDataWithValue = <T = IGenericEnumResWithKeyAndValue[]>(
   )
 }
 
-export const useDocumentUpload = () => {
+export const useDocumentUpload = (
+  setUploadProgressValue?: Dispatch<SetStateAction<number>>
+) => {
   return useMutation((requestData: { file: Blob | MediaSource }) => {
     return initApiRequest<BackendSuccessResponse<{ uuid: string }>>({
       apiDetails: uploadDocument,
       requestData,
+      onUploadProgress: (progressEvent) => {
+        setUploadProgressValue?.(
+          Math.round((progressEvent.loaded * 100) / (progressEvent?.total || 1))
+        )
+      },
     })
   })
 }

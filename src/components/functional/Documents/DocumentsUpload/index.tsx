@@ -35,6 +35,7 @@ import {
   IFileState,
 } from './document-upload.interface'
 import { IDocumentResponse } from '@/shared/shared.interface'
+import DocumentsUploadProgress from '../DocumentUploadProgress'
 
 interface IDocumentsUploadProps {
   moduleId: StringNumber
@@ -73,13 +74,15 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
   const [isUpdateStatePrepared, setIsUpdateStatePrepared] = useState(false)
 
   const [currentViewDocument, setCurrentViewDocument] = useState<StringNumber>()
+  const [uploadProgressValue, setUploadProgressValue] = useState(0)
 
   const { t } = useTranslation()
 
   const { data: requiredDocumentList = [], isLoading: documentLoading } =
     useGetAllModuleDocumentMappingByModuleId(moduleId)
 
-  const { mutate: uploadDocument } = useDocumentUpload()
+  const { mutateAsync: uploadDocument, isLoading: isUploading } =
+    useDocumentUpload(setUploadProgressValue)
 
   const structureFileState = () => {
     const initialFileState = requiredDocumentList.reduce<FileStateFile>(
@@ -199,7 +202,9 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
     }
   }, [documentList, fileState?.files, isUpdateStatePrepared])
 
-  const handleInputFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleInputFileChange = async (
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
     if (event.target.files?.[0]) {
       const {
         target: { files, id },
@@ -218,7 +223,7 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
         })
       }
 
-      uploadDocument(
+      await uploadDocument(
         { file: files[0] },
         {
           onSuccess: (res) => {
@@ -258,6 +263,7 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
           },
         }
       )
+      setUploadProgressValue(0)
     }
   }
 
@@ -389,43 +395,47 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
   }
 
   return (
-    <div className="">
-      <div className="mt-4">
-        <Text variant="h5" typeface="semibold">
-          {t('document.title')}
-        </Text>
+    <>
+      <div className="">
+        <div className="mt-4">
+          <Text variant="h5" typeface="semibold">
+            {t('document.title')}
+          </Text>
+        </div>
+
+        <DataTable
+          data={requiredDocumentList}
+          columns={columns}
+          isLoading={documentLoading}
+          withScrollable={false}
+        />
+
+        <ViewUploadedFilesModal
+          isOpen={!!currentViewDocument}
+          filesData={
+            !canUploadMultipleFile &&
+            currentViewDocument &&
+            fileState.files[currentViewDocument]?.fileData?.file
+              ? ([fileState.files[currentViewDocument].fileData] as FileData[])
+              : currentViewDocument
+              ? fileState.files[currentViewDocument]?.filesData || []
+              : []
+          }
+          toggleFileViewModal={handleToggleFileView}
+          modalTitle={
+            currentViewDocument
+              ? getTextByLanguage(
+                  fileState.files[currentViewDocument]?.documentTypeEn,
+                  fileState.files[currentViewDocument]?.documentTypeNp
+                )
+              : ''
+          }
+          removeFileAction={removeFileAction}
+        />
       </div>
 
-      <DataTable
-        data={requiredDocumentList}
-        columns={columns}
-        isLoading={documentLoading}
-        withScrollable={false}
-      />
-
-      <ViewUploadedFilesModal
-        isOpen={!!currentViewDocument}
-        filesData={
-          !canUploadMultipleFile &&
-          currentViewDocument &&
-          fileState.files[currentViewDocument]?.fileData?.file
-            ? ([fileState.files[currentViewDocument].fileData] as FileData[])
-            : currentViewDocument
-            ? fileState.files[currentViewDocument]?.filesData || []
-            : []
-        }
-        toggleFileViewModal={handleToggleFileView}
-        modalTitle={
-          currentViewDocument
-            ? getTextByLanguage(
-                fileState.files[currentViewDocument]?.documentTypeEn,
-                fileState.files[currentViewDocument]?.documentTypeNp
-              )
-            : ''
-        }
-        removeFileAction={removeFileAction}
-      />
-    </div>
+      {isUploading && <DocumentsUploadProgress value={uploadProgressValue} />}
+    </>
   )
 }
 
