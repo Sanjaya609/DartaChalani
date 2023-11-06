@@ -69,6 +69,7 @@ const useGetDropdownConfigById = (dropdownConfigId: StringNumber | null) => {
         return data?.data?.data
       },
       enabled: !!dropdownConfigId,
+      staleTime: 0,
     }
   )
 }

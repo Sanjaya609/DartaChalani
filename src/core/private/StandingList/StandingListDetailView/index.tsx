@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next'
 import { useGetStandingListDetailById } from '../AddStandingList/services/standing-list.query'
 import DocumentsUpload from '@/components/functional/Documents/DocumentsUpload'
 import ViewUploadedFiles from '@/components/functional/Documents/DocumentsUpload/ViewUploadedFiles'
+import { apiDetails } from '@/service/api'
 
 const StandingListDetailView = () => {
   const { t } = useTranslation()
@@ -139,6 +140,9 @@ const StandingListDetailView = () => {
           </Grid>
           <ViewUploadedFiles
             documentList={standingListDetails?.documentList || []}
+            viewControllerName={
+              apiDetails.downloadDocumentForStandingList.controllerName
+            }
           />
         </Card>
       </ContainerLayout>

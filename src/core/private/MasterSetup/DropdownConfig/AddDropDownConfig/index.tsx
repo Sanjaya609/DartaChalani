@@ -37,7 +37,7 @@ const AddDropDownConfig = () => {
   const { data: dropdownConfigDetails } = useGetDropdownConfigById(dropdownId)
 
   useEffect(() => {
-    if (dropdownConfigDetails) {
+    if (dropdownConfigDetails && params?.id) {
       const {
         dropDownDescriptionEn,
         dropDownDescriptionNp,
@@ -50,19 +50,27 @@ const AddDropDownConfig = () => {
         dropDownDescriptionEn,
         dropDownDescriptionNp,
         isActive,
-        listOfDropDownDetailRequestDto: dropDownDetailResponseDtoList?.map(
-          (dropDown) => ({
+        listOfDropDownDetailRequestDto:
+          dropDownDetailResponseDtoList?.map((dropDown) => ({
             descriptionEn: dropDown.descriptionEn,
             descriptionNp: dropDown.descriptionNp,
             isActive: dropDown.isActive,
-          })
-        ),
+            id: dropDown.id,
+            dropDownId: dropDown.dropDownId,
+            fieldValues: [
+              { field: dropDown.field1 || '', value: dropDown.value1 || '' },
+              { field: dropDown.field2 || '', value: dropDown.value2 || '' },
+              { field: dropDown.field3 || '', value: dropDown.value3 || '' },
+              { field: dropDown.field4 || '', value: dropDown.value4 || '' },
+            ].filter((field) => !!field.field),
+          })) || [],
       })
     }
   }, [dropdownConfigDetails])
 
   const navigateToList = () => {
     navigate(privateRoutePath.masterSetup.dropdownConfig.base)
+    setDropdownInitialValueState(dropdownConfigInitialValue)
   }
 
   const handleSaveDropDown = (values: IDropdownFieldConfigInitialValue) => {
@@ -73,17 +81,19 @@ const AddDropDownConfig = () => {
             const mappedField = {
               ...accField,
 
-              [`field-${index + 1}`]: currField.field,
-              [`value-${index + 1}`]: currField.value,
+              [`field${index + 1}`]: currField.field,
+              [`value${index + 1}`]: currField.value,
             }
 
             return mappedField
           },
           {}
         )
+
+        debugger
         return {
           ...(list.dropDownId && { dropDownId: list.dropDownId }),
-          ...(list.id && { dropDownId: list.id }),
+          ...(list.id && { id: list.id }),
           descriptionEn: list.descriptionEn,
           descriptionNp: list.descriptionNp,
           ...mappedFieldsVal,
@@ -93,7 +103,7 @@ const AddDropDownConfig = () => {
     const reqData = {
       dropDownDescriptionEn: values.dropDownDescriptionEn,
       dropDownDescriptionNp: values.dropDownDescriptionNp,
-      id: 0,
+      id: values.id,
       isActive: true,
       listOfDropDownDetailRequestDto,
     } as IDropdownConfigInitialValue
@@ -331,7 +341,11 @@ const AddDropDownConfig = () => {
                                               {values?.listOfDropDownDetailRequestDto[
                                                 index
                                               ]?.fieldValues?.map(
-                                                (fieldVal, fieldIndex) => (
+                                                (
+                                                  fieldVal,
+                                                  fieldIndex,
+                                                  allFields
+                                                ) => (
                                                   <Grid.Col sm="sm:col-span-12">
                                                     <Grid
                                                       sm={'sm:grid-cols-12'}
@@ -403,20 +417,26 @@ const AddDropDownConfig = () => {
                                                               icon={Trash}
                                                             />
                                                           </Button>
-                                                          <Button
-                                                            type="button"
-                                                            size="sm"
-                                                            onClick={() => {
-                                                              nestedDropDownDetails.push(
-                                                                {
-                                                                  field: '',
-                                                                  value: '',
-                                                                }
-                                                              )
-                                                            }}
-                                                          >
-                                                            <Icon icon={Plus} />
-                                                          </Button>
+                                                          {fieldIndex + 1 ===
+                                                            allFields.length &&
+                                                            fieldIndex < 3 && (
+                                                              <Button
+                                                                type="button"
+                                                                size="sm"
+                                                                onClick={() => {
+                                                                  nestedDropDownDetails.push(
+                                                                    {
+                                                                      field: '',
+                                                                      value: '',
+                                                                    }
+                                                                  )
+                                                                }}
+                                                              >
+                                                                <Icon
+                                                                  icon={Plus}
+                                                                />
+                                                              </Button>
+                                                            )}
                                                         </Flexbox>
                                                       </Grid.Col>
                                                     </Grid>
@@ -460,27 +480,29 @@ const AddDropDownConfig = () => {
               </form>
             </ContainerLayout>
 
-            <Box className=" w-full border-2  text-right">
-              <ContainerLayout>
-                <Button
-                  type="button"
-                  btnType="outlined"
-                  variant="secondary"
-                  className="mr-3"
-                  onClick={navigateToList}
-                >
-                  {t('btns.cancel')}
-                </Button>
-                <Button
-                  type="submit"
-                  onClick={() => {
-                    handleSubmit()
-                  }}
-                  className="ml-auto"
-                >
-                  {dropdownId ? t('btns.update') : t('btns.save')}
-                </Button>
-              </ContainerLayout>
+            <Box className="w-full border-2 pb-10 text-right">
+              <Flexbox align="center" justify="flex-end" className="px-16 py-6">
+                <div>
+                  <Button
+                    type="button"
+                    btnType="outlined"
+                    variant="secondary"
+                    className="mr-3"
+                    onClick={navigateToList}
+                  >
+                    {t('btns.cancel')}
+                  </Button>
+                  <Button
+                    type="submit"
+                    onClick={() => {
+                      handleSubmit()
+                    }}
+                    className="ml-auto"
+                  >
+                    {dropdownId ? t('btns.update') : t('btns.save')}
+                  </Button>
+                </div>
+              </Flexbox>
             </Box>
           </>
         )

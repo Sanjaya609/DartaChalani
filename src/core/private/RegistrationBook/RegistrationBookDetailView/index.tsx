@@ -7,6 +7,7 @@ import ContainerLayout from '@/components/ui/core/Layout/ContainerLayout'
 import { Text } from '@/components/ui/core/Text'
 import { getTextByLanguage } from '@/lib/i18n/i18n'
 import { privateRoutePath, useNavigate, useParams } from '@/router'
+import { apiDetails } from '@/service/api'
 import { decodeParams } from '@/utility/route-params'
 import { useTranslation } from 'react-i18next'
 import { useGetRegistrationBookDetailById } from '../AddRegistrationBook/services/add-registration-book.query'
@@ -132,6 +133,9 @@ const RegistrationBookDetailView = () => {
           </Grid>
           <ViewUploadedFiles
             documentList={registrationBookDetails?.documentList || []}
+            viewControllerName={
+              apiDetails.downloadDocumentForRegistrationBook.controllerName
+            }
           />
         </Card>
       </ContainerLayout>

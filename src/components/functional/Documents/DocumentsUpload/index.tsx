@@ -44,6 +44,7 @@ interface IDocumentsUploadProps {
   setUploadedDocumentData?: Dispatch<SetStateAction<IDocumentPayload[]>>
   viewOnly?: boolean
   documentList?: IDocumentResponse[]
+  viewControllerName?: string
 }
 
 const flatDocDataForPayload = (files: FileStateFile) => {
@@ -65,6 +66,7 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
     setUploadedDocumentData,
     viewOnly = false,
     documentList,
+    viewControllerName = '',
   } = props
   const [fileState, setFileState] = useState<IFileState>({
     files: {},
@@ -178,6 +180,7 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
                   fileUrl: doc.url,
                   uuid: doc.uuid,
                   file: null,
+                  documentName: doc?.documentName,
                 })) || [],
           }),
           ...(!canUploadMultipleFile && {
@@ -187,6 +190,7 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
                 fileUrl: doc.url,
                 uuid: doc.uuid,
                 file: null,
+                documentName: doc?.documentName,
               }))[0] || {
               file: null,
               uuid: '',
@@ -431,6 +435,7 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
               : ''
           }
           removeFileAction={removeFileAction}
+          controllerName={viewControllerName}
         />
       </div>
 

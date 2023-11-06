@@ -10,6 +10,7 @@ import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FileData } from '../document-upload.interface'
 import { IDocumentResponse } from '@/shared/shared.interface'
+import AuthFile from '@/components/AuthFile/AuthFile'
 
 const imgWidthWithLength = {
   1: 'sm:col-span-12',
@@ -22,6 +23,7 @@ interface IViewUploadedFilesModalProps {
   toggleFileViewModal: Function
   modalTitle?: string
   removeFileAction?: (file: FileData) => void
+  controllerName?: string
 }
 
 const ViewUploadedFilesModal = (props: IViewUploadedFilesModalProps) => {
@@ -31,6 +33,7 @@ const ViewUploadedFilesModal = (props: IViewUploadedFilesModalProps) => {
     modalTitle,
     filesData,
     removeFileAction,
+    controllerName,
   } = props
   const {
     t,
@@ -40,7 +43,8 @@ const ViewUploadedFilesModal = (props: IViewUploadedFilesModalProps) => {
   const fileWithObjectSrc = useMemo(() => {
     return filesData.map((data) => ({
       ...data,
-      fileSrc: data.file ? URL.createObjectURL(data.file!) : data.fileUrl,
+      fileSrc: data.file ? URL.createObjectURL(data.file!) : '',
+      documentName: data.documentName || '',
     }))
   }, [filesData])
 
@@ -76,52 +80,62 @@ const ViewUploadedFilesModal = (props: IViewUploadedFilesModalProps) => {
               } group relative h-[250px] cursor-pointer `}
             >
               <div className="relative h-full border border-slate-300 p-1 md:p-2">
-                <ImageWithSrc
-                  spinnerProps={{
-                    size: 'xl',
-                    className: 'h-full flex items-center justify-center',
-                  }}
-                  showSpinner
-                  alt="gallery"
-                  className="block h-full w-full rounded-lg object-contain object-center"
-                  src={isImageFile(fileExt) ? fileData.fileSrc : DocImage}
-                />
+                {fileData.fileSrc ? (
+                  <>
+                    <ImageWithSrc
+                      spinnerProps={{
+                        size: 'xl',
+                        className: 'h-full flex items-center justify-center',
+                      }}
+                      showSpinner
+                      alt="gallery"
+                      className="block h-full w-full rounded-lg object-contain object-center"
+                      src={isImageFile(fileExt) ? fileData.fileSrc : DocImage}
+                    />
 
-                <div className="absolute left-1/2 top-1/2 z-10 h-full w-full  -translate-x-1/2 -translate-y-1/2 bg-gray-300/70 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                  <div className="flex h-full flex-col items-center justify-center">
-                    <div className="flex">
-                      <div
-                        className="group/icon rounded-sm border border-gray-80 bg-gray-64 p-2 text-gray-24 transition-all duration-300 hover:border-navy-40"
-                        onClick={() => {
-                          if (fileData?.file) {
-                            handleViewOrDownload({
-                              action: 'view',
-                              fileProps: {
-                                file: fileData.file,
-                                fileType: fileExt,
-                              },
-                            })
-                          }
-                        }}
-                      >
-                        <Icon
-                          className="group-hover/icon:text-navy-40"
-                          icon={Eye}
-                          size={20}
-                        />
+                    <div className="absolute left-1/2 top-1/2 z-10 h-full w-full  -translate-x-1/2 -translate-y-1/2 bg-gray-300/70 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                      <div className="flex h-full flex-col items-center justify-center">
+                        <div className="flex">
+                          <div
+                            className="group/icon rounded-sm border border-gray-80 bg-gray-64 p-2 text-gray-24 transition-all duration-300 hover:border-navy-40"
+                            onClick={() => {
+                              if (fileData?.file) {
+                                handleViewOrDownload({
+                                  action: 'view',
+                                  fileProps: {
+                                    file: fileData.file,
+                                    fileType: fileExt,
+                                  },
+                                })
+                              }
+                            }}
+                          >
+                            <Icon
+                              className="group-hover/icon:text-navy-40"
+                              icon={Eye}
+                              size={20}
+                            />
+                          </div>
+                        </div>
+
+                        <div className="mt-2 text-center">
+                          <span className="bold ">
+                            {getTruncatedFileNameByLength(
+                              fileData?.file?.name || fileData?.documentName,
+                              15
+                            )}
+                          </span>
+                        </div>
                       </div>
                     </div>
-
-                    <div className="mt-2 text-center">
-                      <span className="bold ">
-                        {getTruncatedFileNameByLength(
-                          fileData?.file?.name || '',
-                          15
-                        )}
-                      </span>
-                    </div>
-                  </div>
-                </div>
+                  </>
+                ) : (
+                  <AuthFile
+                    controllerName={controllerName || ''}
+                    fileData={fileData}
+                    className="flex h-full items-center justify-center"
+                  />
+                )}
 
                 {removeFileAction && (
                   <div className="group/delete  absolute right-0 top-0 z-10 rounded-sm p-2 text-gray-24 opacity-0 transition-opacity duration-500 hover:border-navy-40 group-hover:opacity-100">
@@ -131,7 +145,7 @@ const ViewUploadedFilesModal = (props: IViewUploadedFilesModalProps) => {
                         icon={X}
                         size={20}
                         onClick={() => {
-                          if (fileData?.file) {
+                          if (fileData?.uuid) {
                             if (fileData.uuid === currentDeleteId) {
                               setCurrentDeleteId('')
                             } else {

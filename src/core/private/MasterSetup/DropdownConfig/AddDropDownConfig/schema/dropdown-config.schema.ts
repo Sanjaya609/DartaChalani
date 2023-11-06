@@ -9,9 +9,9 @@ export interface IDropdownFieldConfigInitialValue {
     descriptionEn: string
     descriptionNp: string
     isActive: boolean
-    fieldValues?: { field: string; value: string }[]
     dropDownId?: number
     id?: number
+    fieldValues?: { field: string; value: string }[]
   }[]
 }
 
