@@ -2,6 +2,7 @@ export type FileData = {
   uuid: string
   file?: Blob | null
   fileUrl?: string
+  documentName?: string
 }
 
 export interface IFileStateFileValue {

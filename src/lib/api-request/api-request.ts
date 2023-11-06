@@ -1,4 +1,4 @@
-import Axios, { AxiosError, AxiosResponse } from 'axios'
+import Axios, { AxiosError, AxiosProgressEvent, AxiosResponse } from 'axios'
 import { Primitive } from 'type-fest'
 
 import {
@@ -22,6 +22,7 @@ export interface InitApiRequest {
   params?: { [key: string]: Primitive | Array<GenericObj<Primitive>> }
   requestData?: RequestDataType
   signal?: AbortSignal
+  onUploadProgress?: (progressEvent: AxiosProgressEvent) => void
 }
 
 Axios.interceptors.response.use(
@@ -46,6 +47,7 @@ const initApiRequest = async <TData>({
   params,
   signal,
   requestData,
+  onUploadProgress,
 }: InitApiRequest): Promise<AxiosResponse<TData> | undefined> => {
   let sanitizedDetails = apiDetails
 
@@ -57,6 +59,7 @@ const initApiRequest = async <TData>({
       params,
       signal: signal ?? controller.signal,
       ...transformRequestData(sanitizedDetails, requestData),
+      onUploadProgress,
     })
   } catch (error) {
     throw new HttpException(
