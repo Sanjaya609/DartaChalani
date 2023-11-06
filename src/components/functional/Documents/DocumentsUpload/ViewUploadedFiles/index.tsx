@@ -11,10 +11,11 @@ import { getTextByLanguage } from '@/lib/i18n/i18n'
 interface IViewUploadedFilesProps {
   loading?: boolean
   documentList: IDocumentResponse[]
+  viewControllerName: string
 }
 
 const ViewUploadedFiles = (props: IViewUploadedFilesProps) => {
-  const { loading, documentList } = props
+  const { loading, documentList, viewControllerName } = props
   const { t } = useTranslation()
 
   const [currentViewDocument, setCurrentViewDocument] =
@@ -92,6 +93,7 @@ const ViewUploadedFiles = (props: IViewUploadedFilesProps) => {
               )
             : ''
         }
+        controllerName={viewControllerName}
       />
     </div>
   )

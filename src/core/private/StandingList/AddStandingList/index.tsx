@@ -9,6 +9,7 @@ import { Box, Button, Grid } from '@/components/ui'
 import ContainerLayout from '@/components/ui/core/Layout/ContainerLayout'
 import { Text } from '@/components/ui/core/Text'
 import { privateRoutePath, useNavigate, useParams } from '@/router'
+import { apiDetails } from '@/service/api'
 import { decodeParams } from '@/utility/route-params'
 import { generateWardOption } from '@/utility/utility'
 import { useFormik } from 'formik'
@@ -480,6 +481,9 @@ const StandingList = () => {
           setIsAllRequiredDocumentUploaded={setIsAllRequiredDocumentUploaded}
           setUploadedDocumentData={setUploadedDocumentData}
           documentList={registrationBookDetails?.documentList}
+          viewControllerName={
+            apiDetails.downloadDocumentForStandingList.controllerName
+          }
         />
       </ContainerLayout>
 

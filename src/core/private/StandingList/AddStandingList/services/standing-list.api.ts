@@ -18,6 +18,12 @@ const standingListAPI = {
     queryKeyName: 'GET_STANDING_LIST_DETAIL_BY_ID',
     requestMethod: RequestMethod.GET,
   },
+
+  downloadDocumentForStandingList: {
+    controllerName: `${prefix}/download-file`,
+    queryKeyName: 'DOWNLOAD_DOCUMENT_FOR_STANDING_LiST',
+    requestMethod: RequestMethod.GET,
+  },
 }
 
 export default standingListAPI
