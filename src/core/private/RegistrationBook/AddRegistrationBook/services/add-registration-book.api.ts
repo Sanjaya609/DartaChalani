@@ -24,7 +24,7 @@ const addRegistrationBookAPI = {
     requestMethod: RequestMethod.GET,
   },
   downloadDocumentForRegistrationBook: {
-    controllerName: `${prefix}/download-file`,
+    controllerName: `registration-book/download-file`,
     queryKeyName: 'DOWNLOAD_DOCUMENT_FOR_REGISTRATION_BOOK',
     requestMethod: RequestMethod.GET,
   },

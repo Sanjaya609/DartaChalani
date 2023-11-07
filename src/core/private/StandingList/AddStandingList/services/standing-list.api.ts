@@ -20,7 +20,7 @@ const standingListAPI = {
   },
 
   downloadDocumentForStandingList: {
-    controllerName: `${prefix}/download-file`,
+    controllerName: `standing-list/download-file`,
     queryKeyName: 'DOWNLOAD_DOCUMENT_FOR_STANDING_LiST',
     requestMethod: RequestMethod.GET,
   },
