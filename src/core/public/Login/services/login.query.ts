@@ -26,6 +26,9 @@ const useLogin = () => {
           setIsAuthenticated(true)
         }
       },
+      onError: (response: any) => {
+        console.log(response)
+      },
     }
   )
 }

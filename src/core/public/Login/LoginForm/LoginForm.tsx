@@ -13,14 +13,8 @@ import {
 import { useLogin } from '../services/login.query'
 
 const LoginForm = () => {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const { mutate, isLoading } = useLogin()
-
-  // mutate({
-  //   username: 'ramesh.koirala',
-  //   password: 'Test@123',
-  //   grant_type: 'password',
-  // })
 
   const { values, handleSubmit, errors, touched, handleChange, handleBlur } =
     useFormik({
