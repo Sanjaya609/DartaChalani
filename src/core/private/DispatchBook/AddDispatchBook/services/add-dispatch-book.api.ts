@@ -19,7 +19,7 @@ const dispatchBookAPI = {
     requestMethod: RequestMethod.GET,
   },
   downloadDocumentForDispatchBook: {
-    controllerName: `${prefix}/download-file`,
+    controllerName: `dispatch-book/download-file`,
     queryKeyName: 'DOWNLOAD_DOCUMENT_FOR_DISPATCH_BOOK',
     requestMethod: RequestMethod.GET,
   },
