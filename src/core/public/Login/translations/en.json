@@ -1,0 +1,11 @@
+{
+  "login": "Login",
+  "username": "Username",
+  "password": "Password",
+  "welcomeToSystem": "Welcome to Darta Chalani System",
+  "nepalGovernment": "Government of Nepal",
+  "errors": {
+    "username": "Username is required",
+    "password": "Password is required"
+  }
+}
