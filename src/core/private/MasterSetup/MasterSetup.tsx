@@ -11,12 +11,12 @@ const MasterSetup = () => {
   const sideBarItem = useMemo<ISidebarItem[]>(
     () => [
       {
-        title: t('sidebar.masterSetup.fiscalYear'),
-        path: privateRoutePath.masterSetup.fiscalYear,
-      },
-      {
         title: t('sidebar.masterSetup.office'),
         path: privateRoutePath.masterSetup.office,
+      },
+      {
+        title: t('sidebar.masterSetup.fiscalYear'),
+        path: privateRoutePath.masterSetup.fiscalYear,
       },
       {
         title: t('sidebar.masterSetup.sector'),

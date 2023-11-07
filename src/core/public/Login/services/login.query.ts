@@ -1,7 +1,7 @@
 import {
   ILoginPayload,
   ILoginResponse,
-} from '@/core/public/Login/interface/login.interface'
+} from '@/core/public/Login/schema/login.interface'
 import { initApiRequest } from '@/lib/api-request'
 import { useAuth } from '@/providers'
 import { apiDetails } from '@/service/api'

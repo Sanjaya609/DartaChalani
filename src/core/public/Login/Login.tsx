@@ -3,8 +3,10 @@ import { Card } from '@/components/ui/core/Card'
 import Logo from '@/assets/img/logo.png'
 import { Text } from '@/components/ui/core/Text'
 import LoginForm from './LoginForm/LoginForm'
+import { useTranslation } from 'react-i18next'
 
 const Login = () => {
+  const { t } = useTranslation()
   return (
     <section className="flex h-full w-full items-center justify-center bg-[#E5E5E5] ">
       <Grid
@@ -20,7 +22,7 @@ const Login = () => {
             <Flexbox direction="column" align="center" justify="center">
               <Image src={Logo} alt="Govt. Of Nepal" />
               <Text className="mt-3" typeface="bold" color="text-white">
-                नेपाल सरकार
+                {t('public.login.nepalGovernment')}
               </Text>
             </Flexbox>
 
@@ -32,7 +34,7 @@ const Login = () => {
               variant="h5"
               typeface="extrabold"
             >
-              दर्ता चलानी मा तपाईंलाई स्वागत छ
+              {t('public.login.welcomeToSystem')}
             </Text>
           </Card>
         </Grid.Col>
