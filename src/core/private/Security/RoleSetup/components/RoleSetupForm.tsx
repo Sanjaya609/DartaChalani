@@ -67,6 +67,7 @@ const RoleSetupForm = ({
         </Grid.Col>
         <Grid.Col sm={'sm:col-span-4'}>
           <Form.Input
+            isNepali
             value={values.roleNameNepali}
             errors={errors}
             touched={touched}

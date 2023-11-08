@@ -1,3 +1,6 @@
+import toast, {
+  ToastType,
+} from '@/components/functional/ToastNotifier/ToastNotifier'
 import {
   ILoginPayload,
   ILoginResponse,
@@ -27,7 +30,15 @@ const useLogin = () => {
         }
       },
       onError: (response: any) => {
-        console.log(response)
+        toast({
+          type: ToastType.error,
+          message:
+            response?.error?.data?.error_description ||
+            'Something went wrong, Please try again.',
+        })
+      },
+      meta: {
+        disableFailureToast: true,
       },
     }
   )
