@@ -484,6 +484,7 @@ const StandingList = () => {
           viewControllerName={
             apiDetails.downloadDocumentForStandingList.controllerName
           }
+          deleteAPIDetails={apiDetails.deleteDocumentForStandingList}
         />
       </ContainerLayout>
 

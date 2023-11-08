@@ -24,6 +24,11 @@ const standingListAPI = {
     queryKeyName: 'DOWNLOAD_DOCUMENT_FOR_STANDING_LiST',
     requestMethod: RequestMethod.GET,
   },
+  deleteDocumentForStandingList: {
+    controllerName: `${prefix}/document`,
+    queryKeyName: 'DELETE_DOCUMENT_FOR_STANDING_LIST',
+    requestMethod: RequestMethod.DELETE,
+  },
 }
 
 export default standingListAPI

@@ -23,6 +23,11 @@ const dispatchBookAPI = {
     queryKeyName: 'DOWNLOAD_DOCUMENT_FOR_DISPATCH_BOOK',
     requestMethod: RequestMethod.GET,
   },
+  deleteDocumentForDispatchBook: {
+    controllerName: `${prefix}/document`,
+    queryKeyName: 'DELETE_DOCUMENT_FOR_DISPATCH_BOOK',
+    requestMethod: RequestMethod.DELETE,
+  },
 }
 
 export default dispatchBookAPI

@@ -5,8 +5,10 @@ import { Box } from '@/components/ui'
 import { Text } from '@/components/ui/core/Text'
 import { IModuleDocumentMappingResponse } from '@/core/private/MasterSetup/ModuleDocumentMapping/schema/module-document-mapping.interface'
 import { useGetAllModuleDocumentMappingByModuleId } from '@/core/private/MasterSetup/ModuleDocumentMapping/services/module-document-mapping.query'
+import { initApiRequest, RequestMethod } from '@/lib/api-request'
 import { getTextByLanguage } from '@/lib/i18n/i18n'
 import { useDocumentUpload } from '@/service/generic/generic.query'
+import { IDocumentResponse } from '@/shared/shared.interface'
 import { validateDocumentFile } from '@/utility/document/document-validations'
 import { ColumnDef } from '@tanstack/react-table'
 import { UploadSimple } from 'phosphor-react'
@@ -20,22 +22,21 @@ import {
 } from 'react'
 import { useTranslation } from 'react-i18next'
 import { DataTable } from '../../Table'
-import TableAction from '../../Table/Components/Table/TableAction'
 import {
   tableActionIcon,
   tableActionList,
   tableActionTooltip,
 } from '../../Table/Components/Table/table.schema'
-import UploadedFiles from './UploadedFiles/UploadedFiles'
-import ViewUploadedFilesModal from './UploadedFiles/ViewUploadedFilesModal'
+import TableAction from '../../Table/Components/Table/TableAction'
+import DocumentsUploadProgress from '../DocumentUploadProgress'
 import {
   FileData,
   FileStateFile,
   IDocumentPayload,
   IFileState,
 } from './document-upload.interface'
-import { IDocumentResponse } from '@/shared/shared.interface'
-import DocumentsUploadProgress from '../DocumentUploadProgress'
+import UploadedFiles from './UploadedFiles/UploadedFiles'
+import ViewUploadedFilesModal from './UploadedFiles/ViewUploadedFilesModal'
 
 interface IDocumentsUploadProps {
   moduleId: StringNumber
@@ -45,6 +46,11 @@ interface IDocumentsUploadProps {
   viewOnly?: boolean
   documentList?: IDocumentResponse[]
   viewControllerName?: string
+  deleteAPIDetails?: {
+    controllerName: string
+    queryKeyName: string
+    requestMethod: RequestMethod
+  }
 }
 
 const flatDocDataForPayload = (files: FileStateFile) => {
@@ -67,6 +73,7 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
     viewOnly = false,
     documentList,
     viewControllerName = '',
+    deleteAPIDetails,
   } = props
   const [fileState, setFileState] = useState<IFileState>({
     files: {},
@@ -366,35 +373,63 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
     [fileState.files, t]
   )
 
-  const removeFileAction = (file: FileData) => {
+  const removeFileAction = async (file: FileData) => {
     if (currentViewDocument) {
-      const currentFileState = { ...fileState }
-      const updatedFileState = {
-        ...currentFileState.files[currentViewDocument],
-        filesData: currentFileState.files[currentViewDocument].filesData.filter(
-          (currFile) => currFile.uuid !== file.uuid
-        ),
-      }
+      try {
+        const currentFileState = { ...fileState }
 
-      const newFileState = canUploadMultipleFile
-        ? {
-            ...currentFileState,
-            files: {
-              ...currentFileState.files,
-              [currentViewDocument]: updatedFileState,
+        if (deleteAPIDetails && !file?.file) {
+          const res = await initApiRequest<BackendSuccessResponse<null>>({
+            apiDetails: deleteAPIDetails,
+            params: {
+              fileName: file.uuid,
             },
-          }
-        : { ...currentFileState, file: { uuid: '', file: null } }
+          })
 
-      if (canUploadMultipleFile && !updatedFileState.filesData.length) {
-        setCurrentViewDocument('')
-      }
-      if (!canUploadMultipleFile) {
-        setCurrentViewDocument('')
-      }
+          // if (res?.data?.message) {
+          //   toast({ type: ToastType.success, message: res.data.message })
+          // }
+        }
 
-      setFileState(newFileState)
-      validateFileChanges(newFileState.files)
+        const updatedFileState = {
+          ...currentFileState.files[currentViewDocument],
+          filesData: currentFileState.files[
+            currentViewDocument
+          ].filesData.filter((currFile) => currFile.uuid !== file.uuid),
+        }
+
+        const newFileState = canUploadMultipleFile
+          ? {
+              ...currentFileState,
+              files: {
+                ...currentFileState.files,
+                [currentViewDocument]: updatedFileState,
+              },
+            }
+          : { ...currentFileState, file: { uuid: '', file: null } }
+
+        if (canUploadMultipleFile && !updatedFileState.filesData.length) {
+          setCurrentViewDocument('')
+        }
+        if (!canUploadMultipleFile) {
+          setCurrentViewDocument('')
+        }
+
+        setFileState(newFileState)
+        validateFileChanges(newFileState.files)
+      } catch (error: any) {
+        if (error?.error?.data?.error) {
+          toast({ type: ToastType.error, message: error?.error?.data?.error })
+        } else {
+          toast({
+            type: ToastType.error,
+            message: getTextByLanguage(
+              'Delete document failed',
+              'कागजात मेटाउन असफल भयो'
+            ),
+          })
+        }
+      }
     }
   }
 
