@@ -11,10 +11,13 @@ function App() {
     localStorage.setItem('lang', defaultLang)
   }, [])
 
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, ...authProps } = useAuth()
   const router = createBrowserRouter(
     isAuthenticated ? privateRoutes : publicRoutes
   )
+
+  console.log({ authProps })
+
   return <RouterProvider router={router} />
 }
 

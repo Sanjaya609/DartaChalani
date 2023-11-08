@@ -28,6 +28,11 @@ const addRegistrationBookAPI = {
     queryKeyName: 'DOWNLOAD_DOCUMENT_FOR_REGISTRATION_BOOK',
     requestMethod: RequestMethod.GET,
   },
+  deleteDocumentForRegistrationBook: {
+    controllerName: `${prefix}/document`,
+    queryKeyName: 'DELETE_DOCUMENT_FOR_REGISTRATION_BOOK',
+    requestMethod: RequestMethod.DELETE,
+  },
 }
 
 export default addRegistrationBookAPI

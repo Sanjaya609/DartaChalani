@@ -421,6 +421,7 @@ const AddRegistrationBook = () => {
           viewControllerName={
             apiDetails.downloadDocumentForRegistrationBook.controllerName
           }
+          deleteAPIDetails={apiDetails.deleteDocumentForRegistrationBook}
         />
       </ContainerLayout>
 

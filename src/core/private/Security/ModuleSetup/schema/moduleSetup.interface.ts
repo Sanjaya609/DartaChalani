@@ -36,4 +36,5 @@ export interface IModuleSetupTableData {
   resourceResponses: IResourceRequestList[]
   parentModuleId?: StringNumber
   showModuleOnMenu?: boolean
+  childModuleList?: IModuleSetupTableData[]
 }
