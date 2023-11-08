@@ -1,3 +1,6 @@
+import toast, {
+  ToastType,
+} from '@/components/functional/ToastNotifier/ToastNotifier'
 import {
   ILoginPayload,
   ILoginResponse,
@@ -25,6 +28,17 @@ const useLogin = () => {
           TokenService.setRefeshToken(responseData.refresh_token)
           setIsAuthenticated(true)
         }
+      },
+      onError: (response: any) => {
+        toast({
+          type: ToastType.error,
+          message:
+            response?.error?.data?.error_description ||
+            'Something went wrong, Please try again.',
+        })
+      },
+      meta: {
+        disableFailureToast: true,
       },
     }
   )

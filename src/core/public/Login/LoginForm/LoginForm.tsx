@@ -13,24 +13,25 @@ import {
 import { useLogin } from '../services/login.query'
 
 const LoginForm = () => {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const { mutate, isLoading } = useLogin()
 
-  // mutate({
-  //   username: 'ramesh.koirala',
-  //   password: 'Test@123',
-  //   grant_type: 'password',
-  // })
-
-  const { values, handleSubmit, errors, touched, handleChange, handleBlur } =
-    useFormik({
-      enableReinitialize: true,
-      initialValues: loginInitialValue,
-      validationSchema: loginValidationSchema,
-      onSubmit: (values) => {
-        mutate(values)
-      },
-    })
+  const {
+    values,
+    handleSubmit,
+    errors,
+    touched,
+    handleChange,
+    handleBlur,
+    setFieldValue,
+  } = useFormik({
+    enableReinitialize: true,
+    initialValues: loginInitialValue,
+    validationSchema: loginValidationSchema,
+    onSubmit: (values) => {
+      mutate(values)
+    },
+  })
 
   return (
     <Card className="rounded-r-lg px-8 py-7">
@@ -46,7 +47,9 @@ const LoginForm = () => {
           errors={errors}
           touched={touched}
           name="username"
-          onChange={handleChange}
+          onChange={(e) => {
+            setFieldValue('username', e.target.value.replace(/\s/g, ''))
+          }}
           onBlur={handleBlur}
         />
         <PasswordInput

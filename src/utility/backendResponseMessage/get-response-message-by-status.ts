@@ -10,7 +10,11 @@ export const getResponseMessageByStatus = (
     switch (status) {
       case HttpStatusCode.NotFound:
       case HttpStatusCode.InternalServerError:
-        message = typeof data?.error === 'string' ? data?.error : ''
+      case HttpStatusCode.BadRequest:
+        message =
+          typeof data?.error === 'string'
+            ? data?.error
+            : 'Something went wrong, Please try again.'
         break
       default:
         return 'Please contact operator'
