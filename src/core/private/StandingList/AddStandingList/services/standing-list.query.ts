@@ -7,8 +7,12 @@ import {
   IStandingListResponse,
 } from '../schema/standing-list.interface'
 
-const { createStandingList, getAllStandingList, getStandingListById } =
-  apiDetails
+const {
+  createStandingList,
+  getAllStandingList,
+  getStandingListById,
+  deleteStandingList,
+} = apiDetails
 
 const useCreateStandingList = () => {
   const queryClient = useQueryClient()
@@ -64,8 +68,26 @@ const useGetStandingListDetailById = (id: string | number | null) => {
   )
 }
 
+const useDeleteStandingListById = () => {
+  const queryClient = useQueryClient()
+  return useMutation(
+    (id: number | string) => {
+      return initApiRequest({
+        apiDetails: deleteStandingList,
+        pathVariables: { id },
+      })
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries([getAllStandingList.controllerName])
+      },
+    }
+  )
+}
+
 export {
   useCreateStandingList,
   useGetAllStandingList,
   useGetStandingListDetailById,
+  useDeleteStandingListById,
 }

@@ -6,8 +6,12 @@ import {
   IDispatchBookResponse,
 } from '../schema/add-dispatch-book.interface'
 
-const { createDispatchBook, getAllDispatchBook, getDispatchBookById } =
-  apiDetails
+const {
+  createDispatchBook,
+  getAllDispatchBook,
+  getDispatchBookById,
+  deleteDispatchBook,
+} = apiDetails
 
 const useCreateDispatchBook = () => {
   const queryClient = useQueryClient()
@@ -63,8 +67,26 @@ const useGetDispatchBookDetailById = (id: string | number | null) => {
   )
 }
 
+const useDeleteDispatchBookById = () => {
+  const queryClient = useQueryClient()
+  return useMutation(
+    (id: number | string) => {
+      return initApiRequest({
+        apiDetails: deleteDispatchBook,
+        pathVariables: { id },
+      })
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries([getAllDispatchBook.controllerName])
+      },
+    }
+  )
+}
+
 export {
   useCreateDispatchBook,
   useGetAllDispatchBook,
   useGetDispatchBookDetailById,
+  useDeleteDispatchBookById,
 }

@@ -10,6 +10,7 @@ const {
   createRegistrationBook,
   getAllRegistrationBook,
   getRegistrationBookById,
+  deleteRegistrationBook,
 } = apiDetails
 
 const useCreateRegistrationBook = () => {
@@ -66,8 +67,26 @@ const useGetRegistrationBookDetailById = (id: string | number | null) => {
   )
 }
 
+const useDeleteRegistrationBookById = () => {
+  const queryClient = useQueryClient()
+  return useMutation(
+    (id: number | string) => {
+      return initApiRequest({
+        apiDetails: deleteRegistrationBook,
+        pathVariables: { id },
+      })
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries([getAllRegistrationBook.controllerName])
+      },
+    }
+  )
+}
+
 export {
   useCreateRegistrationBook,
   useGetAllRegistrationBook,
   useGetRegistrationBookDetailById,
+  useDeleteRegistrationBookById,
 }

@@ -7,10 +7,14 @@ import { getTextByLanguage } from '@/lib/i18n/i18n'
 import { privateRoutePath, useNavigate } from '@/router'
 import { encodeParams } from '@/utility/route-params'
 import { ColumnDef } from '@tanstack/react-table'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IDispatchBookResponse } from '../AddDispatchBook/schema/add-dispatch-book.interface'
-import { useGetAllDispatchBook } from '../AddDispatchBook/services/add-dispatch-book.query'
+import {
+  useDeleteDispatchBookById,
+  useGetAllDispatchBook,
+} from '../AddDispatchBook/services/add-dispatch-book.query'
+import Modal from '@/components/ui/Modal/Modal'
 
 const DispatchBookTable = () => {
   const { t } = useTranslation()
@@ -19,6 +23,24 @@ const DispatchBookTable = () => {
     data: allRegistrationBookList = [],
     isFetching: allRegistrationBookFetching,
   } = useGetAllDispatchBook()
+
+  const [currentSelectedId, setCurrentSelectedId] = useState<string | number>(
+    ''
+  )
+
+  const setOrRemoveCurrentSelectedId = (id?: string | number) =>
+    setCurrentSelectedId(id || '')
+
+  const { mutate: deleteById, isLoading: deleteByIdLoading } =
+    useDeleteDispatchBookById()
+
+  const handleDeleteById = () => {
+    deleteById(currentSelectedId, {
+      onSuccess: () => {
+        setOrRemoveCurrentSelectedId()
+      },
+    })
+  }
 
   const columns = useMemo<ColumnDef<IDispatchBookResponse>[]>(
     () => [
@@ -72,6 +94,9 @@ const DispatchBookTable = () => {
                 params: { id: encodeParams(id) },
               })
             }}
+            handleDeleteClick={() => {
+              setCurrentSelectedId(id)
+            }}
           />
         ),
       },
@@ -97,6 +122,20 @@ const DispatchBookTable = () => {
             columns={columns}
             data={allRegistrationBookList}
           />
+
+          <Modal
+            open={!!currentSelectedId}
+            toggleModal={setOrRemoveCurrentSelectedId}
+            size="md"
+            title={t('dispatchBook.deleteModal.title')}
+            saveBtnProps={{
+              btnAction: handleDeleteById,
+              loading: deleteByIdLoading,
+              btnTitle: t('btns.delete'),
+            }}
+          >
+            {t('dispatchBook.deleteModal.description')}
+          </Modal>
         </FlexLayout>
       </ContainerLayout>
     </>

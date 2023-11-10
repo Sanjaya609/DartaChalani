@@ -29,6 +29,11 @@ const standingListAPI = {
     queryKeyName: 'DELETE_DOCUMENT_FOR_STANDING_LIST',
     requestMethod: RequestMethod.DELETE,
   },
+  deleteStandingList: {
+    controllerName: `${prefix}/{id}`,
+    queryKeyName: 'DELETE_STANDING_LIST_BY_ID',
+    requestMethod: RequestMethod.DELETE,
+  },
 }
 
 export default standingListAPI

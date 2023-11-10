@@ -28,6 +28,11 @@ const dispatchBookAPI = {
     queryKeyName: 'DELETE_DOCUMENT_FOR_DISPATCH_BOOK',
     requestMethod: RequestMethod.DELETE,
   },
+  deleteDispatchBook: {
+    controllerName: `${prefix}/{id}`,
+    queryKeyName: 'DELETE_DISPATCH_BOOK_BY_ID',
+    requestMethod: RequestMethod.DELETE,
+  },
 }
 
 export default dispatchBookAPI

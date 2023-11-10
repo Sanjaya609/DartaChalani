@@ -7,10 +7,14 @@ import { getTextByLanguage } from '@/lib/i18n/i18n'
 import { privateRoutePath, useNavigate } from '@/router'
 import { encodeParams } from '@/utility/route-params'
 import { ColumnDef } from '@tanstack/react-table'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IRegistrationBookResponse } from '../AddRegistrationBook/schema/add-registration-book.interface'
-import { useGetAllRegistrationBook } from '../AddRegistrationBook/services/add-registration-book.query'
+import {
+  useDeleteRegistrationBookById,
+  useGetAllRegistrationBook,
+} from '../AddRegistrationBook/services/add-registration-book.query'
+import Modal from '@/components/ui/Modal/Modal'
 
 const RegistrationBookTable = () => {
   const { t } = useTranslation()
@@ -19,6 +23,24 @@ const RegistrationBookTable = () => {
     data: allRegistrationBookList = [],
     isFetching: allRegistrationBookFetching,
   } = useGetAllRegistrationBook()
+
+  const [currentSelectedId, setCurrentSelectedId] = useState<string | number>(
+    ''
+  )
+
+  const setOrRemoveCurrentSelectedId = (id?: string | number) =>
+    setCurrentSelectedId(id || '')
+
+  const { mutate: deleteById, isLoading: deleteByIdLoading } =
+    useDeleteRegistrationBookById()
+
+  const handleDeleteById = () => {
+    deleteById(currentSelectedId, {
+      onSuccess: () => {
+        setOrRemoveCurrentSelectedId()
+      },
+    })
+  }
 
   const columns = useMemo<ColumnDef<IRegistrationBookResponse>[]>(
     () => [
@@ -68,6 +90,9 @@ const RegistrationBookTable = () => {
                 params: { id: encodeParams(id) },
               })
             }}
+            handleDeleteClick={() => {
+              setCurrentSelectedId(id)
+            }}
           />
         ),
       },
@@ -95,6 +120,20 @@ const RegistrationBookTable = () => {
           />
         </FlexLayout>
       </ContainerLayout>
+
+      <Modal
+        open={!!currentSelectedId}
+        toggleModal={setOrRemoveCurrentSelectedId}
+        size="md"
+        title={t('registrationBook.deleteModal.title')}
+        saveBtnProps={{
+          btnAction: handleDeleteById,
+          loading: deleteByIdLoading,
+          btnTitle: t('btns.delete'),
+        }}
+      >
+        {t('registrationBook.deleteModal.description')}
+      </Modal>
     </>
   )
 }

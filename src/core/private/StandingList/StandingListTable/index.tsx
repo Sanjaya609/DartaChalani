@@ -7,16 +7,38 @@ import { getTextByLanguage } from '@/lib/i18n/i18n'
 import { privateRoutePath, useNavigate } from '@/router'
 import { encodeParams } from '@/utility/route-params'
 import { ColumnDef } from '@tanstack/react-table'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { IStandingListResponse } from '../AddStandingList/schema/standing-list.interface'
-import { useGetAllStandingList } from '../AddStandingList/services/standing-list.query'
+import {
+  useDeleteStandingListById,
+  useGetAllStandingList,
+} from '../AddStandingList/services/standing-list.query'
+import Modal from '@/components/ui/Modal/Modal'
 
 const StandingListTable = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { data: allStandingList = [], isFetching: allStandingListFetching } =
     useGetAllStandingList()
+
+  const [currentSelectedId, setCurrentSelectedId] = useState<string | number>(
+    ''
+  )
+
+  const setOrRemoveCurrentSelectedId = (id?: string | number) =>
+    setCurrentSelectedId(id || '')
+
+  const { mutate: deleteById, isLoading: deleteByIdLoading } =
+    useDeleteStandingListById()
+
+  const handleDeleteById = () => {
+    deleteById(currentSelectedId, {
+      onSuccess: () => {
+        setOrRemoveCurrentSelectedId()
+      },
+    })
+  }
 
   const columns = useMemo<ColumnDef<IStandingListResponse>[]>(
     () => [
@@ -66,6 +88,9 @@ const StandingListTable = () => {
                 params: { id: encodeParams(id) },
               })
             }}
+            handleDeleteClick={() => {
+              setCurrentSelectedId(id)
+            }}
           />
         ),
       },
@@ -93,6 +118,20 @@ const StandingListTable = () => {
           />
         </FlexLayout>
       </ContainerLayout>
+
+      <Modal
+        open={!!currentSelectedId}
+        toggleModal={setOrRemoveCurrentSelectedId}
+        size="md"
+        title={t('standingList.deleteModal.title')}
+        saveBtnProps={{
+          btnAction: handleDeleteById,
+          loading: deleteByIdLoading,
+          btnTitle: t('btns.delete'),
+        }}
+      >
+        {t('standingList.deleteModal.description')}
+      </Modal>
     </>
   )
 }
