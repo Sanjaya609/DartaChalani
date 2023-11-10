@@ -30,6 +30,7 @@ interface TransformedRequestData {
 
 export const handleLogout = () => {
   TokenService.clearToken()
+  window.location.replace('/')
 }
 
 function getQueryString(data: GenericObj) {

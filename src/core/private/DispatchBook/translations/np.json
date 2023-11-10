@@ -27,7 +27,7 @@
     "letterReceiverName": "पत्र प्राप्त गर्नेको नाम आवश्यक छ",
     "letterReceiverEmail": "पत्र प्राप्त गर्नेको इमेल आवश्यक छ",
     "letterReceiverAddress": "पत्र प्राप्त गर्नेको ठेगाना आवश्यक छ",
-    "letterCarrierName": "पत्र वाहक नाम is required",
+    "letterCarrierName": "पत्र वाहक नाम आवश्यक छ",
     "letterCarrierContact": "पत्र वाहक सम्पर्क आवश्यक छ",
     "physicalFileLocation": "भौतिक फाइल स्थान आवश्यक छ",
     "letterToSection": "खण्डमा पत्र आवश्यक छ",
@@ -37,5 +37,9 @@
     "wardNumber": "वडा नम्बर आवश्यक छ",
     "districtId": "जिल्ला आवश्यक छ",
     "provinceId": "प्रदेश आवश्यक छ"
+  },
+  "deleteModal": {
+    "title": "चलानी किताब हटाउनुहोस्",
+    "description": "के तपाइँ यो चलानी किताब हटाउन निश्चित हुनुहुन्छ?"
   }
 }

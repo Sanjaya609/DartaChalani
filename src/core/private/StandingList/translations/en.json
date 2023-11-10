@@ -41,5 +41,9 @@
     "taxClearanceDate": "Tax Clearance Date is required",
     "taxClearanceDateExtendedDate": "Tax Clearance Extended Date is required",
     "workingSectorDetails": "Working Sector Details is required"
+  },
+  "deleteModal": {
+    "title": "Delete Standing List",
+    "description": "Are you sure you want to delete this standing list ?"
   }
 }

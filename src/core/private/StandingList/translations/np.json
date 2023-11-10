@@ -41,5 +41,9 @@
     "taxClearanceDate": "कर चुक्ता मिति आवश्यक छ",
     "taxClearanceDateExtendedDate": "कर चुक्ता विस्तारित मिति आवश्यक छ",
     "workingSectorDetails": "कार्य क्षेत्र विवरण आवश्यक छ"
+  },
+  "deleteModal": {
+    "title": "मौजुदा सूची हटाउनुहोस्",
+    "description": "के तपाइँ यो मौजुदा सूची हटाउन निश्चित हुनुहुन्छ?"
   }
 }

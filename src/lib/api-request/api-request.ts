@@ -29,7 +29,6 @@ Axios.interceptors.response.use(
   (value) => value,
   (error: AxiosError) => {
     if (error.response?.status === 401) {
-      debugger
       handleLogout()
     }
     // if (
