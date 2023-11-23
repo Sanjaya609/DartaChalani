@@ -211,6 +211,7 @@ const AddRegistrationBook = () => {
 
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Select
+                isRequired
                 options={provinceList}
                 isLoading={provinceListFetching}
                 calculateValueOnChange
@@ -233,6 +234,7 @@ const AddRegistrationBook = () => {
             </Grid.Col>
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Select
+                isRequired
                 options={districtList}
                 isLoading={districtListFetching}
                 calculateValueOnChange
@@ -252,6 +254,7 @@ const AddRegistrationBook = () => {
             </Grid.Col>
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Select
+                isRequired
                 options={localBodyList}
                 isLoading={localBodyListFetching}
                 calculateValueOnChange
@@ -279,6 +282,7 @@ const AddRegistrationBook = () => {
 
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Select
+                isRequired
                 options={wardOption}
                 isLoading={localBodyListFetching}
                 calculateValueOnChange
@@ -302,6 +306,7 @@ const AddRegistrationBook = () => {
 
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.NepaliDatePicker
+                isRequired
                 value={values.letterDispatchDate}
                 errors={errors}
                 touched={touched}
@@ -316,6 +321,7 @@ const AddRegistrationBook = () => {
 
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Input
+                isRequired
                 value={values.letterDispatchNumber}
                 errors={errors}
                 touched={touched}
@@ -339,6 +345,7 @@ const AddRegistrationBook = () => {
             </Grid.Col>
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Input
+                isRequired
                 value={values.letterSenderName}
                 errors={errors}
                 touched={touched}
@@ -372,6 +379,7 @@ const AddRegistrationBook = () => {
             </Grid.Col>
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Select
+                isRequired
                 options={sectorList}
                 isLoading={sectorListFetching}
                 calculateValueOnChange
@@ -388,6 +396,7 @@ const AddRegistrationBook = () => {
             </Grid.Col>
             <Grid.Col sm={'sm:col-span-12'}>
               <Form.Input
+                isRequired
                 value={values.subjectOfLetter}
                 errors={errors}
                 touched={touched}

@@ -56,6 +56,7 @@ const RoleSetupForm = ({
       <Grid sm={'sm:grid-cols-12'} gap="gap-4">
         <Grid.Col sm={'sm:col-span-4'}>
           <Form.Input
+            isRequired
             value={values.roleNameEnglish}
             errors={errors}
             touched={touched}
@@ -67,6 +68,7 @@ const RoleSetupForm = ({
         </Grid.Col>
         <Grid.Col sm={'sm:col-span-4'}>
           <Form.Input
+            isRequired
             isNepali
             value={values.roleNameNepali}
             errors={errors}
@@ -79,6 +81,7 @@ const RoleSetupForm = ({
         </Grid.Col>
         <Grid.Col sm={'sm:col-span-4'}>
           <Form.Select
+            isRequired
             options={roleTypeData}
             calculateValueOnChange
             value={values.roleType}
@@ -94,6 +97,7 @@ const RoleSetupForm = ({
         </Grid.Col>
         <Grid.Col sm={'sm:col-span-4'}>
           <Form.TextArea
+            isRequired
             value={values.description}
             errors={errors}
             touched={touched}

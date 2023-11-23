@@ -225,6 +225,7 @@ const StandingList = () => {
             </Grid.Col>
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Input
+                isRequired
                 value={values.letter_no}
                 errors={errors}
                 touched={touched}
@@ -241,6 +242,7 @@ const StandingList = () => {
             </Grid.Col>
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Select
+                isRequired
                 options={serviceTypeList}
                 isLoading={serviceTypeListFetching}
                 calculateValueOnChange
@@ -257,6 +259,7 @@ const StandingList = () => {
             </Grid.Col>
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Input
+                isRequired
                 value={values.personOrFirmName}
                 errors={errors}
                 touched={touched}
@@ -268,6 +271,7 @@ const StandingList = () => {
             </Grid.Col>
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Input
+                isRequired
                 value={values.firmRegistrationNumber}
                 errors={errors}
                 touched={touched}
@@ -279,6 +283,7 @@ const StandingList = () => {
             </Grid.Col>
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.NepaliDatePicker
+                isRequired
                 value={values.registrationDate}
                 errors={errors}
                 touched={touched}
@@ -292,6 +297,7 @@ const StandingList = () => {
             </Grid.Col>
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Input
+                isRequired
                 value={values.panOrVatNumber}
                 errors={errors}
                 touched={touched}
@@ -303,6 +309,7 @@ const StandingList = () => {
             </Grid.Col>
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.NepaliDatePicker
+                isRequired
                 value={values.panOrVatRegistrationDate}
                 errors={errors}
                 touched={touched}
@@ -316,6 +323,7 @@ const StandingList = () => {
             </Grid.Col>
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Input
+                isRequired
                 value={values.contactPersonName}
                 errors={errors}
                 touched={touched}
@@ -327,6 +335,7 @@ const StandingList = () => {
             </Grid.Col>
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Input
+                isRequired
                 value={values.contactNumber}
                 errors={errors}
                 touched={touched}
@@ -338,6 +347,7 @@ const StandingList = () => {
             </Grid.Col>
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.NepaliDatePicker
+                isRequired
                 value={values.taxClearanceDate}
                 errors={errors}
                 touched={touched}
@@ -351,6 +361,7 @@ const StandingList = () => {
             </Grid.Col>
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.NepaliDatePicker
+                isRequired
                 value={values.taxClearanceDateExtendedDate}
                 errors={errors}
                 touched={touched}
@@ -380,6 +391,7 @@ const StandingList = () => {
             </Grid.Col>
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Select
+                isRequired
                 options={provinceList}
                 isLoading={provinceListFetching}
                 calculateValueOnChange
@@ -402,6 +414,7 @@ const StandingList = () => {
             </Grid.Col>
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Select
+                isRequired
                 options={districtList}
                 isLoading={districtListFetching}
                 calculateValueOnChange
@@ -421,6 +434,7 @@ const StandingList = () => {
             </Grid.Col>
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Select
+                isRequired
                 options={localBodyList}
                 isLoading={localBodyListFetching}
                 calculateValueOnChange
@@ -447,6 +461,7 @@ const StandingList = () => {
             </Grid.Col>
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Select
+                isRequired
                 options={wardOption}
                 isLoading={localBodyListFetching}
                 calculateValueOnChange
@@ -463,6 +478,7 @@ const StandingList = () => {
             </Grid.Col>
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Input
+                isRequired
                 value={values.address}
                 errors={errors}
                 touched={touched}

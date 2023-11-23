@@ -50,6 +50,7 @@ const OfficeForm = (props: IOfficeFormProps) => {
       <Grid sm={'sm:grid-cols-12'} gap="gap-4">
         <Grid.Col sm={'sm:col-span-3'}>
           <Form.Input
+            isRequired
             value={values.officeNameEn}
             errors={errors}
             touched={touched}
@@ -61,6 +62,7 @@ const OfficeForm = (props: IOfficeFormProps) => {
         </Grid.Col>
         <Grid.Col sm={'sm:col-span-3'}>
           <Form.Input
+            isRequired
             isNepali
             value={values.officeNameNP}
             errors={errors}
@@ -74,6 +76,7 @@ const OfficeForm = (props: IOfficeFormProps) => {
 
         <Grid.Col sm={'sm:col-span-3'}>
           <Form.Input
+            isRequired
             value={values.addressEn}
             errors={errors}
             touched={touched}
@@ -86,6 +89,7 @@ const OfficeForm = (props: IOfficeFormProps) => {
 
         <Grid.Col sm={'sm:col-span-3'}>
           <Form.Input
+            isRequired
             isNepali
             value={values.addressNp}
             errors={errors}
@@ -99,6 +103,7 @@ const OfficeForm = (props: IOfficeFormProps) => {
 
         <Grid.Col sm={'sm:col-span-3'}>
           <Form.Input
+            isRequired
             value={values.wardNo}
             errors={errors}
             touched={touched}

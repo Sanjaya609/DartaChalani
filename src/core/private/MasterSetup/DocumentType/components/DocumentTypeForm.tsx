@@ -69,6 +69,7 @@ const DocumentTypeForm = (props: IDocumentTypeFormProps) => {
       <Grid sm={'sm:grid-cols-12'} gap="gap-4">
         <Grid.Col sm={'sm:col-span-4'}>
           <Form.Input
+            isRequired
             value={values.documentTypeEn}
             errors={errors}
             touched={touched}
@@ -80,6 +81,7 @@ const DocumentTypeForm = (props: IDocumentTypeFormProps) => {
         </Grid.Col>
         <Grid.Col sm={'sm:col-span-4'}>
           <Form.Input
+            isRequired
             isNepali
             value={values.documentTypeNp}
             errors={errors}
@@ -93,6 +95,7 @@ const DocumentTypeForm = (props: IDocumentTypeFormProps) => {
 
         <Grid.Col sm={'sm:col-span-4'}>
           <Form.Select
+            isRequired
             options={allowedFileTypeOption}
             multiCheckbox
             value={
@@ -118,6 +121,7 @@ const DocumentTypeForm = (props: IDocumentTypeFormProps) => {
 
         <Grid.Col sm={'sm:col-span-2'}>
           <Form.Input
+            isRequired
             value={values.maxFileSize}
             errors={errors}
             touched={touched}

@@ -81,4 +81,5 @@ interface IBaseFormControlProps {
   label?: string
   name?: string
   wrapperClassName?: string
+  isRequired?: boolean
 }

@@ -43,38 +43,32 @@ const ModuleDocumentMappingForm = (props: IModuleDocumentMappingFormProps) => {
     setInitialValues(documentTypeInitialValue)
   }
 
-  const {
-    values,
-    errors,
-    touched,
-    handleChange,
-    handleBlur,
-    handleSubmit,
-    setFieldValue,
-  } = useFormik({
-    initialValues,
-    enableReinitialize: true,
-    validationSchema: documentTypeValidationSchema,
-    onSubmit: (value, { resetForm }) => {
-      mutate(
-        {
-          ...value,
-        },
-        {
-          onSuccess: () => {
-            resetFormValues()
-            resetForm()
+  const { values, errors, touched, handleBlur, handleSubmit, setFieldValue } =
+    useFormik({
+      initialValues,
+      enableReinitialize: true,
+      validationSchema: documentTypeValidationSchema,
+      onSubmit: (value, { resetForm }) => {
+        mutate(
+          {
+            ...value,
           },
-        }
-      )
-    },
-  })
+          {
+            onSuccess: () => {
+              resetFormValues()
+              resetForm()
+            },
+          }
+        )
+      },
+    })
 
   return (
     <form onSubmit={handleSubmit} className="w-full">
       <Grid sm={'sm:grid-cols-12'} gap="gap-4">
         <Grid.Col sm={'sm:col-span-4'}>
           <Form.Select
+            isRequired
             isLoading={moduleNameFetching}
             options={documentModuleNameOption}
             calculateValueOnChange
@@ -92,6 +86,7 @@ const ModuleDocumentMappingForm = (props: IModuleDocumentMappingFormProps) => {
 
         <Grid.Col sm={'sm:col-span-4'}>
           <Form.Select
+            isRequired
             isLoading={documentTypeDataFetching}
             options={documentTypeData}
             calculateValueOnChange
@@ -109,6 +104,7 @@ const ModuleDocumentMappingForm = (props: IModuleDocumentMappingFormProps) => {
 
         <Grid.Col sm={'sm:col-span-2'}>
           <Form.Switch
+            isRequired
             className="inline"
             checked={values.isMandatory}
             errors={errors}

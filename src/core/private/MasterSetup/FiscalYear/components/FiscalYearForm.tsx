@@ -56,6 +56,7 @@ const FiscalYearForm = (props: IFiscalYearFormProps) => {
             label={t('masterSetup.fiscalYear.fiscalYearNameEn')}
             onChange={handleChange}
             onBlur={handleBlur}
+            isRequired
           />
         </Grid.Col>
         <Grid.Col sm={'sm:col-span-3'}>
@@ -68,6 +69,7 @@ const FiscalYearForm = (props: IFiscalYearFormProps) => {
             label={t('masterSetup.fiscalYear.fiscalYearNameNp')}
             onChange={handleChange}
             onBlur={handleBlur}
+            isRequired
           />
         </Grid.Col>
         <Grid.Col sm={'sm:col-span-3'}>
@@ -81,6 +83,7 @@ const FiscalYearForm = (props: IFiscalYearFormProps) => {
               setFieldValue('startDateAd', engDate ? formatDate(engDate) : '')
               setFieldValue('startDateBs', nepDate)
             }}
+            isRequired
           />
         </Grid.Col>
         <Grid.Col sm={'sm:col-span-3'}>
@@ -95,6 +98,7 @@ const FiscalYearForm = (props: IFiscalYearFormProps) => {
               setFieldValue('startDateAd', engDate ? formatDate(engDate) : '')
               setFieldValue('startDateBs', nepDate)
             }}
+            isRequired
           />
         </Grid.Col>
 
@@ -109,6 +113,7 @@ const FiscalYearForm = (props: IFiscalYearFormProps) => {
               setFieldValue('endDateAd', engDate ? formatDate(engDate) : '')
               setFieldValue('endDateBs', nepDate)
             }}
+            isRequired
           />
         </Grid.Col>
         <Grid.Col sm={'sm:col-span-3'}>
@@ -122,6 +127,7 @@ const FiscalYearForm = (props: IFiscalYearFormProps) => {
               setFieldValue('endDateAd', engDate ? formatDate(engDate) : '')
               setFieldValue('endDateBs', nepDate)
             }}
+            isRequired
           />
         </Grid.Col>
       </Grid>

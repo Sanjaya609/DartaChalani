@@ -67,6 +67,7 @@ const UserSetupForm = (props: IUserSetupFormProps) => {
       <Grid sm={'sm:grid-cols-12'} gap="gap-4">
         <Grid.Col sm={'sm:col-span-3'}>
           <Form.Input
+            isRequired
             value={values.fullNameEn}
             errors={errors}
             touched={touched}
@@ -78,6 +79,7 @@ const UserSetupForm = (props: IUserSetupFormProps) => {
         </Grid.Col>
         <Grid.Col sm={'sm:col-span-3'}>
           <Form.Input
+            isRequired
             isNepali
             value={values.fullNameNp}
             errors={errors}
@@ -90,6 +92,7 @@ const UserSetupForm = (props: IUserSetupFormProps) => {
         </Grid.Col>{' '}
         <Grid.Col sm={'sm:col-span-3'}>
           <Form.Input
+            isRequired
             autoComplete="new-email"
             value={values.email}
             errors={errors}
@@ -102,6 +105,7 @@ const UserSetupForm = (props: IUserSetupFormProps) => {
         </Grid.Col>
         <Grid.Col sm={'sm:col-span-3'}>
           <Form.Input
+            isRequired
             value={values.username}
             errors={errors}
             touched={touched}
@@ -114,6 +118,7 @@ const UserSetupForm = (props: IUserSetupFormProps) => {
         {!values?.id && (
           <Grid.Col sm={'sm:col-span-3'}>
             <PasswordInput
+              isRequired
               autoComplete="new-password"
               value={values.password}
               errors={errors}
@@ -127,6 +132,7 @@ const UserSetupForm = (props: IUserSetupFormProps) => {
         )}
         <Grid.Col sm={'sm:col-span-3'}>
           <Form.Select
+            isRequired
             isLoading={roleDataFetching}
             calculateValueOnChange
             value={values.roleId}
