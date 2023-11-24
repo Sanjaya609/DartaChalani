@@ -92,6 +92,9 @@ const UserSetupForm = (props: IUserSetupFormProps) => {
         </Grid.Col>{' '}
         <Grid.Col sm={'sm:col-span-3'}>
           <Form.Input
+            onChange={(e) => {
+              setFieldValue('email', e.target.value.replace(/\s/g, ''))
+            }}
             isRequired
             autoComplete="new-email"
             value={values.email}
@@ -99,7 +102,6 @@ const UserSetupForm = (props: IUserSetupFormProps) => {
             touched={touched}
             name="email"
             label={t('security.userSetup.email')}
-            onChange={handleChange}
             onBlur={handleBlur}
           />
         </Grid.Col>
@@ -111,7 +113,9 @@ const UserSetupForm = (props: IUserSetupFormProps) => {
             touched={touched}
             name="username"
             label={t('security.userSetup.username')}
-            onChange={handleChange}
+            onChange={(e) => {
+              setFieldValue('username', e.target.value.replace(/\s/g, ''))
+            }}
             onBlur={handleBlur}
           />
         </Grid.Col>

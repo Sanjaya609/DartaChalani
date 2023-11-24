@@ -160,6 +160,7 @@ const AddDropDownConfig = () => {
 
                   <Grid.Col sm={'sm:col-span-3'}>
                     <Form.Input
+                      isNepali
                       isRequired
                       value={values.dropDownDescriptionNp}
                       errors={errors}
@@ -283,6 +284,7 @@ const AddDropDownConfig = () => {
 
                                       <Grid.Col sm={'sm:col-span-5'}>
                                         <Form.Input
+                                          isNepali
                                           isRequired
                                           label={t(
                                             'masterSetup.dropdownConfig.descriptionNp'

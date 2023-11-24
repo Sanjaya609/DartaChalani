@@ -118,8 +118,8 @@ const RoleModuleAssignedList = ({
           options={nonAssignedModuleList}
           onChange={(e) => {
             setAssignedModuleListData((prev) => [
-              ...prev,
               e.value as unknown as IModuleSetupTableData,
+              ...prev,
             ])
             setSelectedModule(e.value as unknown as IModuleSetupTableData)
           }}

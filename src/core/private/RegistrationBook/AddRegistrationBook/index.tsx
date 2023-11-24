@@ -1,4 +1,3 @@
-import { ADToBS } from '@/components/functional/Datepicker/dateConverter'
 import DocumentsUpload from '@/components/functional/Documents/DocumentsUpload'
 import { IDocumentPayload } from '@/components/functional/Documents/DocumentsUpload/document-upload.interface'
 import Form from '@/components/functional/Form/Form'
@@ -9,7 +8,7 @@ import toast, {
 import { Box, Button, Grid } from '@/components/ui'
 import ContainerLayout from '@/components/ui/core/Layout/ContainerLayout'
 import { Text } from '@/components/ui/core/Text'
-import { privateRoutePath, useLocation, useNavigate, useParams } from '@/router'
+import { privateRoutePath, useNavigate, useParams } from '@/router'
 import { apiDetails } from '@/service/api'
 import { decodeParams } from '@/utility/route-params'
 import { generateWardOption } from '@/utility/utility'
@@ -18,11 +17,11 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ILocalBodyList } from '../../MasterSetup/Location/schema/location.interface'
 import {
-  useGetAllProvince,
   useGetAllDistrictByProvinceId,
   useGetAllLocalBodyByDistrictId,
+  useGetAllProvince,
 } from '../../MasterSetup/Location/services/location.query'
-import { useGetAllSector } from '../../MasterSetup/Sector/services/sector.query'
+import { useGetAllActiveSector } from '../../MasterSetup/Sector/services/sector.query'
 import {
   IAddRegistrationBookInitialValue,
   IAddRegistrationBookPayload,
@@ -62,7 +61,7 @@ const AddRegistrationBook = () => {
     })
 
   const { data: sectorList = [], isFetching: sectorListFetching } =
-    useGetAllSector<OptionType[]>({
+    useGetAllActiveSector<OptionType[]>({
       mapDatatoStyleSelect: true,
     })
 

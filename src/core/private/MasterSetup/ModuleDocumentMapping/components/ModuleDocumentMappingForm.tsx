@@ -1,12 +1,9 @@
 import Form from '@/components/functional/Form/Form'
 import { Box, Button, Grid } from '@/components/ui'
 import { useGetConfigurableModuleList } from '@/core/private/Security/ModuleSetup/services/moduleSetup.query'
-import { useGetEnumDataWithValue } from '@/service/generic/generic.query'
-import { APIENUM } from '@/utility/enums/api.enum'
-import { inputChangeNumberOnly } from '@/utility/inputUtils/input-change-utils'
 import { useFormik } from 'formik'
 import { useTranslation } from 'react-i18next'
-import { useGetAllDocumentType } from '../../DocumentType/services/document-type.query'
+import { useGetAllActiveDocumentList } from '../../DocumentType/services/document-type.query'
 import { IModuleDocumentMappingInitialValue } from '../schema/module-document-mapping.interface'
 import {
   documentTypeInitialValue,
@@ -33,7 +30,7 @@ const ModuleDocumentMappingForm = (props: IModuleDocumentMappingFormProps) => {
   })
 
   const { data: documentTypeData = [], isFetching: documentTypeDataFetching } =
-    useGetAllDocumentType<OptionType[]>({
+    useGetAllActiveDocumentList<OptionType[]>({
       mapDatatoStyleSelect: true,
     })
 

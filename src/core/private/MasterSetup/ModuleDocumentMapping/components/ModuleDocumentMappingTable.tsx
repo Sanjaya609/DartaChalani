@@ -72,14 +72,6 @@ const ModuleDocumentMappingTable = (
   const columns = React.useMemo<ColumnDef<IModuleDocumentMappingResponse>[]>(
     () => [
       {
-        header: t('masterSetup.documentType.documentTypeEn'),
-        accessorKey: 'documentTypeResponse.documentTypeEn',
-      },
-      {
-        header: t('masterSetup.documentType.documentTypeNp'),
-        accessorKey: 'documentTypeResponse.documentTypeNp',
-      },
-      {
         header: t('security.module.moduleNameEnglish'),
         accessorKey: 'moduleResponse.moduleNameEnglish',
       },
@@ -87,6 +79,15 @@ const ModuleDocumentMappingTable = (
         header: t('security.module.moduleNameNepali'),
         accessorKey: 'moduleResponse.moduleNameNepali',
       },
+      {
+        header: t('masterSetup.documentType.documentTypeEn'),
+        accessorKey: 'documentTypeResponse.documentTypeEn',
+      },
+      {
+        header: t('masterSetup.documentType.documentTypeNp'),
+        accessorKey: 'documentTypeResponse.documentTypeNp',
+      },
+
       {
         header: t('masterSetup.documentType.isMandatory'),
         accessorKey: 'isMandatory',

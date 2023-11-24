@@ -7,7 +7,8 @@ import {
   ISectorResponse,
 } from '../schema/sector.interface'
 
-const { createSector, getAllSector, changeSectorStatus } = apiDetails
+const { createSector, getAllSector, changeSectorStatus, getAllActiveSector } =
+  apiDetails
 
 const useCreateSector = () => {
   const queryClient = useQueryClient()
@@ -37,16 +38,43 @@ const useGetAllSector = <T = ISectorResponse[]>(
       }),
     {
       select: (data) => {
-        const fiscalYearData = data?.data?.data?.length ? data.data.data : []
+        const sectorData = data?.data?.data?.length ? data.data.data : []
         return (
           getDataWithPropsValue?.mapDatatoStyleSelect
             ? mapDataToStyledSelect({
-                arrayData: fiscalYearData,
+                arrayData: sectorData,
                 id: 'id',
                 name: 'subSectorNameEnglish',
                 nameNp: 'subSectorNameNepali',
               })
-            : fiscalYearData
+            : sectorData
+        ) as T
+      },
+    }
+  )
+}
+
+const useGetAllActiveSector = <T = ISectorResponse[]>(
+  getDataWithPropsValue?: IGetDataWithPropsVal
+) => {
+  return useQuery(
+    [getAllActiveSector.controllerName],
+    () =>
+      initApiRequest<BackendSuccessResponse<ISectorResponse[]>>({
+        apiDetails: getAllActiveSector,
+      }),
+    {
+      select: (data) => {
+        const sectorData = data?.data?.data?.length ? data.data.data : []
+        return (
+          getDataWithPropsValue?.mapDatatoStyleSelect
+            ? mapDataToStyledSelect({
+                arrayData: sectorData,
+                id: 'id',
+                name: 'subSectorNameEnglish',
+                nameNp: 'subSectorNameNepali',
+              })
+            : sectorData
         ) as T
       },
     }
@@ -70,4 +98,9 @@ const useChangeSectorStatus = () => {
   )
 }
 
-export { useChangeSectorStatus, useCreateSector, useGetAllSector }
+export {
+  useChangeSectorStatus,
+  useCreateSector,
+  useGetAllSector,
+  useGetAllActiveSector,
+}
