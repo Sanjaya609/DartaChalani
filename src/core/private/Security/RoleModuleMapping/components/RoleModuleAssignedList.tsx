@@ -70,7 +70,7 @@ const RoleModuleAssignedList = ({
             ?.map((assignList) => +assignList.id)
             .includes(+module.value)
       ),
-    [assignedModuleListData]
+    [assignedModuleListData, moduleList]
   )
 
   const setOrRemoveCurrentSelectedId = (id?: number) =>

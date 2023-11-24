@@ -41,7 +41,7 @@ const RoleModuleResourceList = ({
   })
 
   const handleRoleMappingCreateDelete = (
-    showModuleOnMenu: boolean,
+    showModuleOnMenu: boolean | undefined,
     refetchResourceList = true,
     resource?: IResourceRequestList
   ) => {
@@ -56,13 +56,17 @@ const RoleModuleResourceList = ({
     }
   }
 
-  const deleteRoleMappingCreateDelete = (resource: IResourceRequestList) => {
+  const deleteRoleMappingCreateDelete = (
+    resource: IResourceRequestList,
+    removeModuleAlso: boolean
+  ) => {
     if (roleData?.id && selectedModule?.id) {
       deleteRoleMapping({
         moduleId: +selectedModule.id,
         roleId: roleData?.id,
-        removeModuleAlso: true,
+        removeModuleAlso: !!removeModuleAlso,
         resourceId: resource.id,
+        refetchModuleList: removeModuleAlso,
       })
     }
   }
@@ -105,44 +109,56 @@ const RoleModuleResourceList = ({
                   <FallbackLoader />
                 ) : resourceListByModuleAndRole?.length ? (
                   <Grid gap={'gap-4'} sm={'sm:grid-cols-12'} className="w-full">
-                    {resourceListByModuleAndRole?.map((resource) => (
-                      <Grid.Col
-                        sm="sm:col-span-4"
-                        className="h-full"
-                        key={`${resource.id}-${selectedModule?.id}`}
-                      >
-                        <Card
-                          borderColor="border-gray-96"
-                          bordered
-                          className="h-full"
-                        >
-                          <Flexbox justify="space-between" align="center">
-                            <Text
-                              variant="h6"
-                              typeface="semibold"
-                              className="mr-2"
+                    {resourceListByModuleAndRole?.map(
+                      (resource, index, allResource) => {
+                        const isOnlyLastResourceActiveResourceRemaining =
+                          allResource.filter(
+                            (resource) => !!resource.isAssignedToRole
+                          ).length === 1
+                        return (
+                          <Grid.Col
+                            sm="sm:col-span-4"
+                            className="h-full"
+                            key={`${resource.id}-${selectedModule?.id}`}
+                          >
+                            <Card
+                              borderColor="border-gray-96"
+                              bordered
+                              className="h-full"
                             >
-                              {resource.resourceName}
-                            </Text>
-                            <Switch
-                              checked={!!resource.isAssignedToRole}
-                              size={5}
-                              onChange={() => {
-                                if (!resource.isAssignedToRole) {
-                                  handleRoleMappingCreateDelete(
-                                    !resource.isAssignedToRole,
-                                    true,
-                                    resource
-                                  )
-                                } else {
-                                  deleteRoleMappingCreateDelete(resource)
-                                }
-                              }}
-                            />
-                          </Flexbox>
-                        </Card>
-                      </Grid.Col>
-                    ))}
+                              <Flexbox justify="space-between" align="center">
+                                <Text
+                                  variant="h6"
+                                  typeface="semibold"
+                                  className="mr-2"
+                                >
+                                  {resource.resourceName}
+                                </Text>
+                                <Switch
+                                  checked={!!resource.isAssignedToRole}
+                                  size={5}
+                                  onChange={() => {
+                                    if (!resource.isAssignedToRole) {
+                                      handleRoleMappingCreateDelete(
+                                        selectedModule?.showModuleOnMenu ||
+                                          undefined,
+                                        true,
+                                        resource
+                                      )
+                                    } else {
+                                      deleteRoleMappingCreateDelete(
+                                        resource,
+                                        isOnlyLastResourceActiveResourceRemaining
+                                      )
+                                    }
+                                  }}
+                                />
+                              </Flexbox>
+                            </Card>
+                          </Grid.Col>
+                        )
+                      }
+                    )}
                   </Grid>
                 ) : (
                   <>{t('security.roleModuleMapping.noResourceList')}</>
