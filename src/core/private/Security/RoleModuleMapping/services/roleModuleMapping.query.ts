@@ -92,14 +92,14 @@ const useDeleteRoleMapping = ({
 }) => {
   const queryClient = useQueryClient()
   return useMutation(
-    (params: IRoleMappingDelete) => {
+    ({ refetchModuleList, ...params }: IRoleMappingDelete) => {
       return initApiRequest({
         apiDetails: deleteRoleMapping,
         params: { ...params },
       })
     },
     {
-      onSuccess: () => {
+      onSuccess: (data, variables) => {
         if (invalidateAssignedModule) {
           queryClient.invalidateQueries([
             getAssignedModulesForRole.queryKeyName,
@@ -108,6 +108,11 @@ const useDeleteRoleMapping = ({
         if (invalidateResourceList) {
           queryClient.invalidateQueries([
             getResourceListByModuleAndRole.queryKeyName,
+          ])
+        }
+        if (variables?.refetchModuleList) {
+          queryClient.invalidateQueries([
+            getAssignedModulesForRole.queryKeyName,
           ])
         }
       },

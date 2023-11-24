@@ -2,7 +2,7 @@ export interface IRoleMappingCreate {
   moduleId: number
   resourceId?: number | null
   roleId: number
-  showModuleOnMenu: boolean
+  showModuleOnMenu?: boolean
   refetchResourceList?: boolean
 }
 
@@ -11,4 +11,5 @@ export interface IRoleMappingDelete {
   removeModuleAlso: boolean
   resourceId?: StringNumber
   roleId: StringNumber
+  refetchModuleList?: boolean
 }
