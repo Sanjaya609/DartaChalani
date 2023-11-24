@@ -40,6 +40,7 @@ const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
     wrapperClassName,
     isNepali,
     onChange,
+    isRequired,
     ...rest
   } = props
   const showError = getErrorStatus({
@@ -74,6 +75,7 @@ const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
       id={id}
       label={label}
       className={wrapperClassName}
+      isRequired={isRequired}
     >
       <span className={computedInputWrapperClass}>
         {leftIcon && (

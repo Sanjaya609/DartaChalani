@@ -18,6 +18,7 @@ const FormSelect = (props: ISelectInputProps) => {
     errorClassName,
     labelClassName,
     wrapperClassName,
+    isRequired,
     ...restProps
   } = props
   const showError = getErrorStatus({
@@ -39,6 +40,7 @@ const FormSelect = (props: ISelectInputProps) => {
       id={id}
       label={label}
       className={wrapperClassName}
+      isRequired={isRequired}
     >
       <Select
         {...restProps}

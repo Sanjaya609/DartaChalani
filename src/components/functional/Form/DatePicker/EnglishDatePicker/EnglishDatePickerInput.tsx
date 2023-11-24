@@ -35,6 +35,7 @@ function EnglishDatePickerInput(props: IFormEnglishDatepicker) {
     isFieldArray,
     value,
     wrapperClassName,
+    isRequired,
     ...datePickerProps
   } = props
 
@@ -57,6 +58,7 @@ function EnglishDatePickerInput(props: IFormEnglishDatepicker) {
       id={id}
       label={label}
       className={wrapperClassName}
+      isRequired={isRequired}
     >
       <EnglishDatePicker
         {...datePickerProps}

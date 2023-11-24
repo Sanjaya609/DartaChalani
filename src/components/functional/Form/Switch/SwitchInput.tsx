@@ -21,6 +21,7 @@ const SwitchInput = forwardRef<HTMLInputElement, ISwitchInputProps>(
       labelClassName,
       className,
       wrapperClassName,
+      isRequired,
       ...rest
     } = props
     const showError = getErrorStatus({
@@ -42,6 +43,7 @@ const SwitchInput = forwardRef<HTMLInputElement, ISwitchInputProps>(
         id={id}
         label={label}
         className={wrapperClassName}
+        isRequired={isRequired}
       >
         <Switch {...rest} ref={ref} />
       </FormWrapper>

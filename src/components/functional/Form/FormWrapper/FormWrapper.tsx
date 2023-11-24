@@ -25,13 +25,19 @@ const FormWrapper = (props: IFormWrapperProps) => {
     errorClassName,
     touched,
     className,
+    isRequired,
   } = props
 
   const computedClassName = getComputedClassNames(className)
 
   return (
     <div className={computedClassName}>
-      <Label id={id} className={labelClassName} label={label} />
+      <Label
+        id={id}
+        className={labelClassName}
+        label={label}
+        isRequired={isRequired}
+      />
       {children}
       {showError && name ? (
         isFieldArray ? (

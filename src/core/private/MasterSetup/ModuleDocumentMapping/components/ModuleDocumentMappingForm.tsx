@@ -1,12 +1,9 @@
 import Form from '@/components/functional/Form/Form'
 import { Box, Button, Grid } from '@/components/ui'
 import { useGetConfigurableModuleList } from '@/core/private/Security/ModuleSetup/services/moduleSetup.query'
-import { useGetEnumDataWithValue } from '@/service/generic/generic.query'
-import { APIENUM } from '@/utility/enums/api.enum'
-import { inputChangeNumberOnly } from '@/utility/inputUtils/input-change-utils'
 import { useFormik } from 'formik'
 import { useTranslation } from 'react-i18next'
-import { useGetAllDocumentType } from '../../DocumentType/services/document-type.query'
+import { useGetAllActiveDocumentList } from '../../DocumentType/services/document-type.query'
 import { IModuleDocumentMappingInitialValue } from '../schema/module-document-mapping.interface'
 import {
   documentTypeInitialValue,
@@ -33,7 +30,7 @@ const ModuleDocumentMappingForm = (props: IModuleDocumentMappingFormProps) => {
   })
 
   const { data: documentTypeData = [], isFetching: documentTypeDataFetching } =
-    useGetAllDocumentType<OptionType[]>({
+    useGetAllActiveDocumentList<OptionType[]>({
       mapDatatoStyleSelect: true,
     })
 
@@ -43,38 +40,32 @@ const ModuleDocumentMappingForm = (props: IModuleDocumentMappingFormProps) => {
     setInitialValues(documentTypeInitialValue)
   }
 
-  const {
-    values,
-    errors,
-    touched,
-    handleChange,
-    handleBlur,
-    handleSubmit,
-    setFieldValue,
-  } = useFormik({
-    initialValues,
-    enableReinitialize: true,
-    validationSchema: documentTypeValidationSchema,
-    onSubmit: (value, { resetForm }) => {
-      mutate(
-        {
-          ...value,
-        },
-        {
-          onSuccess: () => {
-            resetFormValues()
-            resetForm()
+  const { values, errors, touched, handleBlur, handleSubmit, setFieldValue } =
+    useFormik({
+      initialValues,
+      enableReinitialize: true,
+      validationSchema: documentTypeValidationSchema,
+      onSubmit: (value, { resetForm }) => {
+        mutate(
+          {
+            ...value,
           },
-        }
-      )
-    },
-  })
+          {
+            onSuccess: () => {
+              resetFormValues()
+              resetForm()
+            },
+          }
+        )
+      },
+    })
 
   return (
     <form onSubmit={handleSubmit} className="w-full">
       <Grid sm={'sm:grid-cols-12'} gap="gap-4">
         <Grid.Col sm={'sm:col-span-4'}>
           <Form.Select
+            isRequired
             isLoading={moduleNameFetching}
             options={documentModuleNameOption}
             calculateValueOnChange
@@ -92,6 +83,7 @@ const ModuleDocumentMappingForm = (props: IModuleDocumentMappingFormProps) => {
 
         <Grid.Col sm={'sm:col-span-4'}>
           <Form.Select
+            isRequired
             isLoading={documentTypeDataFetching}
             options={documentTypeData}
             calculateValueOnChange
@@ -109,6 +101,7 @@ const ModuleDocumentMappingForm = (props: IModuleDocumentMappingFormProps) => {
 
         <Grid.Col sm={'sm:col-span-2'}>
           <Form.Switch
+            isRequired
             className="inline"
             checked={values.isMandatory}
             errors={errors}

@@ -60,6 +60,7 @@ const EmailForm = () => {
                   <Grid sm={'sm:grid-cols-12'} gap="gap-4">
                     <Grid.Col sm={'sm:col-span-3'}>
                       <Form.Input
+                        isRequired
                         autoComplete="new-email"
                         value={values.email}
                         errors={errors}
@@ -72,6 +73,7 @@ const EmailForm = () => {
                     </Grid.Col>
                     <Grid.Col sm={'sm:col-span-3'}>
                       <PasswordInput
+                        isRequired
                         autoComplete="new-password"
                         value={values.password}
                         errors={errors}
@@ -85,6 +87,7 @@ const EmailForm = () => {
 
                     <Grid.Col sm={'sm:col-span-3'}>
                       <Form.Input
+                        isRequired
                         value={values.host}
                         errors={errors}
                         touched={touched}
@@ -97,6 +100,7 @@ const EmailForm = () => {
 
                     <Grid.Col sm={'sm:col-span-3'}>
                       <Form.Input
+                        isRequired
                         value={values.port}
                         errors={errors}
                         touched={touched}
@@ -123,11 +127,11 @@ const EmailForm = () => {
                       />
                       <Grid sm={'sm:grid-cols-12'} gap="gap-4">
                         <Grid.Col sm={'sm:col-span-3'}>
-                          <Label label={t('security.email.key')} />
+                          <Label label={t('security.email.key')} isRequired />
                         </Grid.Col>
 
                         <Grid.Col sm={'sm:col-span-3'}>
-                          <Label label={t('security.email.value')} />
+                          <Label label={t('security.email.value')} isRequired />
                         </Grid.Col>
                       </Grid>
 

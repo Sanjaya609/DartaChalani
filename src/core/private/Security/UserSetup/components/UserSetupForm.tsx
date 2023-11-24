@@ -67,6 +67,7 @@ const UserSetupForm = (props: IUserSetupFormProps) => {
       <Grid sm={'sm:grid-cols-12'} gap="gap-4">
         <Grid.Col sm={'sm:col-span-3'}>
           <Form.Input
+            isRequired
             value={values.fullNameEn}
             errors={errors}
             touched={touched}
@@ -78,6 +79,7 @@ const UserSetupForm = (props: IUserSetupFormProps) => {
         </Grid.Col>
         <Grid.Col sm={'sm:col-span-3'}>
           <Form.Input
+            isRequired
             isNepali
             value={values.fullNameNp}
             errors={errors}
@@ -90,30 +92,37 @@ const UserSetupForm = (props: IUserSetupFormProps) => {
         </Grid.Col>{' '}
         <Grid.Col sm={'sm:col-span-3'}>
           <Form.Input
+            onChange={(e) => {
+              setFieldValue('email', e.target.value.replace(/\s/g, ''))
+            }}
+            isRequired
             autoComplete="new-email"
             value={values.email}
             errors={errors}
             touched={touched}
             name="email"
             label={t('security.userSetup.email')}
-            onChange={handleChange}
             onBlur={handleBlur}
           />
         </Grid.Col>
         <Grid.Col sm={'sm:col-span-3'}>
           <Form.Input
+            isRequired
             value={values.username}
             errors={errors}
             touched={touched}
             name="username"
             label={t('security.userSetup.username')}
-            onChange={handleChange}
+            onChange={(e) => {
+              setFieldValue('username', e.target.value.replace(/\s/g, ''))
+            }}
             onBlur={handleBlur}
           />
         </Grid.Col>
         {!values?.id && (
           <Grid.Col sm={'sm:col-span-3'}>
             <PasswordInput
+              isRequired
               autoComplete="new-password"
               value={values.password}
               errors={errors}
@@ -127,6 +136,7 @@ const UserSetupForm = (props: IUserSetupFormProps) => {
         )}
         <Grid.Col sm={'sm:col-span-3'}>
           <Form.Select
+            isRequired
             isLoading={roleDataFetching}
             calculateValueOnChange
             value={values.roleId}

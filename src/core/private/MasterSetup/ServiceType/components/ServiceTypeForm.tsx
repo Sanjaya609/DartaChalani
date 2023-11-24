@@ -39,6 +39,7 @@ const ServiceType = (props: IServiceTypeProps) => {
       <Grid sm={'sm:grid-cols-12'} gap="gap-4">
         <Grid.Col sm={'sm:col-span-4'}>
           <Form.Input
+            isRequired
             value={values.nameEn}
             errors={errors}
             touched={touched}
@@ -50,6 +51,7 @@ const ServiceType = (props: IServiceTypeProps) => {
         </Grid.Col>
         <Grid.Col sm={'sm:col-span-4'}>
           <Form.Input
+            isRequired
             isNepali
             value={values.nameNp}
             errors={errors}

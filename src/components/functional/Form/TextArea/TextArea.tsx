@@ -22,6 +22,7 @@ const TextArea = forwardRef<HTMLTextAreaElement, IInputProps>((props, ref) => {
     labelClassName,
     className,
     wrapperClassName,
+    isRequired,
     ...rest
   } = props
   const showError = getErrorStatus({
@@ -50,6 +51,7 @@ const TextArea = forwardRef<HTMLTextAreaElement, IInputProps>((props, ref) => {
       id={id}
       label={label}
       className={wrapperClassName}
+      isRequired={isRequired}
     >
       <textarea
         className={computedClassName}

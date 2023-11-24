@@ -51,6 +51,7 @@ const SectorForm = (props: ISectorFormProps) => {
       <Grid sm={'sm:grid-cols-12'} gap="gap-4">
         <Grid.Col sm={'sm:col-span-4'}>
           <Form.Input
+            isRequired
             value={values.sectorNameEnglish}
             errors={errors}
             touched={touched}
@@ -62,6 +63,7 @@ const SectorForm = (props: ISectorFormProps) => {
         </Grid.Col>
         <Grid.Col sm={'sm:col-span-4'}>
           <Form.Input
+            isRequired
             isNepali
             value={values.sectorNameNepali}
             errors={errors}
@@ -75,6 +77,7 @@ const SectorForm = (props: ISectorFormProps) => {
 
         <Grid.Col sm={'sm:col-span-4'}>
           <Form.Input
+            isRequired
             value={values.orderNumber}
             errors={errors}
             touched={touched}

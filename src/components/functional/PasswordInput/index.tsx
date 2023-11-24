@@ -14,6 +14,7 @@ const PasswordInput = (props: IPasswordInput) => {
     wrapperClassName = 'mb-4',
     id = 'password',
     label = t('form.password'),
+    isRequired,
     ...restProps
   } = props
   const { value: showPassword, toggle: toggleShowPassword } = useBoolean(false)
@@ -32,6 +33,7 @@ const PasswordInput = (props: IPasswordInput) => {
           className="mr-2 cursor-pointer"
         />
       }
+      isRequired={isRequired}
     />
   )
 }

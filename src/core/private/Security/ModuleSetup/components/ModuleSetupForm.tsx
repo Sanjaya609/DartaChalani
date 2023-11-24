@@ -146,6 +146,7 @@ const ModuleSetupForm = ({
                 </Grid.Col>
                 <Grid.Col sm={'sm:col-span-1'}>
                   <Form.Input
+                    isRequired
                     value={values.code}
                     errors={errors}
                     touched={touched}
@@ -157,6 +158,7 @@ const ModuleSetupForm = ({
                 </Grid.Col>
                 <Grid.Col sm={'sm:col-span-4'}>
                   <Form.Input
+                    isRequired
                     value={values.moduleNameEnglish}
                     errors={errors}
                     touched={touched}
@@ -168,6 +170,7 @@ const ModuleSetupForm = ({
                 </Grid.Col>
                 <Grid.Col sm={'sm:col-span-4'}>
                   <Form.Input
+                    isRequired
                     isNepali
                     value={values.moduleNameNepali}
                     errors={errors}
@@ -181,6 +184,7 @@ const ModuleSetupForm = ({
 
                 <Grid.Col sm={'sm:col-span-3'}>
                   <Form.Input
+                    isRequired
                     value={values.url}
                     errors={errors}
                     touched={touched}
@@ -193,6 +197,7 @@ const ModuleSetupForm = ({
 
                 <Grid.Col sm={'sm:col-span-1'}>
                   <Form.Input
+                    isRequired
                     value={values.orderNumber}
                     errors={errors}
                     touched={touched}
@@ -210,6 +215,7 @@ const ModuleSetupForm = ({
 
                 <Grid.Col sm={'sm:col-span-4'}>
                   <Form.Input
+                    isRequired
                     value={values.description}
                     errors={errors}
                     touched={touched}
@@ -222,6 +228,7 @@ const ModuleSetupForm = ({
 
                 <Grid.Col sm={'sm:col-span-2'}>
                   <Form.Switch
+                    isRequired
                     className="inline"
                     checked={values.isConfigurable}
                     errors={errors}
@@ -238,6 +245,7 @@ const ModuleSetupForm = ({
                 {values?.isConfigurable && (
                   <Grid.Col sm="sm:col-span-12">
                     <Label
+                      isRequired
                       label={
                         <Text typeface="semibold" className="mb-3">
                           {t('security.module.resource')}
@@ -248,6 +256,7 @@ const ModuleSetupForm = ({
                     <Grid sm={'sm:grid-cols-12'} gap="gap-4">
                       <Grid.Col sm={'sm:col-span-3'}>
                         <Label
+                          isRequired
                           label={t(
                             'security.module.resourceRequestList.resourceName'
                           )}
@@ -255,12 +264,14 @@ const ModuleSetupForm = ({
                       </Grid.Col>
                       <Grid.Col sm={'sm:col-span-3'}>
                         <Label
+                          isRequired
                           label={t('security.module.resourceRequestList.url')}
                         />
                       </Grid.Col>
 
                       <Grid.Col sm={'sm:col-span-2'}>
                         <Label
+                          isRequired
                           label={t(
                             'security.module.resourceRequestList.httpMethod'
                           )}
@@ -269,6 +280,7 @@ const ModuleSetupForm = ({
 
                       <Grid.Col sm={'sm:col-span-2'}>
                         <Label
+                          isRequired
                           label={t(
                             'security.module.resourceRequestList.privilege'
                           )}

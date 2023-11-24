@@ -13,6 +13,11 @@ const sectorAPI = {
     queryKeyName: 'GET_ALL_SECTOR',
     requestMethod: RequestMethod.GET,
   },
+  getAllActiveSector: {
+    controllerName: `${prefix}/list/active`,
+    queryKeyName: 'GET_ALL_ACTIVE_SECTOR',
+    requestMethod: RequestMethod.GET,
+  },
   changeSectorStatus: {
     controllerName: `${prefix}/{sectorId}`,
     queryKeyName: 'CHANGE_SECTOR_STATUS',

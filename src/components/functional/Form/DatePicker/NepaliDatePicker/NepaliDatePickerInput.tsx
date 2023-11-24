@@ -39,6 +39,7 @@ function NepaliDatePickerInput(props: IFormNepaliDatepicker) {
     className,
     onBlur,
     readOnly,
+    isRequired,
   } = props
 
   const showError = getErrorStatus({
@@ -76,6 +77,7 @@ function NepaliDatePickerInput(props: IFormNepaliDatepicker) {
       id={id}
       label={label}
       className={wrapperClassName}
+      isRequired={isRequired}
     >
       <NepaliDatepicker
         readOnly={readOnly}

@@ -145,6 +145,7 @@ const AddDropDownConfig = () => {
                 <Grid sm={'sm:grid-cols-12'} gap="gap-4">
                   <Grid.Col sm={'sm:col-span-3'}>
                     <Form.Input
+                      isRequired
                       value={values.dropDownDescriptionEn}
                       errors={errors}
                       touched={touched}
@@ -159,6 +160,8 @@ const AddDropDownConfig = () => {
 
                   <Grid.Col sm={'sm:col-span-3'}>
                     <Form.Input
+                      isNepali
+                      isRequired
                       value={values.dropDownDescriptionNp}
                       errors={errors}
                       touched={touched}
@@ -254,6 +257,7 @@ const AddDropDownConfig = () => {
                                     >
                                       <Grid.Col sm={'sm:col-span-5'}>
                                         <Form.Input
+                                          isRequired
                                           label={t(
                                             'masterSetup.dropdownConfig.descriptionEn'
                                           )}
@@ -280,6 +284,8 @@ const AddDropDownConfig = () => {
 
                                       <Grid.Col sm={'sm:col-span-5'}>
                                         <Form.Input
+                                          isNepali
+                                          isRequired
                                           label={t(
                                             'masterSetup.dropdownConfig.descriptionNp'
                                           )}

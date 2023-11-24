@@ -28,6 +28,7 @@ const Radio = (props: IRadioProps) => {
     radioInputWrapperClassName,
     radioLabelClassName,
     wrapperClassName,
+    isRequired,
     ...restProps
   } = props
 
@@ -55,6 +56,7 @@ const Radio = (props: IRadioProps) => {
         labelClassName={labelClassName}
         label={label}
         className={wrapperClassName}
+        isRequired={isRequired}
       >
         <Box className={computedRadioInputWrapperClassName}>
           {options.map((option, index) => {
