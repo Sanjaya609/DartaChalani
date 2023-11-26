@@ -8,6 +8,8 @@ import toast, {
 import { Box, Button, Grid } from '@/components/ui'
 import ContainerLayout from '@/components/ui/core/Layout/ContainerLayout'
 import { Text } from '@/components/ui/core/Text'
+import { getTextByLanguage } from '@/lib/i18n/i18n'
+import { useAuth } from '@/providers'
 import { privateRoutePath, useNavigate, useParams } from '@/router'
 import { apiDetails } from '@/service/api'
 import { decodeParams } from '@/utility/route-params'
@@ -32,13 +34,19 @@ import {
 import {
   useCreateDispatchBook,
   useGetDispatchBookDetailById,
+  useGetDispatchNumberByFiscalYearId,
 } from './services/add-dispatch-book.query'
 
 const AddRegistrationBook = () => {
   const { t } = useTranslation()
   const [wardOption, setWardOption] = useState<OptionType[]>([])
+  const { initData } = useAuth()
+
   const [initialRegistrationBookValue, setInitialRegistrationBookValue] =
-    useState(addDispatchBookInitialValues)
+    useState<IAddDispatchBookInitialValue>({
+      ...addDispatchBookInitialValues,
+      dispatchNumber: initData?.currentFiscalYear?.id || '',
+    })
   const [isAllRequiredDocumentUploaded, setIsAllRequiredDocumentUploaded] =
     useState(false)
   const [uploadedDocumentData, setUploadedDocumentData] = useState<
@@ -58,6 +66,11 @@ const AddRegistrationBook = () => {
     useGetAllProvince<OptionType[]>({
       mapDatatoStyleSelect: true,
     })
+
+  useGetDispatchNumberByFiscalYearId(
+    !dispatchBookId ? initData?.currentFiscalYear.id || '' : '',
+    setInitialRegistrationBookValue
+  )
 
   useEffect(() => {
     if (dispatchBookDetails) {
@@ -115,7 +128,7 @@ const AddRegistrationBook = () => {
     if (!isAllRequiredDocumentUploaded) {
       return toast({
         type: ToastType.error,
-        message: 'Please upload all required documents.',
+        message: t('document.uploadAllDoc'),
       })
     }
 
@@ -217,13 +230,14 @@ const AddRegistrationBook = () => {
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Input
                 isRequired
-                value={values.dispatchNumber}
+                value={values?.dispatchNumber}
                 errors={errors}
                 touched={touched}
                 name="dispatchNumber"
                 label={t('dispatchBook.dispatchNumber')}
-                onChange={handleChange}
+                // onChange={handleChange}
                 onBlur={handleBlur}
+                disabled
               />
             </Grid.Col>
 
@@ -235,13 +249,14 @@ const AddRegistrationBook = () => {
 
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Input
-                isRequired
                 value={values.letterNumber}
                 errors={errors}
                 touched={touched}
                 name="letterNumber"
                 label={t('dispatchBook.letterNumber')}
-                onChange={handleChange}
+                disabled
+                isRequired
+                // onChange={handleChange}
                 onBlur={handleBlur}
               />
             </Grid.Col>

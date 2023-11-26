@@ -9,7 +9,8 @@
     "build:staging": "tsc && env-cmd -e staging vite build",
     "preview": "vite preview",
     "test": "env-cmd -e test vitest --ui",
-    "coverage": "vitest --coverage"
+    "coverage": "vitest --coverage",
+    "local": "env-cmd -e local vite --mode development --host"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",

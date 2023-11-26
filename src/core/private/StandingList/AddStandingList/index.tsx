@@ -124,7 +124,7 @@ const StandingList = () => {
     if (!isAllRequiredDocumentUploaded) {
       return toast({
         type: ToastType.error,
-        message: 'Please upload all required documents.',
+        message: t('document.uploadAllDoc'),
       })
     }
 

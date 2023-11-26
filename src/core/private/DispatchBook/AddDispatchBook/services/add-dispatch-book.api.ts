@@ -33,6 +33,11 @@ const dispatchBookAPI = {
     queryKeyName: 'DELETE_DISPATCH_BOOK_BY_ID',
     requestMethod: RequestMethod.DELETE,
   },
+  getDispatchNumberByFiscalYearId: {
+    controllerName: `${prefix}/dispatch-number/{fiscalYearId}`,
+    queryKeyName: 'GET_DISPATCH_NUMBER_BY_FISCAL_YEAR_ID',
+    requestMethod: RequestMethod.GET,
+  },
 }
 
 export default dispatchBookAPI
