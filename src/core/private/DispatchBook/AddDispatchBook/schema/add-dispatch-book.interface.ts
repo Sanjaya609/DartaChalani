@@ -2,8 +2,8 @@ import { IDocumentResponse } from '@/shared/shared.interface'
 
 export interface IAddDispatchBookInitialValue {
   id?: number
-  letterNumber: string
-  dispatchNumber: string
+  letterNumber: string | number
+  dispatchNumber: string | number
   letterDate: string
   subjectOfLetter: string
   letterReceiverName: string

@@ -1,7 +1,9 @@
 import { initApiRequest } from '@/lib/api-request'
 import { apiDetails } from '@/service/api'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { Dispatch, SetStateAction } from 'react'
 import {
+  IAddDispatchBookInitialValue,
   IAddDispatchBookPayload,
   IDispatchBookResponse,
 } from '../schema/add-dispatch-book.interface'
@@ -11,6 +13,7 @@ const {
   getAllDispatchBook,
   getDispatchBookById,
   deleteDispatchBook,
+  getDispatchNumberByFiscalYearId,
 } = apiDetails
 
 const useCreateDispatchBook = () => {
@@ -84,9 +87,40 @@ const useDeleteDispatchBookById = () => {
   )
 }
 
+const useGetDispatchNumberByFiscalYearId = (
+  fiscalYearId: string | number | null,
+  setInitialRegistrationBookValue: Dispatch<
+    SetStateAction<IAddDispatchBookInitialValue>
+  >
+) => {
+  return useQuery(
+    [getDispatchNumberByFiscalYearId.controllerName, fiscalYearId],
+    () =>
+      initApiRequest<BackendSuccessResponse<number>>({
+        apiDetails: getDispatchNumberByFiscalYearId,
+        pathVariables: {
+          fiscalYearId,
+        },
+      }),
+    {
+      select: (data) => {
+        return data?.data?.data
+      },
+      enabled: !!fiscalYearId,
+      onSuccess: (data) => {
+        setInitialRegistrationBookValue((prevVal) => ({
+          ...prevVal,
+          letterNumber: data || '',
+        }))
+      },
+    }
+  )
+}
+
 export {
   useCreateDispatchBook,
   useGetAllDispatchBook,
   useGetDispatchBookDetailById,
   useDeleteDispatchBookById,
+  useGetDispatchNumberByFiscalYearId,
 }
