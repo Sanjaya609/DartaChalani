@@ -200,6 +200,8 @@ const NormalDataTable = <TData extends RowData>({
           addHeaderProps={addHeaderProps}
           customAddFilter={customAddFilter}
           customTableFilter={customTableFilter}
+          searchValue={globalFilter}
+          setSearchValue={setGlobalFilter}
         />
       )}
 

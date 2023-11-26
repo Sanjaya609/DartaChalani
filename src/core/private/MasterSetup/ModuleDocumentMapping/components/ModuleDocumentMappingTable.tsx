@@ -127,6 +127,7 @@ const ModuleDocumentMappingTable = (
         isLoading={isFetching}
         columns={columns}
         data={documentTypeData || []}
+        canSearch
       />
       <Modal
         open={!!currentSelectedId}

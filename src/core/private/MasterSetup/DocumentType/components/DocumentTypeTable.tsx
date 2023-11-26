@@ -115,6 +115,7 @@ const DocumentType = (props: IDocumentTypeProps) => {
   return (
     <>
       <DataTable
+        canSearch
         isLoading={isFetching}
         columns={columns}
         data={documentTypeData || []}

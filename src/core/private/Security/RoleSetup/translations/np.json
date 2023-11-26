@@ -1,16 +1,16 @@
 {
   "title": "भूमिका सेटअप",
-  "roleNameEnglish": "भूमिका नाम (अंग्रेजी)",
-  "roleNameNepali": "भूमिका नाम (नेपाली)",
+  "roleNameEnglish": "भूमिकाको नाम (अंग्रेजी)",
+  "roleNameNepali": "भूमिकाको नाम (नेपाली)",
   "status": "स्थिति",
   "roleType": "भूमिकाको प्रकार",
   "description": "विवरण",
 
   "errors": {
-    "roleNameEnglish": "भूमिका नाम (अंग्रेजी) आवश्यक छ",
-    "roleNameNepali": "भूमिका नाम (नेपाली) आवश्यक छ",
-    "roleType": "भूमिकाको प्रकार आवश्यक छ",
-    "description": "विवरण आवश्यक छ"
+    "roleNameEnglish": "भूमिकाको नाम (अंग्रेजी) अनिवार्य छ",
+    "roleNameNepali": "भूमिकाको नाम (नेपाली) अनिवार्य छ",
+    "roleType": "भूमिकाको प्रकार अनिवार्य छ",
+    "description": "विवरण अनिवार्य छ"
   },
   "modal": {
     "status": {

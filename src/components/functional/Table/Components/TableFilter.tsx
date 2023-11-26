@@ -17,6 +17,8 @@ export interface TableHeaderProps {
   customTableFilter?: React.ReactNode
   customAddFilter?: React.ReactNode
   filterClassName?: string
+  searchValue?: string
+  setSearchValue?: React.Dispatch<React.SetStateAction<string>>
 }
 
 function TableFilter(props: TableHeaderProps) {
@@ -28,8 +30,13 @@ function TableFilter(props: TableHeaderProps) {
     customTableFilter,
     customAddFilter,
     filterClassName,
+    searchValue,
+    setSearchValue,
   } = props
-  const computedClassName = getComputedClassNames('w-full', filterClassName)
+  const computedClassName = getComputedClassNames(
+    'w-full mt-3',
+    filterClassName
+  )
 
   return (
     <Flexbox
@@ -39,9 +46,13 @@ function TableFilter(props: TableHeaderProps) {
     >
       {canSearch && (
         <Input
+          value={searchValue || ''}
           wrapperClassName="flex-1"
           leftIcon={<MagnifyingGlass size={16} />}
           placeholder={t('btns.search')}
+          onChange={(event) => {
+            setSearchValue?.(event.target.value)
+          }}
         />
       )}
       {canFilter && (

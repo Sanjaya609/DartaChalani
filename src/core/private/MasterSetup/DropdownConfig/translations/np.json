@@ -14,11 +14,11 @@
   "numberOfValue": "ड्रपडाउन सूची कुल संख्या",
   "addDropDown": "नयाँ ड्रपडाउन कन्फिगरेसन",
   "errors": {
-    "dropDownDescriptionEn": "ड्रपडाउन विवरण (अंग्रेजी) आवश्यक छ",
-    "dropDownDescriptionNp": "ड्रपडाउन विवरण (नेपाली) आवश्यक छ",
-    "descriptionEn": "विवरण (अंग्रेजी) आवश्यक छ",
-    "descriptionNp": "विवरण (नेपाली) आवश्यक छ",
-    "field": "Field आवश्यक छ",
-    "value": "Value आवश्यक छ"
+    "dropDownDescriptionEn": "ड्रपडाउन विवरण (अंग्रेजी) अनिवार्य छ",
+    "dropDownDescriptionNp": "ड्रपडाउन विवरण (नेपाली) अनिवार्य छ",
+    "descriptionEn": "विवरण (अंग्रेजी) अनिवार्य छ",
+    "descriptionNp": "विवरण (नेपाली) अनिवार्य छ",
+    "field": "Field अनिवार्य छ",
+    "value": "Value अनिवार्य छ"
   }
 }

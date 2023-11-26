@@ -107,6 +107,7 @@ const SectorTable = (props: ISectorTableProps) => {
         isLoading={isFetching}
         columns={columns}
         data={sectorData || []}
+        canSearch
       />
       <Modal
         open={!!currentSelectedId}

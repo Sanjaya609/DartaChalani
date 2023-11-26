@@ -7,7 +7,8 @@ import {
   RoleSetupTableData,
 } from '../schema/roleSetup.interface'
 
-const { createRole, getAllRole, changeRoleStatus } = apiDetails
+const { createRole, getAllRole, changeRoleStatus, getAllActiveRole } =
+  apiDetails
 
 const useCreateRole = () => {
   const queryClient = useQueryClient()
@@ -53,6 +54,33 @@ const useGetAllRole = <T = RoleSetupTableData[]>(
   )
 }
 
+const useGetAllActiveRole = <T = RoleSetupTableData[]>(
+  getDataWithPropsValue?: IGetDataWithPropsVal
+) => {
+  return useQuery(
+    [getAllActiveRole.queryKeyName],
+    () =>
+      initApiRequest<BackendSuccessResponse<RoleSetupTableData[]>>({
+        apiDetails: getAllActiveRole,
+      }),
+    {
+      select: (data) => {
+        const roleData = data?.data?.data?.length ? data.data.data : []
+        return (
+          getDataWithPropsValue?.mapDatatoStyleSelect
+            ? mapDataToStyledSelect({
+                arrayData: roleData,
+                id: 'id',
+                name: 'roleNameEnglish',
+                nameNp: 'roleNameNepali',
+              })
+            : roleData
+        ) as T
+      },
+    }
+  )
+}
+
 const useChangeRoleStatus = () => {
   const queryClient = useQueryClient()
   return useMutation(
@@ -70,4 +98,9 @@ const useChangeRoleStatus = () => {
   )
 }
 
-export { useGetAllRole, useCreateRole, useChangeRoleStatus }
+export {
+  useGetAllRole,
+  useCreateRole,
+  useChangeRoleStatus,
+  useGetAllActiveRole,
+}

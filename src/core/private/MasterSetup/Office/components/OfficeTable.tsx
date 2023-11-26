@@ -108,6 +108,7 @@ const Office = (props: IOfficeProps) => {
   return (
     <>
       <DataTable
+        canSearch
         isLoading={isFetching}
         columns={columns}
         data={sectorData || []}
