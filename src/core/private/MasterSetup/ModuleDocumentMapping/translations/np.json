@@ -1,12 +1,12 @@
 {
   "title": "कागजात प्रकार मोड्युल म्यापिङ",
-  "documentTypeId": "कागजात प्रकार नाम",
+  "documentTypeId": "कागजात प्रकार",
   "status": "स्थिति",
   "isMandatory": "अनिवार्य छ ?",
-  "moduleId": "मोड्युल नाम",
+  "moduleId": "मोड्युल",
   "errors": {
-    "documentTypeId": "कागजात प्रकार नाम आवश्यक छ",
-    "moduleId": "मोड्युल नाम आवश्यक छ"
+    "documentTypeId": "कागजात प्रकार अनिवार्य छ",
+    "moduleId": "मोड्युल अनिवार्य छ"
   },
   "modal": {
     "status": {

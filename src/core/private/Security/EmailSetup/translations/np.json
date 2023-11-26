@@ -8,13 +8,13 @@
   "value": "Value",
   "property": "Property",
   "errors": {
-    "email": "इमेल आवश्यक छ",
-    "password": "पासवर्ड आवश्यक छ",
-    "port": "पोर्ट आवश्यक छ",
-    "host": "होस्ट आवश्यक छ",
-    "key": "Key आवश्यक छ",
-    "value": "Value आवश्यक छ",
-    "atLeastProperties": "कम्तिमा एउटा कन्फिगरेसन आवश्यक छ",
+    "email": "इमेल अनिवार्य छ",
+    "password": "पासवर्ड अनिवार्य छ",
+    "port": "पोर्ट अनिवार्य छ",
+    "host": "होस्ट अनिवार्य छ",
+    "key": "Key अनिवार्य छ",
+    "value": "Value अनिवार्य छ",
+    "atLeastProperties": "कम्तिमा एउटा कन्फिगरेसन अनिवार्य छ",
     "duplicateKey": "Key पहिले नै अवस्थित छ"
   }
 }

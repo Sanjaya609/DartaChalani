@@ -1,10 +1,9 @@
 import Form from '@/components/functional/Form/Form'
 import PasswordInput from '@/components/functional/PasswordInput'
 import { Box, Button, Grid } from '@/components/ui'
-import { inputChangeNumberOnly } from '@/utility/inputUtils/input-change-utils'
 import { useFormik } from 'formik'
 import { useTranslation } from 'react-i18next'
-import { useGetAllRole } from '../../RoleSetup/services/roleSetup.query'
+import { useGetAllActiveRole } from '../../RoleSetup/services/roleSetup.query'
 import { IUserSetupInitialValue } from '../schema/user-setup.interface'
 import {
   userSetupInitialValue,
@@ -23,11 +22,10 @@ const UserSetupForm = (props: IUserSetupFormProps) => {
 
   const { t } = useTranslation()
 
-  const { data: roleData = [], isFetching: roleDataFetching } = useGetAllRole<
-    OptionType[]
-  >({
-    mapDatatoStyleSelect: true,
-  })
+  const { data: roleData = [], isFetching: roleDataFetching } =
+    useGetAllActiveRole<OptionType[]>({
+      mapDatatoStyleSelect: true,
+    })
 
   const {
     values,

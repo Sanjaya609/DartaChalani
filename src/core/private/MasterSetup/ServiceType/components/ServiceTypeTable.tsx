@@ -100,6 +100,7 @@ const ServiceType = (props: IServiceTypeProps) => {
       <DataTable
         isLoading={isFetching}
         columns={columns}
+        canSearch
         data={serviceTypeData || []}
       />
       <Modal

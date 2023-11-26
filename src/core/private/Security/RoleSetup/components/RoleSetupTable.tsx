@@ -111,7 +111,12 @@ const RoleSetupTable = ({
   }
   return (
     <>
-      <DataTable className="pb-4" columns={columns} data={roleList || []} />
+      <DataTable
+        className="pb-4"
+        columns={columns}
+        data={roleList || []}
+        canSearch
+      />
       <Modal
         open={!!currentSelectedId}
         toggleModal={setOrRemoveCurrentSelectedId}

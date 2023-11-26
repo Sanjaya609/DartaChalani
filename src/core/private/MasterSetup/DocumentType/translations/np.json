@@ -1,18 +1,18 @@
 {
   "title": "कागजात प्रकार",
-  "documentTypeEn": "कागजात नाम (अंग्रेजी)",
-  "documentTypeNp": "कागजात नाम (नेपाली)",
+  "documentTypeEn": "कागजातको नाम (अंग्रेजी)",
+  "documentTypeNp": "कागजातको नाम (नेपाली)",
   "status": "स्थिति",
   "allowedFileTypes": "स्वीकृत फाइल प्रकारहरू",
   "isMandatory": "अनिवार्य छ ?",
   "maxFileSize": "अधिकतम फाइल आकार (KB मा)",
   "moduleName": "मोड्युल नाम",
   "errors": {
-    "documentTypeEn": "कागजात नाम (अंग्रेजी) आवश्यक छ",
-    "documentTypeNp": "कागजात नाम (नेपाली) आवश्यक छ",
-    "allowedFileTypes": "स्वीकृत फाइल प्रकारहरू आवश्यक छ",
-    "moduleName": "मोड्युल नाम आवश्यक छ",
-    "maxFileSize": "अधिकतम फाइल आकार आवश्यक छ"
+    "documentTypeEn": "कागजातको नाम (अंग्रेजी) अनिवार्य छ",
+    "documentTypeNp": "कागजातको नाम (नेपाली) अनिवार्य छ",
+    "allowedFileTypes": "स्वीकृत फाइल प्रकारहरू अनिवार्य छ",
+    "moduleName": "मोड्युल नाम अनिवार्य छ",
+    "maxFileSize": "अधिकतम फाइल आकार अनिवार्य छ"
   },
   "modal": {
     "status": {

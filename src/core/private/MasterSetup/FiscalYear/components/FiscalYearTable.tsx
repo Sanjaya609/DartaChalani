@@ -197,6 +197,7 @@ const FiscalYearTable = (props: IFiscalYearTableProps) => {
         isLoading={isFetching}
         columns={columns}
         data={fiscalYearData || []}
+        canSearch
       />
       <Modal
         open={!!currentSelectedId}

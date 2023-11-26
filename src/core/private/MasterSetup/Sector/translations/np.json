@@ -1,13 +1,13 @@
 {
   "title": "क्षेत्र",
-  "sectorNameEnglish": "क्षेत्र नाम (अंग्रेजी)",
-  "sectorNameNepali": "क्षेत्र नाम (नेपाली)",
+  "sectorNameEnglish": "क्षेत्रको नाम (अंग्रेजी)",
+  "sectorNameNepali": "क्षेत्रको नाम (नेपाली)",
   "status": "स्थिति",
   "orderNumber": "अर्डर नम्बर",
   "errors": {
-    "sectorNameEnglish": "क्षेत्र नाम (अंग्रेजी) आवश्यक छ",
-    "sectorNameNepali": "क्षेत्र नाम (नेपाली) आवश्यक छ",
-    "orderNumber": "अर्डर नम्बर आवश्यक छ"
+    "sectorNameEnglish": "क्षेत्रको नाम (अंग्रेजी) अनिवार्य छ",
+    "sectorNameNepali": "क्षेत्रको नाम (नेपाली) अनिवार्य छ",
+    "orderNumber": "अर्डर नम्बर अनिवार्य छ"
   },
   "modal": {
     "status": {

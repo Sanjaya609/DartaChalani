@@ -1,11 +1,11 @@
 {
   "title": "मोड्युल सेटअप",
-  "moduleNameEnglish": "मोड्युल नाम (अंग्रेजी)",
-  "moduleNameNepali": "मोड्युल नाम (नेपाली)",
+  "moduleNameEnglish": "मोड्युलको नाम (अंग्रेजी)",
+  "moduleNameNepali": "मोड्युलको नाम (नेपाली)",
   "status": "स्थिति",
   "orderNumber": "अर्डर नम्बर",
   "isConfigurable": "Is Configurable ?",
-  "parentModuleName": "Parent मोड्युल नाम",
+  "parentModuleName": "Parent मोड्युल",
   "description": "विवरण",
   "url": "URL",
   "code": "कोड",
@@ -17,17 +17,17 @@
     "url": "स्रोतको URL"
   },
   "errors": {
-    "moduleNameEnglish": "मोड्युल नाम (अंग्रेजी) आवश्यक छ",
-    "moduleNameNepali": "मोड्युल नाम (नेपाली) आवश्यक छ",
-    "orderNumber": "अर्डर नम्बर आवश्यक छ",
-    "description": "विवरण आवश्यक छ",
-    "url": "URL आवश्यक छ",
-    "code": "कोड आवश्यक छ",
+    "moduleNameEnglish": "मोड्युलको नाम (अंग्रेजी) अनिवार्य छ",
+    "moduleNameNepali": "मोड्युलको नाम (नेपाली) अनिवार्य छ",
+    "orderNumber": "अर्डर नम्बर अनिवार्य छ",
+    "description": "विवरण अनिवार्य छ",
+    "url": "URL अनिवार्य छ",
+    "code": "कोड अनिवार्य छ",
     "resourceRequestList": {
-      "httpMethod": "HTTP विधि आवश्यक छ",
-      "privilege": "Privilege आवश्यक छ",
-      "resourceName": "स्रोतको नाम आवश्यक छ",
-      "url": "स्रोतको URL आवश्यक छ"
+      "httpMethod": "HTTP विधि अनिवार्य छ",
+      "privilege": "Privilege अनिवार्य छ",
+      "resourceName": "स्रोतको नाम अनिवार्य छ",
+      "url": "स्रोतको URL अनिवार्य छ"
     }
   },
   "addModule": "मोड्युल थप्नुहोस्",

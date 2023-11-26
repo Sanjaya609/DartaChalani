@@ -2,8 +2,8 @@
   "projectTitle": "दर्ता चलानी",
   "sn": "क्र.सं.",
   "actions": "कार्य",
-  "yes": "Yes",
-  "no": "No",
+  "yes": "हो",
+  "no": "होइन",
   "btns": {
     "login": "लग-इन",
     "logout": "लगआउट",
@@ -28,7 +28,7 @@
   "yup": {
     "required": "{{key}} अनिवार्य छ",
     "invalid-email": "कृपया मान्य इमेल राख्नुहोस्",
-    "password-required": "पासवर्ड आवश्यक छ"
+    "password-required": "पासवर्ड अनिवार्य छ"
   },
   "form": {
     "password": "पासवर्ड"

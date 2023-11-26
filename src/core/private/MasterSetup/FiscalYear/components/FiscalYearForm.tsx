@@ -74,6 +74,7 @@ const FiscalYearForm = (props: IFiscalYearFormProps) => {
         </Grid.Col>
         <Grid.Col sm={'sm:col-span-3'}>
           <Form.NepaliDatePicker
+            maxDate={values?.endDateBs || ''}
             value={values.startDateBs}
             errors={errors}
             touched={touched}
@@ -88,6 +89,7 @@ const FiscalYearForm = (props: IFiscalYearFormProps) => {
         </Grid.Col>
         <Grid.Col sm={'sm:col-span-3'}>
           <Form.EnglishDatePicker
+            maxDate={values?.endDateAd || ''}
             onBlur={handleBlur}
             errors={errors}
             touched={touched}
@@ -104,6 +106,7 @@ const FiscalYearForm = (props: IFiscalYearFormProps) => {
 
         <Grid.Col sm={'sm:col-span-3'}>
           <Form.NepaliDatePicker
+            minDate={values?.startDateBs || ''}
             value={values.endDateBs}
             errors={errors}
             touched={touched}
@@ -118,6 +121,7 @@ const FiscalYearForm = (props: IFiscalYearFormProps) => {
         </Grid.Col>
         <Grid.Col sm={'sm:col-span-3'}>
           <Form.EnglishDatePicker
+            minDate={values?.startDateAd || ''}
             errors={errors}
             touched={touched}
             value={values.endDateAd}
