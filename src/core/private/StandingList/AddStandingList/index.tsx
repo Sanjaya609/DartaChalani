@@ -21,7 +21,7 @@ import {
   useGetAllLocalBodyByDistrictId,
   useGetAllProvince,
 } from '../../MasterSetup/Location/services/location.query'
-import { useGetAllServiceType } from '../../MasterSetup/ServiceType/services/servicetype.query'
+import { useGetAllActiveServiceType } from '../../MasterSetup/ServiceType/services/servicetype.query'
 import {
   IStandingListInitialValue,
   IStandingListPayload,
@@ -61,7 +61,7 @@ const StandingList = () => {
     })
 
   const { data: serviceTypeList = [], isFetching: serviceTypeListFetching } =
-    useGetAllServiceType<OptionType[]>({
+    useGetAllActiveServiceType<OptionType[]>({
       mapDatatoStyleSelect: true,
     })
 

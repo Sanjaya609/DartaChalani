@@ -7,8 +7,12 @@ import {
   IServiceTypeResponse,
 } from '../schema/servicetype.interface'
 
-const { createServiceType, getAllServiceType, changeServiceTypeStatus } =
-  apiDetails
+const {
+  createServiceType,
+  getAllServiceType,
+  changeServiceTypeStatus,
+  getAllActiveServiceType,
+} = apiDetails
 
 const useCreateServiceType = () => {
   const queryClient = useQueryClient()
@@ -54,6 +58,33 @@ const useGetAllServiceType = <T = IServiceTypeResponse[]>(
   )
 }
 
+const useGetAllActiveServiceType = <T = IServiceTypeResponse[]>(
+  getDataWithPropsValue?: IGetDataWithPropsVal
+) => {
+  return useQuery(
+    [getAllActiveServiceType.controllerName],
+    () =>
+      initApiRequest<BackendSuccessResponse<IServiceTypeResponse[]>>({
+        apiDetails: getAllActiveServiceType,
+      }),
+    {
+      select: (data) => {
+        const serviceTypeData = data?.data?.data?.length ? data.data.data : []
+        return (
+          getDataWithPropsValue?.mapDatatoStyleSelect
+            ? mapDataToStyledSelect({
+                arrayData: serviceTypeData,
+                id: 'id',
+                name: 'nameEn',
+                nameNp: 'nameNp',
+              })
+            : serviceTypeData
+        ) as T
+      },
+    }
+  )
+}
+
 const useChangeServiceTypeStatus = () => {
   const queryClient = useQueryClient()
   return useMutation(
@@ -75,4 +106,5 @@ export {
   useCreateServiceType,
   useGetAllServiceType,
   useChangeServiceTypeStatus,
+  useGetAllActiveServiceType,
 }

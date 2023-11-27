@@ -13,6 +13,11 @@ const serviceTypeAPI = {
     queryKeyName: 'GET_ALL_SERVICE_TYPE',
     requestMethod: RequestMethod.GET,
   },
+  getAllActiveServiceType: {
+    controllerName: `${prefix}/list/active`,
+    queryKeyName: 'GET_ALL_ACTIVE_SERVICE_TYPE',
+    requestMethod: RequestMethod.GET,
+  },
   changeServiceTypeStatus: {
     controllerName: `${prefix}/{serviceTypeId}`,
     queryKeyName: 'CHANGE_SERVICE_TYPE_STATUS',
