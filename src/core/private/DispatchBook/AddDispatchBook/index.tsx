@@ -271,6 +271,7 @@ const AddRegistrationBook = () => {
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.NepaliDatePicker
                 isRequired
+                disabled={!!dispatchBookId}
                 value={values.letterDate}
                 errors={errors}
                 touched={touched}
