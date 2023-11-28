@@ -154,8 +154,6 @@ export default function AuthFile(props: AuthFileBaseProps) {
     return () => URL.revokeObjectURL(objectUrl)
   }, [objectUrl])
 
-  console.log({ fileData })
-
   const computedClassName = getComputedClassNames(
     'h-full flex items-center justify-center relative',
     className

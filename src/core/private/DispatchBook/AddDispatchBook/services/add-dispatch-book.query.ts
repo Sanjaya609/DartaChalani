@@ -89,7 +89,7 @@ const useDeleteDispatchBookById = () => {
 
 const useGetDispatchNumberByFiscalYearId = (
   fiscalYearId: string | number | null,
-  setInitialRegistrationBookValue: Dispatch<
+  setInitialRegistrationBookValue?: Dispatch<
     SetStateAction<IAddDispatchBookInitialValue>
   >
 ) => {
@@ -108,9 +108,9 @@ const useGetDispatchNumberByFiscalYearId = (
       },
       enabled: !!fiscalYearId,
       onSuccess: (data) => {
-        setInitialRegistrationBookValue((prevVal) => ({
+        setInitialRegistrationBookValue?.((prevVal) => ({
           ...prevVal,
-          letterNumber: data || '',
+          dispatchNumber: data || '',
         }))
       },
     }

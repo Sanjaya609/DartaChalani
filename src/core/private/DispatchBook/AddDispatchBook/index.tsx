@@ -45,7 +45,7 @@ const AddRegistrationBook = () => {
   const [initialRegistrationBookValue, setInitialRegistrationBookValue] =
     useState<IAddDispatchBookInitialValue>({
       ...addDispatchBookInitialValues,
-      dispatchNumber: initData?.currentFiscalYear?.id || '',
+      letterNumber: initData?.currentFiscalYear?.id || '',
     })
   const [isAllRequiredDocumentUploaded, setIsAllRequiredDocumentUploaded] =
     useState(false)
@@ -249,7 +249,14 @@ const AddRegistrationBook = () => {
 
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Input
-                value={values.letterNumber}
+                value={
+                  dispatchBookId
+                    ? values?.letterNumber
+                    : getTextByLanguage(
+                        initData?.currentFiscalYear?.fiscalYearNameEn || '',
+                        initData?.currentFiscalYear?.fiscalYearNameNp || ''
+                      )
+                }
                 errors={errors}
                 touched={touched}
                 name="letterNumber"
