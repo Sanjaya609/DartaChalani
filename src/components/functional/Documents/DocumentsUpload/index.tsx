@@ -285,19 +285,31 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
   const columns = useMemo<ColumnDef<IModuleDocumentMappingResponse>[]>(
     () => [
       {
-        header: t('document.documentTypeEn'),
-        accessorKey: 'documentTypeResponse.documentTypeEn',
+        header: getTextByLanguage(
+          t('document.documentTypeEn'),
+          t('document.documentTypeNp')
+        ),
+        accessorKey: getTextByLanguage(
+          'documentTypeResponse.documentTypeEn',
+          'documentTypeResponse.documentTypeNp'
+        ),
+        cell: ({
+          row: {
+            original: {
+              documentTypeResponse: { documentTypeEn, documentTypeNp },
+              isMandatory,
+            },
+          },
+        }) => (
+          <span>
+            {getTextByLanguage(documentTypeEn, documentTypeNp)}{' '}
+            {isMandatory && (
+              <span className="ml-1 font-semibold text-red-40">*</span>
+            )}
+          </span>
+        ),
       },
-      {
-        header: t('document.documentTypeNp'),
-        accessorKey: 'documentTypeResponse.documentTypeNp',
-      },
-      {
-        header: t('document.isMandatory'),
-        accessorKey: 'isMandatory',
-        cell: ({ row: { original } }) =>
-          original.isMandatory ? t('yes') : t('no'),
-      },
+
       {
         header: t('document.allowedFileTypes'),
         accessorKey: 'documentTypeResponse.allowedFileTypes',

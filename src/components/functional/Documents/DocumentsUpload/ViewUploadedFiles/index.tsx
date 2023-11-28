@@ -28,19 +28,25 @@ const ViewUploadedFiles = (props: IViewUploadedFilesProps) => {
   const columns = useMemo<ColumnDef<IDocumentResponse>[]>(
     () => [
       {
-        header: t('document.documentTypeEn'),
-        accessorKey: 'documentTypeEn',
+        header: getTextByLanguage(
+          t('document.documentTypeEn'),
+          t('document.documentTypeNp')
+        ),
+        accessorKey: getTextByLanguage('documentTypeEn', 'documentTypeNp'),
+        cell: ({
+          row: {
+            original: { documentTypeEn, documentTypeNp, isMandatory },
+          },
+        }) => (
+          <span>
+            {getTextByLanguage(documentTypeEn, documentTypeNp)}{' '}
+            {isMandatory && (
+              <span className="ml-1 font-semibold text-red-40">*</span>
+            )}
+          </span>
+        ),
       },
-      {
-        header: t('document.documentTypeNp'),
-        accessorKey: 'documentTypeNp',
-      },
-      {
-        header: t('document.isMandatory'),
-        accessorKey: 'isMandatory',
-        cell: ({ row: { original } }) =>
-          original.isMandatory ? t('yes') : t('no'),
-      },
+
       {
         header: t('document.allowedFileTypes'),
         accessorKey: 'allowedFileTypes',
