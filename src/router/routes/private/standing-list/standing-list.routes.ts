@@ -23,7 +23,7 @@ export const standingListRoutes: _RouteObject<'private'>[] = [
   createRoute({
     path: privateRoutePath.standingList.base,
     element: StandingListOutlet,
-    checkPrivilege: [],
+    checkPrivilege: [PRIVILEGEENUM.READ_LIST],
     children: [
       createRoute({
         path: privateRoutePath.standingList.base,
