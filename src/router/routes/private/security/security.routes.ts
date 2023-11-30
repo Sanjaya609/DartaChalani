@@ -29,28 +29,28 @@ export const securityRoutes: _RouteObject<'private'>[] = [
       createRoute({
         path: privateRoutePath.security.moduleSetup,
         element: ModuleSetup,
-        checkPrivilege: [PRIVILEGEENUM.READ],
+        checkPrivilege: [PRIVILEGEENUM.READ_LIST],
       }),
       createRoute({
         path: privateRoutePath.security.roleManagement,
         element: RoleSetup,
-        checkPrivilege: [PRIVILEGEENUM.READ],
+        checkPrivilege: [PRIVILEGEENUM.READ_LIST],
       }),
       createRoute({
         path: privateRoutePath.security.roleModuleMapping,
         element: RoleModuleMapping,
         checkFromParentPath: privateRoutePath.security.roleManagement,
-        checkPrivilege: [PRIVILEGEENUM.READ],
+        checkPrivilege: [PRIVILEGEENUM.READ_LIST],
       }),
       createRoute({
         path: privateRoutePath.security.emailSetup,
         element: EmailSetup,
-        checkPrivilege: [PRIVILEGEENUM.READ],
+        checkPrivilege: [PRIVILEGEENUM.READ_LIST],
       }),
       createRoute({
         path: privateRoutePath.security.userSetup,
         element: UserSetup,
-        checkPrivilege: [PRIVILEGEENUM.READ],
+        checkPrivilege: [PRIVILEGEENUM.READ_LIST],
       }),
     ],
   }),

@@ -27,37 +27,37 @@ export const masterSetupRoutes: _RouteObject<'private'>[] = [
   createRoute({
     path: privateRoutePath.masterSetup.base,
     element: MasterSetup,
-    checkPrivilege: [PRIVILEGEENUM.READ],
+    checkPrivilege: [PRIVILEGEENUM.READ_LIST],
     children: [
       createRoute({
         path: privateRoutePath.masterSetup.fiscalYear,
         element: FiscalYear,
-        checkPrivilege: [PRIVILEGEENUM.READ],
+        checkPrivilege: [PRIVILEGEENUM.READ_LIST],
       }),
       createRoute({
         path: privateRoutePath.masterSetup.sector,
         element: Sector,
-        checkPrivilege: [PRIVILEGEENUM.READ],
+        checkPrivilege: [PRIVILEGEENUM.READ_LIST],
       }),
       createRoute({
         path: privateRoutePath.masterSetup.serviceType,
         element: ServiceType,
-        checkPrivilege: [PRIVILEGEENUM.READ],
+        checkPrivilege: [PRIVILEGEENUM.READ_LIST],
       }),
       createRoute({
         path: privateRoutePath.masterSetup.documentType,
         element: DocumentType,
-        checkPrivilege: [PRIVILEGEENUM.READ],
+        checkPrivilege: [PRIVILEGEENUM.READ_LIST],
       }),
       createRoute({
         path: privateRoutePath.masterSetup.office,
         element: Office,
-        checkPrivilege: [PRIVILEGEENUM.READ],
+        checkPrivilege: [PRIVILEGEENUM.READ_LIST],
       }),
       createRoute({
         path: privateRoutePath.masterSetup.moduleDocumentMapping,
         element: ModuleDocumentMapping,
-        checkPrivilege: [PRIVILEGEENUM.READ],
+        checkPrivilege: [PRIVILEGEENUM.READ_LIST],
       }),
       ...dropdownConfigRoutes,
     ],
