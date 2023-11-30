@@ -322,7 +322,10 @@ const AddDispatchBook = (props: Partial<IRoutePrivilege>) => {
                 label={t('dispatchBook.letterReceiverEmail')}
                 onBlur={handleBlur}
                 onChange={(e) => {
-                  setFieldValue('email', e.target.value.replace(/\s/g, ''))
+                  setFieldValue(
+                    'letterReceiverEmail',
+                    e.target.value.replace(/\s/g, '')
+                  )
                 }}
               />
             </Grid.Col>
