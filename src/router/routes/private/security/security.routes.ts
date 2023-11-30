@@ -24,10 +24,12 @@ export const securityRoutes: _RouteObject<'private'>[] = [
   createRoute({
     path: privateRoutePath.security.base,
     element: Security,
+    checkPrivilege: [],
     children: [
       createRoute({
         path: privateRoutePath.security.moduleSetup,
         element: ModuleSetup,
+        checkPrivilege: [PRIVILEGEENUM.READ],
       }),
       createRoute({
         path: privateRoutePath.security.roleManagement,
@@ -37,14 +39,17 @@ export const securityRoutes: _RouteObject<'private'>[] = [
       createRoute({
         path: privateRoutePath.security.roleModuleMapping,
         element: RoleModuleMapping,
+        checkPrivilege: [PRIVILEGEENUM.READ],
       }),
       createRoute({
         path: privateRoutePath.security.emailSetup,
         element: EmailSetup,
+        checkPrivilege: [PRIVILEGEENUM.READ],
       }),
       createRoute({
         path: privateRoutePath.security.userSetup,
         element: UserSetup,
+        checkPrivilege: [PRIVILEGEENUM.READ],
       }),
     ],
   }),

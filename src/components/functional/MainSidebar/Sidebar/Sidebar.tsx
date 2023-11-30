@@ -13,6 +13,9 @@ import {
   sidebarCollapseTriggerStyle,
   sidebarLinkStyle,
 } from './sidebar.styles'
+import { useMemo } from 'react'
+import { useAuth } from '@/providers'
+import { PRIVILEGEENUM } from '@/utility/enums/privilege.enum'
 
 interface ISidebarProps {
   sideBarItem: ISidebarItem[]
@@ -25,10 +28,23 @@ const Sidebar = (props: ISidebarProps) => {
     getComputedClassNames(sidebarLinkStyle)
 
   const location = useLocation()
+  const { flatModulePropsFromURL } = useAuth()
+
+  const privilegeSideBarItem = useMemo(
+    () =>
+      sideBarItem.filter((navList) => {
+        return !!navList?.bypass || flatModulePropsFromURL?.[navList.path]
+          ? !flatModulePropsFromURL?.[navList.path]?.isConfigurable ||
+              !!flatModulePropsFromURL?.[navList?.path]?.resourceResponses
+                ?.length
+          : false
+      }),
+    []
+  )
 
   return (
     <aside className={sideBarAsideWrapper}>
-      {sideBarItem.map((sidebar) => {
+      {privilegeSideBarItem.map((sidebar) => {
         const isActive = location.pathname.includes(sidebar.path)
 
         if (sidebar?.children?.length) {

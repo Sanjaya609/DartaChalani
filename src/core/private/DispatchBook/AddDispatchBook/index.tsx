@@ -36,8 +36,10 @@ import {
   useGetDispatchBookDetailById,
   useGetDispatchNumberByFiscalYearId,
 } from './services/add-dispatch-book.query'
+import { IRoutePrivilege } from '@/router/routes/create-route'
 
-const AddRegistrationBook = () => {
+const AddDispatchBook = (props: Partial<IRoutePrivilege>) => {
+  const { currentModuleDetails } = props
   const { t } = useTranslation()
   const [wardOption, setWardOption] = useState<OptionType[]>([])
   const { initData } = useAuth()
@@ -124,7 +126,7 @@ const AddRegistrationBook = () => {
     navigate(privateRoutePath.dispatchBook.base)
   }
 
-  const handleAddRegistrationBook = (values: IAddDispatchBookInitialValue) => {
+  const handleAddDispatchBook = (values: IAddDispatchBookInitialValue) => {
     if (!isAllRequiredDocumentUploaded) {
       return toast({
         type: ToastType.error,
@@ -189,7 +191,7 @@ const AddRegistrationBook = () => {
     enableReinitialize: true,
     validationSchema: addDispatchBookValidationSchema,
     onSubmit: (values) => {
-      handleAddRegistrationBook(values)
+      handleAddDispatchBook(values)
     },
   })
 
@@ -498,7 +500,7 @@ const AddRegistrationBook = () => {
         </form>
 
         <DocumentsUpload
-          moduleId={'56'}
+          moduleId={currentModuleDetails?.id || ''}
           canUploadMultipleFile
           setIsAllRequiredDocumentUploaded={setIsAllRequiredDocumentUploaded}
           setUploadedDocumentData={setUploadedDocumentData}
@@ -534,4 +536,4 @@ const AddRegistrationBook = () => {
   )
 }
 
-export default AddRegistrationBook
+export default AddDispatchBook

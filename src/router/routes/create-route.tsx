@@ -9,6 +9,7 @@ import { PRIVILEGEENUM } from '@/utility/enums/privilege.enum'
 import { useAuth } from '@/providers'
 import NotFound from '@/core/NotFound'
 import { Text } from '@/components/ui/core/Text'
+import { IModulePropsFromURL } from '@/utility/module/get-module-by-url-or-code'
 
 export interface CreateRoute<Type extends RouteType>
   extends Omit<_RouteObject<Type>, 'element'> {
@@ -20,6 +21,7 @@ export interface CreateRoute<Type extends RouteType>
 
 export interface IRoutePrivilege {
   routePrivilege: Partial<Record<PRIVILEGEENUM, boolean>>
+  currentModuleDetails?: IModulePropsFromURL
 }
 interface IPermissionProps {
   RElement: React.LazyExoticComponent<React.FC<IRoutePrivilege>>
@@ -64,7 +66,10 @@ export const Permission = (props: IPermissionProps) => {
 
     return hasRouteAccess ? (
       <RouteWrapper>
-        <RElement routePrivilege={routePrivilege} />
+        <RElement
+          routePrivilege={routePrivilege}
+          currentModuleDetails={currentPathDetails}
+        />
       </RouteWrapper>
     ) : (
       <NotFound>
@@ -81,11 +86,17 @@ export const Permission = (props: IPermissionProps) => {
 export function createRoute<Type extends RouteType = 'private'>(
   args: CreateRoute<Type>
 ): _RouteObject<Type> {
-  const { element, path, checkFromParentPath, checkPrivilege } = args
+  const {
+    element,
+    path,
+    checkFromParentPath,
+    checkPrivilege,
+    type = !checkPrivilege ? 'bypass' : undefined,
+  } = args
   return {
     ...args,
     element:
-      args.type && ['public', 'bypass'].includes(args.type) ? (
+      type && ['public', 'bypass'].includes(type) ? (
         <RouteWrapper>
           <args.element />
         </RouteWrapper>

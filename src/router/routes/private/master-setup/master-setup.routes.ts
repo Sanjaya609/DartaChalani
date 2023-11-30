@@ -3,6 +3,7 @@ import { privateRoutePath } from '@/router/routes/private/private-route.path'
 import React from 'react'
 import { _RouteObject } from 'react-router-dom'
 import { dropdownConfigRoutes } from './dropdown-config/dropdown-config.routes'
+import { PRIVILEGEENUM } from '@/utility/enums/privilege.enum'
 
 const MasterSetup = React.lazy(
   () => import('@/core/private/MasterSetup/MasterSetup')
@@ -26,30 +27,37 @@ export const masterSetupRoutes: _RouteObject<'private'>[] = [
   createRoute({
     path: privateRoutePath.masterSetup.base,
     element: MasterSetup,
+    checkPrivilege: [PRIVILEGEENUM.READ],
     children: [
       createRoute({
         path: privateRoutePath.masterSetup.fiscalYear,
         element: FiscalYear,
+        checkPrivilege: [PRIVILEGEENUM.READ],
       }),
       createRoute({
         path: privateRoutePath.masterSetup.sector,
         element: Sector,
+        checkPrivilege: [PRIVILEGEENUM.READ],
       }),
       createRoute({
         path: privateRoutePath.masterSetup.serviceType,
         element: ServiceType,
+        checkPrivilege: [PRIVILEGEENUM.READ],
       }),
       createRoute({
         path: privateRoutePath.masterSetup.documentType,
         element: DocumentType,
+        checkPrivilege: [PRIVILEGEENUM.READ],
       }),
       createRoute({
         path: privateRoutePath.masterSetup.office,
         element: Office,
+        checkPrivilege: [PRIVILEGEENUM.READ],
       }),
       createRoute({
         path: privateRoutePath.masterSetup.moduleDocumentMapping,
         element: ModuleDocumentMapping,
+        checkPrivilege: [PRIVILEGEENUM.READ],
       }),
       ...dropdownConfigRoutes,
     ],

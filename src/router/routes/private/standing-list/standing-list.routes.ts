@@ -2,6 +2,7 @@ import { _RouteObject } from 'react-router-dom'
 import { createRoute } from '../../create-route'
 import { privateRoutePath } from '../private-route.path'
 import React from 'react'
+import { PRIVILEGEENUM } from '@/utility/enums/privilege.enum'
 
 const StandingListOutlet = React.lazy(
   () => import('@/core/private/StandingList')
@@ -22,22 +23,30 @@ export const standingListRoutes: _RouteObject<'private'>[] = [
   createRoute({
     path: privateRoutePath.standingList.base,
     element: StandingListOutlet,
+    checkPrivilege: [],
     children: [
       createRoute({
         path: privateRoutePath.standingList.base,
         element: StandingListTable,
+        checkPrivilege: [PRIVILEGEENUM.READ_LIST],
       }),
       createRoute({
         path: privateRoutePath.standingList.add,
         element: AddStandingList,
+        checkPrivilege: [PRIVILEGEENUM.CREATE],
+        checkFromParentPath: privateRoutePath.standingList.base,
       }),
       createRoute({
         path: privateRoutePath.standingList.view,
         element: StandingListDetailView,
+        checkPrivilege: [PRIVILEGEENUM.READ],
+        checkFromParentPath: privateRoutePath.standingList.base,
       }),
       createRoute({
         path: privateRoutePath.standingList.edit,
         element: AddStandingList,
+        checkPrivilege: [PRIVILEGEENUM.CREATE, PRIVILEGEENUM.UPDATE],
+        checkFromParentPath: privateRoutePath.standingList.base,
       }),
     ],
   }),
