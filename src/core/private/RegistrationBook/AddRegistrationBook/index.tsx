@@ -149,7 +149,6 @@ const AddRegistrationBook = (props: Partial<IRoutePrivilege>) => {
       subjectOfLetter,
       wardNumber,
       documents: uploadedDocumentData,
-      moduleId: 56,
       id: id || undefined,
     }
 

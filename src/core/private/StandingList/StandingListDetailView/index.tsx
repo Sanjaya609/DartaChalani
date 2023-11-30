@@ -118,7 +118,7 @@ const StandingListDetailView = () => {
                   '-',
                 standingListDetails?.locationDataResponse?.districtNameNp || '-'
               )}
-              label={t('standingList.provinceId')}
+              label={t('standingList.districtId')}
             />
             <GridColDetailByLabelAndValue
               value={getTextByLanguage(
@@ -127,7 +127,7 @@ const StandingListDetailView = () => {
                 standingListDetails?.locationDataResponse?.localBodyNameNp ||
                   '-'
               )}
-              label={t('standingList.provinceId')}
+              label={t('standingList.localBodyId')}
             />
             <GridColDetailByLabelAndValue
               value={standingListDetails?.wardNumber || '-'}

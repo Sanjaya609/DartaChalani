@@ -39,6 +39,7 @@ export const securityRoutes: _RouteObject<'private'>[] = [
       createRoute({
         path: privateRoutePath.security.roleModuleMapping,
         element: RoleModuleMapping,
+        checkFromParentPath: privateRoutePath.security.roleManagement,
         checkPrivilege: [PRIVILEGEENUM.READ],
       }),
       createRoute({

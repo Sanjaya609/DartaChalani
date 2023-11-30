@@ -45,6 +45,7 @@ const useGetAllStandingList = <T = IStandingListResponse[]>() => {
           : []
         return registrationBookData as T
       },
+      staleTime: 0,
     }
   )
 }
