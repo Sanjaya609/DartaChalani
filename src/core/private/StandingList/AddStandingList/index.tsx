@@ -34,8 +34,10 @@ import {
   useCreateStandingList,
   useGetStandingListDetailById,
 } from './services/standing-list.query'
+import { IRoutePrivilege } from '@/router/routes/create-route'
 
-const StandingList = () => {
+const StandingList = (props: Partial<IRoutePrivilege>) => {
+  const { currentModuleDetails } = props
   const { t } = useTranslation()
   const [wardOption, setWardOption] = useState<OptionType[]>([])
   const [initialRegistrationBookValue, setInitialRegistrationBookValue] =
@@ -492,7 +494,7 @@ const StandingList = () => {
         </form>
 
         <DocumentsUpload
-          moduleId={'68'}
+          moduleId={currentModuleDetails?.id || ''}
           canUploadMultipleFile
           setIsAllRequiredDocumentUploaded={setIsAllRequiredDocumentUploaded}
           setUploadedDocumentData={setUploadedDocumentData}

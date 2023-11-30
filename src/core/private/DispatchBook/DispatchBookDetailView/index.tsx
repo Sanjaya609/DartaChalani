@@ -128,7 +128,7 @@ const DispatchBookDetailView = () => {
                   '-',
                 dispatchBookDetails?.locationDataResponse?.districtNameNp || '-'
               )}
-              label={t('dispatchBook.provinceId')}
+              label={t('dispatchBook.districtId')}
             />
 
             <GridColDetailByLabelAndValue
@@ -138,7 +138,7 @@ const DispatchBookDetailView = () => {
                 dispatchBookDetails?.locationDataResponse?.localBodyNameNp ||
                   '-'
               )}
-              label={t('dispatchBook.provinceId')}
+              label={t('dispatchBook.localBodyId')}
             />
 
             <GridColDetailByLabelAndValue

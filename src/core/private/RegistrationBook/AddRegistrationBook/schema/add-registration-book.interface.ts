@@ -26,7 +26,7 @@ interface IDocument {
 
 export interface IAddRegistrationBookPayload
   extends Omit<IAddRegistrationBookInitialValue, 'provinceId' | 'districtId'> {
-  moduleId: StringNumber
+  // moduleId: StringNumber
   documents: IDocument[]
 }
 

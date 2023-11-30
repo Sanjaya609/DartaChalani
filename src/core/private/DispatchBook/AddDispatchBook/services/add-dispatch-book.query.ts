@@ -66,6 +66,7 @@ const useGetDispatchBookDetailById = (id: string | number | null) => {
         return data?.data?.data
       },
       enabled: !!id,
+      staleTime: 0,
     }
   )
 }

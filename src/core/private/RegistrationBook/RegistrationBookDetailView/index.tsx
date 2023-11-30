@@ -61,7 +61,7 @@ const RegistrationBookDetailView = () => {
                 registrationBookDetails?.locationDataResponse?.districtNameNp ||
                   '-'
               )}
-              label={t('registrationBook.provinceId')}
+              label={t('registrationBook.districtId')}
             />
 
             <GridColDetailByLabelAndValue
@@ -71,7 +71,7 @@ const RegistrationBookDetailView = () => {
                 registrationBookDetails?.locationDataResponse
                   ?.localBodyNameNp || '-'
               )}
-              label={t('registrationBook.provinceId')}
+              label={t('registrationBook.localBodyId')}
             />
 
             <GridColDetailByLabelAndValue

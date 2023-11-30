@@ -3,12 +3,13 @@ import { TFuncKey } from 'i18next'
 import { LayoutDashboard, Settings, ServerCog, Library } from 'lucide-react'
 import { IconProps, Notebook, Ticket } from 'phosphor-react'
 
-interface ISidebarNavList {
+export interface ISidebarNavList {
   icon: React.ForwardRefExoticComponent<
     IconProps & React.RefAttributes<SVGSVGElement>
   >
   path: ValueOf<typeof privateRoutePath>
   title: TFuncKey<'translation'>
+  bypass?: boolean
 }
 
 export const sidebarNavList: ISidebarNavList[] = [
@@ -16,6 +17,7 @@ export const sidebarNavList: ISidebarNavList[] = [
     icon: LayoutDashboard,
     path: privateRoutePath.dashboard,
     title: 'sidebar.dashboard',
+    bypass: true,
   },
   {
     icon: Settings,

@@ -50,7 +50,7 @@ const RoleSetupTable = ({
   initialValues,
   setInitialValues,
 }: RoleSetupTableProps) => {
-  const { data: roleList } = useGetAllRole()
+  const { data: roleList, isLoading } = useGetAllRole()
 
   const { t } = useTranslation()
   const { mutate: changeRoleStatus, isLoading: changeRoleStatusLoading } =
@@ -112,6 +112,7 @@ const RoleSetupTable = ({
   return (
     <>
       <DataTable
+        isLoading={isLoading}
         className="pb-4"
         columns={columns}
         data={roleList || []}

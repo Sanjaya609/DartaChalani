@@ -3,13 +3,12 @@ import { Flexbox, Icon, Image } from '@/components/ui'
 import { Text } from '@/components/ui/core/Text'
 import { useSideBarData } from '@/providers/SidebarProvider'
 import { Link, useLocation } from '@/router'
-import { TFuncKey } from 'i18next'
-import { useTranslation } from 'react-i18next'
-import { sidebarNavList } from '../sidebar.data'
-import { menuOverlayAside } from './menuoverlay.styles'
-import { useOnClickOutside } from 'usehooks-ts'
-import { useRef } from 'react'
 import { getComputedClassNames } from '@/utility/tailwind/tailwind-utility'
+import { TFuncKey } from 'i18next'
+import { useRef } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useOnClickOutside } from 'usehooks-ts'
+import { menuOverlayAside } from './menuoverlay.styles'
 
 const OverLayIcon = () => (
   <svg
@@ -28,7 +27,7 @@ const OverLayIcon = () => (
 const MenuOverlay = () => {
   const { t } = useTranslation()
   const location = useLocation()
-  const { isOpen, setIsOpen } = useSideBarData()
+  const { isOpen, setIsOpen, privilegedSidebarNavList } = useSideBarData()
 
   const asideRef = useRef<HTMLElement>(null)
   useOnClickOutside(asideRef, () => {
@@ -62,7 +61,7 @@ const MenuOverlay = () => {
           </Text>
         </Flexbox>
 
-        {sidebarNavList.map((nav) => {
+        {privilegedSidebarNavList.map((nav) => {
           const isActive = location.pathname.includes(nav.path)
           return (
             <Link

@@ -34,8 +34,11 @@ import {
   useCreateRegistrationBook,
   useGetRegistrationBookDetailById,
 } from './services/add-registration-book.query'
+import { IRoutePrivilege } from '@/router/routes/create-route'
 
-const AddRegistrationBook = () => {
+const AddRegistrationBook = (props: Partial<IRoutePrivilege>) => {
+  const { currentModuleDetails } = props
+
   const { t } = useTranslation()
   const [wardOption, setWardOption] = useState<OptionType[]>([])
   const [initialRegistrationBookValue, setInitialRegistrationBookValue] =
@@ -146,7 +149,6 @@ const AddRegistrationBook = () => {
       subjectOfLetter,
       wardNumber,
       documents: uploadedDocumentData,
-      moduleId: 56,
       id: id || undefined,
     }
 
@@ -421,7 +423,7 @@ const AddRegistrationBook = () => {
         </form>
 
         <DocumentsUpload
-          moduleId={'56'}
+          moduleId={currentModuleDetails?.id || ''}
           canUploadMultipleFile
           setIsAllRequiredDocumentUploaded={setIsAllRequiredDocumentUploaded}
           setUploadedDocumentData={setUploadedDocumentData}
