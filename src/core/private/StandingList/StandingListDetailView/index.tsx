@@ -20,7 +20,7 @@ const StandingListDetailView = () => {
   const params = useParams()
   const registrationBookId = decodeParams<string>(params?.id)
 
-  const { data: standingListDetails } =
+  const { data: standingListDetails, isLoading } =
     useGetStandingListDetailById(registrationBookId)
 
   const navigateToBookList = () => {
@@ -139,6 +139,7 @@ const StandingListDetailView = () => {
             />
           </Grid>
           <ViewUploadedFiles
+            loading={isLoading}
             documentList={standingListDetails?.documentList || []}
             viewControllerName={
               apiDetails.downloadDocumentForStandingList.controllerName

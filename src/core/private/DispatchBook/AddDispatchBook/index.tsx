@@ -505,17 +505,19 @@ const AddDispatchBook = (props: Partial<IRoutePrivilege>) => {
           </Grid>
         </form>
 
-        <DocumentsUpload
-          moduleId={currentModuleDetails?.id || ''}
-          canUploadMultipleFile
-          setIsAllRequiredDocumentUploaded={setIsAllRequiredDocumentUploaded}
-          setUploadedDocumentData={setUploadedDocumentData}
-          documentList={dispatchBookDetails?.documentList}
-          viewControllerName={
-            apiDetails.downloadDocumentForDispatchBook.controllerName
-          }
-          deleteAPIDetails={apiDetails.deleteDocumentForDispatchBook}
-        />
+        {currentModuleDetails?.id && (
+          <DocumentsUpload
+            moduleId={currentModuleDetails.id}
+            canUploadMultipleFile
+            setIsAllRequiredDocumentUploaded={setIsAllRequiredDocumentUploaded}
+            setUploadedDocumentData={setUploadedDocumentData}
+            documentList={dispatchBookDetails?.documentList}
+            viewControllerName={
+              apiDetails.downloadDocumentForDispatchBook.controllerName
+            }
+            deleteAPIDetails={apiDetails.deleteDocumentForDispatchBook}
+          />
+        )}
       </ContainerLayout>
 
       <Box className="mb-6 w-full border-2 pb-6 text-right">

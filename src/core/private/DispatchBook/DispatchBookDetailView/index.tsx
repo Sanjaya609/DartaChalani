@@ -19,7 +19,7 @@ const DispatchBookDetailView = () => {
   const params = useParams()
   const dispatchBookId = decodeParams<string>(params?.id)
 
-  const { data: dispatchBookDetails } =
+  const { data: dispatchBookDetails, isLoading } =
     useGetDispatchBookDetailById(dispatchBookId)
 
   const navigateToBookList = () => {
@@ -147,6 +147,7 @@ const DispatchBookDetailView = () => {
             />
           </Grid>
           <ViewUploadedFiles
+            loading={isLoading}
             documentList={dispatchBookDetails?.documentList || []}
             viewControllerName={
               apiDetails.downloadDocumentForDispatchBook.controllerName
