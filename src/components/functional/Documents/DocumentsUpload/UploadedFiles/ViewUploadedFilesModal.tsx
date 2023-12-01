@@ -1,16 +1,15 @@
 import DocImage from '@/assets/img/document.png'
+import AuthFile from '@/components/AuthFile/AuthFile'
 import { Grid, Icon } from '@/components/ui'
 import Badge from '@/components/ui/Badge/Badge'
-import ImageWithSrc from '@/components/ui/core/Image/ImageWithSrc'
 import Modal from '@/components/ui/Modal/Modal'
+import ImageWithSrc from '@/components/ui/core/Image/ImageWithSrc'
 import { handleViewOrDownload, isImageFile } from '@/utility/file'
 import { getTruncatedFileNameByLength } from '@/utility/utility'
 import { Eye, X } from 'phosphor-react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { FileData } from '../document-upload.interface'
-import { IDocumentResponse } from '@/shared/shared.interface'
-import AuthFile from '@/components/AuthFile/AuthFile'
 
 const imgWidthWithLength = {
   1: 'sm:col-span-12',
@@ -70,6 +69,8 @@ const ViewUploadedFilesModal = (props: IViewUploadedFilesModalProps) => {
       <Grid sm={'sm:grid-cols-12'} gap="gap-4" className="w-full">
         {fileWithObjectSrc.map((fileData) => {
           const fileExt = fileData.file?.name.split('.').pop() || ''
+          const uploadedDocumentFileExt =
+            fileData.documentName.split('.').pop() || ''
           return (
             <Grid.Col
               key={fileData.uuid}
@@ -129,8 +130,16 @@ const ViewUploadedFilesModal = (props: IViewUploadedFilesModalProps) => {
                       </div>
                     </div>
                   </>
+                ) : isImageFile(uploadedDocumentFileExt) ? (
+                  <AuthFile.Image
+                    key={fileData?.uuid}
+                    controllerName={controllerName || ''}
+                    fileData={fileData}
+                    className="flex h-full items-center justify-center"
+                  />
                 ) : (
                   <AuthFile
+                    key={fileData?.uuid}
                     controllerName={controllerName || ''}
                     fileData={fileData}
                     className="flex h-full items-center justify-center"
