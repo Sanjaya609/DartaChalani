@@ -342,7 +342,7 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
         },
       },
       {
-        header: 'Actions',
+        header: t('actions'),
         cell: ({ row: { original } }) => {
           const {
             documentTypeResponse: { allowedFileTypes, id },

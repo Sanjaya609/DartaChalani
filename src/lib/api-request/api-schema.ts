@@ -89,7 +89,6 @@ export const getRequestHeaders = (apiDetails: ApiDetailType) => {
     default:
       headers = { ...headers }
   }
-  // console.log(headers,'headers')
   return headers
 }
 

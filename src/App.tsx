@@ -16,8 +16,6 @@ function App() {
     isAuthenticated ? privateRoutes : publicRoutes
   )
 
-  console.log({ authProps })
-
   return <RouterProvider router={router} />
 }
 

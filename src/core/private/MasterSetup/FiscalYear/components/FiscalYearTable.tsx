@@ -160,6 +160,7 @@ const FiscalYearTable = (props: IFiscalYearTableProps) => {
       },
       {
         header: t('actions'),
+        sticky: 'right',
         cell: ({ row: { original } }) => (
           <TableAction
             handleEditClick={() => {

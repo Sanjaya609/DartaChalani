@@ -93,6 +93,7 @@ const Office = (props: IOfficeProps) => {
       },
       {
         header: t('actions'),
+        sticky: 'right',
         cell: ({ row: { original } }) => (
           <TableAction
             handleEditClick={() => {

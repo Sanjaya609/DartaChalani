@@ -89,6 +89,7 @@ const SectorTable = (props: ISectorTableProps) => {
       },
       {
         header: t('actions'),
+        sticky: 'right',
         cell: ({ row: { original } }) => (
           <TableAction
             handleEditClick={() => {
