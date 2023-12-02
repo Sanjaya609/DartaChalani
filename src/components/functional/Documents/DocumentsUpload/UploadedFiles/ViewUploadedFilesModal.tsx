@@ -71,6 +71,7 @@ const ViewUploadedFilesModal = (props: IViewUploadedFilesModalProps) => {
           const fileExt = fileData.file?.name.split('.').pop() || ''
           const uploadedDocumentFileExt =
             fileData.documentName.split('.').pop() || ''
+
           return (
             <Grid.Col
               key={fileData.uuid}

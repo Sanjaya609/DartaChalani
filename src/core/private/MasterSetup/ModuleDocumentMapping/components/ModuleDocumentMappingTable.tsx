@@ -109,6 +109,7 @@ const ModuleDocumentMappingTable = (
       // },
       {
         header: t('actions'),
+        sticky: 'right',
         cell: ({ row: { original } }) => (
           <TableAction
             handleEditClick={() => {

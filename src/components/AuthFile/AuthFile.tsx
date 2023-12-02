@@ -17,6 +17,7 @@ import toast, { ToastType } from '../functional/ToastNotifier/ToastNotifier'
 import { Box, Icon } from '../ui'
 import ImageWithSrc from '../ui/core/Image/ImageWithSrc'
 import { Spinner } from '../ui/Spinner'
+import { isImageFile } from '@/utility/file'
 
 const browser = Browser.getParser(window.navigator.userAgent)
 const isChrome = browser.getBrowser().name === 'Chrome'
@@ -91,11 +92,12 @@ export default function AuthFile(props: AuthFileBaseProps) {
         params: { fileName: fileData.uuid },
       })
       setloading(false)
+      return data
     } catch (errordata) {
       data = errordata
       setloading(false)
+      throw data
     }
-    return data
   }
 
   const handleAction = async (
@@ -105,48 +107,48 @@ export default function AuthFile(props: AuthFileBaseProps) {
     if (!loading) {
       if (link?.current?.href) return
 
-      const blob: any = await getFile()
+      try {
+        const blob: any = await getFile()
 
-      if (!(blob.data instanceof Blob)) {
-        toast({
-          type: ToastType.error,
-          message: `Failed to get the document ${fileData.documentName}`,
-        })
-        return
-      }
-
-      if (download) {
-        downloadFile(blob.data, fileData.documentName, blob.data.type)
-      } else {
-        if (window.URL) {
-          const href = URL.createObjectURL(blob.data)
-          setobjectUrl((oldObject) => {
-            URL.revokeObjectURL(oldObject)
-
-            return href
+        if (!(blob.data instanceof Blob)) {
+          toast({
+            type: ToastType.error,
+            message: `Failed to get the document ${fileData.documentName}`,
           })
+          return
+        }
 
-          if (mobile) {
-            if (isChrome || isOpera || isFirefox) {
-              window.open(href, '_target')
+        if (download) {
+          downloadFile(blob.data, fileData.documentName, blob.data.type)
+        } else {
+          if (window.URL) {
+            const href = URL.createObjectURL(blob.data)
+            setobjectUrl((oldObject) => {
+              URL.revokeObjectURL(oldObject)
+
+              return href
+            })
+
+            if (mobile) {
+              if (isChrome || isOpera || isFirefox) {
+                window.open(href, '_target')
+              } else {
+                downloadFile(blob.data, fileData.documentName, blob.data.type)
+              }
             } else {
-              downloadFile(blob.data, fileData.documentName, blob.data.type)
+              window.open(href, '_target')
             }
           } else {
-            window.open(href, '_target')
+            downloadFile(blob.data, fileData.documentName, blob.data.type)
           }
-        } else {
-          downloadFile(blob.data, fileData.documentName, blob.data.type)
         }
+      } catch (err) {
+        console.log(err)
       }
     }
   }
 
-  const fileExt = fileData.documentName
-    ? fileData.documentName.split('.')[
-        fileData.documentName.split('.').length - 1
-      ]
-    : ''
+  const fileExt = fileData?.documentName?.split('.').pop() || ''
 
   useEffect(() => {
     link.current?.removeAttribute('href')
@@ -164,7 +166,7 @@ export default function AuthFile(props: AuthFileBaseProps) {
   return (
     <Box className={computedClassName}>
       <>
-        {['jpg', 'jpeg', 'png', 'bmp'].includes(fileExt.toLowerCase()) &&
+        {isImageFile(fileExt) &&
           (iconOnly ? (
             <a
               role="button"
@@ -182,7 +184,7 @@ export default function AuthFile(props: AuthFileBaseProps) {
           ) : (
             <Image size={100} />
           ))}
-        {!['jpg', 'jpeg', 'png', 'bmp'].includes(fileExt.toLowerCase()) &&
+        {!isImageFile(fileExt) &&
           (iconOnly ? (
             <a
               role="button"

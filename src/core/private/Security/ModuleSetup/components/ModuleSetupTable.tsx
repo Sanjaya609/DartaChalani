@@ -54,7 +54,7 @@ const ModuleSetupTable = () => {
       },
       {
         accessorKey: 'isActive',
-        header: 'is Active?',
+        header: t('security.module.status'),
         cell: ({ row: { original } }) => (
           <Switch
             checked={original.isActive}
@@ -66,7 +66,8 @@ const ModuleSetupTable = () => {
       },
 
       {
-        header: 'Actions',
+        header: t('actions'),
+        sticky: 'right',
         cell: ({ row: { original } }) => {
           const {
             id,

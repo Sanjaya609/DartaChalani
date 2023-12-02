@@ -83,6 +83,7 @@ const ServiceType = (props: IServiceTypeProps) => {
       },
       {
         header: t('actions'),
+        sticky: 'right',
         cell: ({ row: { original } }) => (
           <TableAction
             handleEditClick={() => {
