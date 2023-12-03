@@ -5,4 +5,6 @@ export interface ISidebarItem {
   path: ValueOf<typeof privateRoutePath>
   children?: ISidebarItem[]
   bypass?: boolean
+  titleEn?: string
+  titleNp?: string
 }

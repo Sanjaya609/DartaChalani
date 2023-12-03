@@ -51,6 +51,7 @@ interface IDocumentsUploadProps {
     queryKeyName: string
     requestMethod: RequestMethod
   }
+  className?: string
 }
 
 const flatDocDataForPayload = (files: FileStateFile) => {
@@ -74,6 +75,7 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
     documentList,
     viewControllerName = '',
     deleteAPIDetails,
+    className = '',
   } = props
   const [fileState, setFileState] = useState<IFileState>({
     files: {},
@@ -342,7 +344,7 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
         },
       },
       {
-        header: 'Actions',
+        header: t('actions'),
         cell: ({ row: { original } }) => {
           const {
             documentTypeResponse: { allowedFileTypes, id },
@@ -447,7 +449,7 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
 
   return (
     <>
-      <div className="">
+      <div className={className}>
         <div className="mt-4">
           <Text variant="h5" typeface="semibold">
             {t('document.title')}

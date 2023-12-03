@@ -32,6 +32,7 @@ import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { getComputedClassNames } from '@/utility/tailwind/tailwind-utility'
 import DataLoading from './Components/DataLoading'
+import styles from './Components/Table/table.module.css'
 
 interface IHeaderAdd {
   title?: string
@@ -206,7 +207,7 @@ const NormalDataTable = <TData extends RowData>({
       )}
 
       <Flexbox className="h-full w-full flex-col">
-        <Box className={tableBaseStyle}>
+        <Box className={`${tableBaseStyle} ${styles.stickyTable}`}>
           <FixedHeightTable withScrollable={withScrollable}>
             <table className={tableMainStyle}>
               <TableHeader

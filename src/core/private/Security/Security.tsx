@@ -2,11 +2,14 @@ import Sidebar from '@/components/functional/MainSidebar/Sidebar/Sidebar'
 import { ISidebarItem } from '@/components/functional/MainSidebar/Sidebar/sidebar.interface'
 import { Layout } from '@/components/ui'
 import { privateRoutePath } from '@/router'
+import { IRoutePrivilege } from '@/router/routes/create-route'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Outlet } from 'react-router-dom'
 
-const Security = () => {
+const Security = (props: Partial<IRoutePrivilege>) => {
+  const { currentModuleDetails } = props
+
   const { t } = useTranslation()
   const sideBarItem = useMemo<ISidebarItem[]>(
     () => [
@@ -32,7 +35,10 @@ const Security = () => {
 
   return (
     <Layout.Flex>
-      <Sidebar sideBarItem={sideBarItem} />
+      <Sidebar
+        sideBarItem={sideBarItem}
+        currentPath={currentModuleDetails?.url}
+      />
       <Outlet />
     </Layout.Flex>
   )

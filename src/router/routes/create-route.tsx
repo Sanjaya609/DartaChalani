@@ -5,7 +5,7 @@ import { _RouteObject } from 'react-router-dom'
 // import { toast } from 'react-toastify'
 import ErrorBoundary from '@/components/ErrorBoundary/ErrorBoundary'
 import FallbackLoader from '@/components/FallbackLoader'
-import { PRIVILEGEENUM } from '@/utility/enums/privilege.enum'
+import { IPRIVILEGEENUM, PRIVILEGEENUM } from '@/utility/enums/privilege.enum'
 import { useAuth } from '@/providers'
 import NotFound from '@/core/NotFound'
 import { Text } from '@/components/ui/core/Text'
@@ -20,7 +20,7 @@ export interface CreateRoute<Type extends RouteType>
 }
 
 export interface IRoutePrivilege {
-  routePrivilege: Partial<Record<PRIVILEGEENUM, boolean>>
+  routePrivilege: IPRIVILEGEENUM
   currentModuleDetails?: IModulePropsFromURL
 }
 interface IPermissionProps {

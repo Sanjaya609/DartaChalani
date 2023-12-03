@@ -74,6 +74,7 @@ const RegistrationBookTable = () => {
       },
       {
         header: t('actions'),
+        sticky: 'right',
         cell: ({
           row: {
             original: { id },

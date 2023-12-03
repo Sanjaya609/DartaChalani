@@ -243,12 +243,6 @@ const AddDispatchBook = (props: Partial<IRoutePrivilege>) => {
               />
             </Grid.Col>
 
-            <Grid.Col sm={'sm:col-span-12'}>
-              <Text variant="h5" typeface="semibold">
-                {t('dispatchBook.letterDetails')}
-              </Text>
-            </Grid.Col>
-
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Input
                 value={
@@ -284,6 +278,12 @@ const AddDispatchBook = (props: Partial<IRoutePrivilege>) => {
                 }}
                 onBlur={handleBlur}
               />
+            </Grid.Col>
+
+            <Grid.Col sm={'sm:col-span-12'} className="mt-6">
+              <Text variant="h5" typeface="semibold">
+                {t('dispatchBook.letterDetails')}
+              </Text>
             </Grid.Col>
 
             <Grid.Col sm={'sm:col-span-12'}>
@@ -348,7 +348,6 @@ const AddDispatchBook = (props: Partial<IRoutePrivilege>) => {
                 value={values.letterCarrierName}
                 errors={errors}
                 touched={touched}
-                isRequired
                 name="letterCarrierName"
                 label={t('dispatchBook.letterCarrierName')}
                 onChange={handleChange}
@@ -361,7 +360,6 @@ const AddDispatchBook = (props: Partial<IRoutePrivilege>) => {
                 value={values.letterCarrierContact}
                 errors={errors}
                 touched={touched}
-                isRequired
                 name="letterCarrierContact"
                 label={t('dispatchBook.letterCarrierContact')}
                 onChange={handleChange}
@@ -374,7 +372,6 @@ const AddDispatchBook = (props: Partial<IRoutePrivilege>) => {
                 value={values.physicalFileLocation}
                 errors={errors}
                 touched={touched}
-                isRequired
                 name="physicalFileLocation"
                 label={t('dispatchBook.physicalFileLocation')}
                 onChange={handleChange}
@@ -391,13 +388,11 @@ const AddDispatchBook = (props: Partial<IRoutePrivilege>) => {
                 label={t('dispatchBook.letterToSection')}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                isRequired
               />
             </Grid.Col>
 
             <Grid.Col sm={'sm:col-span-6'}>
               <Form.TextArea
-                isRequired
                 value={values.remarks}
                 errors={errors}
                 touched={touched}
@@ -408,7 +403,7 @@ const AddDispatchBook = (props: Partial<IRoutePrivilege>) => {
               />
             </Grid.Col>
 
-            <Grid.Col sm={'sm:col-span-12'}>
+            <Grid.Col sm={'sm:col-span-12'} className="mt-6">
               <Text variant="h5" typeface="semibold">
                 {t('dispatchBook.locationDetails')}
               </Text>
@@ -487,7 +482,6 @@ const AddDispatchBook = (props: Partial<IRoutePrivilege>) => {
 
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Select
-                isRequired
                 options={wardOption}
                 isLoading={localBodyListFetching}
                 calculateValueOnChange
@@ -507,6 +501,7 @@ const AddDispatchBook = (props: Partial<IRoutePrivilege>) => {
 
         {currentModuleDetails?.id && (
           <DocumentsUpload
+            className="mt-6"
             moduleId={currentModuleDetails.id}
             canUploadMultipleFile
             setIsAllRequiredDocumentUploaded={setIsAllRequiredDocumentUploaded}

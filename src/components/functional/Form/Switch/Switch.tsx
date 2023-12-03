@@ -16,7 +16,9 @@ const Switch = forwardRef<HTMLInputElement, ISwitchProps>((props, ref) => {
           type="checkbox"
           className="peer sr-only"
         />{' '}
-        <div className="dot absolute left-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-white transition peer-checked:translate-x-[100%] peer-checked:bg-navy-40">
+        <div
+          className={`dot peer-disabled:n absolute left-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-white transition peer-checked:translate-x-[100%] peer-checked:bg-navy-40 `}
+        >
           <span className="active hidden">
             <svg
               width="11"
@@ -51,7 +53,7 @@ const Switch = forwardRef<HTMLInputElement, ISwitchProps>((props, ref) => {
             </span>
           )} */}
         </div>
-        <div className="block h-8 w-14 rounded-full bg-[#E5E7EB]"></div>
+        <div className="block h-8 w-14 rounded-full bg-[#E5E7EB] peer-disabled:cursor-not-allowed peer-disabled:opacity-75"></div>
       </div>
     </label>
   )

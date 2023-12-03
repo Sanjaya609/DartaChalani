@@ -1,0 +1,19 @@
+.stickyTable {
+  [data-sticky-td] {
+    position: sticky;
+  }
+
+  [data-sticky-last-left-td] {
+    --tw-shadow: -2px -1px 0 0 #ccc inset;
+    --tw-shadow-colored: inset 2px -1px 0 0 var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+      var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  }
+
+  [data-sticky-first-right-td] {
+    --tw-shadow: 2px -1px 0 0 #ccc inset;
+    --tw-shadow-colored: inset 2px -1px 0 0 var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+      var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  }
+}

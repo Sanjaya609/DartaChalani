@@ -18,18 +18,62 @@ const TableHeader = <TData extends RowData>({
   const computedHeaderBaseStyle = getComputedClassNames(tableHeaderBaseStyle, {
     [tableHeaderThStickyStyle]: !!withScrollable,
   })
+
+  let lastHeaderStart = 0
+
   return (
     <thead className={computedHeaderBaseStyle}>
       {headerGroup().map((headerContent) => (
         <tr key={headerContent.id}>
-          {headerContent.headers.map((header) => {
+          {headerContent.headers.map((header, index, headers) => {
+            const hasSticky =
+              (header.column.columnDef as any)?.sticky &&
+              ((header.column.columnDef as any)?.sticky === 'left' ||
+                (header.column.columnDef as any)?.sticky === 'right')
+            const stickyValue = (header.column.columnDef as any)?.sticky
+            const isLastLeftChildSticky =
+              hasSticky && stickyValue === 'left'
+                ? !(
+                    (headers[index + 1]?.column?.columnDef as any)?.sticky ===
+                    'left'
+                  ) || null
+                : null
+
+            const isFirstRigthChildSticky =
+              hasSticky && stickyValue === 'right'
+                ? !(
+                    (headers[index - 1]?.column?.columnDef as any)?.sticky ===
+                    'right'
+                  ) || null
+                : null
+
             return (
               <th
+                data-sticky-td={hasSticky || null}
+                data-sticky-last-left-td={isLastLeftChildSticky}
+                data-sticky-first-right-td={isFirstRigthChildSticky}
                 key={header.id}
                 colSpan={header.colSpan}
                 className={`${tableHeaderThStyle} ${
                   header.id === 'Sn' ? 'w-24' : ''
-                }`}
+                } ${hasSticky ? 'bg-gray-92' : ''} `}
+                style={
+                  hasSticky
+                    ? stickyValue === 'left'
+                      ? {
+                          left: header.getStart(),
+                          zIndex: 4,
+                          minWidth: header.getSize(),
+                        }
+                      : {
+                          right:
+                            headers[headers.length - 1].getStart() -
+                            header.getStart(),
+                          zIndex: 4,
+                          minWidth: header.getSize(),
+                        }
+                    : {}
+                }
               >
                 {header.isPlaceholder ? null : (
                   <button
