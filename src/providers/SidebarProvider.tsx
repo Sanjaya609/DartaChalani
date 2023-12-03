@@ -1,10 +1,9 @@
-import React, { useContext } from 'react'
-import { useAuth } from './AuthProvider'
 import {
   ISidebarNavList,
   sidebarNavList,
 } from '@/components/functional/MainSidebar/sidebar.data'
-import { PRIVILEGEENUM } from '@/utility/enums/privilege.enum'
+import React, { useContext } from 'react'
+import { useAuth } from './AuthProvider'
 
 interface ISidebarContext {
   isOpen: boolean
@@ -25,12 +24,18 @@ export const SidebarProvider = ({ children }: Props) => {
   const [isOpen, setIsOpen] = React.useState(false)
   const { flatModulePropsFromURL } = useAuth()
   const privilegedSidebarNavList = React.useMemo(() => {
-    return sidebarNavList.filter((navList) => {
-      return !!navList?.bypass || flatModulePropsFromURL?.[navList.path]
-        ? !flatModulePropsFromURL?.[navList.path]?.isConfigurable ||
-            flatModulePropsFromURL?.[navList?.path]?.resourceResponses?.length
-        : false
-    })
+    return sidebarNavList
+      .filter((navList) => {
+        return !!navList?.bypass || flatModulePropsFromURL?.[navList.path]
+          ? !flatModulePropsFromURL?.[navList.path]?.isConfigurable ||
+              flatModulePropsFromURL?.[navList?.path]?.resourceResponses?.length
+          : false
+      })
+      .map((navList) => ({
+        ...navList,
+        titleEn: flatModulePropsFromURL?.[navList.path]?.moduleNameEnglish,
+        titleNp: flatModulePropsFromURL?.[navList.path]?.moduleNameNepali,
+      }))
   }, [flatModulePropsFromURL])
 
   const contextValue = React.useMemo(

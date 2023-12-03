@@ -6,6 +6,8 @@ import {
   tableActionWrapper,
 } from '@/components/functional/Table/Components/Table/table.schema'
 import { Box, Button } from '@/components/ui'
+import { defaultPrivilegeEnum } from '@/hooks/useGetPrivilegeByPath'
+import { IPRIVILEGEENUM, PRIVILEGEENUM } from '@/utility/enums/privilege.enum'
 import { Eye, Gear, PencilSimple, TrashSimple } from 'phosphor-react'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
@@ -16,6 +18,7 @@ interface ActionProps {
   handleViewClick?: () => void
   handleConfigureClick?: () => void
   otherActionsComp?: React.ReactNode
+  privilege?: IPRIVILEGEENUM
 }
 
 function TableAction(props: ActionProps) {
@@ -25,11 +28,36 @@ function TableAction(props: ActionProps) {
     handleDeleteClick,
     handleViewClick,
     handleConfigureClick,
+    privilege: propsPrivilege,
   } = props
+
+  const privilege = {
+    ...propsPrivilege,
+  }
+
+  // for bypassing the permissions
+
+  const byPassPermissionAccess =
+    process.env.NODE_ENV === 'production'
+      ? false
+      : import.meta.env.VITE_BYPASS_PERMISSION === 'true'
+  if (byPassPermissionAccess) {
+    let i: keyof typeof privilege
+    for (i in privilege) {
+      privilege[i] = true
+    }
+  }
+
+  if (!('privilege' in props)) {
+    let i: keyof typeof privilege
+    for (i in defaultPrivilegeEnum) {
+      privilege[i] = true
+    }
+  }
 
   return (
     <ul className={tableActionWrapper}>
-      {handleViewClick && (
+      {handleViewClick && !!privilege?.READ && (
         <li className={tableActionList}>
           <span className="group relative " onClick={() => handleViewClick?.()}>
             <Eye className={tableActionIcon} />
@@ -40,7 +68,7 @@ function TableAction(props: ActionProps) {
         </li>
       )}
 
-      {handleEditClick && (
+      {handleEditClick && !!privilege?.UPDATE && (
         <li className={tableActionList}>
           <span className="group relative" onClick={() => handleEditClick?.()}>
             <PencilSimple className={tableActionIcon} />
@@ -54,7 +82,7 @@ function TableAction(props: ActionProps) {
         </li>
       )}
 
-      {handleDeleteClick && (
+      {handleDeleteClick && !!privilege?.DELETE && (
         <li className={tableActionList}>
           <span
             className="group relative"

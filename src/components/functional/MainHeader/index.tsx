@@ -54,7 +54,7 @@ const MainHeader = () => {
                   justify="space-between"
                   className="w-full"
                 >
-                  <Text>Logout</Text>
+                  <Text>{t('btns.logout')}</Text>
                   <Icon icon={LogOut} />
                 </Flexbox>
               </Dropdown.DropdownMenuItem>

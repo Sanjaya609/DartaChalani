@@ -14,7 +14,7 @@ const OverLayIcon = () => (
   <svg
     stroke="currentColor"
     fill="#fff"
-    stroke-width="0"
+    strokeWidth="0"
     viewBox="0 0 16 16"
     height="1em"
     width="1em"

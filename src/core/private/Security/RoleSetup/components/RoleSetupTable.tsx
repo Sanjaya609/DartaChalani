@@ -10,8 +10,10 @@ import {
   RoleSetupTableData,
 } from '../schema/roleSetup.interface'
 import { useChangeRoleStatus, useGetAllRole } from '../services/roleSetup.query'
-import { privateRoutePath, useNavigate } from '@/router'
+import { privateRoutePath, routePaths, useNavigate } from '@/router'
 import { encodeParams } from '@/utility/route-params'
+import { PRIVILEGEENUM } from '@/utility/enums/privilege.enum'
+import useGetPrivilegeByPath from '@/hooks/useGetPrivilegeByPath'
 
 interface RoleSetupTableProps {
   initialValues: RoleSetupFormSchema
@@ -20,12 +22,14 @@ interface RoleSetupTableProps {
 
 const ActionComponent = (
   row: RoleSetupTableData,
-  setInitialValues: React.Dispatch<React.SetStateAction<RoleSetupFormSchema>>
+  setInitialValues: React.Dispatch<React.SetStateAction<RoleSetupFormSchema>>,
+  privilege: Record<PRIVILEGEENUM, boolean>
 ) => {
   const { id, roleNameEnglish, roleNameNepali, roleType, description } = row
   const navigate = useNavigate()
   return (
     <TableAction
+      privilege={{ ...privilege, UPDATE: !!privilege.CREATE }}
       handleEditClick={() => {
         setInitialValues({
           id,
@@ -35,13 +39,21 @@ const ActionComponent = (
           description,
         })
       }}
-      handleConfigureClick={() => {
-        navigate(privateRoutePath.security.roleModuleMapping, {
-          params: {
-            roleData: encodeParams({ roleNameEnglish, roleNameNepali, id }),
-          },
-        })
-      }}
+      handleConfigureClick={
+        privilege?.CREATE
+          ? () => {
+              navigate(privateRoutePath.security.roleModuleMapping, {
+                params: {
+                  roleData: encodeParams({
+                    roleNameEnglish,
+                    roleNameNepali,
+                    id,
+                  }),
+                },
+              })
+            }
+          : undefined
+      }
     />
   )
 }
@@ -51,6 +63,7 @@ const RoleSetupTable = ({
   setInitialValues,
 }: RoleSetupTableProps) => {
   const { data: roleList, isLoading } = useGetAllRole()
+  const privilege = useGetPrivilegeByPath(routePaths.security.roleManagement)
 
   const { t } = useTranslation()
   const { mutate: changeRoleStatus, isLoading: changeRoleStatusLoading } =
@@ -78,6 +91,7 @@ const RoleSetupTable = ({
         header: t('security.roleSetup.status'),
         cell: ({ row: { original } }) => (
           <Switch
+            disabled={!privilege?.UPDATE}
             checked={original.isActive}
             onChange={() => {
               setOrRemoveCurrentSelectedId(original.id)
@@ -90,7 +104,7 @@ const RoleSetupTable = ({
         header: t('actions'),
         sticky: 'right',
         cell: ({ row: { original } }) => {
-          return ActionComponent(original, setInitialValues)
+          return ActionComponent(original, setInitialValues, privilege)
         },
       },
     ],
