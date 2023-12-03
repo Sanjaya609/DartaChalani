@@ -1,4 +1,5 @@
 import { Icon } from '@/components/ui'
+import { getTextByLanguage } from '@/lib/i18n/i18n'
 import { useSideBarData } from '@/providers/SidebarProvider'
 import { Link, useLocation } from '@/router'
 import { TFuncKey } from 'i18next'
@@ -18,7 +19,11 @@ const MainSidebar = () => {
             return (
               <Link
                 key={nav.path}
-                title={t(nav.title) as TFuncKey<'translation'>}
+                title={
+                  nav?.titleEn
+                    ? getTextByLanguage(nav?.titleEn || '', nav?.titleNp || '')
+                    : (t(nav.title) as TFuncKey<'translation'>)
+                }
                 className={`flex w-full cursor-pointer justify-center py-4 hover:bg-primary ${
                   isActive ? 'bg-primary' : ''
                 }`}

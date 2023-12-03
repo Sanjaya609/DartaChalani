@@ -10,6 +10,8 @@ export interface ISidebarNavList {
   path: ValueOf<typeof privateRoutePath>
   title: TFuncKey<'translation'>
   bypass?: boolean
+  titleEn?: string
+  titleNp?: string
 }
 
 export const sidebarNavList: ISidebarNavList[] = [

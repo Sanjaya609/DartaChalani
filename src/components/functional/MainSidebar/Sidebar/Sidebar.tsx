@@ -13,35 +13,55 @@ import {
   sidebarCollapseTriggerStyle,
   sidebarLinkStyle,
 } from './sidebar.styles'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useAuth } from '@/providers'
 import { PRIVILEGEENUM } from '@/utility/enums/privilege.enum'
+import { getTextByLanguage } from '@/lib/i18n/i18n'
+import { useNavigate } from 'react-router-dom'
 
 interface ISidebarProps {
   sideBarItem: ISidebarItem[]
+  currentPath?: string
 }
 
 const Sidebar = (props: ISidebarProps) => {
-  const { sideBarItem } = props
+  const { sideBarItem, currentPath } = props
   const computedSidebarLinkStyle = getComputedClassNames(sidebarLinkStyle)
   const computedCollapseSidebarLinkStyle =
     getComputedClassNames(sidebarLinkStyle)
 
   const location = useLocation()
   const { flatModulePropsFromURL } = useAuth()
+  const navigate = useNavigate()
 
   const privilegeSideBarItem = useMemo(
     () =>
-      sideBarItem.filter((navList) => {
-        return !!navList?.bypass || flatModulePropsFromURL?.[navList.path]
-          ? !flatModulePropsFromURL?.[navList.path]?.isConfigurable ||
-              !!flatModulePropsFromURL?.[navList?.path]?.resourceResponses
-                ?.length
-          : false
-      }),
+      sideBarItem
+        .filter((navList) => {
+          return !!navList?.bypass || flatModulePropsFromURL?.[navList.path]
+            ? !flatModulePropsFromURL?.[navList.path]?.isConfigurable ||
+                !!flatModulePropsFromURL?.[navList?.path]?.resourceResponses
+                  ?.length
+            : false
+        })
+        .map((navList) => ({
+          ...navList,
+          titleEn: flatModulePropsFromURL?.[navList.path]?.moduleNameEnglish,
+          titleNp: flatModulePropsFromURL?.[navList.path]?.moduleNameNepali,
+        })),
     []
   )
 
+  useEffect(() => {
+    if (
+      location.pathname === currentPath ||
+      location.pathname === `${currentPath}/`
+    ) {
+      if (privilegeSideBarItem.length) {
+        navigate(privilegeSideBarItem[0].path)
+      }
+    }
+  }, [privilegeSideBarItem, navigate, location.pathname])
   return (
     <aside className={sideBarAsideWrapper}>
       {privilegeSideBarItem.map((sidebar) => {
@@ -52,7 +72,12 @@ const Sidebar = (props: ISidebarProps) => {
             <Collapse className={computedCollapseSidebarLinkStyle}>
               <CollapsibleTrigger className={sidebarCollapseTriggerStyle}>
                 <Text variant="subtitle2" className="text-white">
-                  {sidebar.title}
+                  {sidebar?.titleEn
+                    ? getTextByLanguage(
+                        sidebar?.titleEn || '',
+                        sidebar?.titleNp || ''
+                      )
+                    : sidebar.title}
                 </Text>
                 <Icon className="text-white" icon={CaretDown} size={16}></Icon>
               </CollapsibleTrigger>
@@ -71,13 +96,19 @@ const Sidebar = (props: ISidebarProps) => {
         }
         return (
           <Link
+            key={sidebar.path}
             className={`${computedSidebarLinkStyle} ${
               isActive ? 'bg-navy-24' : ''
             }`}
             to={sidebar.path}
           >
             <Text variant="subtitle2" className="text-white">
-              {sidebar.title}
+              {sidebar?.titleEn
+                ? getTextByLanguage(
+                    sidebar?.titleEn || '',
+                    sidebar?.titleNp || ''
+                  )
+                : sidebar.title}
             </Text>
           </Link>
         )

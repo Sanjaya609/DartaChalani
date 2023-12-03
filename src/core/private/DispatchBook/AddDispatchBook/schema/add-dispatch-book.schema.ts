@@ -35,19 +35,13 @@ export const addDispatchBookValidationSchema = Yup.object({
   letterReceiverAddress: Yup.string().required(
     'dispatchBook.errors.letterReceiverAddress'
   ),
-  letterCarrierName: Yup.string().required(
-    'dispatchBook.errors.letterCarrierName'
-  ),
-  letterCarrierContact: Yup.string().required(
-    'dispatchBook.errors.letterCarrierContact'
-  ),
-  letterToSection: Yup.string().required('dispatchBook.errors.letterToSection'),
-  physicalFileLocation: Yup.string().required(
-    'dispatchBook.errors.physicalFileLocation'
-  ),
-  remarks: Yup.string().required('dispatchBook.errors.remarks'),
+  letterCarrierName: Yup.string().nullable(),
+  letterCarrierContact: Yup.string().nullable(),
+  letterToSection: Yup.string().nullable(),
+  physicalFileLocation: Yup.string().nullable(),
+  remarks: Yup.string().nullable(),
   localBodyId: Yup.string().required('dispatchBook.errors.localBodyId'),
-  wardNumber: Yup.string().required('dispatchBook.errors.wardNumber'),
+  wardNumber: Yup.string().nullable(),
   provinceId: Yup.string().required('dispatchBook.errors.provinceId'),
   districtId: Yup.string().required('dispatchBook.errors.districtId'),
 })

@@ -11,3 +11,7 @@ export enum PRIVILEGEENUM {
   BACK_FOR_REVIEW = 'BACK_FOR_REVIEW',
   REJECT = 'REJECT',
 }
+
+export type IPRIVILEGEENUM = {
+  [key in PRIVILEGEENUM]?: boolean | null | undefined
+}
