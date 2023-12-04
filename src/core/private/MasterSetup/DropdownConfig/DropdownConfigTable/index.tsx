@@ -50,6 +50,7 @@ const DropdownConfigTable = ({
       {
         header: t('actions'),
         sticky: 'right',
+        id: 'action',
         cell: ({
           row: {
             original: { id },

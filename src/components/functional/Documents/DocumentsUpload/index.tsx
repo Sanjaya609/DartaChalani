@@ -52,6 +52,7 @@ interface IDocumentsUploadProps {
     requestMethod: RequestMethod
   }
   className?: string
+  title?: string
 }
 
 const flatDocDataForPayload = (files: FileStateFile) => {
@@ -76,6 +77,7 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
     viewControllerName = '',
     deleteAPIDetails,
     className = '',
+    title,
   } = props
   const [fileState, setFileState] = useState<IFileState>({
     files: {},
@@ -452,7 +454,7 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
       <div className={className}>
         <div className="mt-4">
           <Text variant="h5" typeface="semibold">
-            {t('document.title')}
+            {title || t('document.title')}
           </Text>
         </div>
 

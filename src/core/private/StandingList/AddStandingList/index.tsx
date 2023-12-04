@@ -35,6 +35,7 @@ import {
   useGetStandingListDetailById,
 } from './services/standing-list.query'
 import { IRoutePrivilege } from '@/router/routes/create-route'
+import { inputChangeNumberOnly } from '@/utility/inputUtils/input-change-utils'
 
 const StandingList = (props: Partial<IRoutePrivilege>) => {
   const { currentModuleDetails } = props
@@ -343,7 +344,12 @@ const StandingList = (props: Partial<IRoutePrivilege>) => {
                 touched={touched}
                 name="contactNumber"
                 label={t('standingList.contactNumber')}
-                onChange={handleChange}
+                onChange={(event) => {
+                  inputChangeNumberOnly({
+                    event,
+                    handleChange,
+                  })
+                }}
                 onBlur={handleBlur}
               />
             </Grid.Col>
@@ -495,6 +501,7 @@ const StandingList = (props: Partial<IRoutePrivilege>) => {
 
         {currentModuleDetails?.id && (
           <DocumentsUpload
+            title={t('document.necessaryDoc')}
             moduleId={currentModuleDetails.id}
             canUploadMultipleFile
             setIsAllRequiredDocumentUploaded={setIsAllRequiredDocumentUploaded}

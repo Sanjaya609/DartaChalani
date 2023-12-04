@@ -48,6 +48,7 @@
       "nameTitle": "{{name}} Documents"
     },
     "confirmRemove": "Confirm Remove",
-    "uploadAllDoc": "Please upload all required documents."
+    "uploadAllDoc": "Please upload all required documents.",
+    "necessaryDoc": "Necessary Documents"
   }
 }
