@@ -424,6 +424,7 @@ const AddRegistrationBook = (props: Partial<IRoutePrivilege>) => {
 
         {currentModuleDetails?.id && (
           <DocumentsUpload
+            title={t('document.necessaryDoc')}
             moduleId={currentModuleDetails.id}
             canUploadMultipleFile
             setIsAllRequiredDocumentUploaded={setIsAllRequiredDocumentUploaded}

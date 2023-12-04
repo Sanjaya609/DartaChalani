@@ -501,6 +501,7 @@ const AddDispatchBook = (props: Partial<IRoutePrivilege>) => {
 
         {currentModuleDetails?.id && (
           <DocumentsUpload
+            title={t('document.necessaryDoc')}
             className="mt-6"
             moduleId={currentModuleDetails.id}
             canUploadMultipleFile

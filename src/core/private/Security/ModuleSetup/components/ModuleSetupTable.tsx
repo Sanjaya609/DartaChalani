@@ -68,6 +68,7 @@ const ModuleSetupTable = () => {
       {
         header: t('actions'),
         sticky: 'right',
+        id: 'action',
         cell: ({ row: { original } }) => {
           const {
             id,

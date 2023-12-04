@@ -103,6 +103,7 @@ const RoleSetupTable = ({
       {
         header: t('actions'),
         sticky: 'right',
+        id: 'action',
         cell: ({ row: { original } }) => {
           return ActionComponent(original, setInitialValues, privilege)
         },
