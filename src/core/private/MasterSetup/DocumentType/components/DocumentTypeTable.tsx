@@ -101,6 +101,7 @@ const DocumentType = (props: IDocumentTypeProps) => {
       {
         header: t('actions'),
         sticky: 'right',
+        id: 'action',
         cell: ({ row: { original } }) => (
           <TableAction
             handleEditClick={() => {

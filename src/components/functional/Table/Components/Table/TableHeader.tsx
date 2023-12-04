@@ -19,8 +19,6 @@ const TableHeader = <TData extends RowData>({
     [tableHeaderThStickyStyle]: !!withScrollable,
   })
 
-  let lastHeaderStart = 0
-
   return (
     <thead className={computedHeaderBaseStyle}>
       {headerGroup().map((headerContent) => (
@@ -63,14 +61,20 @@ const TableHeader = <TData extends RowData>({
                       ? {
                           left: header.getStart(),
                           zIndex: 4,
-                          minWidth: header.getSize(),
+                          minWidth:
+                            header.column.columnDef.id === 'action'
+                              ? 'undefined'
+                              : header.getSize(),
                         }
                       : {
                           right:
                             headers[headers.length - 1].getStart() -
                             header.getStart(),
                           zIndex: 4,
-                          minWidth: header.getSize(),
+                          minWidth:
+                            header.id === 'action'
+                              ? 'undefined'
+                              : header.getSize(),
                         }
                     : {}
                 }
