@@ -213,7 +213,9 @@ const DocumentsUpload = (props: IDocumentsUploadProps) => {
         ...prevState,
         files: newFileStates,
       }))
+
       setIsUpdateStatePrepared(true)
+      validateFileChanges(newFileStates)
     }
   }, [documentList, fileState?.files, isUpdateStatePrepared])
 

@@ -24,14 +24,11 @@ export const addStandingListInitialValues: IStandingListInitialValue = {
 }
 
 export const addStandingListValidationSchema = Yup.object({
-  address: Yup.string().required('standingList.errors.address'),
   contactNumber: Yup.string().required('standingList.errors.contactNumber'),
   contactPersonName: Yup.string().required(
     'standingList.errors.contactPersonName'
   ),
-  firmRegistrationNumber: Yup.string().required(
-    'standingList.errors.firmRegistrationNumber'
-  ),
+
   letter_no: Yup.string().required('standingList.errors.letter_no'),
   localBodyId: Yup.string().required('standingList.errors.localBodyId'),
   provinceId: Yup.string().required('standingList.errors.provinceId'),
@@ -44,14 +41,6 @@ export const addStandingListValidationSchema = Yup.object({
   personOrFirmName: Yup.string().required(
     'standingList.errors.personOrFirmName'
   ),
-  registrationDate: Yup.string().required(
-    'standingList.errors.registrationDate'
-  ),
+
   wardNumber: Yup.string().required('standingList.errors.wardNumber'),
-  taxClearanceDate: Yup.string().required(
-    'standingList.errors.taxClearanceDate'
-  ),
-  taxClearanceDateExtendedDate: Yup.string().required(
-    'standingList.errors.taxClearanceDateExtendedDate'
-  ),
 })

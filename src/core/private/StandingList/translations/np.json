@@ -12,7 +12,7 @@
   "personOrFirmName": "व्यक्ति/फर्म नाम",
   "registrationDate": "दर्ता मिति",
   "subjectOfLetter": "पत्रको विषय",
-  "serviceTypeId": "सेवा प्रकार",
+  "serviceTypeId": "सेवाको प्रकार",
   "wardNumber": "वडा नम्बर",
   "districtId": "जिल्ला",
   "provinceId": "प्रदेश",
@@ -20,7 +20,7 @@
   "taxClearanceDateExtendedDate": "कर चुक्ता विस्तारित मिति",
   "workingSectorDetails": "कार्य क्षेत्र विवरण",
   "locationDetails": "स्थान विवरण",
-  "firmDetails": "फर्म/कम्पनी विवरण",
+  "firmDetails": "व्यक्ति/फर्मको विवरण",
   "errors": {
     "applicationDate": "आवेदन मिति अनिवार्य छ",
     "address": "ठेगाना अनिवार्य छ",
@@ -37,7 +37,7 @@
     "wardNumber": "वडा नम्बर अनिवार्य छ",
     "districtId": "जिल्ला अनिवार्य छ",
     "provinceId": "प्रदेश अनिवार्य छ",
-    "serviceTypeId": "सेवा प्रकार अनिवार्य छ",
+    "serviceTypeId": "सेवाको प्रकार अनिवार्य छ",
     "taxClearanceDate": "कर चुक्ता मिति अनिवार्य छ",
     "taxClearanceDateExtendedDate": "कर चुक्ता विस्तारित मिति अनिवार्य छ",
     "workingSectorDetails": "कार्य क्षेत्र विवरण अनिवार्य छ"
