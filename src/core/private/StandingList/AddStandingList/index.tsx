@@ -155,7 +155,7 @@ const StandingList = (props: Partial<IRoutePrivilege>) => {
       // applicationDate,
       wardNumber,
       documents: uploadedDocumentData,
-      moduleId: 68,
+      moduleId: currentModuleDetails?.id,
       id: id || undefined,
       address,
       contactNumber,
@@ -218,6 +218,7 @@ const StandingList = (props: Partial<IRoutePrivilege>) => {
           <Grid sm={'sm:grid-cols-12'} gap="gap-4">
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.NepaliDatePicker
+                isRequired
                 disabled
                 value={values.applicationDate}
                 errors={errors}
@@ -238,7 +239,7 @@ const StandingList = (props: Partial<IRoutePrivilege>) => {
                 onBlur={handleBlur}
               />
             </Grid.Col>{' '}
-            <Grid.Col sm={'sm:col-span-12'}>
+            <Grid.Col sm={'sm:col-span-12'} className="mt-3">
               <Text variant="h5" typeface="semibold">
                 {t('standingList.firmDetails')}
               </Text>
@@ -274,7 +275,6 @@ const StandingList = (props: Partial<IRoutePrivilege>) => {
             </Grid.Col>
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Input
-                isRequired
                 value={values.firmRegistrationNumber}
                 errors={errors}
                 touched={touched}
@@ -286,7 +286,6 @@ const StandingList = (props: Partial<IRoutePrivilege>) => {
             </Grid.Col>
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.NepaliDatePicker
-                isRequired
                 value={values.registrationDate}
                 errors={errors}
                 touched={touched}
@@ -355,7 +354,6 @@ const StandingList = (props: Partial<IRoutePrivilege>) => {
             </Grid.Col>
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.NepaliDatePicker
-                isRequired
                 value={values.taxClearanceDate}
                 errors={errors}
                 touched={touched}
@@ -369,7 +367,6 @@ const StandingList = (props: Partial<IRoutePrivilege>) => {
             </Grid.Col>
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.NepaliDatePicker
-                isRequired
                 value={values.taxClearanceDateExtendedDate}
                 errors={errors}
                 touched={touched}
@@ -486,7 +483,6 @@ const StandingList = (props: Partial<IRoutePrivilege>) => {
             </Grid.Col>
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Input
-                isRequired
                 value={values.address}
                 errors={errors}
                 touched={touched}
@@ -501,6 +497,7 @@ const StandingList = (props: Partial<IRoutePrivilege>) => {
 
         {currentModuleDetails?.id && (
           <DocumentsUpload
+            className="mt-6"
             title={t('document.necessaryDoc')}
             moduleId={currentModuleDetails.id}
             canUploadMultipleFile

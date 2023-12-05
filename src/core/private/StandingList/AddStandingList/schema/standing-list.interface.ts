@@ -32,7 +32,7 @@ export interface IStandingListPayload
     IStandingListInitialValue,
     'provinceId' | 'districtId' | 'applicationDate' | 'registrationDate'
   > {
-  moduleId: StringNumber
+  moduleId?: StringNumber
   documents: IDocument[]
 }
 

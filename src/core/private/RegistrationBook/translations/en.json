@@ -3,7 +3,7 @@
   "applicationDate": "Application Date",
   "letterDispatchDate": "Letter Dispatch Date",
   "letterDispatchNumber": "Letter Dispatch Number",
-  "letterLinks": "Letter Links",
+  "letterLinks": "Letter Links (Online)",
   "letterSenderName": "Letter Sender Name",
   "letterToPerson": "Letter to Person",
   "localBodyId": "Local Body",
@@ -15,6 +15,8 @@
   "wardNumber": "Ward Number",
   "districtId": "District",
   "provinceId": "Province",
+  "letterDetails": "Letter/Certificate Details",
+  "addressDetails": "Letter/Certificate Sender Location",
   "errors": {
     "applicationDate": "Application Date is required",
     "letterDispatchDate": "Letter Dispatch Date is required",

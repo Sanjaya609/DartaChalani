@@ -194,7 +194,12 @@ const AddRegistrationBook = (props: Partial<IRoutePrivilege>) => {
       />
       <ContainerLayout className="scrollbars grow ">
         <form>
-          <Grid sm={'sm:grid-cols-12'} gap="gap-4">
+          <Grid.Col sm={'sm:col-span-12'} className="mb-3">
+            <Text variant="h5" typeface="semibold">
+              {t('registrationBook.letterDetails')}
+            </Text>
+          </Grid.Col>
+          <Grid sm={'sm:grid-cols-12'} gap="gap-4" className="mb-4">
             {registrationBookDetails?.applicationDate && (
               <Grid.Col sm={'sm:col-span-3'}>
                 <Form.NepaliDatePicker
@@ -210,6 +215,133 @@ const AddRegistrationBook = (props: Partial<IRoutePrivilege>) => {
               </Grid.Col>
             )}
 
+            <Grid.Col sm={'sm:col-span-3'}>
+              <Form.NepaliDatePicker
+                isRequired
+                value={values.letterDispatchDate}
+                errors={errors}
+                touched={touched}
+                name="letterDispatchDate"
+                label={t('registrationBook.letterDispatchDate')}
+                onChange={(nepDate) => {
+                  setFieldValue('letterDispatchDate', nepDate)
+                }}
+                onBlur={handleBlur}
+              />
+            </Grid.Col>
+
+            <Grid.Col sm={'sm:col-span-3'}>
+              <Form.Input
+                isRequired
+                value={values.letterDispatchNumber}
+                errors={errors}
+                touched={touched}
+                name="letterDispatchNumber"
+                label={t('registrationBook.letterDispatchNumber')}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </Grid.Col>
+            <Grid.Col sm={'sm:col-span-3'}>
+              <Form.Input
+                isRequired
+                value={values.letterSenderName}
+                errors={errors}
+                touched={touched}
+                name="letterSenderName"
+                label={t('registrationBook.letterSenderName')}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </Grid.Col>
+          </Grid>
+
+          <Grid sm={'sm:grid-cols-12'} gap="gap-4" className="mb-4">
+            <Grid.Col sm={'sm:col-span-12'}>
+              <Form.Input
+                isRequired
+                value={values.subjectOfLetter}
+                errors={errors}
+                touched={touched}
+                name="subjectOfLetter"
+                label={t('registrationBook.subjectOfLetter')}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </Grid.Col>
+
+            <Grid.Col sm={'sm:col-span-3'}>
+              <Form.Input
+                value={values.letterToPerson}
+                errors={errors}
+                touched={touched}
+                name="letterToPerson"
+                label={t('registrationBook.letterToPerson')}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </Grid.Col>
+
+            <Grid.Col sm={'sm:col-span-3'}>
+              <Form.Select
+                options={sectorList}
+                isLoading={sectorListFetching}
+                calculateValueOnChange
+                value={values.sectorId}
+                errors={errors}
+                touched={touched}
+                name="sectorId"
+                label={t('registrationBook.sectorId')}
+                onChange={(event) => {
+                  setFieldValue(event.name, event?.main)
+                }}
+                onBlur={handleBlur}
+              />
+            </Grid.Col>
+            <Grid.Col sm={'sm:col-span-3'}>
+              <Form.Input
+                value={values.physicalAddress}
+                errors={errors}
+                touched={touched}
+                name="physicalAddress"
+                label={t('registrationBook.physicalAddress')}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </Grid.Col>
+
+            <Grid.Col sm={'sm:col-span-3'}>
+              <Form.Input
+                value={values.letterLinks}
+                errors={errors}
+                touched={touched}
+                name="letterLinks"
+                label={t('registrationBook.letterLinks')}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </Grid.Col>
+
+            <Grid.Col sm={'sm:col-span-12'}>
+              <Form.TextArea
+                value={values.remarks}
+                errors={errors}
+                touched={touched}
+                name="remarks"
+                label={t('registrationBook.remarks')}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </Grid.Col>
+          </Grid>
+
+          <Grid.Col sm={'sm:col-span-12'} className="mb-4 mt-6">
+            <Text variant="h5" typeface="semibold">
+              {t('registrationBook.addressDetails')}
+            </Text>
+          </Grid.Col>
+
+          <Grid sm={'sm:grid-cols-12'} gap="gap-4">
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Select
                 isRequired
@@ -283,7 +415,6 @@ const AddRegistrationBook = (props: Partial<IRoutePrivilege>) => {
 
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Select
-                isRequired
                 options={wardOption}
                 isLoading={localBodyListFetching}
                 calculateValueOnChange
@@ -295,127 +426,6 @@ const AddRegistrationBook = (props: Partial<IRoutePrivilege>) => {
                 onChange={(event) => {
                   setFieldValue(event.name, event?.main)
                 }}
-                onBlur={handleBlur}
-              />
-            </Grid.Col>
-
-            <Grid.Col sm={'sm:col-span-12'}>
-              <Text variant="h5" typeface="semibold">
-                Letter Details
-              </Text>
-            </Grid.Col>
-
-            <Grid.Col sm={'sm:col-span-3'}>
-              <Form.NepaliDatePicker
-                isRequired
-                value={values.letterDispatchDate}
-                errors={errors}
-                touched={touched}
-                name="letterDispatchDate"
-                label={t('registrationBook.letterDispatchDate')}
-                onChange={(nepDate) => {
-                  setFieldValue('letterDispatchDate', nepDate)
-                }}
-                onBlur={handleBlur}
-              />
-            </Grid.Col>
-
-            <Grid.Col sm={'sm:col-span-3'}>
-              <Form.Input
-                isRequired
-                value={values.letterDispatchNumber}
-                errors={errors}
-                touched={touched}
-                name="letterDispatchNumber"
-                label={t('registrationBook.letterDispatchNumber')}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Grid.Col>
-
-            <Grid.Col sm={'sm:col-span-3'}>
-              <Form.Input
-                value={values.letterLinks}
-                errors={errors}
-                touched={touched}
-                name="letterLinks"
-                label={t('registrationBook.letterLinks')}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Grid.Col>
-            <Grid.Col sm={'sm:col-span-3'}>
-              <Form.Input
-                isRequired
-                value={values.letterSenderName}
-                errors={errors}
-                touched={touched}
-                name="letterSenderName"
-                label={t('registrationBook.letterSenderName')}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Grid.Col>
-            <Grid.Col sm={'sm:col-span-3'}>
-              <Form.Input
-                value={values.letterToPerson}
-                errors={errors}
-                touched={touched}
-                name="letterToPerson"
-                label={t('registrationBook.letterToPerson')}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Grid.Col>
-            <Grid.Col sm={'sm:col-span-3'}>
-              <Form.Input
-                value={values.physicalAddress}
-                errors={errors}
-                touched={touched}
-                name="physicalAddress"
-                label={t('registrationBook.physicalAddress')}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Grid.Col>
-            <Grid.Col sm={'sm:col-span-3'}>
-              <Form.Select
-                isRequired
-                options={sectorList}
-                isLoading={sectorListFetching}
-                calculateValueOnChange
-                value={values.sectorId}
-                errors={errors}
-                touched={touched}
-                name="sectorId"
-                label={t('registrationBook.sectorId')}
-                onChange={(event) => {
-                  setFieldValue(event.name, event?.main)
-                }}
-                onBlur={handleBlur}
-              />
-            </Grid.Col>
-            <Grid.Col sm={'sm:col-span-12'}>
-              <Form.Input
-                isRequired
-                value={values.subjectOfLetter}
-                errors={errors}
-                touched={touched}
-                name="subjectOfLetter"
-                label={t('registrationBook.subjectOfLetter')}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Grid.Col>
-
-            <Grid.Col sm={'sm:col-span-6'}>
-              <Form.TextArea
-                value={values.remarks}
-                errors={errors}
-                touched={touched}
-                name="remarks"
-                label={t('registrationBook.remarks')}
-                onChange={handleChange}
                 onBlur={handleBlur}
               />
             </Grid.Col>
