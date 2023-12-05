@@ -3,6 +3,7 @@ import { masterSetupRoutePath } from './master-setup/master-setup-route.path'
 import { registrationBookRoutePath } from './registration-book/registration-book.path'
 import { securityRoutePath } from './security/security-route.path'
 import { standingListRoutePath } from './standing-list/standing-list-route.path'
+import { recommendationSetupRoutePath } from './recommendation/recommendation.path'
 
 export const privateRoutePath = {
   base: '/',
@@ -12,4 +13,5 @@ export const privateRoutePath = {
   standingList: standingListRoutePath,
   registrationBook: registrationBookRoutePath,
   dispatchBook: dispatchBookRoutePath,
+  recommendation: recommendationSetupRoutePath
 } as const

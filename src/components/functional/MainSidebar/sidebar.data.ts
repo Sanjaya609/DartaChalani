@@ -1,7 +1,7 @@
 import { privateRoutePath } from '@/router'
 import { TFuncKey } from 'i18next'
 import { LayoutDashboard, Settings, ServerCog, Library } from 'lucide-react'
-import { IconProps, Notebook, Ticket } from 'phosphor-react'
+import { IconProps, Notebook, Ticket, Keyboard } from 'phosphor-react'
 
 export interface ISidebarNavList {
   icon: React.ForwardRefExoticComponent<
@@ -44,4 +44,9 @@ export const sidebarNavList: ISidebarNavList[] = [
     path: privateRoutePath.dispatchBook.base,
     title: 'sidebar.dispatchBook',
   },
+  {
+    icon: Keyboard,
+    path: privateRoutePath.recommendation.base,
+    title: 'sidebar.recommendation'
+  }
 ]
