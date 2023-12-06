@@ -7,19 +7,19 @@ import {
 } from '../schema/add-recommendation.interface'
 
 const {
-  createRegistrationBook,
-  // getAllRegistrationBook,
-  getRegistrationBookById,
-  deleteRegistrationBook,
-  getAllRecommendation
+  deleteRecommendation,
+  getAllRecommendation,
+  createRecommendation,
+  getRecommendationById,
+  changeRecommendationStatus
 } = apiDetails
 
-const useCreateRegistrationBook = () => {
+const useCreateRecommendation = () => {
   const queryClient = useQueryClient()
   return useMutation(
     (requestData: IAddRecommendationInitialValue) => {
       return initApiRequest({
-        apiDetails: createRegistrationBook,
+        apiDetails: createRecommendation,
         requestData,
       })
     },
@@ -49,12 +49,12 @@ const useGetAllRecommendation = <T = IRecommendationResponse[]>() => {
   )
 }
 
-const useGetRegistrationBookDetailById = (id: string | number | null) => {
+const useGetRecommendationDetailById = (id: string | number | null) => {
   return useQuery(
-    [getRegistrationBookById.controllerName, id],
+    [getRecommendationById.controllerName, id],
     () =>
       initApiRequest<BackendSuccessResponse<IRecommendationResponse>>({
-        apiDetails: getRegistrationBookById,
+        apiDetails: getRecommendationById,
         pathVariables: {
           id,
         },
@@ -69,12 +69,12 @@ const useGetRegistrationBookDetailById = (id: string | number | null) => {
   )
 }
 
-const useDeleteRegistrationBookById = () => {
+const useDeleteRecommendationById = () => {
   const queryClient = useQueryClient()
   return useMutation(
     (id: number | string) => {
       return initApiRequest({
-        apiDetails: deleteRegistrationBook,
+        apiDetails: deleteRecommendation,
         pathVariables: { id },
       })
     },
@@ -86,9 +86,27 @@ const useDeleteRegistrationBookById = () => {
   )
 }
 
+const useChangeRecommendationStatus = () => {
+  const queryClient = useQueryClient()
+  return useMutation(
+    (pathVariables: { recommendationId: number | string }) => {
+      return initApiRequest({
+        apiDetails: changeRecommendationStatus,
+        pathVariables,
+      })
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries([getAllRecommendation.controllerName])
+      },
+    }
+  )
+}
+
 export {
-  useCreateRegistrationBook,
+  useCreateRecommendation,
   useGetAllRecommendation,
-  useGetRegistrationBookDetailById,
-  useDeleteRegistrationBookById,
+  useGetRecommendationDetailById,
+  useDeleteRecommendationById,
+  useChangeRecommendationStatus
 }

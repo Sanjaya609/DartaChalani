@@ -1,0 +1,22 @@
+{
+  "title": "सिफारिस",
+  "addRecommendation": "सिफारिस थप्नुहोस्",
+  "editRecommendation": "सिफारिस सम्पादन गर्नुहोस्",
+  "recommendationNo": "सिफारिस नम्बर",
+  "recommendationNameEn": "सिफारिसको नाम (अंग्रेजी)",
+  "recommendationNameNp": "सिफारिसको नाम (नेपाली)",
+  "errors": {
+    "recommendationNameEn": "सिफारिस नाम (अंग्रेजी) आवश्यक छ",
+    "recommendationNameNp": "सिफारिस नाम (नेपाली) आवश्यक छ"
+  },
+  "modal": {
+    "status": {
+      "title": "स्थिति परिवर्तन गर्नुहोस्",
+      "description": "के तपाइँ निश्चित हुनुहुन्छ कि तपाइँ स्थिति परिवर्तन गर्न चाहनुहुन्छ?"
+    }
+  },
+  "deleteModal": {
+    "title": "सिफारिस हटाउनुहोस्",
+    "description": "के तपाइँ यो सिफारिस हटाउन निश्चित हुनुहुन्छ?"
+  }
+}

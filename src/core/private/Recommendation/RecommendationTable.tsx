@@ -3,36 +3,50 @@ import { DataTable } from '@/components/functional/Table'
 import TableAction from '@/components/functional/Table/Components/Table/TableAction'
 import ContainerLayout from '@/components/ui/core/Layout/ContainerLayout'
 import FlexLayout from '@/components/ui/core/Layout/FlexLayout'
-import { getTextByLanguage } from '@/lib/i18n/i18n'
-import { privateRoutePath, useNavigate } from '@/router'
-import { encodeParams } from '@/utility/route-params'
 import { ColumnDef } from '@tanstack/react-table'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Modal from '@/components/ui/Modal/Modal'
 import {
-  useDeleteRegistrationBookById,
+  useDeleteRecommendationById,
   useGetAllRecommendation,
+  useChangeRecommendationStatus,
 } from './AddRecommendation/services/add-recommendation.query'
 import { IRecommendationResponse } from './AddRecommendation/schema/add-recommendation.interface'
+import AddRecommendationForm from './AddRecommendation'
+import Switch from '@/components/functional/Form/Switch/Switch'
 
 const RegistrationBookTable = () => {
   const { t } = useTranslation()
-  const navigate = useNavigate()
   const {
     data: allRecommendationList = [],
     isFetching: allRecommendationFetching,
   } = useGetAllRecommendation()
 
+  const {
+    mutate: changeRecommendationStatus,
+    isLoading: changeRecommendationStatusLoading,
+  } = useChangeRecommendationStatus()
+
   const [currentSelectedId, setCurrentSelectedId] = useState<string | number>(
     ''
   )
-
   const setOrRemoveCurrentSelectedId = (id?: string | number) =>
     setCurrentSelectedId(id || '')
 
+  const [currentSelectedIdToChangeStatus, setCurrentSelectedIdToChangeStatus] =
+    useState<string | number>('')
+  const setOrRemoveCurrentSelectedIdToChangeStatus = (id?: string | number) =>
+    setCurrentSelectedIdToChangeStatus(id || '')
+
+  const [editId, setEditId] = useState<number>()
+  const [openRecommendationForm, setOpenRecommendationForm] =
+    useState<boolean>(false)
+  const toggleRecommendationForm = () =>
+    setOpenRecommendationForm(!openRecommendationForm)
+
   const { mutate: deleteById, isLoading: deleteByIdLoading } =
-    useDeleteRegistrationBookById()
+    useDeleteRecommendationById()
 
   const handleDeleteById = () => {
     deleteById(currentSelectedId, {
@@ -42,23 +56,48 @@ const RegistrationBookTable = () => {
     })
   }
 
+  const handleChangeStatus = () => {
+    if (currentSelectedIdToChangeStatus) {
+      changeRecommendationStatus(
+        { recommendationId: currentSelectedIdToChangeStatus },
+        {
+          onSuccess: () => {
+            setOrRemoveCurrentSelectedIdToChangeStatus()
+          },
+        }
+      )
+    }
+  }
+
   const columns = useMemo<ColumnDef<IRecommendationResponse>[]>(
     () => [
       {
         accessorKey: 'id',
-        header: t('registrationBook.registrationNumber'),
+        header: t('recommendation.recommendationNo'),
       },
       {
         accessorKey: 'recommendationNameEn',
-        header: 'Recommendation Name (EN)',
+        header: t('recommendation.recommendationNameEn'),
       },
       {
         accessorKey: 'recommendationNameNp',
-        header: 'Recommendation Name (NP)',
+        header: t('recommendation.recommendationNameNp'),
       },
       {
+        header: t('masterSetup.office.status'),
         accessorKey: 'isActive',
-        header: 'Is Active?',
+        cell: ({
+          row: {
+            original: { id, isActive },
+          },
+        }) => (
+          <Switch
+            checked={isActive}
+            onChange={() => {
+              setOrRemoveCurrentSelectedIdToChangeStatus(id)
+            }}
+          />
+        ),
       },
       {
         header: t('actions'),
@@ -68,15 +107,9 @@ const RegistrationBookTable = () => {
           },
         }) => (
           <TableAction
-            handleViewClick={() => {
-              navigate(privateRoutePath.registrationBook.view, {
-                params: { id: encodeParams(id) },
-              })
-            }}
             handleEditClick={() => {
-              navigate(privateRoutePath.registrationBook.edit, {
-                params: { id: encodeParams(id) },
-              })
+              setEditId(id)
+              toggleRecommendationForm()
             }}
             handleDeleteClick={() => {
               setCurrentSelectedId(id)
@@ -89,7 +122,7 @@ const RegistrationBookTable = () => {
   )
   return (
     <>
-      <SectionHeader title="Recommendation " />
+      <SectionHeader title={t('recommendation.title')} />
 
       <ContainerLayout stretch>
         <FlexLayout direction="column">
@@ -99,7 +132,7 @@ const RegistrationBookTable = () => {
             canSearch
             addHeaderProps={{
               handleAdd: () => {
-                navigate(privateRoutePath.recommendation.add)
+                toggleRecommendationForm()
               },
             }}
             className="pb-4"
@@ -113,15 +146,40 @@ const RegistrationBookTable = () => {
         open={!!currentSelectedId}
         toggleModal={setOrRemoveCurrentSelectedId}
         size="md"
-        title={t('registrationBook.deleteModal.title')}
+        title={t('recommendation.deleteModal.title')}
         saveBtnProps={{
           btnAction: handleDeleteById,
           loading: deleteByIdLoading,
           btnTitle: t('btns.delete'),
         }}
+        cancelBtnProps={{
+          btnAction: () => {
+            setOrRemoveCurrentSelectedId()
+          },
+        }}
       >
-        {t('registrationBook.deleteModal.description')}
+        {t('recommendation.deleteModal.description')}
       </Modal>
+
+      <Modal
+        open={!!currentSelectedIdToChangeStatus}
+        toggleModal={setOrRemoveCurrentSelectedIdToChangeStatus}
+        size="md"
+        title={t('recommendation.modal.status.title')}
+        saveBtnProps={{
+          btnAction: handleChangeStatus,
+          loading: changeRecommendationStatusLoading,
+          btnTitle: t('btns.update'),
+        }}
+      >
+        {t('recommendation.modal.status.description')}
+      </Modal>
+
+      <AddRecommendationForm
+        toggleRecommendationForm={toggleRecommendationForm}
+        openRecommendationForm={openRecommendationForm}
+        editId={editId}
+      />
     </>
   )
 }
