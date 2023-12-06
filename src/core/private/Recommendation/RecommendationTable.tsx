@@ -10,16 +10,19 @@ import { ColumnDef } from '@tanstack/react-table'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Modal from '@/components/ui/Modal/Modal'
-import { useDeleteRegistrationBookById, useGetAllRegistrationBook } from '../RegistrationBook/AddRegistrationBook/services/add-registration-book.query'
-import { IRegistrationBookResponse } from '../RegistrationBook/AddRegistrationBook/schema/add-registration-book.interface'
+import {
+  useDeleteRegistrationBookById,
+  useGetAllRecommendation,
+} from './AddRecommendation/services/add-recommendation.query'
+import { IRecommendationResponse } from './AddRecommendation/schema/add-recommendation.interface'
 
 const RegistrationBookTable = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const {
-    data: allRegistrationBookList = [],
-    isFetching: allRegistrationBookFetching,
-  } = useGetAllRegistrationBook()
+    data: allRecommendationList = [],
+    isFetching: allRecommendationFetching,
+  } = useGetAllRecommendation()
 
   const [currentSelectedId, setCurrentSelectedId] = useState<string | number>(
     ''
@@ -39,35 +42,23 @@ const RegistrationBookTable = () => {
     })
   }
 
-  const columns = useMemo<ColumnDef<IRegistrationBookResponse>[]>(
+  const columns = useMemo<ColumnDef<IRecommendationResponse>[]>(
     () => [
       {
-        accessorKey: 'registrationNumber',
+        accessorKey: 'id',
         header: t('registrationBook.registrationNumber'),
       },
       {
-        accessorKey: 'applicationDate',
-        header: t('registrationBook.applicationDate'),
+        accessorKey: 'recommendationNameEn',
+        header: 'Recommendation Name (EN)',
       },
       {
-        accessorKey: 'letterDispatchDate',
-        header: t('registrationBook.letterDispatchDate'),
+        accessorKey: 'recommendationNameNp',
+        header: 'Recommendation Name (NP)',
       },
       {
-        accessorKey: 'letterDispatchNumber',
-        header: t('registrationBook.letterDispatchNumber'),
-      },
-      {
-        accessorKey: getTextByLanguage('sectorNameEnglish', 'sectorNameNepali'),
-        header: t('registrationBook.sectorId'),
-      },
-      {
-        accessorKey: 'letterSenderName',
-        header: t('registrationBook.letterSenderName'),
-      },
-      {
-        accessorKey: 'letterToPerson',
-        header: t('registrationBook.letterToPerson'),
+        accessorKey: 'isActive',
+        header: 'Is Active?',
       },
       {
         header: t('actions'),
@@ -104,16 +95,16 @@ const RegistrationBookTable = () => {
         <FlexLayout direction="column">
           <DataTable
             withSN={false}
-            isLoading={allRegistrationBookFetching}
+            isLoading={allRecommendationFetching}
             canSearch
             addHeaderProps={{
               handleAdd: () => {
-                navigate(privateRoutePath.registrationBook.add)
+                navigate(privateRoutePath.recommendation.add)
               },
             }}
             className="pb-4"
             columns={columns}
-            data={allRegistrationBookList}
+            data={allRecommendationList}
           />
         </FlexLayout>
       </ContainerLayout>
