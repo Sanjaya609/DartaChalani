@@ -163,20 +163,6 @@ const AddRegistrationBook = (props: Partial<IRoutePrivilege>) => {
             </Grid.Col>
           </Grid>
         </form>
-
-        {currentModuleDetails?.id && (
-          <DocumentsUpload
-            moduleId={currentModuleDetails.id}
-            canUploadMultipleFile
-            setIsAllRequiredDocumentUploaded={setIsAllRequiredDocumentUploaded}
-            setUploadedDocumentData={setUploadedDocumentData}
-            documentList={registrationBookDetails?.documentList}
-            viewControllerName={
-              apiDetails.downloadDocumentForRegistrationBook.controllerName
-            }
-            deleteAPIDetails={apiDetails.deleteDocumentForRegistrationBook}
-          />
-        )}
       </ContainerLayout>
 
       <Box className="mb-6 w-full border-2 pb-6 text-right">
