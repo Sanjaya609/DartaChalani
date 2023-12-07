@@ -17,6 +17,7 @@ import {
 } from '@/lib/api-request/api-types'
 import TokenService from '@/service/token/token.service'
 import { pathParamSanitizer } from '@/utility/sanitizer/sanitizer'
+import { ILoginResponse } from '@/core/public/Login/schema/login.interface'
 
 export const basicAuth: AxiosBasicCredentials = {
   username: 'recommendation-app-client',
@@ -51,8 +52,7 @@ export const sanitizeApiController = (
     ),
   }
 }
-// const tokens = `${basicAuth.Username}:${basicAuth.Password}`;
-// const encodedToken = Buffer.from(basicAuth).toString('base64');
+
 export const getRequestHeaders = (apiDetails: ApiDetailType) => {
   const token = TokenService.getAccessToken()
 
@@ -68,7 +68,6 @@ export const getRequestHeaders = (apiDetails: ApiDetailType) => {
       headers = {
         ...headers,
         'Content-Type': 'multipart/form-data',
-        // 'Authorization':`Basic ${ JSON.stringify(encodedToken)}`
       }
       break
     case 'QUERY-STRING':
@@ -220,7 +219,7 @@ const processFailedRequest = (token: string) => {
 }
 
 export const refreshTokenApiDetails: ApiDetailType = {
-  controllerName: 'auth/api/ocr-login',
+  controllerName: '/oauth/token',
   requestMethod: RequestMethod.POST,
   requestBodyType: RequestBodyType.AUTH,
 }
@@ -255,7 +254,7 @@ export const requestRefreshToken = async (error: AxiosError) => {
   isTokenRefreshing = true
 
   try {
-    const response = await Axios.request<any>({
+    const response = await Axios.request<ILoginResponse>({
       ...getAxiosParams(refreshTokenApiDetails),
       signal: abortController.signal,
       data: {
@@ -267,6 +266,7 @@ export const requestRefreshToken = async (error: AxiosError) => {
 
     if (response?.data) {
       TokenService.setToken(response.data.access_token)
+      TokenService.setRefeshToken(response.data.refresh_token)
       processFailedRequest(response.data.access_token)
       failedQueue = []
       isTokenRefreshing = false

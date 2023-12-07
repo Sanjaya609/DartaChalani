@@ -15,8 +15,8 @@
   "wardNumber": "वडा नम्बर",
   "districtId": "जिल्ला",
   "provinceId": "प्रदेश",
-  "letterDetails": "पत्र/प्रमाणपत्रको विवरण",
-  "addressDetails": "पत्र/प्रमाणपत्रको पठाउनेको ठेगाना",
+  "letterDetails": "चिट्ठी/प्रमाणपत्रको विवरण",
+  "addressDetails": "चिट्ठी/प्रमाणपत्रको पठाउनेको ठेगाना",
   "errors": {
     "applicationDate": "आवेदन मिति अनिवार्य छ",
     "letterDispatchDate": "पत्र पठाइएको मिति अनिवार्य छ",

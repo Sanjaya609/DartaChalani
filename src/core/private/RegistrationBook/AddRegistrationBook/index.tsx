@@ -324,6 +324,8 @@ const AddRegistrationBook = (props: Partial<IRoutePrivilege>) => {
 
             <Grid.Col sm={'sm:col-span-12'}>
               <Form.TextArea
+                withCharacterCount
+                maxLength={500}
                 value={values.remarks}
                 errors={errors}
                 touched={touched}

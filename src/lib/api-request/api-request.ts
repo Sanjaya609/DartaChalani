@@ -31,12 +31,12 @@ Axios.interceptors.response.use(
     if (error.response?.status === 401) {
       handleLogout()
     }
-    // if (
-    //   error.response?.status === 401 &&
-    //   error.config?.url !== refreshTokenApiDetails.controllerName
-    // ) {
-    //   return requestRefreshToken(error)
-    // }
+    if (
+      error.response?.status === 401 &&
+      error.config?.url !== refreshTokenApiDetails.controllerName
+    ) {
+      return requestRefreshToken(error)
+    }
     return Promise.reject(error)
   }
 )
