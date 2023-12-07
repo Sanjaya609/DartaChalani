@@ -3,7 +3,7 @@
   "letterNumber": "Letter Number",
   "dispatchDate": "Dispatch Date",
   "dispatchNumber": "Dispatch Number",
-  "letterDate": "Letter Date",
+  "letterDate": "Letter Dispatched Date",
   "subjectOfLetter": "Subject Of Letter",
   "letterReceiverName": "Letter Receiver/Organization Name",
   "letterReceiverEmail": "Letter Receiver Email",
@@ -17,7 +17,7 @@
   "wardNumber": "Ward Number",
   "districtId": "District",
   "provinceId": "Province",
-  "locationDetails": "Location Details",
+  "locationDetails": " Address Details",
   "letterDetails": "Letter Details",
   "errors": {
     "letterNumber": "Letter Number is required",
