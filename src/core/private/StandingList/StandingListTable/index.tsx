@@ -15,8 +15,11 @@ import {
   useGetAllStandingList,
 } from '../AddStandingList/services/standing-list.query'
 import Modal from '@/components/ui/Modal/Modal'
+import { IRoutePrivilege } from '@/router/routes/create-route'
 
-const StandingListTable = () => {
+const StandingListTable = ({
+  currentModuleDetails,
+}: Partial<IRoutePrivilege>) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { data: allStandingList = [], isFetching: allStandingListFetching } =
@@ -101,7 +104,16 @@ const StandingListTable = () => {
   )
   return (
     <>
-      <SectionHeader title={t('standingList.title')} />
+      <SectionHeader
+        title={
+          currentModuleDetails
+            ? getTextByLanguage(
+                currentModuleDetails.moduleNameEnglish,
+                currentModuleDetails.moduleNameNepali
+              )
+            : t('standingList.title')
+        }
+      />
 
       <ContainerLayout stretch>
         <FlexLayout direction="column">

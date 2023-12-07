@@ -15,8 +15,11 @@ import {
   useGetAllRegistrationBook,
 } from '../AddRegistrationBook/services/add-registration-book.query'
 import Modal from '@/components/ui/Modal/Modal'
+import { IRoutePrivilege } from '@/router/routes/create-route'
 
-const RegistrationBookTable = () => {
+const RegistrationBookTable = ({
+  currentModuleDetails,
+}: Partial<IRoutePrivilege>) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const {
@@ -103,7 +106,16 @@ const RegistrationBookTable = () => {
   )
   return (
     <>
-      <SectionHeader title={t('registrationBook.title')} />
+      <SectionHeader
+        title={
+          currentModuleDetails
+            ? getTextByLanguage(
+                currentModuleDetails.moduleNameEnglish,
+                currentModuleDetails.moduleNameNepali
+              )
+            : t('registrationBook.title')
+        }
+      />
 
       <ContainerLayout stretch>
         <FlexLayout direction="column">
