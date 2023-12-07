@@ -5,6 +5,7 @@ import genericAPI from '@/service/generic'
 import registrationBookAPI from '@/core/private/RegistrationBook/AddRegistrationBook/services/add-registration-book.api'
 import standingListAPI from '@/core/private/StandingList/AddStandingList/services/standing-list.api'
 import dispatchBookAPI from '@/core/private/DispatchBook/AddDispatchBook/services/add-dispatch-book.api'
+import recommendationAPI from '@/core/private/Recommendation/AddRecommendation/services/add-recommendation.api'
 
 export const apiDetails = {
   oauthAPI,
@@ -14,4 +15,5 @@ export const apiDetails = {
   ...registrationBookAPI,
   ...standingListAPI,
   ...dispatchBookAPI,
+  ...recommendationAPI
 }

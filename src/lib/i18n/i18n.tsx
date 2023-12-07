@@ -19,6 +19,8 @@ import registrationBookEn from '@/core/private/RegistrationBook/translations/en.
 import registrationBookNp from '@/core/private/RegistrationBook/translations/np.json'
 import dispatchBookEn from '@/core/private/DispatchBook/translations/en.json'
 import dispatchBookNp from '@/core/private/DispatchBook/translations/np.json'
+import recommendationEn from '@/core/private/Recommendation/translations/en.json'
+import recommendationNp from '@/core/private/Recommendation/translations/np.json'
 import { publicEn, publicNp } from '@/core/public/translations'
 
 export const resources = {
@@ -31,6 +33,7 @@ export const resources = {
       standingList: standingListEn,
       registrationBook: registrationBookEn,
       dispatchBook: dispatchBookEn,
+      recommendation: recommendationEn,
       public: publicEn,
     },
   },
@@ -44,6 +47,7 @@ export const resources = {
       standingList: standingListNp,
       registrationBook: registrationBookNp,
       dispatchBook: dispatchBookNp,
+      recommendation: recommendationNp,
       public: publicNp,
     },
   },
