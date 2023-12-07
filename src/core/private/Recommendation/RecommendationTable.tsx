@@ -15,8 +15,12 @@ import {
 import { IRecommendationResponse } from './AddRecommendation/schema/add-recommendation.interface'
 import AddRecommendationForm from './AddRecommendation'
 import Switch from '@/components/functional/Form/Switch/Switch'
+import { IRoutePrivilege } from '@/router/routes/create-route'
+import { getTextByLanguage } from '@/lib/i18n/i18n'
 
-const RegistrationBookTable = () => {
+const RegistrationBookTable = ({
+  currentModuleDetails,
+}: Partial<IRoutePrivilege>) => {
   const { t } = useTranslation()
   const {
     data: allRecommendationList = [],
@@ -122,7 +126,16 @@ const RegistrationBookTable = () => {
   )
   return (
     <>
-      <SectionHeader title={t('recommendation.title')} />
+      <SectionHeader
+        title={
+          currentModuleDetails
+            ? getTextByLanguage(
+                currentModuleDetails.moduleNameEnglish,
+                currentModuleDetails.moduleNameNepali
+              )
+            : t('masterSetup.fiscalYear.title')
+        }
+      />
 
       <ContainerLayout stretch>
         <FlexLayout direction="column">
