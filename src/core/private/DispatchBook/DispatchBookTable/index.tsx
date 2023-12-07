@@ -15,8 +15,11 @@ import {
   useGetAllDispatchBook,
 } from '../AddDispatchBook/services/add-dispatch-book.query'
 import Modal from '@/components/ui/Modal/Modal'
+import { IRoutePrivilege } from '@/router/routes/create-route'
 
-const DispatchBookTable = () => {
+const DispatchBookTable = ({
+  currentModuleDetails,
+}: Partial<IRoutePrivilege>) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const {
@@ -107,7 +110,16 @@ const DispatchBookTable = () => {
   )
   return (
     <>
-      <SectionHeader title={t('dispatchBook.title')} />
+      <SectionHeader
+        title={
+          currentModuleDetails
+            ? getTextByLanguage(
+                currentModuleDetails.moduleNameEnglish,
+                currentModuleDetails.moduleNameNepali
+              )
+            : t('dispatchBook.title')
+        }
+      />
 
       <ContainerLayout stretch>
         <FlexLayout direction="column">
