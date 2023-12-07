@@ -4,10 +4,14 @@ import { forwardRef } from 'react'
 import { formErrorClass } from '../form.classes'
 import { FormWrapper } from '../FormWrapper/FormWrapper'
 import { textAreaInputClass } from './textarea.styles'
+import { getTextByLanguage } from '@/lib/i18n/i18n'
+import { convertEngToNepNumber } from '../../Datepicker/datePickerUtils'
 
 interface IInputProps
   extends React.InputHTMLAttributes<HTMLTextAreaElement>,
-    IBaseFormControlProps {}
+    IBaseFormControlProps {
+  withCharacterCount?: boolean
+}
 
 const TextArea = forwardRef<HTMLTextAreaElement, IInputProps>((props, ref) => {
   const {
@@ -23,6 +27,7 @@ const TextArea = forwardRef<HTMLTextAreaElement, IInputProps>((props, ref) => {
     className,
     wrapperClassName,
     isRequired,
+    withCharacterCount,
     ...rest
   } = props
   const showError = getErrorStatus({
@@ -60,6 +65,18 @@ const TextArea = forwardRef<HTMLTextAreaElement, IInputProps>((props, ref) => {
         ref={ref}
         {...rest}
       />
+      {withCharacterCount && rest.maxLength && (
+        <span className="mt-2 block w-full text-right font-medium text-navy-24">
+          {getTextByLanguage(
+            `${rest.maxLength - (rest?.value ? String(rest.value).length : 0)}
+          characters left`,
+            ` ${convertEngToNepNumber(
+              rest.maxLength - (rest?.value ? String(rest.value).length : 0)
+            )}
+            अक्षर बाँकी`
+          )}
+        </span>
+      )}
     </FormWrapper>
   )
 })

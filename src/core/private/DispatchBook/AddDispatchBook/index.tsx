@@ -37,6 +37,7 @@ import {
   useGetDispatchNumberByFiscalYearId,
 } from './services/add-dispatch-book.query'
 import { IRoutePrivilege } from '@/router/routes/create-route'
+import { inputChangeNumberOnly } from '@/utility/inputUtils/input-change-utils'
 
 const AddDispatchBook = (props: Partial<IRoutePrivilege>) => {
   const { currentModuleDetails } = props
@@ -362,7 +363,12 @@ const AddDispatchBook = (props: Partial<IRoutePrivilege>) => {
                 touched={touched}
                 name="letterCarrierContact"
                 label={t('dispatchBook.letterCarrierContact')}
-                onChange={handleChange}
+                onChange={(event) => {
+                  inputChangeNumberOnly({
+                    event,
+                    handleChange,
+                  })
+                }}
                 onBlur={handleBlur}
               />
             </Grid.Col>
@@ -393,6 +399,8 @@ const AddDispatchBook = (props: Partial<IRoutePrivilege>) => {
 
             <Grid.Col sm={'sm:col-span-6'}>
               <Form.TextArea
+                withCharacterCount
+                maxLength={500}
                 value={values.remarks}
                 errors={errors}
                 touched={touched}
