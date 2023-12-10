@@ -21,10 +21,14 @@ const AddRecommendationForm = ({
   toggleRecommendationForm,
   openRecommendationForm,
   editId,
+  viewOnly,
+  setViewOnly,
 }: {
   toggleRecommendationForm: VoidFunction
   openRecommendationForm: boolean
   editId?: number
+  viewOnly?: boolean
+  setViewOnly?: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
   const { t } = useTranslation()
   const [initialRecommendationValue, setInitialRecommendationValue] = useState(
@@ -42,25 +46,24 @@ const AddRecommendationForm = ({
 
   useEffect(() => {
     if (recommendationDetails) {
-      const { id, recommendationNameEn, recommendationNameNp, isActive } =
-        recommendationDetails
+      const { id, nameEnglish, nameNepali, description } = recommendationDetails
       setInitialRecommendationValue({
         id,
-        recommendationNameEn,
-        recommendationNameNp,
-        isActive,
+        nameEnglish,
+        nameNepali,
+        description,
       })
     }
   }, [recommendationDetails, editId])
 
   const handleAddRecommendation = (values: IAddRecommendationInitialValue) => {
-    const { recommendationNameEn, recommendationNameNp, id, isActive } = values
+    const { nameEnglish, nameNepali, id, description } = values
 
     const reqData: IAddRecommendationPayload = {
       id: id || undefined,
-      recommendationNameEn,
-      recommendationNameNp,
-      isActive: editId ? isActive : true,
+      nameEnglish,
+      nameNepali,
+      description,
     }
 
     createRecommendation(reqData, {
@@ -95,6 +98,7 @@ const AddRecommendationForm = ({
         toggleModal={() => {
           toggleRecommendationForm()
           setInitialRecommendationValue(addRecommendationInitialValues)
+          setViewOnly && setViewOnly(false)
         }}
         size="md"
         title={
@@ -112,6 +116,7 @@ const AddRecommendationForm = ({
             toggleRecommendationForm()
             loading: createRecommendationLoading
             setInitialRecommendationValue(addRecommendationInitialValues)
+            setViewOnly && setViewOnly(false)
           },
         }}
       >
@@ -119,11 +124,12 @@ const AddRecommendationForm = ({
           <Grid sm={'sm:grid-cols-12'} gap="gap-4">
             <Grid.Col sm={'sm:col-span-6'}>
               <Form.Input
+                disabled={viewOnly}
                 isRequired
-                value={values.recommendationNameEn}
+                value={values.nameEnglish}
                 errors={errors}
                 touched={touched}
-                name="recommendationNameEn"
+                name="nameEnglish"
                 label={t('recommendation.recommendationNameEn')}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -132,13 +138,29 @@ const AddRecommendationForm = ({
 
             <Grid.Col sm={'sm:col-span-6'}>
               <Form.Input
+                disabled={viewOnly}
                 isNepali
                 isRequired
-                value={values.recommendationNameNp}
+                value={values.nameNepali}
                 errors={errors}
                 touched={touched}
-                name="recommendationNameNp"
+                name="nameNepali"
                 label={t('recommendation.recommendationNameNp')}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </Grid.Col>
+
+            <Grid.Col sm={'sm:col-span-12'}>
+              <Form.TextArea
+                disabled={viewOnly}
+                withCharacterCount
+                maxLength={500}
+                value={values.description}
+                errors={errors}
+                touched={touched}
+                name="description"
+                label={t('registrationBook.remarks')}
                 onChange={handleChange}
                 onBlur={handleBlur}
               />

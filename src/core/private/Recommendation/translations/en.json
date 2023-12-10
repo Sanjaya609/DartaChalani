@@ -5,9 +5,11 @@
   "recommendationNo": "Recommendation Number",
   "recommendationNameEn": "Recommendation Name (English)",
   "recommendationNameNp": "Recommendation Name (Nepali)",
+  "description": "Description",
   "errors": {
     "recommendationNameEn": "Recommendation Name (English) is required",
-    "recommendationNameNp": "Recommendation Name (Nepali) is required"
+    "recommendationNameNp": "Recommendation Name (Nepali) is required",
+    "description": "Description is required"
   },
   "modal": {
     "status": {

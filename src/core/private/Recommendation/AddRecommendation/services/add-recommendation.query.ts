@@ -11,7 +11,7 @@ const {
   getAllRecommendation,
   createRecommendation,
   getRecommendationById,
-  changeRecommendationStatus
+  // changeRecommendationStatus
 } = apiDetails
 
 const useCreateRecommendation = () => {
@@ -86,27 +86,27 @@ const useDeleteRecommendationById = () => {
   )
 }
 
-const useChangeRecommendationStatus = () => {
-  const queryClient = useQueryClient()
-  return useMutation(
-    (pathVariables: { recommendationId: number | string }) => {
-      return initApiRequest({
-        apiDetails: changeRecommendationStatus,
-        pathVariables,
-      })
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries([getAllRecommendation.controllerName])
-      },
-    }
-  )
-}
+// const useChangeRecommendationStatus = () => {
+//   const queryClient = useQueryClient()
+//   return useMutation(
+//     (pathVariables: { recommendationId: number | string }) => {
+//       return initApiRequest({
+//         apiDetails: changeRecommendationStatus,
+//         pathVariables,
+//       })
+//     },
+//     {
+//       onSuccess: () => {
+//         queryClient.invalidateQueries([getAllRecommendation.controllerName])
+//       },
+//     }
+//   )
+// }
 
 export {
   useCreateRecommendation,
   useGetAllRecommendation,
   useGetRecommendationDetailById,
   useDeleteRecommendationById,
-  useChangeRecommendationStatus
+  // useChangeRecommendationStatus
 }

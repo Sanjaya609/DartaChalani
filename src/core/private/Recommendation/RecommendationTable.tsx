@@ -10,13 +10,14 @@ import Modal from '@/components/ui/Modal/Modal'
 import {
   useDeleteRecommendationById,
   useGetAllRecommendation,
-  useChangeRecommendationStatus,
+  // useChangeRecommendationStatus,
 } from './AddRecommendation/services/add-recommendation.query'
 import { IRecommendationResponse } from './AddRecommendation/schema/add-recommendation.interface'
 import AddRecommendationForm from './AddRecommendation'
 import Switch from '@/components/functional/Form/Switch/Switch'
 import { IRoutePrivilege } from '@/router/routes/create-route'
 import { getTextByLanguage } from '@/lib/i18n/i18n'
+import { boolean } from 'yup'
 
 const RegistrationBookTable = ({
   currentModuleDetails,
@@ -27,10 +28,10 @@ const RegistrationBookTable = ({
     isFetching: allRecommendationFetching,
   } = useGetAllRecommendation()
 
-  const {
-    mutate: changeRecommendationStatus,
-    isLoading: changeRecommendationStatusLoading,
-  } = useChangeRecommendationStatus()
+  // const {
+  //   mutate: changeRecommendationStatus,
+  //   isLoading: changeRecommendationStatusLoading,
+  // } = useChangeRecommendationStatus()
 
   const [currentSelectedId, setCurrentSelectedId] = useState<string | number>(
     ''
@@ -38,12 +39,13 @@ const RegistrationBookTable = ({
   const setOrRemoveCurrentSelectedId = (id?: string | number) =>
     setCurrentSelectedId(id || '')
 
-  const [currentSelectedIdToChangeStatus, setCurrentSelectedIdToChangeStatus] =
-    useState<string | number>('')
-  const setOrRemoveCurrentSelectedIdToChangeStatus = (id?: string | number) =>
-    setCurrentSelectedIdToChangeStatus(id || '')
+  // const [currentSelectedIdToChangeStatus, setCurrentSelectedIdToChangeStatus] =
+  //   useState<string | number>('')
+  // const setOrRemoveCurrentSelectedIdToChangeStatus = (id?: string | number) =>
+  //   setCurrentSelectedIdToChangeStatus(id || '')
 
   const [editId, setEditId] = useState<number>()
+  const [viewOnly, setViewOnly] = useState(false)
   const [openRecommendationForm, setOpenRecommendationForm] =
     useState<boolean>(false)
   const toggleRecommendationForm = () =>
@@ -60,18 +62,18 @@ const RegistrationBookTable = ({
     })
   }
 
-  const handleChangeStatus = () => {
-    if (currentSelectedIdToChangeStatus) {
-      changeRecommendationStatus(
-        { recommendationId: currentSelectedIdToChangeStatus },
-        {
-          onSuccess: () => {
-            setOrRemoveCurrentSelectedIdToChangeStatus()
-          },
-        }
-      )
-    }
-  }
+  // const handleChangeStatus = () => {
+  //   if (currentSelectedIdToChangeStatus) {
+  //     changeRecommendationStatus(
+  //       { recommendationId: currentSelectedIdToChangeStatus },
+  //       {
+  //         onSuccess: () => {
+  //           setOrRemoveCurrentSelectedIdToChangeStatus()
+  //         },
+  //       }
+  //     )
+  //   }
+  // }
 
   const columns = useMemo<ColumnDef<IRecommendationResponse>[]>(
     () => [
@@ -87,22 +89,22 @@ const RegistrationBookTable = ({
         accessorKey: 'recommendationNameNp',
         header: t('recommendation.recommendationNameNp'),
       },
-      {
-        header: t('masterSetup.office.status'),
-        accessorKey: 'isActive',
-        cell: ({
-          row: {
-            original: { id, isActive },
-          },
-        }) => (
-          <Switch
-            checked={isActive}
-            onChange={() => {
-              setOrRemoveCurrentSelectedIdToChangeStatus(id)
-            }}
-          />
-        ),
-      },
+      // {
+      //   header: t('masterSetup.office.status'),
+      //   accessorKey: 'isActive',
+      //   cell: ({
+      //     row: {
+      //       original: { id, isActive },
+      //     },
+      //   }) => (
+      //     <Switch
+      //       checked={isActive}
+      //       onChange={() => {
+      //         setOrRemoveCurrentSelectedIdToChangeStatus(id)
+      //       }}
+      //     />
+      //   ),
+      // },
       {
         header: t('actions'),
         cell: ({
@@ -114,6 +116,11 @@ const RegistrationBookTable = ({
             handleEditClick={() => {
               setEditId(id)
               toggleRecommendationForm()
+            }}
+            handleViewClick={() => {
+              setEditId(id)
+              toggleRecommendationForm()
+              setViewOnly(true)
             }}
             handleDeleteClick={() => {
               setCurrentSelectedId(id)
@@ -174,7 +181,7 @@ const RegistrationBookTable = ({
         {t('recommendation.deleteModal.description')}
       </Modal>
 
-      <Modal
+      {/* <Modal
         open={!!currentSelectedIdToChangeStatus}
         toggleModal={setOrRemoveCurrentSelectedIdToChangeStatus}
         size="md"
@@ -186,12 +193,14 @@ const RegistrationBookTable = ({
         }}
       >
         {t('recommendation.modal.status.description')}
-      </Modal>
+      </Modal> */}
 
       <AddRecommendationForm
         toggleRecommendationForm={toggleRecommendationForm}
         openRecommendationForm={openRecommendationForm}
         editId={editId}
+        viewOnly={viewOnly}
+        setViewOnly={setViewOnly}
       />
     </>
   )

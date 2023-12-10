@@ -1,6 +1,6 @@
 import { RequestMethod } from '@/lib/api-request'
 
-const prefix = '/recommendation'
+const prefix = '/form'
 
 const addRecommendationAPI = {
   createRecommendation: {
@@ -9,15 +9,15 @@ const addRecommendationAPI = {
     requestMethod: RequestMethod.POST,
   },
   getAllRecommendation: {
-    controllerName: `${prefix}/list`,
+    controllerName: `${prefix}`,
     queryKeyName: 'GET_ALL_RECOMMENDATION',
     requestMethod: RequestMethod.GET,
   },
-  changeRecommendationStatus: {
-    controllerName: `${prefix}/{recommendationId}`,
-    queryKeyName: 'CHANGE_RECOMMENDATION_STATUS',
-    requestMethod: RequestMethod.PUT,
-  },
+  // changeRecommendationStatus: {
+  //   controllerName: `${prefix}/{recommendationId}`,
+  //   queryKeyName: 'CHANGE_RECOMMENDATION_STATUS',
+  //   requestMethod: RequestMethod.PUT,
+  // },
   getRecommendationById: {
     controllerName: `${prefix}/{id}`,
     queryKeyName: 'GET_RRECOMMENDATION_DETAIL_BY_ID',
