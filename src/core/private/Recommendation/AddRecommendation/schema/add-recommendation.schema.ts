@@ -3,16 +3,19 @@ import { IAddRecommendationInitialValue } from './add-recommendation.interface'
 
 export const addRecommendationInitialValues: IAddRecommendationInitialValue =
   {
-    recommendationNameEn: "",
-    recommendationNameNp: "",
-    isActive: false
+    nameEnglish: "",
+    nameNepali: "",
+    description: ""
   }
 
 export const addRecommendationValidationSchema = Yup.object({
-  recommendationNameEn: Yup.string().required(
+  nameEnglish: Yup.string().required(
     'recommendation.errors.recommendationNameEn'
   ),
-  recommendationNameNp: Yup.string().required(
+  nameNepali: Yup.string().required(
     'recommendation.errors.recommendationNameNp'
   ),
+  description: Yup.string().required(
+    'recommendation.errors.description'
+  )
 })

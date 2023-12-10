@@ -1,8 +1,8 @@
 export interface IAddRecommendationInitialValue {
   id?: number
-  recommendationNameEn: string,
-  recommendationNameNp: string,
-  isActive: boolean
+  nameEnglish: string,
+  nameNepali: string,
+  description: string
 }
 
 export interface IAddRecommendationPayload
@@ -11,7 +11,7 @@ export interface IAddRecommendationPayload
 
 export interface IRecommendationResponse {
   id: number
-  recommendationNameEn: string,
-  recommendationNameNp: string,
-  isActive: boolean
+  nameEnglish: string,
+  nameNepali: string,
+  description: string
 }

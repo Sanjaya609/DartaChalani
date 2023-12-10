@@ -5,9 +5,11 @@
   "recommendationNo": "सिफारिस नम्बर",
   "recommendationNameEn": "सिफारिसको नाम (अंग्रेजी)",
   "recommendationNameNp": "सिफारिसको नाम (नेपाली)",
+  "description": "विवरण",
   "errors": {
     "recommendationNameEn": "सिफारिस नाम (अंग्रेजी) आवश्यक छ",
-    "recommendationNameNp": "सिफारिस नाम (नेपाली) आवश्यक छ"
+    "recommendationNameNp": "सिफारिस नाम (नेपाली) आवश्यक छ",
+    "description": "विवरण आवश्यक छ"
   },
   "modal": {
     "status": {
