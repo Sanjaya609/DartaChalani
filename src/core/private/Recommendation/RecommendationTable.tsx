@@ -77,16 +77,16 @@ const RegistrationBookTable = ({
 
   const columns = useMemo<ColumnDef<IRecommendationResponse>[]>(
     () => [
+      // {
+      //   accessorKey: 'id',
+      //   header: t('recommendation.recommendationNo'),
+      // },
       {
-        accessorKey: 'id',
-        header: t('recommendation.recommendationNo'),
-      },
-      {
-        accessorKey: 'recommendationNameEn',
+        accessorKey: 'nameEnglish',
         header: t('recommendation.recommendationNameEn'),
       },
       {
-        accessorKey: 'recommendationNameNp',
+        accessorKey: 'nameNepali',
         header: t('recommendation.recommendationNameNp'),
       },
       // {
