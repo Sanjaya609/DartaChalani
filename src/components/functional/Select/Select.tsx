@@ -35,7 +35,7 @@ const selectStyles: Partial<Styles<TAny, boolean>> = {
       background: state.selectProps.searchModule
         ? '#052354'
         : state['isDisabled']
-        ? gray['24']
+        ? gray['80']
         : '#fff',
       color: gray[24],
       display: 'flex',

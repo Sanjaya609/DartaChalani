@@ -2,7 +2,8 @@ export interface IAddRecommendationInitialValue {
   id?: number
   nameEnglish: string,
   nameNepali: string,
-  description: string
+  description: string,
+  moduleId: string | number
 }
 
 export interface IAddRecommendationPayload
@@ -13,5 +14,6 @@ export interface IRecommendationResponse {
   id: number
   nameEnglish: string,
   nameNepali: string,
-  description: string
+  description: string,
+  moduleId: string | number
 }

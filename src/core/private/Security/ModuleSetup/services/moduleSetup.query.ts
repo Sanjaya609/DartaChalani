@@ -14,6 +14,7 @@ const {
   getModuleListByStatus,
   getConfigurableModuleList,
   changeModuleStatus,
+  getUnConfigurableModuleList
 } = apiDetails
 
 const useCreateModule = () => {
@@ -154,6 +155,33 @@ const useGetConfigurableModuleList = <T = IModuleSetupTableData[]>(
   )
 }
 
+const useGetUnConfigurableModuleList = <T = IModuleSetupTableData[]>(
+  getDataWithPropsValue?: IGetDataWithPropsVal
+) => {
+  return useQuery(
+    [getUnConfigurableModuleList.queryKeyName],
+    () =>
+    initApiRequest<BackendSuccessResponse<IModuleSetupTableData[]>>({
+      apiDetails:getUnConfigurableModuleList,
+    }),
+    {
+      select: (data) => {
+        const moduleListData = data?.data?.data?.length ? data.data.data : []
+        return (
+          getDataWithPropsValue?.mapDatatoStyleSelect
+          ? mapDataToStyledSelect({
+            arrayData: moduleListData,
+            id: 'id',
+            name: 'moduleNameEnglish',
+            nameNp: 'moduleNameNepali'
+          })
+          : moduleListData
+        ) as T
+      },
+    }
+  )
+}
+
 export {
   useCreateModule,
   useGetAllModule,
@@ -161,4 +189,5 @@ export {
   useGetModuleById,
   useGetModuleListByStatus,
   useGetConfigurableModuleList,
+  useGetUnConfigurableModuleList
 }

@@ -16,6 +16,7 @@ import {
   useGetRecommendationDetailById,
 } from './services/add-recommendation.query'
 import Modal from '@/components/ui/Modal/Modal'
+import { useGetUnConfigurableModuleList } from '../../Security/ModuleSetup/services/moduleSetup.query'
 
 const AddRecommendationForm = ({
   toggleRecommendationForm,
@@ -35,44 +36,55 @@ const AddRecommendationForm = ({
     addRecommendationInitialValues
   )
 
+  // GET Module List for dropdown
   const {
-    mutate: createRecommendation,
-    isLoading: createRecommendationLoading,
-  } = useCreateRecommendation()
+    data: documentModuleNameOption = [],
+    isFetching: moduleNameFetching,
+  } = useGetUnConfigurableModuleList<OptionType[]>({
+    mapDatatoStyleSelect: true,
+  })
 
   const { data: recommendationDetails } = useGetRecommendationDetailById(
     editId ?? ''
   )
 
-  useEffect(() => {
-    if (recommendationDetails) {
-      const { id, nameEnglish, nameNepali, description } = recommendationDetails
-      setInitialRecommendationValue({
-        id,
-        nameEnglish,
-        nameNepali,
-        description,
-      })
-    }
-  }, [recommendationDetails, editId])
+  const {
+    mutate: createRecommendation,
+    isLoading: createRecommendationLoading,
+  } = useCreateRecommendation()
 
   const handleAddRecommendation = (values: IAddRecommendationInitialValue) => {
-    const { nameEnglish, nameNepali, id, description } = values
+    const { nameEnglish, nameNepali, id, description, moduleId } = values
 
     const reqData: IAddRecommendationPayload = {
       id: id || undefined,
       nameEnglish,
       nameNepali,
       description,
+      moduleId,
     }
 
     createRecommendation(reqData, {
       onSuccess: () => {
-        setInitialRecommendationValue(addRecommendationInitialValues)
         toggleRecommendationForm()
+        setInitialRecommendationValue(addRecommendationInitialValues)
       },
     })
   }
+
+  useEffect(() => {
+    if (recommendationDetails) {
+      const { id, nameEnglish, nameNepali, description, moduleId } =
+        recommendationDetails
+      setInitialRecommendationValue({
+        id,
+        nameEnglish,
+        nameNepali,
+        description,
+        moduleId,
+      })
+    }
+  }, [recommendationDetails])
 
   const {
     values,
@@ -122,6 +134,24 @@ const AddRecommendationForm = ({
       >
         <form>
           <Grid sm={'sm:grid-cols-12'} gap="gap-4">
+            <Grid.Col sm={'sm:col-span-12'}>
+              <Form.Select
+                isDisabled={viewOnly}
+                isRequired
+                isLoading={moduleNameFetching}
+                options={documentModuleNameOption}
+                calculateValueOnChange
+                value={values.moduleId}
+                errors={errors}
+                touched={touched}
+                name="moduleId"
+                label={t('recommendation.moduleName')}
+                onChange={(event) => {
+                  setFieldValue(event.name, event?.main || '')
+                }}
+                onBlur={handleBlur}
+              />
+            </Grid.Col>
             <Grid.Col sm={'sm:col-span-6'}>
               <Form.Input
                 disabled={viewOnly}

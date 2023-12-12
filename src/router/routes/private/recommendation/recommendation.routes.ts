@@ -11,9 +11,9 @@ const RecommendationTable = React.lazy(
   () => import('@/core/private/Recommendation/RecommendationTable')
 )
 
-// const AddRecommendation = React.lazy(
-//   () => import('@/core/private/Recommendation/AddRecommendation')
-// )
+const ConfigureRecommendation = React.lazy(
+  () => import('@/core/private/Recommendation/ConfigureRecommendation')
+)
 
 export const recommendationSetupRoutes: _RouteObject<'private'>[] = [
   createRoute({
@@ -27,6 +27,12 @@ export const recommendationSetupRoutes: _RouteObject<'private'>[] = [
         element: RecommendationTable,
         checkPrivilege: [PRIVILEGEENUM.READ_LIST],
       }),
+      createRoute({
+        path: privateRoutePath.recommendation.configure,
+        element: ConfigureRecommendation,
+        checkFromParentPath: privateRoutePath.recommendation.base,
+        checkPrivilege: [PRIVILEGEENUM.READ]
+      })
     ],
   }),
 ]
