@@ -2,5 +2,6 @@ const baseRoute = '/recommendation'
 
 export const recommendationSetupRoutePath = {
   base: baseRoute,
-  add: `${baseRoute}/add`
+  add: `${baseRoute}/add`,
+  configure: `${baseRoute}/:id`
 }

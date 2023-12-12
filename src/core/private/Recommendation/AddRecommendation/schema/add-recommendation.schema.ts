@@ -5,7 +5,8 @@ export const addRecommendationInitialValues: IAddRecommendationInitialValue =
   {
     nameEnglish: "",
     nameNepali: "",
-    description: ""
+    description: "",
+    moduleId: ""
   }
 
 export const addRecommendationValidationSchema = Yup.object({
@@ -17,5 +18,8 @@ export const addRecommendationValidationSchema = Yup.object({
   ),
   description: Yup.string().required(
     'recommendation.errors.description'
+  ),
+  moduleId: Yup.string().required(
+    'recommendation.errors.moduleId'
   )
 })

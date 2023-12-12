@@ -6,10 +6,12 @@
   "recommendationNameEn": "Recommendation Name (English)",
   "recommendationNameNp": "Recommendation Name (Nepali)",
   "description": "Description",
+  "moduleName": "Module Name",
   "errors": {
     "recommendationNameEn": "Recommendation Name (English) is required",
     "recommendationNameNp": "Recommendation Name (Nepali) is required",
-    "description": "Description is required"
+    "description": "Description is required",
+    "moduleId": "Module Name is Required"
   },
   "modal": {
     "status": {

@@ -6,10 +6,12 @@
   "recommendationNameEn": "सिफारिसको नाम (अंग्रेजी)",
   "recommendationNameNp": "सिफारिसको नाम (नेपाली)",
   "description": "विवरण",
+  "moduleName": "मोड्युलको नाम",
   "errors": {
     "recommendationNameEn": "सिफारिस नाम (अंग्रेजी) आवश्यक छ",
     "recommendationNameNp": "सिफारिस नाम (नेपाली) आवश्यक छ",
-    "description": "विवरण आवश्यक छ"
+    "description": "विवरण आवश्यक छ",
+    "moduleId": "मोड्युलको नाम आवश्यक छ"
   },
   "modal": {
     "status": {

@@ -18,11 +18,14 @@ import Switch from '@/components/functional/Form/Switch/Switch'
 import { IRoutePrivilege } from '@/router/routes/create-route'
 import { getTextByLanguage } from '@/lib/i18n/i18n'
 import { boolean } from 'yup'
+import { privateRoutePath, useNavigate } from '@/router'
+import { encodeParams } from '@/utility/route-params'
 
 const RegistrationBookTable = ({
   currentModuleDetails,
 }: Partial<IRoutePrivilege>) => {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const {
     data: allRecommendationList = [],
     isFetching: allRecommendationFetching,
@@ -125,6 +128,11 @@ const RegistrationBookTable = ({
             handleDeleteClick={() => {
               setCurrentSelectedId(id)
             }}
+            handleConfigureClick={() => {
+              navigate(privateRoutePath.recommendation.configure, {
+                params: { id: encodeParams(id) },
+              })
+            }}
           />
         ),
       },
@@ -196,7 +204,10 @@ const RegistrationBookTable = ({
       </Modal> */}
 
       <AddRecommendationForm
-        toggleRecommendationForm={toggleRecommendationForm}
+        toggleRecommendationForm={() => {
+          toggleRecommendationForm()
+          setEditId(undefined)
+        }}
         openRecommendationForm={openRecommendationForm}
         editId={editId}
         viewOnly={viewOnly}
