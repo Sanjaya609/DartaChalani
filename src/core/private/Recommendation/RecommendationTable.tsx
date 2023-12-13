@@ -189,20 +189,6 @@ const RegistrationBookTable = ({
         {t('recommendation.deleteModal.description')}
       </Modal>
 
-      {/* <Modal
-        open={!!currentSelectedIdToChangeStatus}
-        toggleModal={setOrRemoveCurrentSelectedIdToChangeStatus}
-        size="md"
-        title={t('recommendation.modal.status.title')}
-        saveBtnProps={{
-          btnAction: handleChangeStatus,
-          loading: changeRecommendationStatusLoading,
-          btnTitle: t('btns.update'),
-        }}
-      >
-        {t('recommendation.modal.status.description')}
-      </Modal> */}
-
       <AddRecommendationForm
         toggleRecommendationForm={() => {
           toggleRecommendationForm()

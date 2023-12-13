@@ -68,6 +68,7 @@ const AddRecommendationForm = ({
       onSuccess: () => {
         toggleRecommendationForm()
         setInitialRecommendationValue(addRecommendationInitialValues)
+        resetForm()
       },
     })
   }
@@ -94,6 +95,7 @@ const AddRecommendationForm = ({
     handleBlur,
     handleSubmit,
     setFieldValue,
+    resetForm,
   } = useFormik({
     initialValues: initialRecommendationValue,
     enableReinitialize: true,
