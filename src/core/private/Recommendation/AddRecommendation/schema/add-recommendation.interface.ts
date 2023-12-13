@@ -7,7 +7,7 @@ export interface IAddRecommendationInitialValue {
 }
 
 export interface IAddRecommendationPayload
-  extends Omit<IAddRecommendationInitialValue, 'provinceId' | 'districtId'> {
+  extends IAddRecommendationInitialValue {
 }
 
 export interface IRecommendationResponse {

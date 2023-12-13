@@ -9,4 +9,5 @@ export enum APIENUM {
   MODULE_NAME = 'MODULE_NAME', // with name
   PRIVILEGE = 'PRIVILEGE', // with name
   USER_TYPE = 'USER_TYPE', // with name
+  FIELD_TYPE = "FIELD_TYPE"
 }

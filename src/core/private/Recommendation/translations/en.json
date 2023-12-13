@@ -7,6 +7,11 @@
   "recommendationNameNp": "Recommendation Name (Nepali)",
   "description": "Description",
   "moduleName": "Module Name",
+  "addField": "Add Field",
+  "fieldName": "Field Name",
+  "fieldType": "Field Type",
+  "orderNo": "Order Number",
+  "isValidationRequired": "Is Validation Required",
   "errors": {
     "recommendationNameEn": "Recommendation Name (English) is required",
     "recommendationNameNp": "Recommendation Name (Nepali) is required",

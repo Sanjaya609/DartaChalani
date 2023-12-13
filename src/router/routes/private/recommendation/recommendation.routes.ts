@@ -12,7 +12,7 @@ const RecommendationTable = React.lazy(
 )
 
 const ConfigureRecommendation = React.lazy(
-  () => import('@/core/private/Recommendation/ConfigureRecommendation')
+  () => import('@/core/private/Recommendation/ConfigureRecommendation/FieldsTable')
 )
 
 export const recommendationSetupRoutes: _RouteObject<'private'>[] = [
