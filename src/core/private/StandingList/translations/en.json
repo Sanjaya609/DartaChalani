@@ -20,7 +20,7 @@
   "taxClearanceDateExtendedDate": "Tax Clearance Extended Date",
   "workingSectorDetails": "Working Sector Details",
   "locationDetails": "Person/Firm Details",
-  "firmDetails": "Firm Details",
+  "firmDetails": "Firm/Company Details",
   "errors": {
     "applicationDate": "Application Date is required",
     "address": "Address is required",

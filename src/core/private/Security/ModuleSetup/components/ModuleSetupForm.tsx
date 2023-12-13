@@ -1,5 +1,5 @@
 import Form from '@/components/functional/Form/Form'
-import { Button, Flexbox, Grid, Icon } from '@/components/ui'
+import { Box, Button, Flexbox, Grid, Icon, Layout } from '@/components/ui'
 import { ArrayHelpers, FieldArray, Formik } from 'formik'
 import { useTranslation } from 'react-i18next'
 import { IModuleSetupFormSchema } from '../schema/moduleSetup.interface'
@@ -288,161 +288,172 @@ const ModuleSetupForm = ({
                       </Grid.Col>
                     </Grid>
 
-                    <FieldArray
-                      name="resourceRequestList"
-                      render={(arrayHelpers: ArrayHelpers) => {
-                        return (
-                          <>
-                            {values?.resourceRequestList?.map(
-                              (resourceRequestList, index) => (
-                                <Grid
-                                  className="mb-4"
-                                  key={`resourceRequestList-${index}`}
-                                  sm={'sm:grid-cols-12'}
-                                  gap="gap-4"
-                                >
-                                  <Grid.Col sm={'sm:col-span-3'}>
-                                    <Form.Input
-                                      isFieldArray={{
-                                        keyName: 'resourceRequestList',
-                                        index,
-                                        name: 'resourceName',
-                                      }}
-                                      value={
-                                        values.resourceRequestList[index]
-                                          .resourceName
-                                      }
-                                      id={`resourceRequestList[${index}].resourceName`}
-                                      name={`resourceRequestList[${index}].resourceName`}
-                                      onChange={handleChange}
-                                      errors={errors}
-                                      onBlur={handleBlur}
-                                      touched={touched}
-                                    />
-                                  </Grid.Col>
-
-                                  <Grid.Col sm={'sm:col-span-3'}>
-                                    <Form.Input
-                                      isFieldArray={{
-                                        keyName: 'resourceRequestList',
-                                        index,
-                                        name: 'url',
-                                      }}
-                                      value={
-                                        values.resourceRequestList[index].url
-                                      }
-                                      id={`resourceRequestList[${index}].url`}
-                                      name={`resourceRequestList[${index}].url`}
-                                      onChange={handleChange}
-                                      errors={errors}
-                                      onBlur={handleBlur}
-                                      touched={touched}
-                                    />
-                                  </Grid.Col>
-
-                                  <Grid.Col sm={'sm:col-span-2'}>
-                                    <Form.Select
-                                      options={HTTPMethodOption}
-                                      calculateValueOnChange
-                                      isFieldArray={{
-                                        keyName: 'resourceRequestList',
-                                        index,
-                                        name: 'httpMethod',
-                                      }}
-                                      value={
-                                        values.resourceRequestList[index]
-                                          .httpMethod
-                                      }
-                                      id={`resourceRequestList[${index}].httpMethod`}
-                                      name={`resourceRequestList[${index}].httpMethod`}
-                                      onChange={(event) => {
-                                        setFieldValue(event.name, event.main)
-                                      }}
-                                      errors={errors}
-                                      onBlur={handleBlur}
-                                      touched={touched}
-                                    />
-                                  </Grid.Col>
-
-                                  <Grid.Col sm={'sm:col-span-2'}>
-                                    <Form.Select
-                                      calculateValueOnChange
-                                      options={privilegeData}
-                                      isFieldArray={{
-                                        keyName: 'resourceRequestList',
-                                        index,
-                                        name: 'privilege',
-                                      }}
-                                      value={
-                                        values.resourceRequestList[index]
-                                          .privilege
-                                      }
-                                      id={`resourceRequestList[${index}].privilege`}
-                                      name={`resourceRequestList[${index}].privilege`}
-                                      onChange={(event) => {
-                                        setFieldValue(event.name, event.main)
-                                      }}
-                                      errors={errors}
-                                      onBlur={handleBlur}
-                                      touched={touched}
-                                    />
-                                  </Grid.Col>
-
-                                  <Grid.Col>
-                                    <Flexbox>
-                                      {index > 0 && (
-                                        <Button
-                                          type="button"
-                                          className="mr-3"
-                                          variant="danger"
-                                          onClick={() =>
-                                            arrayHelpers.remove(index)
+                    <Box className="relative h-72 w-full">
+                      <Layout.Absolute scrollable>
+                        <FieldArray
+                          name="resourceRequestList"
+                          render={(arrayHelpers: ArrayHelpers) => {
+                            return (
+                              <>
+                                {values?.resourceRequestList?.map(
+                                  (resourceRequestList, index) => (
+                                    <Grid
+                                      className="mb-4"
+                                      key={`resourceRequestList-${index}`}
+                                      sm={'sm:grid-cols-12'}
+                                      gap="gap-4"
+                                    >
+                                      <Grid.Col sm={'sm:col-span-3'}>
+                                        <Form.Input
+                                          isFieldArray={{
+                                            keyName: 'resourceRequestList',
+                                            index,
+                                            name: 'resourceName',
+                                          }}
+                                          value={
+                                            values.resourceRequestList[index]
+                                              .resourceName
                                           }
-                                        >
-                                          <Icon icon={Trash} />
-                                        </Button>
-                                      )}
-                                      <Button
-                                        type="button"
-                                        onClick={() => {
-                                          arrayHelpers.push({
-                                            httpMethod: '',
-                                            privilege: '',
-                                            resourceName: '',
-                                            url: '',
-                                          })
-                                        }}
-                                      >
-                                        <Icon fill="#fff" icon={Plus} />
-                                      </Button>
-                                    </Flexbox>
-                                  </Grid.Col>
-                                </Grid>
-                              )
-                            )}
+                                          id={`resourceRequestList[${index}].resourceName`}
+                                          name={`resourceRequestList[${index}].resourceName`}
+                                          onChange={handleChange}
+                                          errors={errors}
+                                          onBlur={handleBlur}
+                                          touched={touched}
+                                        />
+                                      </Grid.Col>
 
-                            {errors &&
-                              errors?.resourceRequestList &&
-                              typeof errors.resourceRequestList ===
-                                'string' && (
-                                <Grid
-                                  className="mb-4"
-                                  sm={'sm:grid-cols-12'}
-                                  gap="gap-4"
-                                >
-                                  <Grid.Col sm="sm:col-span-12">
-                                    <FormikValidationError
-                                      errors={errors}
-                                      touched={touched}
-                                      name="properties"
-                                    />
-                                  </Grid.Col>
-                                </Grid>
-                              )}
-                          </>
-                        )
-                      }}
-                    />
+                                      <Grid.Col sm={'sm:col-span-3'}>
+                                        <Form.Input
+                                          isFieldArray={{
+                                            keyName: 'resourceRequestList',
+                                            index,
+                                            name: 'url',
+                                          }}
+                                          value={
+                                            values.resourceRequestList[index]
+                                              .url
+                                          }
+                                          id={`resourceRequestList[${index}].url`}
+                                          name={`resourceRequestList[${index}].url`}
+                                          onChange={handleChange}
+                                          errors={errors}
+                                          onBlur={handleBlur}
+                                          touched={touched}
+                                        />
+                                      </Grid.Col>
+
+                                      <Grid.Col sm={'sm:col-span-2'}>
+                                        <Form.Select
+                                          options={HTTPMethodOption}
+                                          calculateValueOnChange
+                                          isFieldArray={{
+                                            keyName: 'resourceRequestList',
+                                            index,
+                                            name: 'httpMethod',
+                                          }}
+                                          value={
+                                            values.resourceRequestList[index]
+                                              .httpMethod
+                                          }
+                                          id={`resourceRequestList[${index}].httpMethod`}
+                                          name={`resourceRequestList[${index}].httpMethod`}
+                                          onChange={(event) => {
+                                            setFieldValue(
+                                              event.name,
+                                              event.main
+                                            )
+                                          }}
+                                          errors={errors}
+                                          onBlur={handleBlur}
+                                          touched={touched}
+                                        />
+                                      </Grid.Col>
+
+                                      <Grid.Col sm={'sm:col-span-2'}>
+                                        <Form.Select
+                                          calculateValueOnChange
+                                          options={privilegeData}
+                                          isFieldArray={{
+                                            keyName: 'resourceRequestList',
+                                            index,
+                                            name: 'privilege',
+                                          }}
+                                          value={
+                                            values.resourceRequestList[index]
+                                              .privilege
+                                          }
+                                          id={`resourceRequestList[${index}].privilege`}
+                                          name={`resourceRequestList[${index}].privilege`}
+                                          onChange={(event) => {
+                                            setFieldValue(
+                                              event.name,
+                                              event.main
+                                            )
+                                          }}
+                                          errors={errors}
+                                          onBlur={handleBlur}
+                                          touched={touched}
+                                        />
+                                      </Grid.Col>
+
+                                      <Grid.Col>
+                                        <Flexbox>
+                                          {index > 0 && (
+                                            <Button
+                                              type="button"
+                                              className="mr-3"
+                                              variant="danger"
+                                              onClick={() =>
+                                                arrayHelpers.remove(index)
+                                              }
+                                            >
+                                              <Icon icon={Trash} />
+                                            </Button>
+                                          )}
+                                          <Button
+                                            type="button"
+                                            onClick={() => {
+                                              arrayHelpers.push({
+                                                httpMethod: '',
+                                                privilege: '',
+                                                resourceName: '',
+                                                url: '',
+                                              })
+                                            }}
+                                          >
+                                            <Icon fill="#fff" icon={Plus} />
+                                          </Button>
+                                        </Flexbox>
+                                      </Grid.Col>
+                                    </Grid>
+                                  )
+                                )}
+
+                                {errors &&
+                                  errors?.resourceRequestList &&
+                                  typeof errors.resourceRequestList ===
+                                    'string' && (
+                                    <Grid
+                                      className="mb-4"
+                                      sm={'sm:grid-cols-12'}
+                                      gap="gap-4"
+                                    >
+                                      <Grid.Col sm="sm:col-span-12">
+                                        <FormikValidationError
+                                          errors={errors}
+                                          touched={touched}
+                                          name="properties"
+                                        />
+                                      </Grid.Col>
+                                    </Grid>
+                                  )}
+                              </>
+                            )
+                          }}
+                        />
+                      </Layout.Absolute>
+                    </Box>
                   </Grid.Col>
                 )}
               </Grid>
