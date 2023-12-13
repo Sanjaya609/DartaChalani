@@ -19,8 +19,8 @@
   "taxClearanceDate": "कर चुक्ता मिति",
   "taxClearanceDateExtendedDate": "कर चुक्ता विस्तारित मिति",
   "workingSectorDetails": "कार्य क्षेत्र विवरण",
-  "locationDetails": "स्थान विवरण",
-  "firmDetails": "व्यक्ति/फर्मको विवरण",
+  "locationDetails": "व्यक्ति/फर्मको विवरण",
+  "firmDetails": "फर्म/कम्पनी विवरण",
   "errors": {
     "applicationDate": "आवेदन मिति अनिवार्य छ",
     "address": "ठेगाना अनिवार्य छ",
