@@ -1,11 +1,14 @@
 export interface IAddFieldInitialValue {
-    id?: string | number;
+    id?: number;
     dropDownId: string | number;
     fieldControlName: string;
     fieldType: string;
     isValidationRequired: boolean;
     orderNo: string | number;
     recommendationId: string | number;
+    lableNameEnglish: string;
+    lableNameNepali: string;
+    className: string
 }
 
 export interface IAddFieldPayload
@@ -15,8 +18,11 @@ export interface IAddFieldPayload
     dropDownId: string | number;
     fieldControlName: string;
     fieldType: string;
-    id: string | number;
+    id: number;
     isValidationRequired: boolean;
     orderNo: string | number;
     recommendationId: string | number;
+    lableNameEnglish: string;
+    lableNameNepali: string;
+    className: string
  }

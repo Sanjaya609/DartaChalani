@@ -11,6 +11,8 @@ const {
   updateField,
   getAllFieldByRecommendationId,
   getAllField,
+  getFieldDetailById,
+  deleteFieldById
 } = apiDetails
 
 const useCreateField = () => {
@@ -86,9 +88,46 @@ const useGetAllField = <T = IAddFieldResponse[]>() => {
     )
   }
 
+  const useGetFieldDetailById = (id: string | number | null) => {
+    return useQuery(
+      [getFieldDetailById.controllerName, id],
+      () =>
+        initApiRequest<BackendSuccessResponse<IAddFieldResponse>>({
+          apiDetails: getFieldDetailById,
+          pathVariables: { id }
+        }),
+        {
+          select: (data) => {
+            return data?.data?.data
+          },
+          enabled: !!id,
+          staleTime: 0
+        }
+    )
+  }
+
+  const useDeleteFieldById = () => {
+    const queryClient = useQueryClient()
+    return useMutation(
+      (id: number | string) => {
+        return initApiRequest({
+          apiDetails: deleteFieldById,
+          pathVariables: { id }
+        })
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries([getAllFieldByRecommendationId.controllerName, getAllField.controllerName])
+        },
+      }
+    )
+  }
+
 export {
   useCreateField,
   useUpdateField,
   useGetAllFieldByRecommendationId,
-  useGetAllField
+  useGetAllField,
+  useGetFieldDetailById,
+  useDeleteFieldById
 }

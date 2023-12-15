@@ -6,15 +6,19 @@ import FlexLayout from '@/components/ui/core/Layout/FlexLayout'
 import { ColumnDef } from '@tanstack/react-table'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useGetAllFieldByRecommendationId } from './services/fields.query'
+import { useGetRecommendationDetailById } from '../AddRecommendation/services/add-recommendation.query'
+import {
+  useGetAllFieldByRecommendationId,
+  useGetFieldDetailById,
+  useDeleteFieldById,
+} from './services/fields.query'
 import { IAddFieldResponse } from './schema/field.interface'
 import { IRoutePrivilege } from '@/router/routes/create-route'
 import { getTextByLanguage } from '@/lib/i18n/i18n'
-import { boolean } from 'yup'
 import { privateRoutePath, useNavigate, useParams } from '@/router'
 import { decodeParams, encodeParams } from '@/utility/route-params'
 import AddField from './AddField'
-import { useGetRecommendationDetailById } from '../AddRecommendation/services/add-recommendation.query'
+import Modal from '@/components/ui/Modal/Modal'
 
 const RegistrationBookTable = ({
   currentModuleDetails,
@@ -29,34 +33,49 @@ const RegistrationBookTable = ({
   const toggleRecommendationForm = () =>
     setOpenRecommendationForm(!openRecommendationForm)
 
+  const [currentSelectedId, setCurrentSelectedId] = useState<string | number>(
+    ''
+  )
+  const setOrRemoveCurrentSelectedId = (id?: string | number) =>
+    setCurrentSelectedId(id || '')
+
   const navigateToRecommendationList = () => {
     navigate(privateRoutePath.recommendation.base)
   }
 
   const recommendationId = decodeParams<string>(params?.id)
-
   const { data: recommendationDetails } = useGetRecommendationDetailById(
     recommendationId ?? ''
   )
+  const { mutate: deleteById, isLoading: deleteByIdLoading } =
+    useDeleteFieldById()
 
   const {
     data: allFiledByRecommendationIdList = [],
     isFetching: allFiledByRecommendationFetching,
   } = useGetAllFieldByRecommendationId(recommendationId)
 
-  const [currentSelectedId, setCurrentSelectedId] = useState<string | number>(
-    ''
-  )
+  const handleDeleteById = () => {
+    deleteById(currentSelectedId, {
+      onSuccess: () => {
+        setOrRemoveCurrentSelectedId()
+      },
+    })
+  }
 
   const columns = useMemo<ColumnDef<IAddFieldResponse>[]>(
     () => [
       {
-        accessorKey: 'nameEnglish',
+        accessorKey: getTextByLanguage('labelNameEnglish', 'labelNameNepali'),
         header: t('recommendation.fieldName'),
       },
       {
-        accessorKey: 'nameNepali',
+        accessorKey: 'fieldType',
         header: t('recommendation.fieldType'),
+      },
+      {
+        accessorKey: 'orderNo',
+        header: t('recommendation.orderNo'),
       },
       {
         header: t('actions'),
@@ -67,10 +86,13 @@ const RegistrationBookTable = ({
         }) => (
           <TableAction
             handleEditClick={() => {
+              setEditId(id)
               toggleRecommendationForm()
             }}
             handleViewClick={() => {
+              setEditId(id)
               toggleRecommendationForm()
+              setViewOnly
             }}
             handleDeleteClick={() => {
               setCurrentSelectedId(id)
@@ -123,6 +145,25 @@ const RegistrationBookTable = ({
         setViewOnly={setViewOnly}
         formId={recommendationId!}
       />
+
+      <Modal
+        open={!!currentSelectedId}
+        toggleModal={setOrRemoveCurrentSelectedId}
+        size="md"
+        title={t('recommendation.deleteModal.title')}
+        saveBtnProps={{
+          btnAction: handleDeleteById,
+          loading: deleteByIdLoading,
+          btnTitle: t('btns.delete'),
+        }}
+        cancelBtnProps={{
+          btnAction: () => {
+            setOrRemoveCurrentSelectedId()
+          },
+        }}
+      >
+        {t('recommendation.deleteModal.description')}
+      </Modal>
     </>
   )
 }

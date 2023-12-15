@@ -11,10 +11,7 @@ import {
   addFieldInitialValues,
   addFieldValidationSchema,
 } from './schema/field.schema'
-import {
-  useCreateField,
-  // useGetAllField,
-} from './services/fields.query'
+import { useCreateField, useGetFieldDetailById } from './services/fields.query'
 import Modal from '@/components/ui/Modal/Modal'
 import { useGetUnConfigurableModuleList } from '../../Security/ModuleSetup/services/moduleSetup.query'
 import { useGetEnumDataWithValue } from '@/service/generic/generic.query'
@@ -46,22 +43,22 @@ const AddField = ({
       mapDatatoStyleSelect: false,
     })
 
-  // const { data: recommendationDetails } = useGetRecommendationDetailById(
-  //   editId ?? ''
-  // )
+  const { data: fieldDetails } = useGetFieldDetailById(editId ?? '')
 
   const { mutate: createField, isLoading: createFieldLoading } =
     useCreateField()
 
   const handleAddField = (values: IAddFieldInitialValue) => {
     const {
+      id,
       dropDownId,
       fieldControlName,
       fieldType,
       isValidationRequired,
       orderNo,
-      recommendationId,
-      id,
+      lableNameEnglish,
+      lableNameNepali,
+      className,
     } = values
 
     const reqData: IAddFieldPayload = {
@@ -72,6 +69,9 @@ const AddField = ({
       isValidationRequired,
       orderNo,
       recommendationId: formId,
+      lableNameEnglish,
+      lableNameNepali,
+      className,
     }
 
     createField(reqData, {
@@ -83,19 +83,33 @@ const AddField = ({
     })
   }
 
-  // useEffect(() => {
-  //   if (recommendationDetails) {
-  //     const { id, nameEnglish, nameNepali, description, moduleId } =
-  //       recommendationDetails
-  //     setInitialRecommendationValue({
-  //       id,
-  //       nameEnglish,
-  //       nameNepali,
-  //       description,
-  //       moduleId,
-  //     })
-  //   }
-  // }, [recommendationDetails])
+  useEffect(() => {
+    if (fieldDetails) {
+      const {
+        id,
+        lableNameEnglish,
+        lableNameNepali,
+        fieldControlName,
+        fieldType,
+        isValidationRequired,
+        orderNo,
+        className,
+        dropDownId,
+      } = fieldDetails
+      setInitialFieldValue({
+        id,
+        dropDownId,
+        fieldControlName,
+        fieldType,
+        isValidationRequired,
+        orderNo,
+        recommendationId: formId,
+        lableNameEnglish,
+        lableNameNepali,
+        className,
+      })
+    }
+  }, [fieldDetails])
 
   const {
     values,
@@ -177,6 +191,35 @@ const AddField = ({
                 onChange={(event) => {
                   setFieldValue(event.name, event?.main || '')
                 }}
+                onBlur={handleBlur}
+              />
+            </Grid.Col>
+
+            <Grid.Col sm={'sm:col-span-6'}>
+              <Form.Input
+                disabled={viewOnly}
+                isRequired
+                value={values.lableNameEnglish}
+                errors={errors}
+                touched={touched}
+                name="lableNameEnglish"
+                label={t('recommendation.lableNameEnglish')}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </Grid.Col>
+
+            <Grid.Col sm={'sm:col-span-6'}>
+              <Form.Input
+                disabled={viewOnly}
+                isNepali
+                isRequired
+                value={values.lableNameNepali}
+                errors={errors}
+                touched={touched}
+                name="lableNameNepali"
+                label={t('recommendation.lableNameNepali')}
+                onChange={handleChange}
                 onBlur={handleBlur}
               />
             </Grid.Col>
