@@ -11,12 +11,18 @@
   "fieldName": "Field Name",
   "fieldType": "Field Type",
   "orderNo": "Order Number",
-  "isValidationRequired": "Is Validation Required",
+  "isValidationRequired": "Is Validation Required ?",
+  "lableNameEnglish": "Lable Name (English)",
+  "lableNameNepali": "Lable Name (Nepali)",
+  "className": "Class Name (CSS Styling)",
   "errors": {
     "recommendationNameEn": "Recommendation Name (English) is required",
     "recommendationNameNp": "Recommendation Name (Nepali) is required",
     "description": "Description is required",
-    "moduleId": "Module Name is Required"
+    "moduleId": "Module Name is Required",
+    "orderNo": "Order Number is Required",
+    "lableNameEnglish": "Lable Name (English) is Required",
+    "lableNameNepali": "Lable Name (Nepali) is Reuired"
   },
   "modal": {
     "status": {
