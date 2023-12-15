@@ -13,7 +13,6 @@ import {
 } from './schema/field.schema'
 import { useCreateField, useGetFieldDetailById } from './services/fields.query'
 import Modal from '@/components/ui/Modal/Modal'
-import { useGetUnConfigurableModuleList } from '../../Security/ModuleSetup/services/moduleSetup.query'
 import { useGetEnumDataWithValue } from '@/service/generic/generic.query'
 import { APIENUM } from '@/utility/enums/api.enum'
 
