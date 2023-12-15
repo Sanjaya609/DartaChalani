@@ -16,7 +16,7 @@ import { IAddFieldResponse } from './schema/field.interface'
 import { IRoutePrivilege } from '@/router/routes/create-route'
 import { getTextByLanguage } from '@/lib/i18n/i18n'
 import { privateRoutePath, useNavigate, useParams } from '@/router'
-import { decodeParams, encodeParams } from '@/utility/route-params'
+import { decodeParams } from '@/utility/route-params'
 import AddField from './AddField'
 import Modal from '@/components/ui/Modal/Modal'
 
@@ -97,11 +97,11 @@ const RegistrationBookTable = ({
             handleDeleteClick={() => {
               setCurrentSelectedId(id)
             }}
-            handleConfigureClick={() => {
-              navigate(privateRoutePath.recommendation.configure, {
-                params: { id: encodeParams(id) },
-              })
-            }}
+            // handleConfigureClick={() => {
+            //   navigate(privateRoutePath.recommendation.configure, {
+            //     params: { id: encodeParams(id) },
+            //   })
+            // }}
           />
         ),
       },
