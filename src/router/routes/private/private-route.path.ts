@@ -4,6 +4,7 @@ import { registrationBookRoutePath } from './registration-book/registration-book
 import { securityRoutePath } from './security/security-route.path'
 import { standingListRoutePath } from './standing-list/standing-list-route.path'
 import { recommendationSetupRoutePath } from './recommendation/recommendation.path'
+import { dynamicFormRoutePath } from './dynamic-form/dynamic-form.path'
 
 export const privateRoutePath = {
   base: '/',
@@ -13,5 +14,6 @@ export const privateRoutePath = {
   standingList: standingListRoutePath,
   registrationBook: registrationBookRoutePath,
   dispatchBook: dispatchBookRoutePath,
-  recommendation: recommendationSetupRoutePath
+  recommendation: recommendationSetupRoutePath,
+  dynamicForm: dynamicFormRoutePath,
 } as const
