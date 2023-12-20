@@ -13,7 +13,10 @@ import {
 } from '../ConfigureRecommendation/schema/field.schema'
 import { useGetEnumDataWithValue } from '@/service/generic/generic.query'
 import { APIENUM } from '@/utility/enums/api.enum'
-import { useCreateField, useGetFieldDetailById } from '../ConfigureRecommendation/services/fields.query'
+import {
+  useCreateField,
+  useGetFieldDetailById,
+} from '../ConfigureRecommendation/services/fields.query'
 
 const AddField = ({
   editId,
@@ -73,6 +76,7 @@ const AddField = ({
   }
 
   useEffect(() => {
+    debugger
     if (fieldDetails) {
       const {
         id,
@@ -98,7 +102,7 @@ const AddField = ({
         className,
       })
     }
-  }, [fieldDetails])
+  }, [fieldDetails, editId])
 
   const {
     values,
@@ -200,75 +204,75 @@ const AddField = ({
               />
             </Grid.Col>
           </Grid.Col>
-        );
-  
+        )
+
       case 'SELECT':
-        return (
-          <Grid.Col sm={'sm:col-span-12'} key="selectField">
-            
-          </Grid.Col>
-        );
-  
+        return <Grid.Col sm={'sm:col-span-12'} key="selectField"></Grid.Col>
+
       case 'CHECKBOX':
-        return (
-          <Grid.Col sm={'sm:col-span-12'} key="checkboxField">
-           
-          </Grid.Col>
-        );
-  
+        return <Grid.Col sm={'sm:col-span-12'} key="checkboxField"></Grid.Col>
+
       case 'RADIO':
-        return (
-          <Grid.Col sm={'sm:col-span-12'} key="radioField">
-            
-          </Grid.Col>
-        );
-  
+        return <Grid.Col sm={'sm:col-span-12'} key="radioField"></Grid.Col>
+
       case 'FILE':
-        return (
-          <Grid.Col sm={'sm:col-span-12'} key="fileField">
-            
-          </Grid.Col>
-        );
-  
+        return <Grid.Col sm={'sm:col-span-12'} key="fileField"></Grid.Col>
+
       case 'DATEPICKER':
-        return (
-          <Grid.Col sm={'sm:col-span-12'} key="datepickerField">
-            
-          </Grid.Col>
-        );
-  
+        return <Grid.Col sm={'sm:col-span-12'} key="datepickerField"></Grid.Col>
+
       default:
-        return null;
+        return null
     }
-  };
+  }
 
   return (
     <>
-        <form>
-          <Grid sm={'sm:grid-cols-12'} gap="gap-4">
-            <Grid.Col sm={'sm:col-span-12'}>
-              <Form.Select
-                isRequired
-                isLoading={fieldTypeFetching}
-                options={fieldTypeOptions?.map((field) => {
-                  return { value: field.key, label: field.nameEnglish }
-                })}
-                calculateValueOnChange
-                value={values.fieldType}
-                errors={errors}
-                touched={touched}
-                name="fieldType"
-                label={t('recommendation.fieldType')}
-                onChange={(event) => {
-                  setFieldValue(event.name, event?.main || '')
-                }}
-                onBlur={handleBlur}
-              />
-            </Grid.Col>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-6 bg-blue-500 p-4 text-white">
+          <div className="flex items-center justify-between">
+            <h1 className="flex items-center text-lg font-semibold">
+              <i className="fas fa-wpforms mr-2"></i>
+              Field Details
+            </h1>
+            <button
+              type="submit"
+              className="flex items-center rounded bg-green-500 px-4 py-2 font-semibold text-white hover:bg-green-600"
+            >
+              <i className="fas fa-plus-circle mr-2"></i>
+              {editId ? 'Update' : 'Add'}
+            </button>
+          </div>
+        </div>
+        <Grid sm={'sm:grid-cols-12'} gap="gap-4">
+          <Grid.Col sm={'sm:col-span-12'}>
+            <Form.Select
+              isRequired
+              isLoading={fieldTypeFetching}
+              options={fieldTypeOptions?.map((field) => {
+                return { value: field.key, label: field.nameEnglish }
+              })}
+              calculateValueOnChange
+              value={values.fieldType}
+              errors={errors}
+              touched={touched}
+              name="fieldType"
+              label={t('recommendation.fieldType')}
+              onChange={(event) => {
+                setFieldValue(event.name, event?.main || '')
+              }}
+              onBlur={handleBlur}
+            />
+          </Grid.Col>
 
-            {renderAdditionalFields(values.fieldType, values, handleChange, handleBlur)}
-          </Grid>
-        </form>
+          {renderAdditionalFields(
+            values.fieldType,
+            values,
+            handleChange,
+            handleBlur
+          )}
+        </Grid>
+      </form>
     </>
   )
 }

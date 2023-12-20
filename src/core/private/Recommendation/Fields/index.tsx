@@ -18,19 +18,34 @@ import ContainerLayout from '@/components/ui/core/Layout/ContainerLayout'
 import FlexLayout from '@/components/ui/core/Layout/FlexLayout'
 import { IRoutePrivilege } from '@/router/routes/create-route'
 import { addFieldInitialValues } from './schema/field.schema'
-import { Button, Grid } from '@/components/ui'
+import { Button, Grid, Icon } from '@/components/ui'
 import { decodeParams } from '@/utility/route-params'
 import { useParams } from 'react-router-dom'
-import { useGetAllFieldByRecommendationId } from '../ConfigureRecommendation/services/fields.query'
+import {
+  useDeleteFieldById,
+  useGetAllFieldByRecommendationId,
+} from '../ConfigureRecommendation/services/fields.query'
 import SortableItem from './SortableItem'
 import AddField from './AddField'
 import { useGetRecommendationDetailById } from '../AddRecommendation/services/add-recommendation.query'
+import { Pencil, Trash } from 'phosphor-react'
+import { IAddFieldInitialValue } from './schema/field.interface'
+import Modal from '@/components/ui/Modal/Modal'
+import { useTranslation } from 'react-i18next'
 
 const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
+  const { t } = useTranslation()
   const [editId, setEditId] = useState<number>()
   const [items, setItems] = useState(addFieldInitialValues)
+  const [deleteId, setDeleteId] = useState<string | number>('')
+  const setOrRemoveDeleteId = (id?: string | number) => setDeleteId(id || '')
 
   const params = useParams()
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor)
+  )
+
   const recommendationId = decodeParams<string>(params?.id)
   const { data: recommendationDetails } = useGetRecommendationDetailById(
     recommendationId ?? ''
@@ -39,24 +54,11 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
   const {
     data: allFiledByRecommendationIdList = [],
     isFetching: allFiledByRecommendationFetching,
-    isSuccess: allFiledByRecommendationSuccess
   } = useGetAllFieldByRecommendationId(recommendationId)
-
-  useEffect(() => {
-    if(allFiledByRecommendationSuccess) {
-      setItems(allFiledByRecommendationIdList)
-    }
-  }, [allFiledByRecommendationSuccess])
-
-
-  const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(KeyboardSensor)
-  )
 
   const handleDragEnd = ({ active, over }: { active: any; over: any }) => {
     if (active.id === over.id) {
-      return;
+      return
     }
 
     if (active.id !== over.id) {
@@ -67,57 +69,106 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
         return arrayMove(items, oldIndex, newIndex)
       })
     }
-
-    if(active.data.current.sortable.containerId !== over.data.current.sortable.containerId) {
-      debugger
-    }
   }
+
+  const { mutate: deleteById, isLoading: deleteByIdLoading } =
+    useDeleteFieldById()
+
+  const handleDeleteById = () => {
+    deleteById(deleteId, {
+      onSuccess: () => {
+        setOrRemoveDeleteId()
+      },
+    })
+  }
+
+  const renderActionButtons = (item: IAddFieldInitialValue) => (
+    <div className="absolute right-0 top-4 mr-5 mt-2 hidden space-x-2 group-hover:flex">
+      <Button
+        variant="success"
+        size="sm"
+        type="button"
+        icons="icons"
+        className="z-40 ml-4 whitespace-nowrap rounded border border-gray-80"
+        onClick={() => setEditId(item.id)}
+      >
+        <Icon icon={Pencil} />
+      </Button>
+
+      <Button
+        variant="danger"
+        size="sm"
+        type="button"
+        icons="icons"
+        className="z-40 ml-4 whitespace-nowrap rounded border border-gray-80"
+        onClick={() => setDeleteId(item.id)}
+      >
+        <Icon icon={Trash} />
+      </Button>
+
+      <Modal
+        open={!!deleteId}
+        toggleModal={setOrRemoveDeleteId}
+        size="md"
+        title={t('recommendation.deleteModal.title')}
+        saveBtnProps={{
+          btnAction: handleDeleteById,
+          loading: deleteByIdLoading,
+          btnTitle: t('btns.delete'),
+        }}
+        cancelBtnProps={{
+          btnAction: () => {
+            setOrRemoveDeleteId()
+          },
+        }}
+      >
+        {t('recommendation.deleteModal.description')}
+      </Modal>
+    </div>
+  )
+
+  useEffect(() => {
+    if (allFiledByRecommendationIdList) {
+      setItems(allFiledByRecommendationIdList)
+    }
+  }, [allFiledByRecommendationFetching])
 
   return (
     <>
       <SectionHeader title={recommendationDetails?.nameEnglish} />
 
-      <ContainerLayout stretch >
+      <ContainerLayout stretch>
         <FlexLayout direction="row">
-            <div className="w-1/4 overflow-y-auto bg-white p-6 mr-4 h-full overflow-x-hidden">
-            <div className="bg-blue-500 p-4 text-white mb-6">
-              <div className="flex items-center justify-between">
-                <h1 className="text-lg font-semibold flex items-center">
-                  <i className="fas fa-wpforms mr-2"></i>
-                    Field Details
-                </h1>
-                <button className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded flex items-center">
-                  <i className="fas fa-plus-circle mr-2"></i>
-                  Add
-                </button>
-              </div>
-            </div>
+          <div className="mr-4 h-full w-1/4 overflow-y-auto overflow-x-hidden bg-white p-6">
+            <AddField editId={editId} formId={recommendationId!} />
+          </div>
 
-              <AddField 
-                editId={editId} 
-                formId={recommendationId!} 
-              />
-            </div>
-
-            <form className="flex-1 overflow-y-auto bg-white p-6 h-screen">
-              <Grid sm={'sm:grid-cols-12'} >
-                <DndContext
-                  sensors={sensors}
-                  collisionDetection={closestCenter}
-                  onDragEnd={handleDragEnd}
-                  onDragCancel={() => console.log('Drag cancelled')}
-                >
-                  <SortableContext items={items} strategy={rectSortingStrategy}>
-                      {items.map((item, index) => (
-                        <>
-                          <SortableItem key={item.id} item={item} />
-                        </>
-                      ))}
-                  </SortableContext>
-                          
-                </DndContext>
-              </Grid>
-            </form>
+          <Grid
+            sm={'sm:grid-cols-12'}
+            className="w-3/4 overflow-auto bg-white px-5 pt-2"
+          >
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragEnd={handleDragEnd}
+              onDragCancel={() => console.log('Drag cancelled')}
+            >
+              <SortableContext items={items} strategy={rectSortingStrategy}>
+                {items.map((item) => (
+                  <>
+                    <Grid.Col
+                      sm={'sm:col-span-6'}
+                      className="group relative p-3"
+                      key={item.id}
+                    >
+                      {renderActionButtons(item)}
+                      <SortableItem key={item.id} item={item} />
+                    </Grid.Col>
+                  </>
+                ))}
+              </SortableContext>
+            </DndContext>
+          </Grid>
         </FlexLayout>
       </ContainerLayout>
     </>
