@@ -6,8 +6,8 @@ export interface IAddFieldInitialValue {
     isValidationRequired: boolean;
     orderNo: string | number;
     recommendationId: string | number;
-    lableNameEnglish: string;
-    lableNameNepali: string;
+    labelNameEnglish: string;
+    labelNameNepali: string;
     className: string
 }
 
@@ -22,7 +22,7 @@ export interface IAddFieldPayload
     isValidationRequired: boolean;
     orderNo: string | number;
     recommendationId: string | number;
-    lableNameEnglish: string;
-    lableNameNepali: string;
+    labelNameEnglish: string;
+    labelNameNepali: string;
     className: string
  }

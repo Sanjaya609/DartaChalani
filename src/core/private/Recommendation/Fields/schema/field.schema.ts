@@ -11,8 +11,8 @@ export const addFieldInitialValues: IAddFieldInitialValue[] =
         isValidationRequired: false,
         orderNo: "",
         recommendationId: "",
-        lableNameEnglish: "",
-        lableNameNepali: "",
+        labelNameEnglish: "",
+        labelNameNepali: "",
         className: ""
     },
     {
@@ -23,8 +23,8 @@ export const addFieldInitialValues: IAddFieldInitialValue[] =
         isValidationRequired: false,
         orderNo: "",
         recommendationId: "",
-        lableNameEnglish: "",
-        lableNameNepali: "",
+        labelNameEnglish: "",
+        labelNameNepali: "",
         className: ""
     },
     {
@@ -35,8 +35,8 @@ export const addFieldInitialValues: IAddFieldInitialValue[] =
         isValidationRequired: false,
         orderNo: "",
         recommendationId: "",
-        lableNameEnglish: "",
-        lableNameNepali: "",
+        labelNameEnglish: "",
+        labelNameNepali: "",
         className: ""
     }
 ]
@@ -49,6 +49,6 @@ export const addFieldValidationSchema = Yup.object({
         'recommendation.errors.recommendationNameNp'
     ),
     orderNo: Yup.number().required('recommendation.errors.orderNo'),
-    lableNameEnglish: Yup.string().required('recommendation.errors.lableNameEnglish'),
-    lableNameNepali: Yup.string().required('recommendation.errors.lableNameNepali')
+    labelNameEnglish: Yup.string().required('recommendation.errors.labelNameEnglish'),
+    labelNameNepali: Yup.string().required('recommendation.errors.labelNameNepali')
 })
