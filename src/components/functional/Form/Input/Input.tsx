@@ -14,7 +14,7 @@ import {
   inputWrapperClass,
 } from './input.styles'
 
-interface IInputProps
+export interface IInputProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
     IBaseFormControlProps {
   type?: 'number' | 'email' | 'password' | 'text'

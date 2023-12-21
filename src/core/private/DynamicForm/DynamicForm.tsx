@@ -3,13 +3,14 @@ import { Grid } from '@/components/ui'
 import ContainerLayout from '@/components/ui/core/Layout/ContainerLayout'
 import {
   createFormInputFromFieldType,
-  DynamicFormFieldTypeMapping,
+  makeFieldsWithSchema,
 } from '@/utility/dynamic-form/dynamic-form'
+import { useFormik } from 'formik'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { createElement } from 'react'
-import { DYNAMICFORMFIELDTYPE } from '@/utility/enums/dynamic-form.enum'
+import * as Yup from 'yup'
 
-const dynamicForm = [
+export const dynamicForm = [
   {
     id: 1,
     recommendationId: 11,
@@ -106,6 +107,28 @@ const dynamicForm = [
 
 const DynamicForm = () => {
   const { t } = useTranslation()
+  const [isFormFieldReady, setIsFormFieldReady] = useState(false)
+  const [validationSchema, setValidationSchema] = useState(Yup.object({}))
+  const [initialValues, setInitialValues] = useState({})
+
+  const generateFieldWithValidationSchema = (form: typeof dynamicForm) => {
+    const { initialValues, validationSchema } = makeFieldsWithSchema(form)
+
+    console.log({ initialValues, validationSchema })
+  }
+
+  useEffect(() => {
+    generateFieldWithValidationSchema(dynamicForm)
+  }, [])
+
+  const {} = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: (values) => {
+      console.log(values)
+    },
+  })
+
   return (
     <>
       <SectionHeader title={'Dynamic Form'} />
