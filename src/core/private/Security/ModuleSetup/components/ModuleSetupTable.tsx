@@ -18,12 +18,59 @@ import {
 import ModuleSetupForm from './ModuleSetupForm'
 
 const ModuleSetupTable = () => {
+  const { t } = useTranslation()
   const [initialValues, setInitialValues] = useState(moduleSetupInitialValues)
 
   const { data: moduelList } = useGetAllModule()
   const { value: isOpenAddEditModal, toggle: toggleAddEditModal } = useBoolean()
 
-  const { t } = useTranslation()
+  const setInitialValuesfromGivenValue = (values: IModuleSetupTableData) => {
+    const {
+      id,
+      moduleNameEnglish,
+      moduleNameNepali,
+      description,
+      code,
+      url,
+      iconClass,
+      isConfigurable,
+      orderNumber,
+      parentModuleId,
+      resourceResponses,
+    } = values
+
+    setInitialValues({
+      id,
+      moduleNameEnglish,
+      moduleNameNepali,
+      description,
+      code,
+      url,
+      iconClass,
+      isConfigurable,
+      orderNumber,
+      parentModuleId,
+      resourceRequestList: resourceResponses?.length
+        ? resourceResponses.map(
+            ({ httpMethod, privilege, resourceName, url, id }) => ({
+              id,
+              httpMethod,
+              privilege,
+              resourceName,
+              url,
+            })
+          )
+        : [
+            {
+              httpMethod: '',
+              privilege: '',
+              resourceName: '',
+              url: '',
+            },
+          ],
+    })
+  }
+
   const { mutate: changeModuleStatus, isLoading: changeModuleStatusLoading } =
     useChangeModuleStatus()
   const [currentSelectedId, setCurrentSelectedId] = useState<null | number>(
@@ -70,52 +117,10 @@ const ModuleSetupTable = () => {
         sticky: 'right',
         id: 'action',
         cell: ({ row: { original } }) => {
-          const {
-            id,
-            moduleNameEnglish,
-            moduleNameNepali,
-            description,
-            code,
-            url,
-            iconClass,
-            isConfigurable,
-            orderNumber,
-            parentModuleId,
-            resourceResponses,
-          } = original
           return (
             <TableAction
               handleEditClick={() => {
-                setInitialValues({
-                  id,
-                  moduleNameEnglish,
-                  moduleNameNepali,
-                  description,
-                  code,
-                  url,
-                  iconClass,
-                  isConfigurable,
-                  orderNumber,
-                  parentModuleId,
-                  resourceRequestList: resourceResponses?.length
-                    ? resourceResponses.map(
-                        ({ httpMethod, privilege, resourceName, url, id }) => ({
-                          id,
-                          httpMethod,
-                          privilege,
-                          resourceName,
-                          url,
-                        })
-                      )
-                    : [
-                        {
-                          httpMethod: '',
-                          privilege: '',
-                          resourceName: '',
-                          url: '',
-                        },
-                      ],
-                })
+                setInitialValuesfromGivenValue(original)
                 toggleAddEditModal()
               }}
             />

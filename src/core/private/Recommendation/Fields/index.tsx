@@ -18,7 +18,7 @@ import ContainerLayout from '@/components/ui/core/Layout/ContainerLayout'
 import FlexLayout from '@/components/ui/core/Layout/FlexLayout'
 import { IRoutePrivilege } from '@/router/routes/create-route'
 import { addFieldInitialValues } from './schema/field.schema'
-import { Button, Grid, Icon } from '@/components/ui'
+import { Button, Flexbox, Grid, Icon } from '@/components/ui'
 import { decodeParams } from '@/utility/route-params'
 import { useParams } from 'react-router-dom'
 import {
@@ -28,13 +28,16 @@ import {
 import SortableItem from './SortableItem'
 import AddField from './AddField'
 import { useGetRecommendationDetailById } from '../AddRecommendation/services/add-recommendation.query'
-import { Pencil, Trash } from 'phosphor-react'
+import { Minus, Pencil, Plus, Trash } from 'phosphor-react'
 import { IAddFieldInitialValue } from './schema/field.interface'
 import Modal from '@/components/ui/Modal/Modal'
 import { useTranslation } from 'react-i18next'
+import { Card } from '@/components/ui/core/Card'
+import { Cross } from 'lucide-react'
 
 const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
   const { t } = useTranslation()
+  const [showAddOrEditForm, setShowAddOrEditForm] = useState(false)
   const [editId, setEditId] = useState<number>()
   const [items, setItems] = useState(addFieldInitialValues)
   const [deleteId, setDeleteId] = useState<string | number>('')
@@ -137,16 +140,9 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
     <>
       <SectionHeader title={recommendationDetails?.nameEnglish} />
 
-      <ContainerLayout stretch>
-        <FlexLayout direction="row">
-          <div className="mr-4 h-full w-1/4 overflow-y-auto overflow-x-hidden bg-white p-6">
-            <AddField editId={editId} formId={recommendationId!} />
-          </div>
-
-          <Grid
-            sm={'sm:grid-cols-12'}
-            className="w-3/4 overflow-auto bg-white px-5 pt-2"
-          >
+      <ContainerLayout className="scrollbars grow ">
+        <Card className="h-full">
+          <Grid sm={'sm:grid-cols-12'} gap="gap-2">
             <DndContext
               sensors={sensors}
               collisionDetection={closestCenter}
@@ -169,7 +165,41 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
               </SortableContext>
             </DndContext>
           </Grid>
-        </FlexLayout>
+
+          <Flexbox
+            align="flex-end"
+            justify="flex-end"
+            className="w-full bg-white px-5 py-3"
+          >
+            {!showAddOrEditForm ? (
+              <button
+                onClick={() => setShowAddOrEditForm(true)}
+                className="rounded-full border-2 border-dotted border-sky-500 p-4 hover:bg-blue-500 hover:text-white"
+              >
+                <Icon icon={Plus}></Icon>
+              </button>
+            ) : (
+              <button
+                onClick={() => setShowAddOrEditForm(false)}
+                className="rounded-full border-2 border-dotted border-red-500 p-4 hover:bg-blue-500 hover:text-white"
+              >
+                <Icon icon={Minus}></Icon>
+              </button>
+            )}
+          </Flexbox>
+
+          {showAddOrEditForm && (
+            <Grid
+              sm={'sm:grid-cols-12'}
+              gap="gap-6"
+              className="border-2 border-dotted border-green-500"
+            >
+              <Grid.Col sm={'sm:col-span-12'} className="group relative p-3">
+                <AddField editId={editId} formId={recommendationId!} />
+              </Grid.Col>
+            </Grid>
+          )}
+        </Card>
       </ContainerLayout>
     </>
   )
