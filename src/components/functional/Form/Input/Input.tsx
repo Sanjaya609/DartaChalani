@@ -49,6 +49,8 @@ const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
     touched,
     isFieldArray,
   })
+  console.log({ inputErrors: { name, errors, touched, showError } })
+
   const computedInputWrapperClass = getComputedClassNames(
     formCommonInputWrapperClass,
     inputWrapperClass,

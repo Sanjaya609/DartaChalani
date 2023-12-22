@@ -1,5 +1,5 @@
 import SectionHeader from '@/components/functional/SectionHeader'
-import { Grid } from '@/components/ui'
+import { Box, Button, Grid } from '@/components/ui'
 import ContainerLayout from '@/components/ui/core/Layout/ContainerLayout'
 import {
   createFormInputFromFieldType,
@@ -16,7 +16,7 @@ export const dynamicForm = [
     recommendationId: 11,
     recommendationName: 'फारम १',
     recommendationNameNp: 'From 1',
-    fieldControlName: 'Gender',
+    fieldControlName: 'gender',
     fieldType: 'SELECT',
     orderNo: 1,
     isValidationRequired: true,
@@ -78,7 +78,7 @@ export const dynamicForm = [
     recommendationId: 11,
     recommendationName: 'फारम १',
     recommendationNameNp: 'From 1',
-    fieldControlName: 'ABC',
+    fieldControlName: 'birthDate',
     fieldType: 'NEPALICALENDAR',
     orderNo: 1,
     isValidationRequired: true,
@@ -93,14 +93,29 @@ export const dynamicForm = [
     recommendationId: 11,
     recommendationName: 'फारम १',
     recommendationNameNp: 'From 1',
-    fieldControlName: 'First Name',
+    fieldControlName: 'firstName',
     fieldType: 'TEXT',
     orderNo: 3,
     isValidationRequired: true,
     labelNameEnglish: 'test',
     labelNameNepali: 'testnp',
     className: 'BCD',
-    fieldValidationList: [],
+    fieldValidationList: [
+      {
+        id: 1,
+        fieldId: 2,
+        validationType: 'NOT_NULL',
+        errorMessage: 'please enter value',
+        regex: null,
+      },
+      {
+        id: 1,
+        fieldId: 2,
+        validationType: 'MAX_LENGTH',
+        errorMessage: 'max length of 1 value',
+        regex: null,
+      },
+    ],
     dropDownResponse: null,
   },
 ]
@@ -108,26 +123,34 @@ export const dynamicForm = [
 const DynamicForm = () => {
   const { t } = useTranslation()
   const [isFormFieldReady, setIsFormFieldReady] = useState(false)
-  const [validationSchema, setValidationSchema] = useState(Yup.object({}))
+  const [validationSchema, setValidationSchema] = useState<Record<string, any>>(
+    Yup.object({})
+  )
   const [initialValues, setInitialValues] = useState({})
 
   const generateFieldWithValidationSchema = (form: typeof dynamicForm) => {
     const { initialValues, validationSchema } = makeFieldsWithSchema(form)
 
-    console.log({ initialValues, validationSchema })
+    setInitialValues(initialValues)
+    setValidationSchema(Yup.object(validationSchema))
   }
 
   useEffect(() => {
     generateFieldWithValidationSchema(dynamicForm)
   }, [])
 
-  const {} = useFormik({
+  console.log({ validationSchema })
+
+  const formikConfig = useFormik({
+    enableReinitialize: true,
     initialValues,
     validationSchema,
     onSubmit: (values) => {
       console.log(values)
     },
   })
+
+  console.log({ formikConfig: formikConfig.errors })
 
   return (
     <>
@@ -137,12 +160,32 @@ const DynamicForm = () => {
           <Grid sm={'sm:grid-cols-12'} gap="gap-4">
             {dynamicForm?.map((form) => (
               <Grid.Col key={form.id} sm={'sm:col-span-3'}>
-                {createFormInputFromFieldType(form)}
+                {createFormInputFromFieldType(form, formikConfig)}
               </Grid.Col>
             ))}
           </Grid>
         </form>
       </ContainerLayout>
+
+      <Box className="mb-6 w-full border-2 pb-6 text-right">
+        <ContainerLayout>
+          <Button
+            type="button"
+            btnType="outlined"
+            variant="secondary"
+            className="mr-3"
+          >
+            {t('btns.cancel')}
+          </Button>
+          <Button
+            type="submit"
+            onClick={() => formikConfig.handleSubmit()}
+            className="ml-auto"
+          >
+            {t('btns.save')}
+          </Button>
+        </ContainerLayout>
+      </Box>
     </>
   )
 }
