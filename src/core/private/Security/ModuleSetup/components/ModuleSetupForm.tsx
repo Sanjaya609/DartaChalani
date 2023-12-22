@@ -10,6 +10,7 @@ import {
 } from '../schema/moduleSetup.schema'
 import {
   useCreateModule,
+  useDeleteModuleResource,
   useGetModuleListByStatus,
 } from '../services/moduleSetup.query'
 
@@ -22,7 +23,7 @@ import { APIENUM } from '@/utility/enums/api.enum'
 import { inputChangeNumberOnly } from '@/utility/inputUtils/input-change-utils'
 import { mapDataToStyledSelect } from '@/utility/react-select-helper'
 import { Plus, Trash } from 'phosphor-react'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 
 interface IModuleSetupFormProps {
   initialValues: IModuleSetupFormSchema
@@ -37,11 +38,25 @@ const ModuleSetupForm = ({
   toggleAddEditModal,
 }: IModuleSetupFormProps) => {
   const { t } = useTranslation()
+  const [deleteIdId, setDeleteId] = useState<string | number>('')
+  const setOrRemoveDeleteId = (id?: string | number) => setDeleteId(id || '')
+
   const { mutateAsync: createModule, isLoading: isModuleCreating } =
     useCreateModule()
   const { data: activeModuleListOption } = useGetModuleListByStatus(true, {
     enabled: isOpenAddEditModal,
   })
+
+  const { mutate: deteteModuleResource, isLoading: deleteResourceLoading } =
+    useDeleteModuleResource()
+  const handleDeleteById = () => {
+    deteteModuleResource(deleteIdId, {
+      onSuccess: () => {
+        setOrRemoveDeleteId()
+        toggleAddEditModal()
+      },
+    })
+  }
 
   const { data: privilegeData = [] } = useGetEnumDataWithName<OptionType[]>(
     APIENUM.PRIVILEGE,
@@ -405,25 +420,39 @@ const ModuleSetupForm = ({
                                               className="mr-3"
                                               variant="danger"
                                               onClick={() =>
-                                                arrayHelpers.remove(index)
+                                                // arrayHelpers.remove(index)
+                                                values.resourceRequestList[
+                                                  index
+                                                ].id
+                                                  ? setOrRemoveDeleteId(
+                                                      values
+                                                        .resourceRequestList[
+                                                        index
+                                                      ].id
+                                                    )
+                                                  : arrayHelpers.remove(index)
                                               }
                                             >
                                               <Icon icon={Trash} />
                                             </Button>
                                           )}
-                                          <Button
-                                            type="button"
-                                            onClick={() => {
-                                              arrayHelpers.push({
-                                                httpMethod: '',
-                                                privilege: '',
-                                                resourceName: '',
-                                                url: '',
-                                              })
-                                            }}
-                                          >
-                                            <Icon fill="#fff" icon={Plus} />
-                                          </Button>
+                                          {values.resourceRequestList.length -
+                                            1 ===
+                                            index && (
+                                            <Button
+                                              type="button"
+                                              onClick={() => {
+                                                arrayHelpers.push({
+                                                  httpMethod: '',
+                                                  privilege: '',
+                                                  resourceName: '',
+                                                  url: '',
+                                                })
+                                              }}
+                                            >
+                                              <Icon fill="#fff" icon={Plus} />
+                                            </Button>
+                                          )}
                                         </Flexbox>
                                       </Grid.Col>
                                     </Grid>
@@ -477,6 +506,20 @@ const ModuleSetupForm = ({
           Save
         </Button>
       </Box> */}
+
+            <Modal
+              open={!!deleteIdId}
+              toggleModal={setOrRemoveDeleteId}
+              size="md"
+              title={t('security.module.modal.resourceDelete.title')}
+              saveBtnProps={{
+                btnAction: handleDeleteById,
+                loading: deleteResourceLoading,
+                btnTitle: t('btns.delete'),
+              }}
+            >
+              {t('security.module.modal.resourceDelete.description')}
+            </Modal>
           </Modal>
         )
       }}

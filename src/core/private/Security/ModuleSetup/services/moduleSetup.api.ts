@@ -37,6 +37,11 @@ const moduleSetupAPI = {
         controllerName: `${prefix}/unconfigurable-list`,
         queryKeyName: "GET_UNCONFIGURABLE_MODULE_LIST",
         requestMethod: RequestMethod.GET
+    },
+    deleteModuleResource: {
+        controllerName: `${prefix}/resource/{id}`,
+        quertName: "DELETE_MODULE_RESOURCE",
+        requestMethod: RequestMethod.DELETE
     }
 }
 

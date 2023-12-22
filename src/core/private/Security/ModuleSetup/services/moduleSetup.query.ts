@@ -14,7 +14,8 @@ const {
   getModuleListByStatus,
   getConfigurableModuleList,
   changeModuleStatus,
-  getUnConfigurableModuleList
+  getUnConfigurableModuleList,
+  deleteModuleResource
 } = apiDetails
 
 const useCreateModule = () => {
@@ -182,6 +183,24 @@ const useGetUnConfigurableModuleList = <T = IModuleSetupTableData[]>(
   )
 }
 
+const useDeleteModuleResource = () => {
+  const queryClient = useQueryClient()
+  return useMutation(
+    (id: number | string) => {
+      return initApiRequest({
+        apiDetails: deleteModuleResource,
+        pathVariables: { id },
+      })
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries([getAllModule.queryKeyName])
+        queryClient.invalidateQueries([getModuleListByStatus.queryKeyName])
+      },
+    }
+  )
+}
+
 export {
   useCreateModule,
   useGetAllModule,
@@ -189,5 +208,6 @@ export {
   useGetModuleById,
   useGetModuleListByStatus,
   useGetConfigurableModuleList,
-  useGetUnConfigurableModuleList
+  useGetUnConfigurableModuleList,
+  useDeleteModuleResource
 }
