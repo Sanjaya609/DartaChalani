@@ -420,7 +420,6 @@ const ModuleSetupForm = ({
                                               className="mr-3"
                                               variant="danger"
                                               onClick={() =>
-                                                // arrayHelpers.remove(index)
                                                 values.resourceRequestList[
                                                   index
                                                 ].id
