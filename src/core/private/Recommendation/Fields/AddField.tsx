@@ -6,29 +6,23 @@ import { useTranslation } from 'react-i18next'
 import {
   IAddFieldInitialValue,
   IAddFieldPayload,
-} from './schema/field.interface'
+} from '../ConfigureRecommendation/schema/field.interface'
 import {
   addFieldInitialValues,
   addFieldValidationSchema,
-} from './schema/field.schema'
-import { useCreateField, useGetFieldDetailById } from './services/fields.query'
-import Modal from '@/components/ui/Modal/Modal'
+} from '../ConfigureRecommendation/schema/field.schema'
 import { useGetEnumDataWithValue } from '@/service/generic/generic.query'
 import { APIENUM } from '@/utility/enums/api.enum'
+import {
+  useCreateField,
+  useGetFieldDetailById,
+} from '../ConfigureRecommendation/services/fields.query'
 
 const AddField = ({
-  toggleRecommendationForm,
-  openRecommendationForm,
   editId,
-  viewOnly,
-  setViewOnly,
   formId,
 }: {
-  toggleRecommendationForm: VoidFunction
-  openRecommendationForm: boolean
   editId?: number
-  viewOnly?: boolean
-  setViewOnly?: React.Dispatch<React.SetStateAction<boolean>>
   formId: string | number
 }) => {
   const { t } = useTranslation()
@@ -61,7 +55,7 @@ const AddField = ({
     } = values
 
     const reqData: IAddFieldPayload = {
-      id: id || undefined,
+      id: id,
       dropDownId,
       fieldControlName,
       fieldType,
@@ -75,7 +69,6 @@ const AddField = ({
 
     createField(reqData, {
       onSuccess: () => {
-        toggleRecommendationForm()
         setInitialFieldValue(addFieldInitialValues)
         resetForm()
       },
@@ -83,6 +76,7 @@ const AddField = ({
   }
 
   useEffect(() => {
+    debugger
     if (fieldDetails) {
       const {
         id,
@@ -108,7 +102,7 @@ const AddField = ({
         className,
       })
     }
-  }, [fieldDetails])
+  }, [fieldDetails, editId])
 
   const {
     values,
@@ -128,40 +122,18 @@ const AddField = ({
     },
   })
 
-  return (
-    <>
-      <Modal
-        open={!!openRecommendationForm}
-        toggleModal={() => {
-          toggleRecommendationForm()
-          setInitialFieldValue(addFieldInitialValues)
-          setViewOnly && setViewOnly(false)
-        }}
-        size="md"
-        title={
-          editId
-            ? t('recommendation.editRecommendation')
-            : t('recommendation.addRecommendation')
-        }
-        saveBtnProps={{
-          btnAction: handleSubmit,
-          loading: createFieldLoading,
-          btnTitle: t('btns.save'),
-        }}
-        cancelBtnProps={{
-          btnAction: () => {
-            toggleRecommendationForm()
-            loading: createFieldLoading
-            setInitialFieldValue(addFieldInitialValues)
-            setViewOnly && setViewOnly(false)
-          },
-        }}
-      >
-        <form>
-          <Grid sm={'sm:grid-cols-12'} gap="gap-4">
-            <Grid.Col sm={'sm:col-span-6'}>
+  const renderAdditionalFields = (
+    fieldType: string,
+    values: IAddFieldInitialValue,
+    handleChange: any,
+    handleBlur: any
+  ) => {
+    switch (fieldType) {
+      case 'INPUT':
+        return (
+          <Grid.Col sm={'sm:col-span-12'} key="inputField">
+            <Grid.Col sm={'sm:col-span-12'}>
               <Form.Input
-                disabled={viewOnly}
                 isRequired
                 value={values.fieldControlName}
                 errors={errors}
@@ -173,30 +145,8 @@ const AddField = ({
               />
             </Grid.Col>
 
-            <Grid.Col sm={'sm:col-span-6'}>
-              <Form.Select
-                isDisabled={viewOnly}
-                isRequired
-                isLoading={fieldTypeFetching}
-                options={fieldTypeOptions?.map((field) => {
-                  return { value: field.key, label: field.nameEnglish }
-                })}
-                calculateValueOnChange
-                value={values.fieldType}
-                errors={errors}
-                touched={touched}
-                name="fieldType"
-                label={t('recommendation.fieldType')}
-                onChange={(event) => {
-                  setFieldValue(event.name, event?.main || '')
-                }}
-                onBlur={handleBlur}
-              />
-            </Grid.Col>
-
-            <Grid.Col sm={'sm:col-span-6'}>
+            <Grid.Col sm={'sm:col-span-12'}>
               <Form.Input
-                disabled={viewOnly}
                 isRequired
                 value={values.labelNameEnglish}
                 errors={errors}
@@ -208,9 +158,8 @@ const AddField = ({
               />
             </Grid.Col>
 
-            <Grid.Col sm={'sm:col-span-6'}>
+            <Grid.Col sm={'sm:col-span-12'}>
               <Form.Input
-                disabled={viewOnly}
                 isNepali
                 isRequired
                 value={values.labelNameNepali}
@@ -223,9 +172,8 @@ const AddField = ({
               />
             </Grid.Col>
 
-            <Grid.Col sm={'sm:col-span-6'}>
+            <Grid.Col sm={'sm:col-span-12'}>
               <Form.Input
-                disabled={viewOnly}
                 isRequired
                 value={values.orderNo}
                 errors={errors}
@@ -237,7 +185,7 @@ const AddField = ({
               />
             </Grid.Col>
 
-            <Grid.Col sm={'sm:col-span-2'}>
+            <Grid.Col sm={'sm:col-span-12'}>
               <Form.Switch
                 isRequired
                 className="inline"
@@ -255,9 +203,76 @@ const AddField = ({
                 onBlur={handleBlur}
               />
             </Grid.Col>
-          </Grid>
-        </form>
-      </Modal>
+          </Grid.Col>
+        )
+
+      case 'SELECT':
+        return <Grid.Col sm={'sm:col-span-12'} key="selectField"></Grid.Col>
+
+      case 'CHECKBOX':
+        return <Grid.Col sm={'sm:col-span-12'} key="checkboxField"></Grid.Col>
+
+      case 'RADIO':
+        return <Grid.Col sm={'sm:col-span-12'} key="radioField"></Grid.Col>
+
+      case 'FILE':
+        return <Grid.Col sm={'sm:col-span-12'} key="fileField"></Grid.Col>
+
+      case 'DATEPICKER':
+        return <Grid.Col sm={'sm:col-span-12'} key="datepickerField"></Grid.Col>
+
+      default:
+        return null
+    }
+  }
+
+  return (
+    <>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-6 bg-blue-500 p-4 text-white">
+          <div className="flex items-center justify-between">
+            <h1 className="flex items-center text-lg font-semibold">
+              <i className="fas fa-wpforms mr-2"></i>
+              Field Details
+            </h1>
+            <button
+              type="submit"
+              className="flex items-center rounded bg-green-500 px-4 py-2 font-semibold text-white hover:bg-green-600"
+            >
+              <i className="fas fa-plus-circle mr-2"></i>
+              {editId ? 'Update' : 'Add'}
+            </button>
+          </div>
+        </div>
+        <Grid sm={'sm:grid-cols-12'} gap="gap-4">
+          <Grid.Col sm={'sm:col-span-12'}>
+            <Form.Select
+              isRequired
+              isLoading={fieldTypeFetching}
+              options={fieldTypeOptions?.map((field) => {
+                return { value: field.key, label: field.nameEnglish }
+              })}
+              calculateValueOnChange
+              value={values.fieldType}
+              errors={errors}
+              touched={touched}
+              name="fieldType"
+              label={t('recommendation.fieldType')}
+              onChange={(event) => {
+                setFieldValue(event.name, event?.main || '')
+              }}
+              onBlur={handleBlur}
+            />
+          </Grid.Col>
+
+          {renderAdditionalFields(
+            values.fieldType,
+            values,
+            handleChange,
+            handleBlur
+          )}
+        </Grid>
+      </form>
     </>
   )
 }

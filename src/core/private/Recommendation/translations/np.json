@@ -12,8 +12,8 @@
   "fieldType": "फिल्डको प्रकार",
   "orderNo": "अर्डर नम्बर",
   "isValidationRequired": "प्रमाणीकरण आवश्यक छ ?",
-  "lableNameEnglish": "लेबलको नाम (अंग्रेजी)",
-  "lableNameNepali": "लेबलको नाम (नेपाली)",
+  "labelNameEnglish": "लेबलको नाम (अंग्रेजी)",
+  "labelNameNepali": "लेबलको नाम (नेपाली)",
   "className": "Class Name (CSS Styling)",
   "errors": {
     "recommendationNameEn": "सिफारिस नाम (अंग्रेजी) आवश्यक छ",
@@ -21,8 +21,8 @@
     "description": "विवरण आवश्यक छ",
     "moduleId": "मोड्युलको नाम आवश्यक छ",
     "orderNo": "अर्डर नम्बर आवश्यक छ",
-    "lableNameEnglish": "लेबल नाम (अंग्रेजी) आवश्यक छ",
-    "lableNameNepali": "लेबल नाम (नेपाली) आवश्यक छ"
+    "labelNameEnglish": "लेबल नाम (अंग्रेजी) आवश्यक छ",
+    "labelNameNepali": "लेबल नाम (नेपाली) आवश्यक छ"
   },
   "modal": {
     "status": {

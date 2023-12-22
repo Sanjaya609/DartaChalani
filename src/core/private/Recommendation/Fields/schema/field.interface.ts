@@ -1,5 +1,5 @@
 export interface IAddFieldInitialValue {
-    id?: number;
+    id: number;
     dropDownId: string | number;
     fieldControlName: string;
     fieldType: string;
