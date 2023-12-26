@@ -14,6 +14,8 @@ import {
   useChangeModuleDocumentMappingStatus,
   useGetAllModuleDocumentMapping,
 } from '../services/module-document-mapping.query'
+import useGetPrivilegeByPath from '@/hooks/useGetPrivilegeByPath'
+import { routePaths } from '@/router'
 
 interface IModuleDocumentMappingTableProps {
   initialValues: IModuleDocumentMappingInitialValue
@@ -26,7 +28,9 @@ const ModuleDocumentMappingTable = (
   props: IModuleDocumentMappingTableProps
 ) => {
   const { setInitialValues } = props
-
+  const privilege = useGetPrivilegeByPath(
+    routePaths.masterSetup.moduleDocumentMapping
+  )
   const [currentSelectedId, setCurrentSelectedId] = useState<null | number>(
     null
   )
@@ -113,6 +117,7 @@ const ModuleDocumentMappingTable = (
         id: 'action',
         cell: ({ row: { original } }) => (
           <TableAction
+            privilege={privilege}
             handleEditClick={() => {
               handleEditClick(original)
             }}

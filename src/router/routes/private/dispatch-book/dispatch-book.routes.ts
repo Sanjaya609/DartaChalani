@@ -30,7 +30,7 @@ export const dispatchBookRoutes: _RouteObject<'private'>[] = [
         path: privateRoutePath.dispatchBook.add,
         element: AddDispatchBook,
         checkFromParentPath: privateRoutePath.dispatchBook.base,
-        checkPrivilege: [PRIVILEGEENUM.READ_LIST],
+        checkPrivilege: [PRIVILEGEENUM.CREATE],
       }),
       createRoute({
         path: privateRoutePath.dispatchBook.view,
@@ -42,7 +42,7 @@ export const dispatchBookRoutes: _RouteObject<'private'>[] = [
         path: privateRoutePath.dispatchBook.edit,
         element: AddDispatchBook,
         checkFromParentPath: privateRoutePath.dispatchBook.base,
-        checkPrivilege: [PRIVILEGEENUM.CREATE, PRIVILEGEENUM.READ_LIST],
+        checkPrivilege: [PRIVILEGEENUM.CREATE],
       }),
     ],
   }),

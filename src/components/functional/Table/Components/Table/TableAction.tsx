@@ -68,7 +68,7 @@ function TableAction(props: ActionProps) {
         </li>
       )}
 
-      {handleEditClick && !!privilege?.UPDATE && (
+      {handleEditClick && (!!privilege?.UPDATE || !!privilege?.CREATE) && (
         <li className={tableActionList}>
           <span className="group relative" onClick={() => handleEditClick?.()}>
             <PencilSimple className={tableActionIcon} />

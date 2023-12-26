@@ -4,16 +4,22 @@ import { useState } from 'react'
 import { serviceTypeInitialValue } from '../schema/servicetype.schema'
 import ServiceTypeForm from './ServiceTypeForm'
 import ServiceTypeTable from './ServiceTypeTable'
+import { routePaths } from '@/router'
+import useGetPrivilegeByPath from '@/hooks/useGetPrivilegeByPath'
 
 const ServiceTypeWrapper = () => {
   const [initialValues, setInitialValues] = useState(serviceTypeInitialValue)
+  const privilege = useGetPrivilegeByPath(routePaths.masterSetup.serviceType)
+
   return (
     <ContainerLayout stretch>
       <FlexLayout direction="column">
-        <ServiceTypeForm
-          initialValues={initialValues}
-          setInitialValues={setInitialValues}
-        />
+        {privilege?.CREATE && (
+          <ServiceTypeForm
+            initialValues={initialValues}
+            setInitialValues={setInitialValues}
+          />
+        )}
         <ServiceTypeTable
           initialValues={initialValues}
           setInitialValues={setInitialValues}

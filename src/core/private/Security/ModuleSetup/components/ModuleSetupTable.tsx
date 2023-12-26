@@ -16,6 +16,8 @@ import {
   useGetAllModule,
 } from '../services/moduleSetup.query'
 import ModuleSetupForm from './ModuleSetupForm'
+import useGetPrivilegeByPath from '@/hooks/useGetPrivilegeByPath'
+import { routePaths } from '@/router'
 
 const ModuleSetupTable = () => {
   const { t } = useTranslation()
@@ -23,6 +25,7 @@ const ModuleSetupTable = () => {
 
   const { data: moduelList } = useGetAllModule()
   const { value: isOpenAddEditModal, toggle: toggleAddEditModal } = useBoolean()
+  const privilege = useGetPrivilegeByPath(routePaths.masterSetup.office)
 
   const setInitialValuesfromGivenValue = (values: IModuleSetupTableData) => {
     const {
@@ -119,6 +122,7 @@ const ModuleSetupTable = () => {
         cell: ({ row: { original } }) => {
           return (
             <TableAction
+              privilege={privilege}
               handleEditClick={() => {
                 setInitialValuesfromGivenValue(original)
                 toggleAddEditModal()
@@ -149,11 +153,15 @@ const ModuleSetupTable = () => {
     <>
       <DataTable
         canSearch
-        addHeaderProps={{
-          handleAdd: () => {
-            toggleAddEditModal()
-          },
-        }}
+        addHeaderProps={
+          privilege?.CREATE
+            ? {
+                handleAdd: () => {
+                  toggleAddEditModal()
+                },
+              }
+            : undefined
+        }
         className="pb-4"
         columns={columns}
         data={moduelList || []}
@@ -171,12 +179,14 @@ const ModuleSetupTable = () => {
         {t('masterSetup.fiscalYear.modal.status.description')}
       </Modal>
 
-      <ModuleSetupForm
-        isOpenAddEditModal={isOpenAddEditModal}
-        toggleAddEditModal={toggleAddEditModal}
-        initialValues={initialValues}
-        setInitialValues={setInitialValues}
-      />
+      {privilege?.CREATE && (
+        <ModuleSetupForm
+          isOpenAddEditModal={isOpenAddEditModal}
+          toggleAddEditModal={toggleAddEditModal}
+          initialValues={initialValues}
+          setInitialValues={setInitialValues}
+        />
+      )}
     </>
   )
 }

@@ -16,9 +16,12 @@ import { useCreateEmailSetup, useGetEmailSetup } from '../services/email.query'
 import { inputChangeNumberWithComparisonAndLength } from '@/utility/inputUtils/input-change-utils'
 import { FormikValidationError } from '@/components/functional/Form/InputErrorMessage/InputErrorMessage'
 import { Text } from '@/components/ui/core/Text'
+import useGetPrivilegeByPath from '@/hooks/useGetPrivilegeByPath'
+import { routePaths } from '@/router'
 
 const EmailForm = () => {
   const [initialValues, setInitialValues] = useState(emailInitialValue)
+  const privilege = useGetPrivilegeByPath(routePaths.security.roleManagement)
 
   const { t } = useTranslation()
   const { mutate: saveEmailConfig, isLoading } = useCreateEmailSetup()
@@ -60,6 +63,7 @@ const EmailForm = () => {
                   <Grid sm={'sm:grid-cols-12'} gap="gap-4">
                     <Grid.Col sm={'sm:col-span-3'}>
                       <Form.Input
+                        disabled={!privilege?.UPDATE && !privilege?.CREATE}
                         isRequired
                         autoComplete="new-email"
                         value={values.email}
@@ -73,6 +77,7 @@ const EmailForm = () => {
                     </Grid.Col>
                     <Grid.Col sm={'sm:col-span-3'}>
                       <PasswordInput
+                        disabled={!privilege?.UPDATE && !privilege?.CREATE}
                         isRequired
                         autoComplete="new-password"
                         value={values.password}
@@ -87,6 +92,7 @@ const EmailForm = () => {
 
                     <Grid.Col sm={'sm:col-span-3'}>
                       <Form.Input
+                        disabled={!privilege?.UPDATE && !privilege?.CREATE}
                         isRequired
                         value={values.host}
                         errors={errors}
@@ -100,6 +106,7 @@ const EmailForm = () => {
 
                     <Grid.Col sm={'sm:col-span-3'}>
                       <Form.Input
+                        disabled={!privilege?.UPDATE && !privilege?.CREATE}
                         isRequired
                         value={values.port}
                         errors={errors}
@@ -149,6 +156,9 @@ const EmailForm = () => {
                                 >
                                   <Grid.Col sm={'sm:col-span-3'}>
                                     <Form.Input
+                                      disabled={
+                                        !privilege?.UPDATE && !privilege?.CREATE
+                                      }
                                       placeholder={t('security.email.key')}
                                       isFieldArray={{
                                         keyName: 'properties',
@@ -167,6 +177,9 @@ const EmailForm = () => {
 
                                   <Grid.Col sm={'sm:col-span-3'}>
                                     <Form.Input
+                                      disabled={
+                                        !privilege?.UPDATE && !privilege?.CREATE
+                                      }
                                       placeholder={t('security.email.value')}
                                       isFieldArray={{
                                         keyName: 'properties',
@@ -183,33 +196,35 @@ const EmailForm = () => {
                                     />
                                   </Grid.Col>
 
-                                  <Grid.Col>
-                                    <Flexbox>
-                                      {index > 0 && (
+                                  {(privilege?.CREATE || privilege?.UPDATE) && (
+                                    <Grid.Col>
+                                      <Flexbox>
+                                        {index > 0 && (
+                                          <Button
+                                            type="button"
+                                            className="mr-3"
+                                            variant="danger"
+                                            onClick={() =>
+                                              arrayHelpers.remove(index)
+                                            }
+                                          >
+                                            <Icon icon={Trash} />
+                                          </Button>
+                                        )}
                                         <Button
                                           type="button"
-                                          className="mr-3"
-                                          variant="danger"
-                                          onClick={() =>
-                                            arrayHelpers.remove(index)
-                                          }
+                                          onClick={() => {
+                                            arrayHelpers.push({
+                                              key: '',
+                                              value: '',
+                                            })
+                                          }}
                                         >
-                                          <Icon icon={Trash} />
+                                          <Icon fill="#fff" icon={Plus} />
                                         </Button>
-                                      )}
-                                      <Button
-                                        type="button"
-                                        onClick={() => {
-                                          arrayHelpers.push({
-                                            key: '',
-                                            value: '',
-                                          })
-                                        }}
-                                      >
-                                        <Icon fill="#fff" icon={Plus} />
-                                      </Button>
-                                    </Flexbox>
-                                  </Grid.Col>
+                                      </Flexbox>
+                                    </Grid.Col>
+                                  )}
                                 </Grid>
                               ))}
 
@@ -237,15 +252,17 @@ const EmailForm = () => {
                     </Grid.Col>
                   </Grid>
 
-                  <Box className="mt-4 text-right">
-                    <Button
-                      disabled={isLoading}
-                      loading={isLoading}
-                      className="ml-auto"
-                    >
-                      {t('btns.save')}
-                    </Button>
-                  </Box>
+                  {(privilege?.CREATE || privilege?.UPDATE) && (
+                    <Box className="mt-4 text-right">
+                      <Button
+                        disabled={isLoading}
+                        loading={isLoading}
+                        className="ml-auto"
+                      >
+                        {t('btns.save')}
+                      </Button>
+                    </Box>
+                  )}
                 </form>
               </>
             )

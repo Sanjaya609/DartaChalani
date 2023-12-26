@@ -4,16 +4,22 @@ import { useState } from 'react'
 import { userSetupInitialValue } from '../schema/user-setup.schema'
 import UserSetupForm from './UserSetupForm'
 import UserTable from './UserSetupTable'
+import useGetPrivilegeByPath from '@/hooks/useGetPrivilegeByPath'
+import { routePaths } from '@/router'
 
 const UserSetupWrapper = () => {
   const [initialValues, setInitialValues] = useState(userSetupInitialValue)
+  const privilege = useGetPrivilegeByPath(routePaths.security.userSetup)
+
   return (
     <ContainerLayout stretch>
       <FlexLayout direction="column">
-        <UserSetupForm
-          initialValues={initialValues}
-          setInitialValues={setInitialValues}
-        />
+        {privilege?.CREATE && (
+          <UserSetupForm
+            initialValues={initialValues}
+            setInitialValues={setInitialValues}
+          />
+        )}
         <UserTable
           initialValues={initialValues}
           setInitialValues={setInitialValues}

@@ -33,7 +33,7 @@ export const registrationBookRoutes: _RouteObject<'private'>[] = [
         path: privateRoutePath.registrationBook.add,
         element: AddRegistrationBook,
         checkFromParentPath: privateRoutePath.registrationBook.base,
-        checkPrivilege: [PRIVILEGEENUM.READ_LIST],
+        checkPrivilege: [PRIVILEGEENUM.CREATE],
       }),
       createRoute({
         path: privateRoutePath.registrationBook.view,
@@ -44,7 +44,7 @@ export const registrationBookRoutes: _RouteObject<'private'>[] = [
       createRoute({
         path: privateRoutePath.registrationBook.edit,
         element: AddRegistrationBook,
-        checkPrivilege: [PRIVILEGEENUM.READ_LIST, PRIVILEGEENUM.UPDATE],
+        checkPrivilege: [PRIVILEGEENUM.CREATE, PRIVILEGEENUM.UPDATE],
         checkFromParentPath: privateRoutePath.registrationBook.base,
       }),
     ],

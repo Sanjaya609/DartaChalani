@@ -15,6 +15,8 @@ import {
   useGetResourceListByModuleAndRole,
 } from '../services/roleModuleMapping.query'
 import useGetRoleMappingParamsData from './useGetRoleMappingParamsData'
+import useGetPrivilegeByPath from '@/hooks/useGetPrivilegeByPath'
+import { routePaths } from '@/router'
 
 interface IRoleModuleResourceListProps {
   selectedModule: IModuleSetupTableData | undefined
@@ -25,6 +27,7 @@ const RoleModuleResourceList = ({
 }: IRoleModuleResourceListProps) => {
   const { t } = useTranslation()
   const roleData = useGetRoleMappingParamsData()
+  const privilege = useGetPrivilegeByPath(routePaths.security.roleManagement)
 
   const {
     data: resourceListByModuleAndRole = [],
@@ -85,7 +88,7 @@ const RoleModuleResourceList = ({
               : ''}
           </Text>
 
-          {selectedModule && (
+          {selectedModule && (privilege?.UPDATE || privilege?.CREATE) && (
             <Switch
               checked={!!selectedModule?.showModuleOnMenu}
               size={5}
@@ -135,6 +138,9 @@ const RoleModuleResourceList = ({
                                   {resource.resourceName}
                                 </Text>
                                 <Switch
+                                  disabled={
+                                    !privilege?.UPDATE && !privilege?.CREATE
+                                  }
                                   checked={!!resource.isAssignedToRole}
                                   size={5}
                                   onChange={() => {

@@ -13,6 +13,8 @@ import {
   useChangeSectorStatus,
   useGetAllSector,
 } from '../services/sector.query'
+import useGetPrivilegeByPath from '@/hooks/useGetPrivilegeByPath'
+import { routePaths } from '@/router'
 
 interface ISectorTableProps {
   initialValues: ISectorInitialValue
@@ -21,7 +23,7 @@ interface ISectorTableProps {
 
 const SectorTable = (props: ISectorTableProps) => {
   const { setInitialValues } = props
-
+  const privilege = useGetPrivilegeByPath(routePaths.masterSetup.sector)
   const [currentSelectedId, setCurrentSelectedId] = useState<null | number>(
     null
   )
@@ -93,6 +95,7 @@ const SectorTable = (props: ISectorTableProps) => {
         id: 'action',
         cell: ({ row: { original } }) => (
           <TableAction
+            privilege={privilege}
             handleEditClick={() => {
               handleEditClick(original)
             }}

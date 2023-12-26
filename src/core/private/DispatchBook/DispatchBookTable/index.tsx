@@ -19,6 +19,7 @@ import { IRoutePrivilege } from '@/router/routes/create-route'
 
 const DispatchBookTable = ({
   currentModuleDetails,
+  routePrivilege,
 }: Partial<IRoutePrivilege>) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
@@ -89,6 +90,7 @@ const DispatchBookTable = ({
           },
         }) => (
           <TableAction
+            privilege={routePrivilege}
             handleViewClick={() => {
               navigate(privateRoutePath.dispatchBook.view, {
                 params: { id: encodeParams(id) },
@@ -127,11 +129,15 @@ const DispatchBookTable = ({
             withSN={false}
             isLoading={allRegistrationBookFetching}
             canSearch
-            addHeaderProps={{
-              handleAdd: () => {
-                navigate(privateRoutePath.dispatchBook.add)
-              },
-            }}
+            addHeaderProps={
+              routePrivilege?.CREATE
+                ? {
+                    handleAdd: () => {
+                      navigate(privateRoutePath.dispatchBook.add)
+                    },
+                  }
+                : undefined
+            }
             className="pb-4"
             columns={columns}
             data={allRegistrationBookList}

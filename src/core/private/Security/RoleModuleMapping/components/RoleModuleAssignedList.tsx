@@ -20,6 +20,8 @@ import {
 import useGetRoleMappingParamsData from './useGetRoleMappingParamsData'
 import { useTranslation } from 'react-i18next'
 import Modal from '@/components/ui/Modal/Modal'
+import useGetPrivilegeByPath from '@/hooks/useGetPrivilegeByPath'
+import { routePaths } from '@/router'
 
 interface IRoleModuleAssignedListProps {
   setSelectedModule: Dispatch<SetStateAction<IModuleSetupTableData | undefined>>
@@ -30,6 +32,8 @@ const RoleModuleAssignedList = ({
   setSelectedModule,
   selectedModule,
 }: IRoleModuleAssignedListProps) => {
+  const privilege = useGetPrivilegeByPath(routePaths.security.roleManagement)
+
   const { t } = useTranslation()
   const [assignedModuleListData, setAssignedModuleListData] = useState<
     IModuleSetupTableData[]
@@ -149,23 +153,25 @@ const RoleModuleAssignedList = ({
                         module?.moduleNameNepali
                       )}
                     </Text>
-                    <Box
-                      onClick={(event: any) => {
-                        event.stopPropagation()
-                        if ('showModuleOnMenu' in module) {
-                          setCurrentSelectedId(module.id)
-                        } else {
-                          removeFromModuleList(module.id)
-                        }
-                      }}
-                      className="group cursor-pointer rounded p-2 transition-colors hover:bg-red-40 "
-                    >
-                      <Trash2
-                        onClick={(e) => {}}
-                        className="text-red-40 group-hover:text-white"
-                        size={18}
-                      />
-                    </Box>
+                    {privilege?.DELETE && (
+                      <Box
+                        onClick={(event: any) => {
+                          event.stopPropagation()
+                          if ('showModuleOnMenu' in module) {
+                            setCurrentSelectedId(module.id)
+                          } else {
+                            removeFromModuleList(module.id)
+                          }
+                        }}
+                        className="group cursor-pointer rounded p-2 transition-colors hover:bg-red-40 "
+                      >
+                        <Trash2
+                          onClick={(e) => {}}
+                          className="text-red-40 group-hover:text-white"
+                          size={18}
+                        />
+                      </Box>
+                    )}
                   </Box>
                 )
               })

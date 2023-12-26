@@ -14,6 +14,8 @@ import {
   useChangeDocumentTypeStatus,
   useGetAllDocumentType,
 } from '../services/document-type.query'
+import useGetPrivilegeByPath from '@/hooks/useGetPrivilegeByPath'
+import { routePaths } from '@/router'
 
 interface IDocumentTypeProps {
   initialValues: IDocumentTypeInitialValue
@@ -24,6 +26,7 @@ interface IDocumentTypeProps {
 
 const DocumentType = (props: IDocumentTypeProps) => {
   const { setInitialValues } = props
+  const privilege = useGetPrivilegeByPath(routePaths.masterSetup.documentType)
 
   const [currentSelectedId, setCurrentSelectedId] = useState<null | number>(
     null
@@ -104,6 +107,7 @@ const DocumentType = (props: IDocumentTypeProps) => {
         id: 'action',
         cell: ({ row: { original } }) => (
           <TableAction
+            privilege={privilege}
             handleEditClick={() => {
               handleEditClick(original)
             }}

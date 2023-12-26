@@ -14,6 +14,8 @@ import {
   useChangeOfficeStatus,
   useGetAllOffice,
 } from '../services/office.query'
+import useGetPrivilegeByPath from '@/hooks/useGetPrivilegeByPath'
+import { routePaths } from '@/router'
 
 interface IOfficeProps {
   initialValues: IOfficeInitialValue
@@ -22,6 +24,7 @@ interface IOfficeProps {
 
 const Office = (props: IOfficeProps) => {
   const { setInitialValues } = props
+  const privilege = useGetPrivilegeByPath(routePaths.masterSetup.office)
 
   const [currentSelectedId, setCurrentSelectedId] = useState<null | number>(
     null
@@ -97,6 +100,7 @@ const Office = (props: IOfficeProps) => {
         id: 'action',
         cell: ({ row: { original } }) => (
           <TableAction
+            privilege={privilege}
             handleEditClick={() => {
               handleEditClick(original)
             }}

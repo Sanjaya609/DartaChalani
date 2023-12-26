@@ -13,6 +13,8 @@ import {
   useChangeServiceTypeStatus,
   useGetAllServiceType,
 } from '../services/servicetype.query'
+import useGetPrivilegeByPath from '@/hooks/useGetPrivilegeByPath'
+import { routePaths } from '@/router'
 
 interface IServiceTypeProps {
   initialValues: IServiceTypeInitialValue
@@ -23,6 +25,7 @@ interface IServiceTypeProps {
 
 const ServiceType = (props: IServiceTypeProps) => {
   const { setInitialValues } = props
+  const privilege = useGetPrivilegeByPath(routePaths.masterSetup.serviceType)
 
   const [currentSelectedId, setCurrentSelectedId] = useState<null | number>(
     null
@@ -87,6 +90,7 @@ const ServiceType = (props: IServiceTypeProps) => {
         id: 'action',
         cell: ({ row: { original } }) => (
           <TableAction
+            privilege={privilege}
             handleEditClick={() => {
               handleEditClick(original)
             }}

@@ -14,6 +14,8 @@ import {
   useChangeUserStatus,
   useGetAllUser,
 } from '../services/user-setup.query'
+import useGetPrivilegeByPath from '@/hooks/useGetPrivilegeByPath'
+import { routePaths } from '@/router'
 
 interface ISectorTableProps {
   initialValues: IUserSetupInitialValue
@@ -22,6 +24,7 @@ interface ISectorTableProps {
 
 const SectorTable = (props: ISectorTableProps) => {
   const { setInitialValues } = props
+  const privilege = useGetPrivilegeByPath(routePaths.security.userSetup)
 
   const [currentSelectedId, setCurrentSelectedId] = useState<null | number>(
     null
@@ -107,6 +110,7 @@ const SectorTable = (props: ISectorTableProps) => {
         id: 'action',
         cell: ({ row: { original } }) => (
           <TableAction
+            privilege={privilege}
             handleEditClick={() => {
               handleEditClick(original)
             }}

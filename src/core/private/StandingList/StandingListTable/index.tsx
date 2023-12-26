@@ -19,6 +19,7 @@ import { IRoutePrivilege } from '@/router/routes/create-route'
 
 const StandingListTable = ({
   currentModuleDetails,
+  routePrivilege,
 }: Partial<IRoutePrivilege>) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
@@ -83,6 +84,7 @@ const StandingListTable = ({
           },
         }) => (
           <TableAction
+            privilege={routePrivilege}
             handleViewClick={() => {
               navigate(privateRoutePath.standingList.view, {
                 params: { id: encodeParams(id) },
@@ -121,11 +123,15 @@ const StandingListTable = ({
             withSN={false}
             isLoading={allStandingListFetching}
             canSearch
-            addHeaderProps={{
-              handleAdd: () => {
-                navigate(privateRoutePath.standingList.add)
-              },
-            }}
+            addHeaderProps={
+              routePrivilege?.CREATE
+                ? {
+                    handleAdd: () => {
+                      navigate(privateRoutePath.standingList.add)
+                    },
+                  }
+                : undefined
+            }
             className="pb-4"
             columns={columns}
             data={allStandingList}

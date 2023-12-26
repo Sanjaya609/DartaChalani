@@ -29,7 +29,7 @@ const ActionComponent = (
   const navigate = useNavigate()
   return (
     <TableAction
-      privilege={{ ...privilege, UPDATE: !!privilege.CREATE }}
+      privilege={{ ...privilege }}
       handleEditClick={() => {
         setInitialValues({
           id,

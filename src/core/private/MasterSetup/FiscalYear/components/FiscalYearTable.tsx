@@ -24,6 +24,8 @@ import {
   useGetAllFiscalYear,
   useSwitchCurrentFiscalYear,
 } from '../services/fiscalyear.query'
+import useGetPrivilegeByPath from '@/hooks/useGetPrivilegeByPath'
+import { routePaths } from '@/router'
 
 interface IFiscalYearTableProps {
   initialValues: IFiscalYearInitialValue
@@ -34,6 +36,7 @@ interface IFiscalYearTableProps {
 
 const FiscalYearTable = (props: IFiscalYearTableProps) => {
   const { setInitialValues } = props
+  const privilege = useGetPrivilegeByPath(routePaths.masterSetup.fiscalYear)
 
   const [currentSelectedId, setCurrentSelectedId] = useState<null | number>(
     null
@@ -167,6 +170,7 @@ const FiscalYearTable = (props: IFiscalYearTableProps) => {
             handleEditClick={() => {
               handleEditClick(original)
             }}
+            privilege={privilege}
             otherActionsComp={
               <>
                 {!original.isCurrentFiscalYear && (
