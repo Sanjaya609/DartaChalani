@@ -10,13 +10,8 @@ import {
   loginValidationSchema,
 } from '../schema/login.schema'
 import { useLogin } from '../services/login.query'
-import { Dispatch, SetStateAction } from 'react'
 
-interface ILoginFormProps {
-  setShowPasswordResetForm: Dispatch<SetStateAction<boolean>>
-}
-
-const LoginForm = ({ setShowPasswordResetForm }: ILoginFormProps) => {
+const ResetPasswordForm = () => {
   const { t } = useTranslation()
   const { mutate, isLoading } = useLogin()
 
@@ -40,7 +35,7 @@ const LoginForm = ({ setShowPasswordResetForm }: ILoginFormProps) => {
   return (
     <Card className="rounded-r-lg px-8 py-7">
       <Text variant="h6" typeface="extrabold" className="mb-4">
-        {t('public.login.login')}
+        {t('public.login.resetPassword.header')}
       </Text>
 
       <form onSubmit={handleSubmit}>
@@ -56,23 +51,13 @@ const LoginForm = ({ setShowPasswordResetForm }: ILoginFormProps) => {
           }}
           onBlur={handleBlur}
         />
-        <PasswordInput
-          autoComplete="new-password"
-          value={values.password}
-          errors={errors}
-          touched={touched}
-          id="password"
-          label={t('public.login.password')}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
 
         <Button loading={isLoading} className="w-full">
-          {t('btns.login')}
+          {t('public.login.resetPassword.sendResetLink')}
         </Button>
       </form>
     </Card>
   )
 }
 
-export default LoginForm
+export default ResetPasswordForm

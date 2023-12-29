@@ -6,12 +6,15 @@ import { switchLanguage } from '@/lib/i18n/i18n'
 import { Globe } from 'phosphor-react'
 import { useTranslation } from 'react-i18next'
 import LoginForm from './LoginForm/LoginForm'
+import { useState } from 'react'
+import ResetPasswordForm from './ResetPasswordForm/ResetPasswordForm'
 
 const Login = () => {
   const {
     t,
     i18n: { language },
   } = useTranslation()
+  const [showPasswordResetForm, setShowPasswordResetForm] = useState(false)
 
   return (
     <section className="flex h-full w-full items-center justify-center bg-[#E5E5E5] ">
@@ -65,7 +68,11 @@ const Login = () => {
           </Card>
         </Grid.Col>
         <Grid.Col sm="sm:col-span-6">
-          <LoginForm />
+          {showPasswordResetForm ? (
+            <ResetPasswordForm />
+          ) : (
+            <LoginForm setShowPasswordResetForm={setShowPasswordResetForm} />
+          )}
         </Grid.Col>
       </Grid>
     </section>

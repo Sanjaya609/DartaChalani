@@ -22,3 +22,9 @@ interface IUser {
   roleType: string
   isCommonRole: boolean
 }
+
+export interface IChangePassword {
+  confirmNewPassword: string
+  currentPassword: string
+  newPassword: string
+}
