@@ -29,7 +29,7 @@ const AddField = ({
   editId?: number
   viewOnly?: boolean
   setViewOnly?: React.Dispatch<React.SetStateAction<boolean>>
-  formId: string | number
+  formId: null | number
 }) => {
   const { t } = useTranslation()
   const [initialFieldValue, setInitialFieldValue] = useState(
@@ -58,6 +58,7 @@ const AddField = ({
       labelNameEnglish,
       labelNameNepali,
       className,
+      groupingId,
     } = values
 
     const reqData: IAddFieldPayload = {
@@ -71,6 +72,7 @@ const AddField = ({
       labelNameEnglish,
       labelNameNepali,
       className,
+      groupingId,
     }
 
     createField(reqData, {
@@ -94,6 +96,7 @@ const AddField = ({
         orderNo,
         className,
         dropDownId,
+        groupingId,
       } = fieldDetails
       setInitialFieldValue({
         id,
@@ -106,6 +109,7 @@ const AddField = ({
         labelNameEnglish,
         labelNameNepali,
         className,
+        groupingId,
       })
     }
   }, [fieldDetails])

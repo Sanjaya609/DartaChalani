@@ -10,35 +10,11 @@ export const addFieldInitialValues: IAddFieldInitialValue[] =
         id: 5,
         isValidationRequired: false,
         orderNo: "",
-        recommendationId: "",
+        recommendationId: null,
         labelNameEnglish: "",
         labelNameNepali: "",
         className: ""
     },
-    {
-        dropDownId: "",
-        fieldControlName: "Gender",
-        fieldType: "",
-        id: 1,
-        isValidationRequired: false,
-        orderNo: "",
-        recommendationId: "",
-        labelNameEnglish: "",
-        labelNameNepali: "",
-        className: ""
-    },
-    {
-        dropDownId: "",
-        fieldControlName: "Test",
-        fieldType: "",
-        id: 2,
-        isValidationRequired: false,
-        orderNo: "",
-        recommendationId: "",
-        labelNameEnglish: "",
-        labelNameNepali: "",
-        className: ""
-    }
 ]
 
 export const addFieldValidationSchema = Yup.object({

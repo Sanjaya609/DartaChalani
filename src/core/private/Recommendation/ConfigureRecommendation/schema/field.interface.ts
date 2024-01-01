@@ -5,10 +5,11 @@ export interface IAddFieldInitialValue {
     fieldType: string;
     isValidationRequired: boolean;
     orderNo: string | number;
-    recommendationId: string | number;
+    recommendationId: null | number;
     labelNameEnglish: string;
     labelNameNepali: string;
-    className: string
+    className: string;
+    groupingId: string;
 }
 
 export interface IAddFieldPayload
@@ -21,8 +22,9 @@ export interface IAddFieldPayload
     id: number;
     isValidationRequired: boolean;
     orderNo: string | number;
-    recommendationId: string | number;
+    recommendationId: null | number;
     labelNameEnglish: string;
     labelNameNepali: string;
-    className: string
+    className: string;
+    groupingId: string
  }

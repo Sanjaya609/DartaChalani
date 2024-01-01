@@ -143,7 +143,7 @@ const RegistrationBookTable = ({
         editId={editId}
         viewOnly={viewOnly}
         setViewOnly={setViewOnly}
-        formId={recommendationId!}
+        formId={parseInt(recommendationId!)}
       />
 
       <Modal

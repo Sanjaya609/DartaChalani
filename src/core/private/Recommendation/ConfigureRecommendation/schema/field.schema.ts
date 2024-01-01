@@ -9,10 +9,11 @@ export const addFieldInitialValues: IAddFieldInitialValue =
     id: 0,
     isValidationRequired: false,
     orderNo: "",
-    recommendationId: "",
+    recommendationId: null,
     labelNameEnglish: "",
     labelNameNepali: "",
-    className: ""
+    className: "",
+    groupingId: ""
 }
 
 export const addFieldValidationSchema = Yup.object({

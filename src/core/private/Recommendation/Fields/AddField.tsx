@@ -18,20 +18,28 @@ import {
   useGetFieldDetailById,
 } from '../ConfigureRecommendation/services/fields.query'
 import { Text } from '@/components/ui/core/Text'
+import AddGroup from './AddGroup'
 
 const AddField = ({
   editId,
   formId,
-  setShowAddOrEditForm
+  setShowAddOrEditForm,
 }: {
   editId?: number
-  formId: string | number
+  formId: number | null
   setShowAddOrEditForm: Dispatch<SetStateAction<boolean>>
 }) => {
   const { t } = useTranslation()
   const [initialFieldValue, setInitialFieldValue] = useState(
     addFieldInitialValues
   )
+
+  const [edittId, setEdittId] = useState<number>()
+  const [viewOnly, setViewOnly] = useState(false)
+  const [openRecommendationForm, setOpenRecommendationForm] =
+    useState<boolean>(false)
+  const toggleRecommendationForm = () =>
+    setOpenRecommendationForm(!openRecommendationForm)
 
   // GET Field Type for dropdown
   const { data: fieldTypeOptions = [], isLoading: fieldTypeFetching } =
@@ -55,6 +63,7 @@ const AddField = ({
       labelNameEnglish,
       labelNameNepali,
       className,
+      groupingId,
     } = values
 
     const reqData: IAddFieldPayload = {
@@ -68,6 +77,7 @@ const AddField = ({
       labelNameEnglish,
       labelNameNepali,
       className,
+      groupingId,
     }
 
     createField(reqData, {
@@ -90,6 +100,7 @@ const AddField = ({
         orderNo,
         className,
         dropDownId,
+        groupingId,
       } = fieldDetails
       setInitialFieldValue({
         id,
@@ -102,6 +113,7 @@ const AddField = ({
         labelNameEnglish,
         labelNameNepali,
         className,
+        groupingId,
       })
     }
   }, [fieldDetails, editId])
@@ -133,109 +145,108 @@ const AddField = ({
     let renderByFieldType = () => {
       switch (fieldType) {
         case 'INPUT':
-          return (
-            <>
-            </>
-          )
-  
+          return <></>
+
         case 'SELECT':
           return <Grid.Col sm={'sm:col-span-12'} key="selectField"></Grid.Col>
-  
+
         case 'CHECKBOX':
           return <Grid.Col sm={'sm:col-span-12'} key="checkboxField"></Grid.Col>
-  
+
         case 'RADIO':
           return <Grid.Col sm={'sm:col-span-12'} key="radioField"></Grid.Col>
-  
+
         case 'FILE':
           return <Grid.Col sm={'sm:col-span-12'} key="fileField"></Grid.Col>
-  
+
         case 'DATEPICKER':
-          return <Grid.Col sm={'sm:col-span-12'} key="datepickerField"></Grid.Col>
-  
+          return (
+            <Grid.Col sm={'sm:col-span-12'} key="datepickerField"></Grid.Col>
+          )
+
         default:
           return null
       }
     }
 
-    if (values.fieldType) 
-    return (
-      <>
-        <Grid.Col sm={'sm:col-span-4'}>
-          <Form.Input
-            isRequired
-            value={values.fieldControlName}
-            errors={errors}
-            touched={touched}
-            name="fieldControlName"
-            label={t('recommendation.fieldName')}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-        </Grid.Col>
+    if (values.fieldType)
+      return (
+        <>
+          <Grid.Col sm={'sm:col-span-4'}>
+            <Form.Input
+              isRequired
+              value={values.fieldControlName}
+              errors={errors}
+              touched={touched}
+              name="fieldControlName"
+              label={t('recommendation.fieldName')}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+          </Grid.Col>
 
-        <Grid.Col sm={'sm:col-span-4'}>
-          <Form.Input
-            isRequired
-            value={values.labelNameEnglish}
-            errors={errors}
-            touched={touched}
-            name="labelNameEnglish"
-            label={t('recommendation.labelNameEnglish')}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-        </Grid.Col>
+          <Grid.Col sm={'sm:col-span-4'}>
+            <Form.Input
+              isRequired
+              value={values.labelNameEnglish}
+              errors={errors}
+              touched={touched}
+              name="labelNameEnglish"
+              label={t('recommendation.labelNameEnglish')}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+          </Grid.Col>
 
-        <Grid.Col sm={'sm:col-span-4'}>
-          <Form.Input
-            isNepali
-            isRequired
-            value={values.labelNameNepali}
-            errors={errors}
-            touched={touched}
-            name="labelNameNepali"
-            label={t('recommendation.labelNameNepali')}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-        </Grid.Col>
+          <Grid.Col sm={'sm:col-span-4'}>
+            <Form.Input
+              isNepali
+              isRequired
+              value={values.labelNameNepali}
+              errors={errors}
+              touched={touched}
+              name="labelNameNepali"
+              label={t('recommendation.labelNameNepali')}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+          </Grid.Col>
 
-        <Grid.Col sm={'sm:col-span-4'}>
-          <Form.Input
-            isRequired
-            value={values.orderNo}
-            errors={errors}
-            touched={touched}
-            name="orderNo"
-            label={t('recommendation.orderNo')}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-        </Grid.Col>
+          <Grid.Col sm={'sm:col-span-4'}>
+            <Form.Input
+              isRequired
+              value={values.orderNo}
+              errors={errors}
+              touched={touched}
+              name="orderNo"
+              label={t('recommendation.orderNo')}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+          </Grid.Col>
 
-        <Grid.Col sm={'sm:col-span-4'}>
-          <Form.Switch
-            isRequired
-            className="inline"
-            checked={values.isValidationRequired}
-            errors={errors}
-            touched={touched}
-            name="isValidationRequired"
-            label={t('recommendation.isValidationRequired')}
-            onChange={() => {
-              setFieldValue(
-                'isValidationRequired',
-                !values.isValidationRequired
-              )
-            }}
-            onBlur={handleBlur}
-          />
-        </Grid.Col>
+          <Grid.Col sm={'sm:col-span-4'}>
+            <Form.Switch
+              isRequired
+              className="inline"
+              checked={values.isValidationRequired}
+              errors={errors}
+              touched={touched}
+              name="isValidationRequired"
+              label={t('recommendation.isValidationRequired')}
+              onChange={() => {
+                setFieldValue(
+                  'isValidationRequired',
+                  !values.isValidationRequired
+                )
+              }}
+              onBlur={handleBlur}
+            />
+          </Grid.Col>
 
-        {renderByFieldType()}
-      </>
-    )
+          {renderByFieldType()}
+        </>
+      )
   }
 
   return (
@@ -243,15 +254,41 @@ const AddField = ({
       <Flexbox
         align="center"
         justify="space-between"
-        className="w-full pb-1 p-3 my-2"
+        className="my-2 w-full p-3 pb-1"
       >
-          <Text typeface="extrabold" className="text-primary" variant="h5">
-            Field Details
-          </Text>
-          <div className="h-px flex-auto bg-gray-100"></div>
+        <Text typeface="extrabold" className="text-primary" variant="h5">
+          Field Details
+        </Text>
+        <div className="h-px flex-auto bg-gray-100"></div>
       </Flexbox>
       <form onSubmit={handleSubmit} className="ml-3">
         <Grid sm={'sm:grid-cols-12'} gap="gap-4">
+          <Grid.Col sm={'sm:col-span-4'}>
+            <Form.Select
+              isRequired
+              isLoading={fieldTypeFetching}
+              options={[
+                {
+                  label: 'Create New Group',
+                  value: 'NEW_GROUP',
+                },
+              ]}
+              calculateValueOnChange
+              value={values.groupingId}
+              errors={errors}
+              touched={touched}
+              name="groupingId"
+              label="Group"
+              onChange={(event) => {
+                // setFieldValue(event.name, event?.main || '')
+                if (event.main === 'NEW_GROUP') {
+                  toggleRecommendationForm()
+                }
+              }}
+              onBlur={handleBlur}
+            />
+          </Grid.Col>
+
           <Grid.Col sm={'sm:col-span-4'}>
             <Form.Select
               isRequired
@@ -286,22 +323,38 @@ const AddField = ({
           <Button
             size="md"
             type="button"
-            variant='danger'
+            variant="danger"
             icons="icons"
             className="ml-4 whitespace-nowrap border border-gray-80"
             onClick={() => {
               setShowAddOrEditForm(false)
             }}
-          >Close</Button>
+          >
+            Close
+          </Button>
           <Button
             size="md"
             type="submit"
-            variant='success'
+            variant="success"
             icons="icons"
             className="ml-4 whitespace-nowrap border border-gray-80"
-          >{editId ? 'Update' : 'Add'}</Button>
+          >
+            {editId ? 'Update' : 'Add'}
+          </Button>
         </Flexbox>
       </form>
+
+      <AddGroup
+        toggleRecommendationForm={() => {
+          toggleRecommendationForm()
+          setEdittId(undefined)
+        }}
+        openRecommendationForm={openRecommendationForm}
+        editId={edittId}
+        viewOnly={viewOnly}
+        setViewOnly={setViewOnly}
+        formId={formId!}
+      />
     </>
   )
 }
