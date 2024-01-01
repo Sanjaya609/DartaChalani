@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { privateRoutePath, useNavigate, useParams } from '@/router'
 import {
   DndContext,
   closestCenter,
@@ -15,12 +16,10 @@ import {
 } from '@dnd-kit/sortable'
 import SectionHeader from '@/components/functional/SectionHeader'
 import ContainerLayout from '@/components/ui/core/Layout/ContainerLayout'
-import FlexLayout from '@/components/ui/core/Layout/FlexLayout'
 import { IRoutePrivilege } from '@/router/routes/create-route'
 import { addFieldInitialValues } from './schema/field.schema'
 import { Button, Flexbox, Grid, Icon } from '@/components/ui'
 import { decodeParams } from '@/utility/route-params'
-import { useParams } from 'react-router-dom'
 import {
   useDeleteFieldById,
   useGetAllFieldByRecommendationId,
@@ -33,7 +32,7 @@ import { IAddFieldInitialValue } from './schema/field.interface'
 import Modal from '@/components/ui/Modal/Modal'
 import { useTranslation } from 'react-i18next'
 import { Card } from '@/components/ui/core/Card'
-import { Cross } from 'lucide-react'
+import { Text } from '@/components/ui/core/Text'
 
 const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
   const { t } = useTranslation()
@@ -93,7 +92,10 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
         type="button"
         icons="icons"
         className="z-40 ml-4 whitespace-nowrap rounded border border-gray-80"
-        onClick={() => setEditId(item.id)}
+        onClick={() => {
+          setShowAddOrEditForm(true)
+          setEditId(item.id)
+        }}
       >
         <Icon icon={Pencil} />
       </Button>
@@ -130,6 +132,11 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
     </div>
   )
 
+  const navigate = useNavigate()
+  const navigateToRecommendationList = () => {
+    navigate(privateRoutePath.recommendation.base)
+  }
+
   useEffect(() => {
     if (allFiledByRecommendationIdList) {
       setItems(allFiledByRecommendationIdList)
@@ -138,9 +145,24 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
 
   return (
     <>
-      <SectionHeader title={recommendationDetails?.nameEnglish} />
-
-      <ContainerLayout className="scrollbars grow ">
+      <SectionHeader title={recommendationDetails?.nameEnglish} backAction={navigateToRecommendationList} />
+      <Flexbox
+        align="center"
+        justify="space-between"
+        className='w-full mt-3'
+      >
+        <div></div>
+        <Button
+            size="md"
+            type="button"
+            icons="icons"
+            className="ml-4 mr-16 whitespace-nowrap border border-gray-80"
+            onClick={() => {
+              setShowAddOrEditForm(true)
+            }}
+          >Add Field</Button>
+      </Flexbox>
+      <ContainerLayout className="scrollbars grow mt-[-15px]">
         <Card className="h-full">
           <Grid sm={'sm:grid-cols-12'} gap="gap-2">
             <DndContext
@@ -153,8 +175,8 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
                 {items.map((item) => (
                   <>
                     <Grid.Col
-                      sm={'sm:col-span-6'}
-                      className="group relative p-3"
+                      sm={'sm:col-span-4'}
+                      className="group relative p-3 hover:bg-gray-50 hover:rounded-3xl"
                       key={item.id}
                     >
                       {renderActionButtons(item)}
@@ -166,36 +188,14 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
             </DndContext>
           </Grid>
 
-          <Flexbox
-            align="flex-end"
-            justify="flex-end"
-            className="w-full bg-white px-5 py-3"
-          >
-            {!showAddOrEditForm ? (
-              <button
-                onClick={() => setShowAddOrEditForm(true)}
-                className="rounded-full border-2 border-dotted border-sky-500 p-4 hover:bg-blue-500 hover:text-white"
-              >
-                <Icon icon={Plus}></Icon>
-              </button>
-            ) : (
-              <button
-                onClick={() => setShowAddOrEditForm(false)}
-                className="rounded-full border-2 border-dotted border-red-500 p-4 hover:bg-blue-500 hover:text-white"
-              >
-                <Icon icon={Minus}></Icon>
-              </button>
-            )}
-          </Flexbox>
-
           {showAddOrEditForm && (
             <Grid
               sm={'sm:grid-cols-12'}
               gap="gap-6"
-              className="border-2 border-dotted border-green-500"
+              className="mt-8 rounded-3xl ring-1 ring-gray-200 bg-gray-50"
             >
               <Grid.Col sm={'sm:col-span-12'} className="group relative p-3">
-                <AddField editId={editId} formId={recommendationId!} />
+                <AddField editId={editId} formId={recommendationId!} setShowAddOrEditForm={setShowAddOrEditForm} />
               </Grid.Col>
             </Grid>
           )}

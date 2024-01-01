@@ -1,7 +1,7 @@
 import Form from '@/components/functional/Form/Form'
-import { Flexbox, Grid } from '@/components/ui'
+import { Button, Flexbox, Grid } from '@/components/ui'
 import { useFormik } from 'formik'
-import { useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   IAddFieldInitialValue,
@@ -17,13 +17,16 @@ import {
   useCreateField,
   useGetFieldDetailById,
 } from '../ConfigureRecommendation/services/fields.query'
+import { Text } from '@/components/ui/core/Text'
 
 const AddField = ({
   editId,
   formId,
+  setShowAddOrEditForm
 }: {
   editId?: number
   formId: string | number
+  setShowAddOrEditForm: Dispatch<SetStateAction<boolean>>
 }) => {
   const { t } = useTranslation()
   const [initialFieldValue, setInitialFieldValue] = useState(
@@ -127,115 +130,127 @@ const AddField = ({
     handleChange: any,
     handleBlur: any
   ) => {
-    switch (fieldType) {
-      case 'INPUT':
-        return (
-          <>
-            <Grid.Col sm={'sm:col-span-4'}>
-              <Form.Input
-                isRequired
-                value={values.fieldControlName}
-                errors={errors}
-                touched={touched}
-                name="fieldControlName"
-                label={t('recommendation.fieldName')}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Grid.Col>
-
-            <Grid.Col sm={'sm:col-span-4'}>
-              <Form.Input
-                isRequired
-                value={values.labelNameEnglish}
-                errors={errors}
-                touched={touched}
-                name="labelNameEnglish"
-                label={t('recommendation.labelNameEnglish')}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Grid.Col>
-
-            <Grid.Col sm={'sm:col-span-4'}>
-              <Form.Input
-                isNepali
-                isRequired
-                value={values.labelNameNepali}
-                errors={errors}
-                touched={touched}
-                name="labelNameNepali"
-                label={t('recommendation.labelNameNepali')}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Grid.Col>
-
-            <Grid.Col sm={'sm:col-span-4'}>
-              <Form.Input
-                isRequired
-                value={values.orderNo}
-                errors={errors}
-                touched={touched}
-                name="orderNo"
-                label={t('recommendation.orderNo')}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Grid.Col>
-
-            <Grid.Col sm={'sm:col-span-4'}>
-              <Form.Switch
-                isRequired
-                className="inline"
-                checked={values.isValidationRequired}
-                errors={errors}
-                touched={touched}
-                name="isValidationRequired"
-                label={t('recommendation.isValidationRequired')}
-                onChange={() => {
-                  setFieldValue(
-                    'isValidationRequired',
-                    !values.isValidationRequired
-                  )
-                }}
-                onBlur={handleBlur}
-              />
-            </Grid.Col>
-          </>
-        )
-
-      case 'SELECT':
-        return <Grid.Col sm={'sm:col-span-12'} key="selectField"></Grid.Col>
-
-      case 'CHECKBOX':
-        return <Grid.Col sm={'sm:col-span-12'} key="checkboxField"></Grid.Col>
-
-      case 'RADIO':
-        return <Grid.Col sm={'sm:col-span-12'} key="radioField"></Grid.Col>
-
-      case 'FILE':
-        return <Grid.Col sm={'sm:col-span-12'} key="fileField"></Grid.Col>
-
-      case 'DATEPICKER':
-        return <Grid.Col sm={'sm:col-span-12'} key="datepickerField"></Grid.Col>
-
-      default:
-        return null
+    let renderByFieldType = () => {
+      switch (fieldType) {
+        case 'INPUT':
+          return (
+            <>
+            </>
+          )
+  
+        case 'SELECT':
+          return <Grid.Col sm={'sm:col-span-12'} key="selectField"></Grid.Col>
+  
+        case 'CHECKBOX':
+          return <Grid.Col sm={'sm:col-span-12'} key="checkboxField"></Grid.Col>
+  
+        case 'RADIO':
+          return <Grid.Col sm={'sm:col-span-12'} key="radioField"></Grid.Col>
+  
+        case 'FILE':
+          return <Grid.Col sm={'sm:col-span-12'} key="fileField"></Grid.Col>
+  
+        case 'DATEPICKER':
+          return <Grid.Col sm={'sm:col-span-12'} key="datepickerField"></Grid.Col>
+  
+        default:
+          return null
+      }
     }
+
+    if (values.fieldType) 
+    return (
+      <>
+        <Grid.Col sm={'sm:col-span-4'}>
+          <Form.Input
+            isRequired
+            value={values.fieldControlName}
+            errors={errors}
+            touched={touched}
+            name="fieldControlName"
+            label={t('recommendation.fieldName')}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+        </Grid.Col>
+
+        <Grid.Col sm={'sm:col-span-4'}>
+          <Form.Input
+            isRequired
+            value={values.labelNameEnglish}
+            errors={errors}
+            touched={touched}
+            name="labelNameEnglish"
+            label={t('recommendation.labelNameEnglish')}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+        </Grid.Col>
+
+        <Grid.Col sm={'sm:col-span-4'}>
+          <Form.Input
+            isNepali
+            isRequired
+            value={values.labelNameNepali}
+            errors={errors}
+            touched={touched}
+            name="labelNameNepali"
+            label={t('recommendation.labelNameNepali')}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+        </Grid.Col>
+
+        <Grid.Col sm={'sm:col-span-4'}>
+          <Form.Input
+            isRequired
+            value={values.orderNo}
+            errors={errors}
+            touched={touched}
+            name="orderNo"
+            label={t('recommendation.orderNo')}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+        </Grid.Col>
+
+        <Grid.Col sm={'sm:col-span-4'}>
+          <Form.Switch
+            isRequired
+            className="inline"
+            checked={values.isValidationRequired}
+            errors={errors}
+            touched={touched}
+            name="isValidationRequired"
+            label={t('recommendation.isValidationRequired')}
+            onChange={() => {
+              setFieldValue(
+                'isValidationRequired',
+                !values.isValidationRequired
+              )
+            }}
+            onBlur={handleBlur}
+          />
+        </Grid.Col>
+
+        {renderByFieldType()}
+      </>
+    )
   }
 
   return (
     <>
-      <div className="mb-6 bg-blue-500 p-4 text-white">
-        <div className="flex items-center justify-between">
-          <h1 className="flex items-center text-lg font-semibold">
-            <i className="fas fa-wpforms mr-2"></i>
+      <Flexbox
+        align="center"
+        justify="space-between"
+        className="w-full pb-1 p-3 my-2"
+      >
+          <Text typeface="extrabold" className="text-primary" variant="h5">
             Field Details
-          </h1>
-        </div>
-      </div>
-      <form onSubmit={handleSubmit} className="mx-3">
+          </Text>
+          <div className="h-px flex-auto bg-gray-100"></div>
+      </Flexbox>
+      <form onSubmit={handleSubmit} className="ml-3">
         <Grid sm={'sm:grid-cols-12'} gap="gap-4">
           <Grid.Col sm={'sm:col-span-4'}>
             <Form.Select
@@ -268,13 +283,23 @@ const AddField = ({
         </Grid>
 
         <Flexbox align="flex-end" justify="flex-end">
-          <button
+          <Button
+            size="md"
+            type="button"
+            variant='danger'
+            icons="icons"
+            className="ml-4 whitespace-nowrap border border-gray-80"
+            onClick={() => {
+              setShowAddOrEditForm(false)
+            }}
+          >Close</Button>
+          <Button
+            size="md"
             type="submit"
-            className="flex items-center rounded bg-green-500 px-4 py-2 font-semibold text-white hover:bg-green-600"
-          >
-            <i className="fas fa-plus-circle mr-2"></i>
-            {editId ? 'Update' : 'Add'}
-          </button>
+            variant='success'
+            icons="icons"
+            className="ml-4 whitespace-nowrap border border-gray-80"
+          >{editId ? 'Update' : 'Add'}</Button>
         </Flexbox>
       </form>
     </>
