@@ -62,17 +62,17 @@ const AddGroup = ({
     })
   }
 
-  useEffect(() => {
-    if (groupDetails) {
-      const { id, nameEnglish, nameNepali, recommendationId } = groupDetails
-      setInitialGroupdValue({
-        id,
-        nameEnglish,
-        nameNepali,
-        recommendationId,
-      })
-    }
-  }, [groupDetails])
+  // useEffect(() => {
+  //   if (groupDetails) {
+  //     const { id, nameEnglish, nameNepali, recommendationId } = groupDetails
+  //     setInitialGroupdValue({
+  //       id,
+  //       nameEnglish,
+  //       nameNepali,
+  //       recommendationId,
+  //     })
+  //   }
+  // }, [groupDetails])
 
   const {
     values,

@@ -52,7 +52,7 @@ const useGetAllGroupByRecommendationId = (id: string | number | null) => {
   return useQuery(
     [getAllGroupByRecommendationId.controllerName, id],
     () =>
-      initApiRequest<BackendSuccessResponse<IAddGroupResponse>>({
+      initApiRequest<BackendSuccessResponse<IAddGroupResponse[]>>({
         apiDetails: getAllGroupByRecommendationId,
         pathVariables: {
             id

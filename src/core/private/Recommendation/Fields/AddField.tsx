@@ -3,22 +3,15 @@ import { Button, Flexbox, Grid } from '@/components/ui'
 import { useFormik } from 'formik'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  IAddFieldInitialValue,
-  IAddFieldPayload,
-} from '../ConfigureRecommendation/schema/field.interface'
-import {
-  addFieldInitialValues,
-  addFieldValidationSchema,
-} from '../ConfigureRecommendation/schema/field.schema'
 import { useGetEnumDataWithValue } from '@/service/generic/generic.query'
 import { APIENUM } from '@/utility/enums/api.enum'
-import {
-  useCreateField,
-  useGetFieldDetailById,
-} from '../ConfigureRecommendation/services/fields.query'
 import { Text } from '@/components/ui/core/Text'
 import AddGroup from './AddGroup'
+import { addFieldInitialValues, addFieldValidationSchema } from './schema/field.schema'
+import { useCreateField, useGetFieldDetailById } from './services/fields.query'
+import { IAddFieldInitialValue, IAddFieldPayload } from './schema/field.interface'
+import { useGetAllGroupByRecommendationId } from './services/groups.query'
+import { getTextByLanguage } from '@/lib/i18n/i18n'
 
 const AddField = ({
   editId,
@@ -47,6 +40,9 @@ const AddField = ({
       mapDatatoStyleSelect: false,
     })
 
+  const { data: groupListOption = [], isLoading: groupListLoading} =
+      useGetAllGroupByRecommendationId(formId)
+
   const { data: fieldDetails } = useGetFieldDetailById(editId ?? '')
 
   const { mutate: createField, isLoading: createFieldLoading } =
@@ -56,10 +52,10 @@ const AddField = ({
     const {
       id,
       dropDownId,
-      fieldControlName,
+      // fieldControlName,
       fieldType,
       isValidationRequired,
-      orderNo,
+      // orderNo,
       labelNameEnglish,
       labelNameNepali,
       className,
@@ -69,11 +65,11 @@ const AddField = ({
     const reqData: IAddFieldPayload = {
       id: id,
       dropDownId,
-      fieldControlName,
+      // fieldControlName,
       fieldType,
       isValidationRequired,
-      orderNo,
-      recommendationId: formId,
+      // orderNo,
+      // recommendationId: formId,
       labelNameEnglish,
       labelNameNepali,
       className,
@@ -94,10 +90,10 @@ const AddField = ({
         id,
         labelNameEnglish,
         labelNameNepali,
-        fieldControlName,
+        // fieldControlName,
         fieldType,
         isValidationRequired,
-        orderNo,
+        // orderNo,
         className,
         dropDownId,
         groupingId,
@@ -105,11 +101,11 @@ const AddField = ({
       setInitialFieldValue({
         id,
         dropDownId,
-        fieldControlName,
+        // fieldControlName,
         fieldType,
         isValidationRequired,
-        orderNo,
-        recommendationId: formId,
+        // orderNo,
+        // recommendationId: formId,
         labelNameEnglish,
         labelNameNepali,
         className,
@@ -172,7 +168,7 @@ const AddField = ({
     if (values.fieldType)
       return (
         <>
-          <Grid.Col sm={'sm:col-span-4'}>
+          {/* <Grid.Col sm={'sm:col-span-4'}>
             <Form.Input
               isRequired
               value={values.fieldControlName}
@@ -183,7 +179,7 @@ const AddField = ({
               onChange={handleChange}
               onBlur={handleBlur}
             />
-          </Grid.Col>
+          </Grid.Col> */}
 
           <Grid.Col sm={'sm:col-span-4'}>
             <Form.Input
@@ -212,7 +208,7 @@ const AddField = ({
             />
           </Grid.Col>
 
-          <Grid.Col sm={'sm:col-span-4'}>
+          {/* <Grid.Col sm={'sm:col-span-4'}>
             <Form.Input
               isRequired
               value={values.orderNo}
@@ -223,7 +219,7 @@ const AddField = ({
               onChange={handleChange}
               onBlur={handleBlur}
             />
-          </Grid.Col>
+          </Grid.Col> */}
 
           <Grid.Col sm={'sm:col-span-4'}>
             <Form.Switch
@@ -268,6 +264,12 @@ const AddField = ({
               isRequired
               isLoading={fieldTypeFetching}
               options={[
+                ...groupListOption?.map(group => {
+                  return {
+                    label: getTextByLanguage(group.nameEnglish, group.nameNepali),
+                    value: group.id
+                  }
+                }),
                 {
                   label: 'Create New Group',
                   value: 'NEW_GROUP',
@@ -280,9 +282,10 @@ const AddField = ({
               name="groupingId"
               label="Group"
               onChange={(event) => {
-                // setFieldValue(event.name, event?.main || '')
                 if (event.main === 'NEW_GROUP') {
                   toggleRecommendationForm()
+                } else {
+                  setFieldValue(event.name, event?.main || '')
                 }
               }}
               onBlur={handleBlur}
