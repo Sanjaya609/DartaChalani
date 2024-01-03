@@ -7,5 +7,10 @@
   "errors": {
     "username": "Username is required",
     "password": "Password is required"
+  },
+  "resetPassword": {
+    "header": "Reset Password",
+    "email": "Email",
+    "btnTitle": "Reset Password"
   }
 }

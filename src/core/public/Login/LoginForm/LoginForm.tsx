@@ -4,13 +4,13 @@ import { Button } from '@/components/ui'
 import { Card } from '@/components/ui/core/Card'
 import { Text } from '@/components/ui/core/Text'
 import { useFormik } from 'formik'
-import { FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   loginInitialValue,
   loginValidationSchema,
 } from '../schema/login.schema'
 import { useLogin } from '../services/login.query'
+import { Dispatch, SetStateAction } from 'react'
 
 const LoginForm = () => {
   const { t } = useTranslation()
@@ -64,7 +64,7 @@ const LoginForm = () => {
         />
 
         <Button loading={isLoading} className="w-full">
-          Login
+          {t('btns.login')}
         </Button>
       </form>
     </Card>

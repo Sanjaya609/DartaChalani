@@ -1,23 +1,28 @@
-import { Link } from 'react-router-dom'
 import Logo from '@/assets/img/logo.png'
-import { Flexbox, Icon, Image } from '@/components/ui'
-import MenuOverlay from '@/components/functional/MainSidebar/MenuOverlay/MenuOverlay'
-import { Text } from '@/components/ui/core/Text'
-import { useTranslation } from 'react-i18next'
 import userImg from '@/assets/img/user.jpg'
-import { switchLanguage } from '@/lib/i18n/i18n'
+import MenuOverlay from '@/components/functional/MainSidebar/MenuOverlay/MenuOverlay'
+import { Flexbox, Icon, Image } from '@/components/ui'
 import Dropdown from '@/components/ui/Dropdown/Dropdown'
-import { LogOut } from 'lucide-react'
+import { Text } from '@/components/ui/core/Text'
 import { handleLogout } from '@/lib/api-request/api-schema'
+import { switchLanguage } from '@/lib/i18n/i18n'
 import { useAuth } from '@/providers'
+import { LogOut } from 'lucide-react'
+import { Key } from 'phosphor-react'
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+import ChangePasswordModal from './ChangePassword/ChangePasswordModal'
 
 const MainHeader = () => {
   const {
     t,
     i18n: { language },
   } = useTranslation()
+  const [openModal, setOpenModal] = useState(false)
 
   const { setIsAuthenticated } = useAuth()
+  const toggleModal = () => setOpenModal(!openModal)
   return (
     <div className="flex">
       <MenuOverlay />
@@ -43,6 +48,19 @@ const MainHeader = () => {
               }
             >
               <Dropdown.DropdownMenuItem
+                onClick={toggleModal}
+                className="cursor-pointer hover:bg-red-88"
+              >
+                <Flexbox
+                  align="center"
+                  justify="space-between"
+                  className="w-full"
+                >
+                  <Text>{t('btns.changePassword')}</Text>
+                  <Icon icon={Key} className="ml-3" />
+                </Flexbox>
+              </Dropdown.DropdownMenuItem>
+              <Dropdown.DropdownMenuItem
                 onClick={() => {
                   handleLogout()
                   setIsAuthenticated(false)
@@ -55,7 +73,7 @@ const MainHeader = () => {
                   className="w-full"
                 >
                   <Text>{t('btns.logout')}</Text>
-                  <Icon icon={LogOut} />
+                  <Icon icon={LogOut} className="ml-3" />
                 </Flexbox>
               </Dropdown.DropdownMenuItem>
             </Dropdown>
@@ -70,6 +88,8 @@ const MainHeader = () => {
           </Text>
         </Flexbox>
       </header>
+
+      <ChangePasswordModal openModal={openModal} toggleModal={toggleModal} />
     </div>
   )
 }
