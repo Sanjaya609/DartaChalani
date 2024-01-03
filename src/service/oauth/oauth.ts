@@ -21,6 +21,7 @@ const oauthAPI = {
     controllerName: '/user/forgot-password',
     queryKeyName: 'FORGOT_PASSWORD',
     requestMethod: RequestMethod.POST,
+    requestBodyType: RequestBodyType.AUTH,
   },
   resetPassword: {
     controllerName: '/user/reset-password',

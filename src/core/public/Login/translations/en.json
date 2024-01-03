@@ -11,6 +11,6 @@
   "resetPassword": {
     "header": "Reset Password",
     "email": "Email",
-    "sendResetLink": "Send Password Reset Link"
+    "btnTitle": "Reset Password"
   }
 }

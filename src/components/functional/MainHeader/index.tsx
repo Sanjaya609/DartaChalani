@@ -48,6 +48,19 @@ const MainHeader = () => {
               }
             >
               <Dropdown.DropdownMenuItem
+                onClick={toggleModal}
+                className="cursor-pointer hover:bg-red-88"
+              >
+                <Flexbox
+                  align="center"
+                  justify="space-between"
+                  className="w-full"
+                >
+                  <Text>{t('btns.changePassword')}</Text>
+                  <Icon icon={Key} className="ml-3" />
+                </Flexbox>
+              </Dropdown.DropdownMenuItem>
+              <Dropdown.DropdownMenuItem
                 onClick={() => {
                   handleLogout()
                   setIsAuthenticated(false)
@@ -61,19 +74,6 @@ const MainHeader = () => {
                 >
                   <Text>{t('btns.logout')}</Text>
                   <Icon icon={LogOut} className="ml-3" />
-                </Flexbox>
-              </Dropdown.DropdownMenuItem>
-              <Dropdown.DropdownMenuItem
-                onClick={toggleModal}
-                className="cursor-pointer hover:bg-red-88"
-              >
-                <Flexbox
-                  align="center"
-                  justify="space-between"
-                  className="w-full"
-                >
-                  <Text>{t('btns.changePassword')}</Text>
-                  <Icon icon={Key} className="ml-3" />
                 </Flexbox>
               </Dropdown.DropdownMenuItem>
             </Dropdown>

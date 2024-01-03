@@ -12,11 +12,7 @@ import {
 import { useLogin } from '../services/login.query'
 import { Dispatch, SetStateAction } from 'react'
 
-interface ILoginFormProps {
-  setShowPasswordResetForm: Dispatch<SetStateAction<boolean>>
-}
-
-const LoginForm = ({ setShowPasswordResetForm }: ILoginFormProps) => {
+const LoginForm = () => {
   const { t } = useTranslation()
   const { mutate, isLoading } = useLogin()
 
