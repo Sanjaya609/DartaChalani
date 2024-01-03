@@ -1,5 +1,4 @@
 import Form from '@/components/functional/Form/Form'
-import PasswordInput from '@/components/functional/PasswordInput'
 import { Button } from '@/components/ui'
 import { Card } from '@/components/ui/core/Card'
 import { Text } from '@/components/ui/core/Text'

@@ -2,11 +2,9 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { apiDetails } from '@/service/api'
 import { initApiRequest } from '@/lib/api-request'
 import { IChangePassword, IInitResponse } from './oauth.interface'
-import { useAuth } from '@/providers'
-import { handleLogout } from '@/lib/api-request/api-schema'
 
 const {
-  oauthAPI: { getInitData, changePassword },
+  oauthAPI: { getInitData, changePassword, resetPassword },
 } = apiDetails
 
 export const useGetInitData = (isAuthenticated?: boolean) => {
@@ -26,10 +24,18 @@ export const useGetInitData = (isAuthenticated?: boolean) => {
 }
 
 export const useChangePassword = () => {
-  const { setIsAuthenticated } = useAuth()
   return useMutation((requestData: IChangePassword) => {
     return initApiRequest({
       apiDetails: changePassword,
+      requestData,
+    })
+  })
+}
+
+export const useSendResetPasswordLink = () => {
+  return useMutation((requestData: { email: string }) => {
+    return initApiRequest({
+      apiDetails: resetPassword,
       requestData,
     })
   })

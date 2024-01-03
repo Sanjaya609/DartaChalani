@@ -14,6 +14,14 @@ import {
   useChangeUserStatus,
   useGetAllUser,
 } from '../services/user-setup.query'
+import {
+  tableActionIcon,
+  tableActionList,
+  tableActionTooltip,
+} from '@/components/functional/Table/Components/Table/table.schema'
+import { Box } from '@/components/ui'
+import { MailPlus } from 'lucide-react'
+import { useSendResetPasswordLink } from '@/service/oauth/oauth.query'
 
 interface ISectorTableProps {
   initialValues: IUserSetupInitialValue
@@ -27,13 +35,21 @@ const SectorTable = (props: ISectorTableProps) => {
     null
   )
 
+  const [currentSelectedUser, setCurrentSelectedUser] =
+    useState<IUserSetupResponse | null>(null)
+
   const { t } = useTranslation()
   const { data: sectorData, isFetching } = useGetAllUser()
   const { mutate: changeUserStatus, isLoading: changeUserStatusLoading } =
     useChangeUserStatus()
+  const { mutate: sendResetPasswordLink, isLoading: resetPasswordLoading } =
+    useSendResetPasswordLink()
 
   const setOrRemoveCurrentSelectedId = (id?: number) =>
     setCurrentSelectedId(id || null)
+
+  const setOrRemoveCurrentSelectedUser = (user?: IUserSetupResponse) =>
+    setCurrentSelectedUser(user || null)
 
   const handleEditClick = ({
     email,
@@ -61,6 +77,19 @@ const SectorTable = (props: ISectorTableProps) => {
         {
           onSuccess: () => {
             setOrRemoveCurrentSelectedId()
+          },
+        }
+      )
+    }
+  }
+
+  const handleSendResetPasswordLink = () => {
+    if (currentSelectedUser) {
+      sendResetPasswordLink(
+        { email: currentSelectedUser.email },
+        {
+          onSuccess: () => {
+            setOrRemoveCurrentSelectedUser()
           },
         }
       )
@@ -110,6 +139,23 @@ const SectorTable = (props: ISectorTableProps) => {
             handleEditClick={() => {
               handleEditClick(original)
             }}
+            otherActionsComp={
+              <>
+                <li className={tableActionList}>
+                  <span
+                    className="group relative"
+                    onClick={() => {
+                      setOrRemoveCurrentSelectedUser(original)
+                    }}
+                  >
+                    <MailPlus className={tableActionIcon} size={20} />
+                    <Box as="span" className={tableActionTooltip}>
+                      {t('security.userSetup.modal.resetPassword.icon')}
+                    </Box>
+                  </span>
+                </li>
+              </>
+            }
           />
         ),
       },
@@ -136,6 +182,21 @@ const SectorTable = (props: ISectorTableProps) => {
         }}
       >
         {t('security.userSetup.modal.status.description')}
+      </Modal>
+
+      <Modal
+        open={!!currentSelectedUser}
+        toggleModal={setOrRemoveCurrentSelectedUser}
+        size="md"
+        title={t('security.userSetup.modal.resetPassword.title')}
+        saveBtnProps={{
+          btnAction: handleSendResetPasswordLink,
+          loading: resetPasswordLoading,
+        }}
+      >
+        {t('security.userSetup.modal.resetPassword.description', {
+          email: currentSelectedUser?.email,
+        })}
       </Modal>
     </>
   )
