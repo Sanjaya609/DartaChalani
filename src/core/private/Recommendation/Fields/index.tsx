@@ -92,7 +92,7 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
         title={recommendationDetails?.nameEnglish}
         backAction={navigateToRecommendationList}
       />
-      {/* <Flexbox align="center" justify="space-between" className="mt-3 w-full">
+      <Flexbox align="center" justify="space-between" className="mt-3 w-full">
         <div></div>
         <Button
           size="md"
@@ -100,12 +100,12 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
           icons="icons"
           className="ml-4 mr-16 whitespace-nowrap border border-gray-80"
           onClick={() => {
-            setShowAddOrEditForm(true)
+            // setShowAddOrEditForm(true)
           }}
         >
-          Add Field
+          Add Group
         </Button>
-      </Flexbox> */}
+      </Flexbox>
       <ContainerLayout className="scrollbars mt-[-15px] grow">
         <Card className="h-full">
           <DndContext

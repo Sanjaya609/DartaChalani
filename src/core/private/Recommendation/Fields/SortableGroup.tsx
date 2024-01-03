@@ -145,7 +145,7 @@ const SortableGroup = ({
       {...listeners}
       style={style}
     >
-      <Flexbox align="center" justify="space-between" className="mt-3 w-full">
+      <Flexbox align="center" justify="space-between" className="mt-3 w-full ">
         <Text variant="h5" typeface="semibold">
           {item.nameEnglish}
         </Text>
