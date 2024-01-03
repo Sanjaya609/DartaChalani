@@ -7,7 +7,6 @@ import { useForgotPassword } from '@/service/oauth/oauth.query'
 import { useFormik } from 'formik'
 import { ArrowLeft } from 'phosphor-react'
 import { useTranslation } from 'react-i18next'
-import { useLogin } from '../Login/services/login.query'
 import PublicPageWrapper from '../PublicPageWrapper/PublicPageWrapper'
 import {
   resetPasswordInitialValue,
