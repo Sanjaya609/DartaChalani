@@ -28,7 +28,11 @@ import { IAddFieldInitialValue } from './schema/field.interface'
 import Modal from '@/components/ui/Modal/Modal'
 import { useTranslation } from 'react-i18next'
 import { Card } from '@/components/ui/core/Card'
-import { useDeleteFieldById, useGetAllFieldByRecommendationId } from './services/fields.query'
+import {
+  useDeleteFieldById,
+  useGetAllFieldByRecommendationId,
+} from './services/fields.query'
+import { useGetAllGroupByRecommendationId } from './services/groups.query'
 
 const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
   const { t } = useTranslation()
@@ -53,6 +57,9 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
     data: allFiledByRecommendationIdList = [],
     isFetching: allFiledByRecommendationFetching,
   } = useGetAllFieldByRecommendationId(recommendationId)
+
+  const { data: groupListData = [], isFetching: groupListDataFetching } =
+    useGetAllGroupByRecommendationId(recommendationId)
 
   const handleDragEnd = ({ active, over }: { active: any; over: any }) => {
     if (active.id === over.id) {
@@ -134,31 +141,38 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
   }
 
   useEffect(() => {
-    if (allFiledByRecommendationIdList) {
-      setItems(allFiledByRecommendationIdList)
+    if (groupListData) {
+      const allFieldResponses: IAddFieldInitialValue[] = (
+        [] as IAddFieldInitialValue[]
+      ).concat(...groupListData.map((item) => item.fieldResponseList || []))
+      setItems(allFieldResponses)
     }
-  }, [allFiledByRecommendationFetching])
+    // if (allFiledByRecommendationIdList) {
+    //   setItems(allFiledByRecommendationIdList)
+    // }
+  }, [groupListData])
 
   return (
     <>
-      <SectionHeader title={recommendationDetails?.nameEnglish} backAction={navigateToRecommendationList} />
-      <Flexbox
-        align="center"
-        justify="space-between"
-        className='w-full mt-3'
-      >
+      <SectionHeader
+        title={recommendationDetails?.nameEnglish}
+        backAction={navigateToRecommendationList}
+      />
+      <Flexbox align="center" justify="space-between" className="mt-3 w-full">
         <div></div>
         <Button
-            size="md"
-            type="button"
-            icons="icons"
-            className="ml-4 mr-16 whitespace-nowrap border border-gray-80"
-            onClick={() => {
-              setShowAddOrEditForm(true)
-            }}
-          >Add Field</Button>
+          size="md"
+          type="button"
+          icons="icons"
+          className="ml-4 mr-16 whitespace-nowrap border border-gray-80"
+          onClick={() => {
+            setShowAddOrEditForm(true)
+          }}
+        >
+          Add Field
+        </Button>
       </Flexbox>
-      <ContainerLayout className="scrollbars grow mt-[-15px]">
+      <ContainerLayout className="scrollbars mt-[-15px] grow">
         <Card className="h-full">
           <Grid sm={'sm:grid-cols-12'} gap="gap-2">
             <DndContext
@@ -172,7 +186,7 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
                   <>
                     <Grid.Col
                       sm={'sm:col-span-4'}
-                      className="group relative p-3 hover:bg-gray-50 hover:rounded-3xl"
+                      className="group relative p-3 hover:rounded-3xl hover:bg-gray-50"
                       key={item.id}
                     >
                       {renderActionButtons(item)}
@@ -188,10 +202,14 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
             <Grid
               sm={'sm:grid-cols-12'}
               gap="gap-6"
-              className="mt-8 rounded-3xl ring-1 ring-gray-200 bg-gray-50"
+              className="mt-8 rounded-3xl bg-gray-50 ring-1 ring-gray-200"
             >
               <Grid.Col sm={'sm:col-span-12'} className="group relative p-3">
-                <AddField editId={editId} formId={parseInt(recommendationId!)} setShowAddOrEditForm={setShowAddOrEditForm} />
+                <AddField
+                  editId={editId}
+                  formId={parseInt(recommendationId!)}
+                  setShowAddOrEditForm={setShowAddOrEditForm}
+                />
               </Grid.Col>
             </Grid>
           )}

@@ -1,3 +1,5 @@
+import { IAddFieldInitialValue } from "./field.interface";
+
 export interface IAddGroupInitialValue {
     id?: number | null | string;
     nameEnglish: string;
@@ -13,4 +15,5 @@ export interface IAddGroupPayload
     nameEnglish: string;
     nameNepali: string;
     recommendationId: number;
+    fieldResponseList: IAddFieldInitialValue[]
  }
