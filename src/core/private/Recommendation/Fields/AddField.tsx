@@ -6,20 +6,17 @@ import { useTranslation } from 'react-i18next'
 import { useGetEnumDataWithValue } from '@/service/generic/generic.query'
 import { APIENUM } from '@/utility/enums/api.enum'
 import { Text } from '@/components/ui/core/Text'
-import AddGroup from './AddGroup'
 import { addFieldInitialValues, addFieldValidationSchema } from './schema/field.schema'
 import { useCreateField, useGetFieldDetailById } from './services/fields.query'
 import { IAddFieldInitialValue, IAddFieldPayload } from './schema/field.interface'
-import { useGetAllGroupByRecommendationId } from './services/groups.query'
-import { getTextByLanguage } from '@/lib/i18n/i18n'
 
 const AddField = ({
-  editId,
-  formId,
+  fieldId,
+  groupId,
   setShowAddOrEditForm,
 }: {
-  editId?: number
-  formId: number | null
+  fieldId?: number
+  groupId: number
   setShowAddOrEditForm: Dispatch<SetStateAction<boolean>>
 }) => {
   const { t } = useTranslation()
@@ -27,23 +24,13 @@ const AddField = ({
     addFieldInitialValues
   )
 
-  const [edittId, setEdittId] = useState<number>()
-  const [viewOnly, setViewOnly] = useState(false)
-  const [openRecommendationForm, setOpenRecommendationForm] =
-    useState<boolean>(false)
-  const toggleRecommendationForm = () =>
-    setOpenRecommendationForm(!openRecommendationForm)
-
   // GET Field Type for dropdown
   const { data: fieldTypeOptions = [], isLoading: fieldTypeFetching } =
     useGetEnumDataWithValue<OptionType[]>(APIENUM.FIELD_TYPE, {
       mapDatatoStyleSelect: false,
     })
 
-  const { data: groupListOption = [], isLoading: groupListLoading} =
-      useGetAllGroupByRecommendationId(formId)
-
-  const { data: fieldDetails } = useGetFieldDetailById(editId ?? '')
+  const { data: fieldDetails } = useGetFieldDetailById(fieldId ?? '')
 
   const { mutate: createField, isLoading: createFieldLoading } =
     useCreateField()
@@ -52,28 +39,22 @@ const AddField = ({
     const {
       id,
       dropDownId,
-      // fieldControlName,
       fieldType,
       isValidationRequired,
-      // orderNo,
       labelNameEnglish,
       labelNameNepali,
       className,
-      groupingId,
     } = values
 
     const reqData: IAddFieldPayload = {
       id: id,
       dropDownId,
-      // fieldControlName,
       fieldType,
       isValidationRequired,
-      // orderNo,
-      // recommendationId: formId,
       labelNameEnglish,
       labelNameNepali,
       className,
-      groupingId,
+      groupingId: groupId,
     }
 
     createField(reqData, {
@@ -90,10 +71,8 @@ const AddField = ({
         id,
         labelNameEnglish,
         labelNameNepali,
-        // fieldControlName,
         fieldType,
         isValidationRequired,
-        // orderNo,
         className,
         dropDownId,
         groupingId,
@@ -101,18 +80,15 @@ const AddField = ({
       setInitialFieldValue({
         id,
         dropDownId,
-        // fieldControlName,
         fieldType,
         isValidationRequired,
-        // orderNo,
-        // recommendationId: formId,
         labelNameEnglish,
         labelNameNepali,
         className,
         groupingId,
       })
     }
-  }, [fieldDetails, editId])
+  }, [fieldDetails, fieldId])
 
   const {
     values,
@@ -168,19 +144,6 @@ const AddField = ({
     if (values.fieldType)
       return (
         <>
-          {/* <Grid.Col sm={'sm:col-span-4'}>
-            <Form.Input
-              isRequired
-              value={values.fieldControlName}
-              errors={errors}
-              touched={touched}
-              name="fieldControlName"
-              label={t('recommendation.fieldName')}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-          </Grid.Col> */}
-
           <Grid.Col sm={'sm:col-span-4'}>
             <Form.Input
               isRequired
@@ -207,19 +170,6 @@ const AddField = ({
               onBlur={handleBlur}
             />
           </Grid.Col>
-
-          {/* <Grid.Col sm={'sm:col-span-4'}>
-            <Form.Input
-              isRequired
-              value={values.orderNo}
-              errors={errors}
-              touched={touched}
-              name="orderNo"
-              label={t('recommendation.orderNo')}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-          </Grid.Col> */}
 
           <Grid.Col sm={'sm:col-span-4'}>
             <Form.Switch
@@ -259,39 +209,6 @@ const AddField = ({
       </Flexbox>
       <form onSubmit={handleSubmit} className="ml-3">
         <Grid sm={'sm:grid-cols-12'} gap="gap-4">
-          <Grid.Col sm={'sm:col-span-4'}>
-            <Form.Select
-              isRequired
-              isLoading={fieldTypeFetching}
-              options={[
-                ...groupListOption?.map(group => {
-                  return {
-                    label: getTextByLanguage(group.nameEnglish, group.nameNepali),
-                    value: group.id
-                  }
-                }),
-                {
-                  label: 'Create New Group',
-                  value: 'NEW_GROUP',
-                },
-              ]}
-              calculateValueOnChange
-              value={values.groupingId}
-              errors={errors}
-              touched={touched}
-              name="groupingId"
-              label="Group"
-              onChange={(event) => {
-                if (event.main === 'NEW_GROUP') {
-                  toggleRecommendationForm()
-                } else {
-                  setFieldValue(event.name, event?.main || '')
-                }
-              }}
-              onBlur={handleBlur}
-            />
-          </Grid.Col>
-
           <Grid.Col sm={'sm:col-span-4'}>
             <Form.Select
               isRequired
@@ -342,22 +259,10 @@ const AddField = ({
             icons="icons"
             className="ml-4 whitespace-nowrap border border-gray-80"
           >
-            {editId ? 'Update' : 'Add'}
+            {fieldId ? 'Update' : 'Add'}
           </Button>
         </Flexbox>
       </form>
-
-      <AddGroup
-        toggleRecommendationForm={() => {
-          toggleRecommendationForm()
-          setEdittId(undefined)
-        }}
-        openRecommendationForm={openRecommendationForm}
-        editId={edittId}
-        viewOnly={viewOnly}
-        setViewOnly={setViewOnly}
-        formId={formId!}
-      />
     </>
   )
 }

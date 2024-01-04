@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react'
+import { useState } from 'react'
 import { CSS } from '@dnd-kit/utilities'
 import { Button, Flexbox, Grid, Icon } from '@/components/ui'
 import {
@@ -8,13 +8,11 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
-  DragOverEvent,
 } from '@dnd-kit/core'
 import {
   arrayMove,
   SortableContext,
   rectSortingStrategy,
-  verticalListSortingStrategy,
   useSortable,
 } from '@dnd-kit/sortable'
 import SortableItem from './SortableItem'
@@ -22,32 +20,47 @@ import { IAddFieldInitialValue } from './schema/field.interface'
 import { Text } from '@/components/ui/core/Text'
 import Modal from '@/components/ui/Modal/Modal'
 import { useDeleteFieldById } from './services/fields.query'
-import { Pencil, Trash } from 'phosphor-react'
+import { Pencil, Trash, HandGrabbing, Plus } from 'phosphor-react'
 import { useTranslation } from 'react-i18next'
 import AddField from './AddField'
+import { IAddGroupResponse } from './schema/group.interface'
 
 const SortableGroup = ({
   item,
-  setEditId,
-  setShowAddOrEditForm,
-  showAddOrEditForm,
-  editId,
-  recommendationId,
+  toggleGroupForm,
 }: {
-  item: {
-    nameEnglish: string
-    id: number
-    fieldResponseList: IAddFieldInitialValue[]
-  }
-  setEditId: Dispatch<SetStateAction<number | undefined>>
-  setShowAddOrEditForm: Dispatch<SetStateAction<boolean>>
-  showAddOrEditForm: boolean
-  editId: number
-  recommendationId: string | null
+  item: IAddGroupResponse;
+  toggleGroupForm:  (groupData?: IAddGroupResponse) => void
 }) => {
   const { t } = useTranslation()
+  const [items, setItems] = useState([
+    {
+      id: 1,
+      dropDownId: "",
+      fieldControlName: "name",
+      fieldType: "INPUT",
+      isValidationRequired: true,
+      labelNameEnglish: "Name",
+      labelNameNepali: "नाम",
+      className: "",
+      groupingId: 1
+    },
+    {
+      id: 2,
+      dropDownId: "",
+      fieldControlName: "gender",
+      fieldType: "INPUT",
+      isValidationRequired: true,
+      labelNameEnglish: "Gender",
+      labelNameNepali: "लिङ्ग",
+      className: "",
+      groupingId: 1
+    },
+])
+  // const [items, setItems] = useState(item.fieldResponseList)
+  const [showAddOrEditForm, setShowAddOrEditForm] = useState(false)
+  const [editId, setEditId] = useState<number>()
 
-  const [items, setItems] = useState(item.fieldResponseList)
   const [deleteId, setDeleteId] = useState<string | number>('')
   const setOrRemoveDeleteId = (id?: string | number) => setDeleteId(id || '')
 
@@ -55,7 +68,7 @@ const SortableGroup = ({
     useSensor(PointerSensor),
     useSensor(KeyboardSensor)
   )
-  const { attributes, listeners, setNodeRef, transform, transition } =
+  const { attributes, listeners, setNodeRef, transform, transition,setActivatorNodeRef  } =
     useSortable({ id: item.id })
   const style = {
     transition,
@@ -89,7 +102,7 @@ const SortableGroup = ({
   }
 
   const renderActionButtons = (item: IAddFieldInitialValue) => (
-    <div className="absolute right-0 top-4 mr-5 mt-2 hidden space-x-2 group-hover:flex">
+    <div className="absolute right-0 top-4 mr-3  hidden space-x-2 group-hover:flex">
       <Button
         variant="success"
         size="sm"
@@ -97,8 +110,8 @@ const SortableGroup = ({
         icons="icons"
         className="z-40 ml-4 whitespace-nowrap rounded border border-gray-80"
         onClick={() => {
-          setShowAddOrEditForm(true)
-          setEditId(item.id)
+          // setShowAddOrEditForm(true)
+          // setEditId(item.id)
         }}
       >
         <Icon icon={Pencil} />
@@ -137,70 +150,94 @@ const SortableGroup = ({
   )
 
   return (
-    // <Flexbox align="center" justify="space-between" className="mt-3 w-full">
-    <div
-      className="group relative"
-      ref={setNodeRef}
-      {...attributes}
-      {...listeners}
-      style={style}
-    >
-      <Flexbox align="center" justify="space-between" className="mt-3 w-full ">
-        <Text variant="h5" typeface="semibold">
-          {item.nameEnglish}
-        </Text>
-        <Button
-          size="md"
+    <div className='bg-gray-50 mb-3 group relative'>
+      <div className="flex flex-row-reverse absolute right-0 mr-3 hidden top-[-20px] space-x-2 group-hover:flex">
+        <Button {...listeners} {...attributes} ref={setNodeRef}
+          variant="secondary"
+          size="sm"
           type="button"
           icons="icons"
-          className="z-40 ml-4 mr-4 whitespace-nowrap border border-gray-80"
+          className="z-40 ml-4 whitespace-nowrap rounded border border-gray-80"
+        >
+          <Icon icon={HandGrabbing} />
+        </Button>
+
+        <Button 
+          variant="secondary"
+          size="sm"
+          type="button"
+          icons="icons"
+          className="z-40 ml-4 whitespace-nowrap rounded border border-gray-80"
           onClick={() => {
-            debugger
+            toggleGroupForm(item)
+          }}
+        >
+          <Icon icon={Pencil} />
+        </Button>
+        
+        <Button 
+          variant="secondary"
+          size="sm"
+          type="button"
+          icons="icons"
+          className="z-40 ml-4 whitespace-nowrap rounded border border-gray-80"
+          onClick={() => {
             setShowAddOrEditForm(true)
           }}
         >
-          Add Field
+          <Icon icon={Plus} />
         </Button>
-      </Flexbox>
+      </div>
 
-      <Grid sm={'sm:grid-cols-12'} gap="gap-2">
-        <DndContext
-          sensors={sensors}
-          collisionDetection={closestCenter}
-          onDragEnd={handleDragEnd}
-          onDragCancel={() => console.log('Drag cancelled')}
-        >
-          <SortableContext items={items} strategy={rectSortingStrategy}>
-            {items.map((item) => (
-              <>
-                <Grid.Col
-                  sm={'sm:col-span-4'}
-                  className="group relative p-3 hover:rounded-3xl hover:bg-gray-50"
-                  key={item.id}
-                >
-                  {/* {renderActionButtons(item)} */}
-                  <SortableItem key={item.id} item={item} />
-                </Grid.Col>
-              </>
-            ))}
-          </SortableContext>
-        </DndContext>
-      </Grid>
-      {showAddOrEditForm && (
-        <Grid
-          sm={'sm:grid-cols-12'}
-          gap="gap-6"
-          className="mt-8 rounded-3xl bg-gray-50 ring-1 ring-gray-200"
-        >
-          <Grid.Col sm={'sm:col-span-12'} className="group relative p-3">
-            <AddField
-              editId={editId}
-              formId={parseInt(recommendationId!)}
-              setShowAddOrEditForm={setShowAddOrEditForm}
-            />
-          </Grid.Col>
+      <div
+        className="group relative p-3"
+        style={style}
+      >
+        <Flexbox align="center" justify="space-between" className="mt-3 w-full ">
+          <Text variant="h5" typeface="semibold">
+            {item.nameEnglish}
+          </Text>
+        </Flexbox>
+
+        <Grid sm={'sm:grid-cols-12'} gap="gap-4">
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+            onDragCancel={() => console.log('Drag cancelled')}
+          >
+            <SortableContext items={items} strategy={rectSortingStrategy}>
+              {items.map((item) => (
+                <>
+                  <Grid.Col
+                    sm={'sm:col-span-4'}
+                    className="group relative hover:rounded-3xl hover:bg-gray-50"
+                    key={item.id}
+                  >
+                    {renderActionButtons(item)}
+                    <SortableItem key={item.id} item={item} />
+                  </Grid.Col>
+                </>
+              ))}
+            </SortableContext>
+          </DndContext>
         </Grid>
-      )}
+        {showAddOrEditForm && (
+          <Grid
+            sm={'sm:grid-cols-12'}
+            gap="gap-6"
+            className="mt-8 rounded-3xl bg-gray-50 ring-1 ring-gray-200"
+          >
+            <Grid.Col sm={'sm:col-span-12'} className="group relative p-3">
+              <AddField
+                fieldId={editId}
+                groupId={item.id}
+                setShowAddOrEditForm={setShowAddOrEditForm}
+              />
+            </Grid.Col>
+          </Grid>
+        )}
+      </div>
     </div>
     // </Flexbox>
   )

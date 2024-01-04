@@ -1,17 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useFormik } from 'formik'
 import { useTranslation } from 'react-i18next'
 import {
   useCreateGroup,
-  useGetAllGroupByRecommendationId,
 } from './services/groups.query'
-import { APIENUM } from '@/utility/enums/api.enum'
 import Form from '@/components/functional/Form/Form'
 import { Grid } from '@/components/ui'
 import Modal from '@/components/ui/Modal/Modal'
 import {
   IAddGroupInitialValue,
   IAddGroupPayload,
+  IAddGroupResponse,
 } from './schema/group.interface'
 import {
   addGroupInitialValues,
@@ -19,26 +18,24 @@ import {
 } from './schema/group.schema'
 
 const AddGroup = ({
-  toggleRecommendationForm,
-  openRecommendationForm,
-  editId,
+  toggleGroupForm,
+  openGroupForm,
+  editGroupData,
   viewOnly,
   setViewOnly,
-  formId,
+  recommendationId,
 }: {
-  toggleRecommendationForm: VoidFunction
-  openRecommendationForm: boolean
-  editId?: number
+  toggleGroupForm: VoidFunction
+  openGroupForm: boolean
+  editGroupData?: IAddGroupResponse
   viewOnly?: boolean
   setViewOnly?: React.Dispatch<React.SetStateAction<boolean>>
-  formId: number | null
+  recommendationId: number | null
 }) => {
   const { t } = useTranslation()
-  const [initialGroupValue, setInitialGroupdValue] = useState(
-    addGroupInitialValues
-  )
+  const [initialGroupValue, setInitialGroupdValue] = useState(addGroupInitialValues)
 
-  const { data: groupDetails } = useGetAllGroupByRecommendationId(editId ?? '')
+  console.log(initialGroupValue, "filter")
 
   const { mutate: createGroup, isLoading: createGroupLoading } =
     useCreateGroup()
@@ -50,12 +47,12 @@ const AddGroup = ({
       id: id || '',
       nameEnglish: nameEnglish,
       nameNepali: nameNepali,
-      recommendationId: formId,
+      recommendationId: recommendationId,
     }
 
     createGroup(reqData, {
       onSuccess: () => {
-        toggleRecommendationForm()
+        toggleGroupForm()
         setInitialGroupdValue(addGroupInitialValues)
         resetForm()
       },
@@ -84,7 +81,13 @@ const AddGroup = ({
     setFieldValue,
     resetForm,
   } = useFormik({
-    initialValues: initialGroupValue,
+    initialValues: editGroupData 
+    ? { 
+      id: editGroupData.id, 
+      nameEnglish: editGroupData.nameEnglish, 
+      nameNepali: editGroupData.nameNepali, 
+      recommendationId: editGroupData.recommendationId } 
+    : initialGroupValue,
     enableReinitialize: true,
     validationSchema: addGroupValidationSchema,
     onSubmit: (values) => {
@@ -95,15 +98,15 @@ const AddGroup = ({
   return (
     <>
       <Modal
-        open={!!openRecommendationForm}
+        open={!!openGroupForm}
         toggleModal={() => {
-          toggleRecommendationForm()
+          toggleGroupForm()
           setInitialGroupdValue(addGroupInitialValues)
           setViewOnly && setViewOnly(false)
         }}
         size="md"
         title={
-          editId
+          editGroupData
             ? t('recommendation.editRecommendation')
             : t('recommendation.addRecommendation')
         }
@@ -114,7 +117,7 @@ const AddGroup = ({
         }}
         cancelBtnProps={{
           btnAction: () => {
-            toggleRecommendationForm()
+            toggleGroupForm()
             loading: createGroupLoading
             setInitialGroupdValue(addGroupInitialValues)
             setViewOnly && setViewOnly(false)

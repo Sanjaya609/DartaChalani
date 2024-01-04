@@ -9,7 +9,7 @@ export interface IAddFieldInitialValue {
     labelNameEnglish: string;
     labelNameNepali: string;
     className: string;
-    groupingId: string;
+    groupingId: number | null;
 }
 
 export interface IAddFieldPayload
@@ -26,5 +26,5 @@ export interface IAddFieldPayload
     labelNameEnglish: string;
     labelNameNepali: string;
     className: string
-    groupingId: string;
+    groupingId: number | null;
  }

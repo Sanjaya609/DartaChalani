@@ -4,7 +4,7 @@ export interface IAddGroupInitialValue {
     id?: number | null | string;
     nameEnglish: string;
     nameNepali: string;
-    recommendationId: number | null
+    recommendationId: number | null;
 }
 
 export interface IAddGroupPayload
@@ -15,5 +15,5 @@ export interface IAddGroupPayload
     nameEnglish: string;
     nameNepali: string;
     recommendationId: number;
-    fieldResponseList: IAddFieldInitialValue[]
+    fieldResponseList?: IAddFieldInitialValue[]
  }

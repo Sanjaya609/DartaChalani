@@ -7,42 +7,41 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
-  DragOverEvent,
 } from '@dnd-kit/core'
 
 import {
   arrayMove,
   SortableContext,
-  rectSortingStrategy,
   verticalListSortingStrategy,
-  useSortable,
 } from '@dnd-kit/sortable'
 import SectionHeader from '@/components/functional/SectionHeader'
 import ContainerLayout from '@/components/ui/core/Layout/ContainerLayout'
 import { IRoutePrivilege } from '@/router/routes/create-route'
-import { addFieldInitialValues } from './schema/field.schema'
 import { Button, Flexbox, Grid, Icon } from '@/components/ui'
 import { decodeParams } from '@/utility/route-params'
-import SortableItem from './SortableItem'
-import AddField from './AddField'
 import { useGetRecommendationDetailById } from '../AddRecommendation/services/add-recommendation.query'
-import { IAddFieldInitialValue } from './schema/field.interface'
 import { useTranslation } from 'react-i18next'
 import { Card } from '@/components/ui/core/Card'
-import {
-  useDeleteFieldById,
-  useGetAllFieldByRecommendationId,
-} from './services/fields.query'
 import { useGetAllGroupByRecommendationId } from './services/groups.query'
 import SortableGroup from './SortableGroup'
-import { IAddGroupResponse } from './schema/group.interface'
+import { IAddGroupInitialValue, IAddGroupResponse } from './schema/group.interface'
+import AddGroup from './AddGroup'
 
 const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
   const { t } = useTranslation()
+  const navigate = useNavigate()
+  const navigateToRecommendationList = () => {
+    navigate(privateRoutePath.recommendation.base)
+  }
+  const [viewOnly, setViewOnly] = useState<boolean>(false)
   const [groupingList, setGroupingList] = useState<IAddGroupResponse[]>([])
-  const [showAddOrEditForm, setShowAddOrEditForm] = useState(false)
-  const [editId, setEditId] = useState<number>()
-
+  const [editGroupData, setEditGroupData] = useState<IAddGroupResponse>()
+  const [openGroupForm, setOpenGroupForm] = useState<boolean>(false)
+  const toggleGroupForm = (groupData?: IAddGroupResponse) => {
+    groupData && setEditGroupData(groupData);
+    setOpenGroupForm(groupData ? true : !openGroupForm)
+  }
+console.log(editGroupData, "filter")
   const params = useParams()
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -54,18 +53,8 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
     recommendationId ?? ''
   )
 
-  const {
-    data: allFiledByRecommendationIdList = [],
-    isFetching: allFiledByRecommendationFetching,
-  } = useGetAllFieldByRecommendationId(recommendationId)
-
   const { data: groupListData = [], isFetching: groupListDataFetching } =
     useGetAllGroupByRecommendationId(recommendationId)
-
-  const navigate = useNavigate()
-  const navigateToRecommendationList = () => {
-    navigate(privateRoutePath.recommendation.base)
-  }
 
   useEffect(() => {
     if (groupListData) setGroupingList(groupListData)
@@ -100,7 +89,7 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
           icons="icons"
           className="ml-4 mr-16 whitespace-nowrap border border-gray-80"
           onClick={() => {
-            // setShowAddOrEditForm(true)
+            toggleGroupForm()
           }}
         >
           Add Group
@@ -121,17 +110,25 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
                 <SortableGroup
                   key={item.id}
                   item={item}
-                  editId={editId!}
-                  recommendationId={recommendationId}
-                  setEditId={setEditId}
-                  setShowAddOrEditForm={setShowAddOrEditForm}
-                  showAddOrEditForm={showAddOrEditForm}
+                  toggleGroupForm={toggleGroupForm}
                 />
               ))}
             </SortableContext>
           </DndContext>
         </Card>
       </ContainerLayout>
+
+      <AddGroup
+        toggleGroupForm={() => {
+          toggleGroupForm()
+          setEditGroupData(undefined)
+        }}
+        openGroupForm={openGroupForm}
+        editGroupData={editGroupData}
+        viewOnly={viewOnly}
+        setViewOnly={setViewOnly}
+        recommendationId={parseInt(recommendationId!)}
+      />
     </>
   )
 }

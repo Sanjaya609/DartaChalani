@@ -5,7 +5,7 @@ export const addGroupInitialValues: IAddGroupInitialValue = {
     id: null,
     nameEnglish: "",
     nameNepali: "",
-    recommendationId: null
+    recommendationId: null,
 }
 
 export const addGroupValidationSchema = Yup.object({

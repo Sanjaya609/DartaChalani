@@ -14,7 +14,7 @@ export const addFieldInitialValues: IAddFieldInitialValue =
         labelNameEnglish: "",
         labelNameNepali: "",
         className: "",
-        groupingId: ""
+        groupingId: null
     }
 
 
