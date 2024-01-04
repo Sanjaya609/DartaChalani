@@ -6,7 +6,8 @@ import registrationBookAPI from '@/core/private/RegistrationBook/AddRegistration
 import standingListAPI from '@/core/private/StandingList/AddStandingList/services/standing-list.api'
 import dispatchBookAPI from '@/core/private/DispatchBook/AddDispatchBook/services/add-dispatch-book.api'
 import recommendationAPI from '@/core/private/Recommendation/AddRecommendation/services/add-recommendation.api'
-import fieldApi from '@/core/private/Recommendation/ConfigureRecommendation/services/flelds.api'
+import fieldApi from '@/core/private/Recommendation/Fields/services/flelds.api'
+import addGroupAPI  from '@/core/private/Recommendation/Fields/services/group.api'
 
 export const apiDetails = {
   oauthAPI,
@@ -17,5 +18,6 @@ export const apiDetails = {
   ...standingListAPI,
   ...dispatchBookAPI,
   ...recommendationAPI,
-  ...fieldApi
+  ...fieldApi,
+  ...addGroupAPI
 }
