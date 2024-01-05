@@ -24,12 +24,18 @@ import { useTranslation } from 'react-i18next'
 import { Card } from '@/components/ui/core/Card'
 import { useGetAllGroupByRecommendationId } from './services/groups.query'
 import SortableGroup from './SortableGroup'
-import { IAddGroupInitialValue, IAddGroupResponse } from './schema/group.interface'
+import {
+  IAddGroupInitialValue,
+  IAddGroupResponse,
+} from './schema/group.interface'
 import AddGroup from './AddGroup'
 
 const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const params = useParams()
+  const recommendationId = decodeParams<string>(params?.id)
+
   const navigateToRecommendationList = () => {
     navigate(privateRoutePath.recommendation.base)
   }
@@ -38,17 +44,15 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
   const [editGroupData, setEditGroupData] = useState<IAddGroupResponse>()
   const [openGroupForm, setOpenGroupForm] = useState<boolean>(false)
   const toggleGroupForm = (groupData?: IAddGroupResponse) => {
-    groupData && setEditGroupData(groupData);
+    groupData && setEditGroupData(groupData)
     setOpenGroupForm(groupData ? true : !openGroupForm)
   }
-console.log(editGroupData, "filter")
-  const params = useParams()
+
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor)
   )
 
-  const recommendationId = decodeParams<string>(params?.id)
   const { data: recommendationDetails } = useGetRecommendationDetailById(
     recommendationId ?? ''
   )
@@ -127,7 +131,6 @@ console.log(editGroupData, "filter")
         editGroupData={editGroupData}
         viewOnly={viewOnly}
         setViewOnly={setViewOnly}
-        recommendationId={parseInt(recommendationId!)}
       />
     </>
   )

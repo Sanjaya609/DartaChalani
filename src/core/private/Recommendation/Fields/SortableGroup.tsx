@@ -33,31 +33,7 @@ const SortableGroup = ({
   toggleGroupForm: (groupData?: IAddGroupResponse) => void
 }) => {
   const { t } = useTranslation()
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      dropDownId: '',
-      fieldControlName: 'name',
-      fieldType: 'INPUT',
-      isValidationRequired: true,
-      labelNameEnglish: 'Name',
-      labelNameNepali: 'नाम',
-      className: '',
-      groupingId: 1,
-    },
-    {
-      id: 2,
-      dropDownId: '',
-      fieldControlName: 'gender',
-      fieldType: 'INPUT',
-      isValidationRequired: true,
-      labelNameEnglish: 'Gender',
-      labelNameNepali: 'लिङ्ग',
-      className: '',
-      groupingId: 1,
-    },
-  ])
-  // const [items, setItems] = useState(item.fieldResponseList)
+  const [items, setItems] = useState(item.fieldResponseList!)
   const [showAddOrEditForm, setShowAddOrEditForm] = useState(false)
   const [editId, setEditId] = useState<number>()
 

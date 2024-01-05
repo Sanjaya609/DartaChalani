@@ -12,7 +12,9 @@ const {
   getAllFieldByRecommendationId,
   getAllField,
   getFieldDetailById,
-  deleteFieldById
+  deleteFieldById,
+  getAllGroupByRecommendationId,
+  getAllGroup
 } = apiDetails
 
 const useCreateField = () => {
@@ -26,7 +28,7 @@ const useCreateField = () => {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries([getAllFieldByRecommendationId.controllerName])
+        queryClient.invalidateQueries([getAllGroupByRecommendationId.controllerName])
       },
     }
   )
@@ -43,7 +45,7 @@ const useUpdateField = () => {
       },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries([getAllFieldByRecommendationId.controllerName])
+          queryClient.invalidateQueries([getAllGroupByRecommendationId.controllerName])
         },
       }
     )
@@ -117,7 +119,7 @@ const useGetAllField = <T = IAddFieldResponse[]>() => {
       },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries([getAllFieldByRecommendationId.controllerName, getAllField.controllerName])
+          queryClient.invalidateQueries([getAllGroupByRecommendationId.controllerName, getAllGroup.controllerName])
         },
       }
     )

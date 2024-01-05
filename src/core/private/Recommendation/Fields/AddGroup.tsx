@@ -14,6 +14,8 @@ import {
   addGroupInitialValues,
   addGroupValidationSchema,
 } from './schema/group.schema'
+import { decodeParams } from '@/utility/route-params'
+import { useParams } from 'react-router-dom'
 
 const AddGroup = ({
   toggleGroupForm,
@@ -21,19 +23,20 @@ const AddGroup = ({
   editGroupData,
   viewOnly,
   setViewOnly,
-  recommendationId,
 }: {
   toggleGroupForm: VoidFunction
   openGroupForm: boolean
   editGroupData?: IAddGroupResponse
   viewOnly?: boolean
   setViewOnly?: React.Dispatch<React.SetStateAction<boolean>>
-  recommendationId: number | null
 }) => {
   const { t } = useTranslation()
+  const params = useParams()
+  const recommendationId = decodeParams<string>(params?.id)
+
   const [initialGroupValue, setInitialGroupdValue] = useState({
     ...addGroupInitialValues,
-    recommendationId: recommendationId,
+    recommendationId: recommendationId ?? '',
   })
 
   const { mutate: createGroup, isLoading: createGroupLoading } =
