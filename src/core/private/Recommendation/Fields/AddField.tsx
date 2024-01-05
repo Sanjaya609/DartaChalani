@@ -6,9 +6,17 @@ import { useTranslation } from 'react-i18next'
 import { useGetEnumDataWithValue } from '@/service/generic/generic.query'
 import { APIENUM } from '@/utility/enums/api.enum'
 import { Text } from '@/components/ui/core/Text'
-import { addFieldInitialValues, addFieldValidationSchema } from './schema/field.schema'
+import {
+  addFieldInitialValues,
+  addFieldValidationSchema,
+} from './schema/field.schema'
 import { useCreateField, useGetFieldDetailById } from './services/fields.query'
-import { IAddFieldInitialValue, IAddFieldPayload } from './schema/field.interface'
+import {
+  IAddFieldInitialValue,
+  IAddFieldPayload,
+} from './schema/field.interface'
+import { useParams } from 'react-router-dom'
+import { decodeParams } from '@/utility/route-params'
 
 const AddField = ({
   fieldId,
@@ -20,6 +28,8 @@ const AddField = ({
   setShowAddOrEditForm: Dispatch<SetStateAction<boolean>>
 }) => {
   const { t } = useTranslation()
+  const params = useParams()
+  const recommendationId = decodeParams<string>(params?.id)
   const [initialFieldValue, setInitialFieldValue] = useState(
     addFieldInitialValues
   )
@@ -55,6 +65,7 @@ const AddField = ({
       labelNameNepali,
       className,
       groupingId: groupId,
+      recommendationId: recommendationId!,
     }
 
     createField(reqData, {
@@ -86,6 +97,7 @@ const AddField = ({
         labelNameNepali,
         className,
         groupingId,
+        recommendationId: recommendationId!,
       })
     }
   }, [fieldDetails, fieldId])

@@ -10,7 +10,7 @@ export const addFieldInitialValues: IAddFieldInitialValue =
         id: 5,
         isValidationRequired: false,
         // orderNo: "",
-        // recommendationId: null,
+        recommendationId: "",
         labelNameEnglish: "",
         labelNameNepali: "",
         className: "",

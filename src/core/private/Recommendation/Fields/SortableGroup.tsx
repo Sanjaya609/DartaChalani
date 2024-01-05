@@ -29,35 +29,11 @@ const SortableGroup = ({
   item,
   toggleGroupForm,
 }: {
-  item: IAddGroupResponse;
-  toggleGroupForm:  (groupData?: IAddGroupResponse) => void
+  item: IAddGroupResponse
+  toggleGroupForm: (groupData?: IAddGroupResponse) => void
 }) => {
   const { t } = useTranslation()
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      dropDownId: "",
-      fieldControlName: "name",
-      fieldType: "INPUT",
-      isValidationRequired: true,
-      labelNameEnglish: "Name",
-      labelNameNepali: "नाम",
-      className: "",
-      groupingId: 1
-    },
-    {
-      id: 2,
-      dropDownId: "",
-      fieldControlName: "gender",
-      fieldType: "INPUT",
-      isValidationRequired: true,
-      labelNameEnglish: "Gender",
-      labelNameNepali: "लिङ्ग",
-      className: "",
-      groupingId: 1
-    },
-])
-  // const [items, setItems] = useState(item.fieldResponseList)
+  const [items, setItems] = useState(item.fieldResponseList!)
   const [showAddOrEditForm, setShowAddOrEditForm] = useState(false)
   const [editId, setEditId] = useState<number>()
 
@@ -68,8 +44,14 @@ const SortableGroup = ({
     useSensor(PointerSensor),
     useSensor(KeyboardSensor)
   )
-  const { attributes, listeners, setNodeRef, transform, transition,setActivatorNodeRef  } =
-    useSortable({ id: item.id })
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    setActivatorNodeRef,
+  } = useSortable({ id: item.id })
   const style = {
     transition,
     transform: CSS.Transform.toString(transform),
@@ -110,8 +92,8 @@ const SortableGroup = ({
         icons="icons"
         className="z-40 ml-4 whitespace-nowrap rounded border border-gray-80"
         onClick={() => {
-          // setShowAddOrEditForm(true)
-          // setEditId(item.id)
+          setShowAddOrEditForm(true)
+          setEditId(item.id)
         }}
       >
         <Icon icon={Pencil} />
@@ -150,9 +132,12 @@ const SortableGroup = ({
   )
 
   return (
-    <div className='bg-gray-50 mb-3 group relative'>
-      <div className="flex flex-row-reverse absolute right-0 mr-3 hidden top-[-20px] space-x-2 group-hover:flex">
-        <Button {...listeners} {...attributes} ref={setNodeRef}
+    <div className="group relative mb-3 bg-gray-50">
+      <div className="absolute right-0 top-[-20px] mr-3 flex hidden flex-row-reverse space-x-2 group-hover:flex">
+        <Button
+          {...listeners}
+          {...attributes}
+          ref={setNodeRef}
           variant="secondary"
           size="sm"
           type="button"
@@ -162,7 +147,7 @@ const SortableGroup = ({
           <Icon icon={HandGrabbing} />
         </Button>
 
-        <Button 
+        <Button
           variant="secondary"
           size="sm"
           type="button"
@@ -174,8 +159,8 @@ const SortableGroup = ({
         >
           <Icon icon={Pencil} />
         </Button>
-        
-        <Button 
+
+        <Button
           variant="secondary"
           size="sm"
           type="button"
@@ -189,11 +174,12 @@ const SortableGroup = ({
         </Button>
       </div>
 
-      <div
-        className="group relative p-3"
-        style={style}
-      >
-        <Flexbox align="center" justify="space-between" className="mt-3 w-full ">
+      <div className="group relative p-3" style={style}>
+        <Flexbox
+          align="center"
+          justify="space-between"
+          className="mt-3 w-full "
+        >
           <Text variant="h5" typeface="semibold">
             {item.nameEnglish}
           </Text>

@@ -1,9 +1,7 @@
 import { useState } from 'react'
 import { useFormik } from 'formik'
 import { useTranslation } from 'react-i18next'
-import {
-  useCreateGroup,
-} from './services/groups.query'
+import { useCreateGroup } from './services/groups.query'
 import Form from '@/components/functional/Form/Form'
 import { Grid } from '@/components/ui'
 import Modal from '@/components/ui/Modal/Modal'
@@ -16,6 +14,8 @@ import {
   addGroupInitialValues,
   addGroupValidationSchema,
 } from './schema/group.schema'
+import { decodeParams } from '@/utility/route-params'
+import { useParams } from 'react-router-dom'
 
 const AddGroup = ({
   toggleGroupForm,
@@ -23,19 +23,21 @@ const AddGroup = ({
   editGroupData,
   viewOnly,
   setViewOnly,
-  recommendationId,
 }: {
   toggleGroupForm: VoidFunction
   openGroupForm: boolean
   editGroupData?: IAddGroupResponse
   viewOnly?: boolean
   setViewOnly?: React.Dispatch<React.SetStateAction<boolean>>
-  recommendationId: number | null
 }) => {
   const { t } = useTranslation()
-  const [initialGroupValue, setInitialGroupdValue] = useState(addGroupInitialValues)
+  const params = useParams()
+  const recommendationId = decodeParams<string>(params?.id)
 
-  console.log(initialGroupValue, "filter")
+  const [initialGroupValue, setInitialGroupdValue] = useState({
+    ...addGroupInitialValues,
+    recommendationId: recommendationId ?? '',
+  })
 
   const { mutate: createGroup, isLoading: createGroupLoading } =
     useCreateGroup()
@@ -81,13 +83,14 @@ const AddGroup = ({
     setFieldValue,
     resetForm,
   } = useFormik({
-    initialValues: editGroupData 
-    ? { 
-      id: editGroupData.id, 
-      nameEnglish: editGroupData.nameEnglish, 
-      nameNepali: editGroupData.nameNepali, 
-      recommendationId: editGroupData.recommendationId } 
-    : initialGroupValue,
+    initialValues: editGroupData
+      ? {
+          id: editGroupData.id,
+          nameEnglish: editGroupData.nameEnglish,
+          nameNepali: editGroupData.nameNepali,
+          recommendationId: editGroupData.recommendationId,
+        }
+      : initialGroupValue,
     enableReinitialize: true,
     validationSchema: addGroupValidationSchema,
     onSubmit: (values) => {
