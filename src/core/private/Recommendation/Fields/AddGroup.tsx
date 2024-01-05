@@ -1,9 +1,7 @@
 import { useState } from 'react'
 import { useFormik } from 'formik'
 import { useTranslation } from 'react-i18next'
-import {
-  useCreateGroup,
-} from './services/groups.query'
+import { useCreateGroup } from './services/groups.query'
 import Form from '@/components/functional/Form/Form'
 import { Grid } from '@/components/ui'
 import Modal from '@/components/ui/Modal/Modal'
@@ -33,9 +31,10 @@ const AddGroup = ({
   recommendationId: number | null
 }) => {
   const { t } = useTranslation()
-  const [initialGroupValue, setInitialGroupdValue] = useState(addGroupInitialValues)
-
-  console.log(initialGroupValue, "filter")
+  const [initialGroupValue, setInitialGroupdValue] = useState({
+    ...addGroupInitialValues,
+    recommendationId: recommendationId,
+  })
 
   const { mutate: createGroup, isLoading: createGroupLoading } =
     useCreateGroup()
@@ -81,13 +80,14 @@ const AddGroup = ({
     setFieldValue,
     resetForm,
   } = useFormik({
-    initialValues: editGroupData 
-    ? { 
-      id: editGroupData.id, 
-      nameEnglish: editGroupData.nameEnglish, 
-      nameNepali: editGroupData.nameNepali, 
-      recommendationId: editGroupData.recommendationId } 
-    : initialGroupValue,
+    initialValues: editGroupData
+      ? {
+          id: editGroupData.id,
+          nameEnglish: editGroupData.nameEnglish,
+          nameNepali: editGroupData.nameNepali,
+          recommendationId: editGroupData.recommendationId,
+        }
+      : initialGroupValue,
     enableReinitialize: true,
     validationSchema: addGroupValidationSchema,
     onSubmit: (values) => {
