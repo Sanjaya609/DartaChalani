@@ -66,7 +66,7 @@ const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
   return (
     <FormWrapper
       touched={touched}
-      showError={showError}
+      showError={props.showError && showError}
       errorClassName={errorClassName}
       errors={errors}
       isFieldArray={isFieldArray}
