@@ -3,6 +3,7 @@ import { DataTable } from '@/components/functional/Table'
 import TableAction from '@/components/functional/Table/Components/Table/TableAction'
 import Modal from '@/components/ui/Modal/Modal'
 import { getTextByLanguage } from '@/lib/i18n/i18n'
+import { useSendResetPasswordLink } from '@/service/oauth/oauth.query'
 import { ColumnDef } from '@tanstack/react-table'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -14,21 +15,13 @@ import {
   useChangeUserStatus,
   useGetAllUser,
 } from '../services/user-setup.query'
-import {
-  tableActionIcon,
-  tableActionList,
-  tableActionTooltip,
-} from '@/components/functional/Table/Components/Table/table.schema'
-import { Box } from '@/components/ui'
-import { MailPlus } from 'lucide-react'
-import { useSendResetPasswordLink } from '@/service/oauth/oauth.query'
 
-interface ISectorTableProps {
+interface IUserSetupTableProps {
   initialValues: IUserSetupInitialValue
   setInitialValues: React.Dispatch<React.SetStateAction<IUserSetupInitialValue>>
 }
 
-const SectorTable = (props: ISectorTableProps) => {
+const UserSetupTable = (props: IUserSetupTableProps) => {
   const { setInitialValues } = props
 
   const [currentSelectedId, setCurrentSelectedId] = useState<null | number>(
@@ -139,23 +132,25 @@ const SectorTable = (props: ISectorTableProps) => {
             handleEditClick={() => {
               handleEditClick(original)
             }}
-            otherActionsComp={
-              <>
-                <li className={tableActionList}>
-                  <span
-                    className="group relative"
-                    onClick={() => {
-                      setOrRemoveCurrentSelectedUser(original)
-                    }}
-                  >
-                    <MailPlus className={tableActionIcon} size={20} />
-                    <Box as="span" className={tableActionTooltip}>
-                      {t('security.userSetup.modal.resetPassword.icon')}
-                    </Box>
-                  </span>
-                </li>
-              </>
-            }
+            // otherActionsComp={
+            //   <>
+            //     {initData?.user?.roleType === 'ADMIN' && (
+            //       <li className={tableActionList}>
+            //         <span
+            //           className="group relative"
+            //           onClick={() => {
+            //             setOrRemoveCurrentSelectedUser(original)
+            //           }}
+            //         >
+            //           <MailPlus className={tableActionIcon} size={20} />
+            //           <Box as="span" className={tableActionTooltip}>
+            //             {t('security.userSetup.modal.resetPassword.icon')}
+            //           </Box>
+            //         </span>
+            //       </li>
+            //     )}
+            //   </>
+            // }
           />
         ),
       },
@@ -202,4 +197,4 @@ const SectorTable = (props: ISectorTableProps) => {
   )
 }
 
-export default SectorTable
+export default UserSetupTable

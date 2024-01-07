@@ -11,3 +11,7 @@ export const numberNotStartingWithZeroReg = /^(?:[1-9]\d*)*$/
  * 0-9 float
  */
 export const floatNumberReg = /^\d*(\.\d*)?$/
+
+export const passwordRegex = new RegExp(
+  /^(?=.*[A-Z])(?=.*[a-z])(?=.*[#$@!%&*?])(?=.*\d)[A-Za-z0-9\d#$@!%&*?]{6,}$/
+)

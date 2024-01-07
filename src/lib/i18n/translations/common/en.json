@@ -60,5 +60,13 @@
     "uploadAllDoc": "Please upload all required documents.",
     "necessaryDoc": "Necessary Documents"
   },
-  "changePasswordLabel": "Change Password"
+  "changePasswordLabel": "Change Password",
+  "passwordStrength": {
+    "notStrong": "Your password is not strong enough. New password must:",
+    "sixChar": "Be at least six characters long",
+    "upper": "Have at least one uppercase letter",
+    "lower": "Have at least one lowercase letter",
+    "number": "Have at least one number",
+    "special": "Have at least one special character (!@#$%^&*)"
+  }
 }

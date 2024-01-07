@@ -27,6 +27,7 @@ const oauthAPI = {
     controllerName: '/user/reset-password',
     queryKeyName: 'RESET_PASSWORD',
     requestMethod: RequestMethod.POST,
+    requestBodyType: RequestBodyType.NO_AUTH,
   },
 }
 

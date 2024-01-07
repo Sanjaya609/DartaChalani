@@ -1,24 +1,28 @@
+import Form from '@/components/functional/Form/Form'
 import PasswordInput from '@/components/functional/PasswordInput'
 import { Button, Flexbox } from '@/components/ui'
 import { Card } from '@/components/ui/core/Card'
 import { Text } from '@/components/ui/core/Text'
 import { publicRoutePath, useNavigate, useParams } from '@/router'
-import { useForgotPassword } from '@/service/oauth/oauth.query'
+import {
+  useForgotPassword,
+  useSendResetPasswordLink,
+} from '@/service/oauth/oauth.query'
 import { useFormik } from 'formik'
 import { ArrowLeft } from 'phosphor-react'
 import { useTranslation } from 'react-i18next'
 import PublicPageWrapper from '../PublicPageWrapper/PublicPageWrapper'
-import PasswordStrengthInfo from './PasswordStrengthInfo'
 import {
-  resetPasswordInitialValue,
-  resetPasswordValidationSchema,
-} from './schema/reset-password.schema'
+  forgotPasswordInitialValue,
+  forgotPasswordValidationSchema,
+} from './schema/forgot-password.schema'
 
 const ResetPassword = () => {
   const { t } = useTranslation()
-  const { mutate: resetPassword, isLoading } = useForgotPassword()
   const navigate = useNavigate()
   const params = useParams()
+  const { mutate: sendResetPasswordLink, isLoading: resetPasswordLoading } =
+    useSendResetPasswordLink()
 
   const goToLogin = () => {
     navigate(publicRoutePath.login)
@@ -27,19 +31,14 @@ const ResetPassword = () => {
   const { values, handleSubmit, errors, touched, handleChange, handleBlur } =
     useFormik({
       enableReinitialize: true,
-      initialValues: resetPasswordInitialValue,
-      validationSchema: resetPasswordValidationSchema,
+      initialValues: forgotPasswordInitialValue,
+      validationSchema: forgotPasswordValidationSchema,
       onSubmit: (values) => {
-        if (params?.token) {
-          resetPassword(
-            { ...values, token: params?.token },
-            {
-              onSuccess: () => {
-                goToLogin()
-              },
-            }
-          )
-        }
+        sendResetPasswordLink(values, {
+          onSuccess: () => {
+            goToLogin()
+          },
+        })
       },
     })
 
@@ -48,7 +47,7 @@ const ResetPassword = () => {
       <Card className="w-[400px] rounded-r-lg px-8 py-7">
         <Flexbox align="center" justify="space-between" className="mb-4">
           <Text variant="h6" typeface="extrabold">
-            {t('public.login.resetPassword.header')}
+            {t('public.login.forgotPassword')}
           </Text>
 
           <Button
@@ -63,36 +62,25 @@ const ResetPassword = () => {
         </Flexbox>
 
         <form onSubmit={handleSubmit}>
-          <PasswordInput
-            showError={!values?.newPassword}
+          <Form.Input
+            wrapperClassName="mb-4"
             isRequired
-            autoComplete="new-password"
-            value={values.newPassword}
+            autoComplete="email"
+            value={values.email}
             errors={errors}
             touched={touched}
-            id="newPassword"
-            label={t('form.newPassword')}
-            onChange={handleChange}
-            onBlur={handleBlur}
-          />
-          <PasswordStrengthInfo
-            showInfo={!!values?.newPassword && !!errors?.newPassword}
-          />
-
-          <PasswordInput
-            isRequired
-            autoComplete="new-password"
-            value={values.confirmPassword}
-            errors={errors}
-            touched={touched}
-            id="confirmPassword"
-            label={t('form.confirmNewPassword')}
+            id="email"
+            label={t('public.login.resetPassword.email')}
             onChange={handleChange}
             onBlur={handleBlur}
           />
 
-          <Button disabled={isLoading} loading={isLoading} className="w-full">
-            {t('public.login.resetPassword.btnTitle')}
+          <Button
+            disabled={resetPasswordLoading}
+            loading={resetPasswordLoading}
+            className="w-full"
+          >
+            {t('public.login.sendResetPasswordLink')}
           </Button>
         </form>
       </Card>
