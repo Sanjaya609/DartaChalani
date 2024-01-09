@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CSS } from '@dnd-kit/utilities'
 import { Button, Flexbox, Grid, Icon } from '@/components/ui'
 import {
@@ -15,15 +15,13 @@ import {
   rectSortingStrategy,
   useSortable,
 } from '@dnd-kit/sortable'
-import SortableItem from './SortableItem'
-import { IAddFieldInitialValue } from './schema/field.interface'
+import SortableItem from './SortableField'
 import { Text } from '@/components/ui/core/Text'
-import Modal from '@/components/ui/Modal/Modal'
-import { useDeleteFieldById } from './services/fields.query'
 import { Pencil, Trash, HandGrabbing, Plus } from 'phosphor-react'
 import { useTranslation } from 'react-i18next'
 import AddField from './AddField'
 import { IAddGroupResponse } from './schema/group.interface'
+import { useUpdateFieldOrder } from './services/fields.query'
 
 const SortableGroup = ({
   item,
@@ -34,11 +32,12 @@ const SortableGroup = ({
 }) => {
   const { t } = useTranslation()
   const [items, setItems] = useState(item.fieldResponseList!)
+
+  const { mutate: updateFieldOrder, isLoading: createGroupLoading } =
+    useUpdateFieldOrder()
+
   const [showAddOrEditForm, setShowAddOrEditForm] = useState(false)
   const [editId, setEditId] = useState<number>()
-
-  const [deleteId, setDeleteId] = useState<string | number>('')
-  const setOrRemoveDeleteId = (id?: string | number) => setDeleteId(id || '')
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -63,77 +62,23 @@ const SortableGroup = ({
     }
 
     if (active.id !== over.id) {
+      const oldIndex = items.findIndex((item) => item.id === active.id)
+      const newIndex = items.findIndex((item) => item.id === over.id)
+      let newOrder = arrayMove(items, oldIndex, newIndex)
+      let newOrderPayload = newOrder?.map((order,index) => ({
+        fieldGroupId: item.id,
+        id: order.id,
+        orderNo: index
+      }))
+
+      updateFieldOrder(newOrderPayload)
       // Update the items array when an item is dropped
-      setItems((items) => {
-        const oldIndex = items.findIndex((item) => item.id === active.id)
-        const newIndex = items.findIndex((item) => item.id === over.id)
-        return arrayMove(items, oldIndex, newIndex)
-      })
+      setItems(newOrder)
     }
   }
 
-  const { mutate: deleteById, isLoading: deleteByIdLoading } =
-    useDeleteFieldById()
-
-  const handleDeleteById = () => {
-    deleteById(deleteId, {
-      onSuccess: () => {
-        setOrRemoveDeleteId()
-      },
-    })
-  }
-
-  const renderActionButtons = (item: IAddFieldInitialValue) => (
-    <div className="absolute right-0 top-4 mr-3  hidden space-x-2 group-hover:flex">
-      <Button
-        variant="success"
-        size="sm"
-        type="button"
-        icons="icons"
-        className="z-40 ml-4 whitespace-nowrap rounded border border-gray-80"
-        onClick={() => {
-          setShowAddOrEditForm(true)
-          setEditId(item.id)
-        }}
-      >
-        <Icon icon={Pencil} />
-      </Button>
-
-      <Button
-        variant="danger"
-        size="sm"
-        type="button"
-        icons="icons"
-        className="z-40 ml-4 whitespace-nowrap rounded border border-gray-80"
-        onClick={() => setDeleteId(item.id)}
-      >
-        <Icon icon={Trash} />
-      </Button>
-
-      <Modal
-        open={!!deleteId}
-        toggleModal={setOrRemoveDeleteId}
-        size="md"
-        title={t('recommendation.deleteModal.title')}
-        saveBtnProps={{
-          btnAction: handleDeleteById,
-          loading: deleteByIdLoading,
-          btnTitle: t('btns.delete'),
-        }}
-        cancelBtnProps={{
-          btnAction: () => {
-            setOrRemoveDeleteId()
-          },
-        }}
-      >
-        {t('recommendation.deleteModal.description')}
-      </Modal>
-    </div>
-  )
-
-  return (
-    <div className="group relative mb-3 bg-gray-50">
-      <div className="absolute right-0 top-[-20px] mr-3 flex hidden flex-row-reverse space-x-2 group-hover:flex">
+  const renderGroupActionButtons = (item: IAddGroupResponse) => (
+    <div className="absolute right-0 top-[-10px] mr-3 hidden flex-row-reverse space-x-2 group-hover/field:flex">
         <Button
           {...listeners}
           {...attributes}
@@ -142,7 +87,7 @@ const SortableGroup = ({
           size="sm"
           type="button"
           icons="icons"
-          className="z-40 ml-4 whitespace-nowrap rounded border border-gray-80"
+          className="z-40 ml-2 whitespace-nowrap rounded border border-gray-80"
         >
           <Icon icon={HandGrabbing} />
         </Button>
@@ -152,7 +97,7 @@ const SortableGroup = ({
           size="sm"
           type="button"
           icons="icons"
-          className="z-40 ml-4 whitespace-nowrap rounded border border-gray-80"
+          className="z-40 whitespace-nowrap rounded border border-gray-80"
           onClick={() => {
             toggleGroupForm(item)
           }}
@@ -165,7 +110,7 @@ const SortableGroup = ({
           size="sm"
           type="button"
           icons="icons"
-          className="z-40 ml-4 whitespace-nowrap rounded border border-gray-80"
+          className="z-40 whitespace-nowrap rounded border border-gray-80"
           onClick={() => {
             setShowAddOrEditForm(true)
           }}
@@ -173,12 +118,20 @@ const SortableGroup = ({
           <Icon icon={Plus} />
         </Button>
       </div>
+  )
 
-      <div className="group relative p-3" style={style}>
+  useEffect(() => {
+    item.fieldResponseList && setItems(item.fieldResponseList)
+  }, [item])
+
+  return (
+    <div className="relative mb-3 bg-gray-200">
+      <div className="relativ group/field hover:rounded-md hover:border hover:border-rose-500 p-2" style={style}>
+      {renderGroupActionButtons(item)}
         <Flexbox
           align="center"
           justify="space-between"
-          className="mt-3 w-full "
+          className={`mt-3 w-full mb-2 ml-2 ${item.showInForm && "line-through text-zinc-400"}`}
         >
           <Text variant="h5" typeface="semibold">
             {item.nameEnglish}
@@ -197,11 +150,13 @@ const SortableGroup = ({
                 <>
                   <Grid.Col
                     sm={'sm:col-span-4'}
-                    className="group relative hover:rounded-3xl hover:bg-gray-50"
+                    className=" relative"
                     key={item.id}
                   >
-                    {renderActionButtons(item)}
-                    <SortableItem key={item.id} item={item} />
+                    <SortableItem key={item.id} item={item} setEditId={(id: number) => {
+                      setEditId(id)
+                      setShowAddOrEditForm(true)
+                    }} />
                   </Grid.Col>
                 </>
               ))}
@@ -225,7 +180,6 @@ const SortableGroup = ({
         )}
       </div>
     </div>
-    // </Flexbox>
   )
 }
 

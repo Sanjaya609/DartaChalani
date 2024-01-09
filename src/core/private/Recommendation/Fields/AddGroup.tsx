@@ -43,13 +43,14 @@ const AddGroup = ({
     useCreateGroup()
 
   const handleAddGroup = (values: IAddGroupInitialValue) => {
-    const { id, nameEnglish, nameNepali, recommendationId } = values
+    const { id, nameEnglish, nameNepali, recommendationId, showInForm } = values
 
     const reqData: IAddGroupPayload = {
       id: id || '',
       nameEnglish: nameEnglish,
       nameNepali: nameNepali,
       recommendationId: recommendationId,
+      showInForm: showInForm
     }
 
     createGroup(reqData, {
@@ -60,18 +61,6 @@ const AddGroup = ({
       },
     })
   }
-
-  // useEffect(() => {
-  //   if (groupDetails) {
-  //     const { id, nameEnglish, nameNepali, recommendationId } = groupDetails
-  //     setInitialGroupdValue({
-  //       id,
-  //       nameEnglish,
-  //       nameNepali,
-  //       recommendationId,
-  //     })
-  //   }
-  // }, [groupDetails])
 
   const {
     values,
@@ -89,6 +78,7 @@ const AddGroup = ({
           nameEnglish: editGroupData.nameEnglish,
           nameNepali: editGroupData.nameNepali,
           recommendationId: editGroupData.recommendationId,
+          showInForm: editGroupData.showInForm
         }
       : initialGroupValue,
     enableReinitialize: true,
@@ -145,6 +135,7 @@ const AddGroup = ({
 
             <Grid.Col sm={'sm:col-span-6'}>
               <Form.Input
+                isNepali
                 disabled={viewOnly}
                 isRequired
                 value={values.nameNepali}
@@ -153,6 +144,25 @@ const AddGroup = ({
                 name="nameNepali"
                 label="Group Name Nepali"
                 onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </Grid.Col>
+
+            <Grid.Col sm={'sm:col-span-4'}>
+              <Form.Switch
+                isRequired
+                className="inline"
+                checked={values.showInForm}
+                errors={errors}
+                touched={touched}
+                name="showInForm"
+                label={t('recommendation.showInForm')}
+                onChange={() => {
+                  setFieldValue(
+                    'showInForm',
+                    !values.showInForm
+                  )
+                }}
                 onBlur={handleBlur}
               />
             </Grid.Col>

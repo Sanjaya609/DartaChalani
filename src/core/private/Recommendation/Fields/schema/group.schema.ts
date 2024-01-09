@@ -6,6 +6,7 @@ export const addGroupInitialValues: IAddGroupInitialValue = {
     nameEnglish: "",
     nameNepali: "",
     recommendationId: "",
+    showInForm: true
 }
 
 export const addGroupValidationSchema = Yup.object({
