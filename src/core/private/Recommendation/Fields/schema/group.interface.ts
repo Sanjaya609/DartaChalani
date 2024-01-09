@@ -5,6 +5,7 @@ export interface IAddGroupInitialValue {
     nameEnglish: string;
     nameNepali: string;
     recommendationId: string;
+    showInForm: boolean;
 }
 
 export interface IAddGroupPayload
@@ -16,4 +17,5 @@ export interface IAddGroupPayload
     nameNepali: string;
     recommendationId: string;
     fieldResponseList?: IAddFieldInitialValue[]
+    showInForm: boolean
  }

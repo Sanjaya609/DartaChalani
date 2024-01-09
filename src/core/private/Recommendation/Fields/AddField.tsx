@@ -71,6 +71,7 @@ const AddField = ({
     createField(reqData, {
       onSuccess: () => {
         setInitialFieldValue(addFieldInitialValues)
+        setShowAddOrEditForm(false)
         resetForm()
       },
     })

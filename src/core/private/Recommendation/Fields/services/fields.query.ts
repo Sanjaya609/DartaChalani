@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   IAddFieldInitialValue,
   IAddFieldResponse,
+  IUpdateFieldOrder,
 } from '../schema/field.interface'
 
 const {
@@ -14,7 +15,8 @@ const {
   getFieldDetailById,
   deleteFieldById,
   getAllGroupByRecommendationId,
-  getAllGroup
+  getAllGroup,
+  updateFieldOrder
 } = apiDetails
 
 const useCreateField = () => {
@@ -123,7 +125,23 @@ const useGetAllField = <T = IAddFieldResponse[]>() => {
         },
       }
       )
-      debugger
+  }
+
+  const useUpdateFieldOrder = () => {
+    const queryClient = useQueryClient()
+    return useMutation(
+      (requestData: IUpdateFieldOrder[]) => {
+        return initApiRequest({
+          apiDetails: updateFieldOrder,
+          requestData,
+        })
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries([getAllGroupByRecommendationId.controllerName])
+        },
+      }
+    )
   }
 
 export {
@@ -132,5 +150,6 @@ export {
   useGetAllFieldByRecommendationId,
   useGetAllField,
   useGetFieldDetailById,
-  useDeleteFieldById
+  useDeleteFieldById,
+  useUpdateFieldOrder
 }

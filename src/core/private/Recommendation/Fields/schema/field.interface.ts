@@ -15,7 +15,7 @@ export interface IAddFieldInitialValue {
 export interface IAddFieldPayload
  extends IAddFieldInitialValue {}
 
- export interface IAddFieldResponse {
+export interface IAddFieldResponse {
     dropDownId: string | number;
     fieldControlName: string;
     fieldType: string;
@@ -27,4 +27,10 @@ export interface IAddFieldPayload
     labelNameNepali: string;
     className: string
     groupingId: number | null;
+ }
+
+ export interface IUpdateFieldOrder {
+    fieldGroupId: number,
+    id: number,
+    orderNo: number
  }

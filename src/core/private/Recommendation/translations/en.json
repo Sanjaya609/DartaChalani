@@ -12,6 +12,7 @@
   "fieldType": "Field Type",
   "orderNo": "Order Number",
   "isValidationRequired": "Is Validation Required ?",
+  "showInForm": "Show In Form",
   "labelNameEnglish": "Lable Name (English)",
   "labelNameNepali": "Lable Name (Nepali)",
   "className": "Class Name (CSS Styling)",

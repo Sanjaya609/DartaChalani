@@ -32,6 +32,11 @@ const addFieldAPI = {
     controllerName: `${prefix}/{id}`,
     queryName: 'DELETE_FIELD_BY_ID',
     requestMethod: RequestMethod.DELETE
+  },
+  updateFieldOrder: {
+    controllerName: `${prefix}/update-order`,
+    queryName: "UPDATE_FIELD_ORDER",
+    requestMethod: RequestMethod.POST
   }
 }
 

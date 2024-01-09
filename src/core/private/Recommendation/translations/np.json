@@ -12,6 +12,7 @@
   "fieldType": "फिल्डको प्रकार",
   "orderNo": "अर्डर नम्बर",
   "isValidationRequired": "प्रमाणीकरण आवश्यक छ ?",
+  "showInForm": "Show In Form",
   "labelNameEnglish": "लेबलको नाम (अंग्रेजी)",
   "labelNameNepali": "लेबलको नाम (नेपाली)",
   "className": "Class Name (CSS Styling)",
