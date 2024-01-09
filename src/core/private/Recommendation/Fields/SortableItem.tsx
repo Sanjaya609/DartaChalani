@@ -13,7 +13,7 @@ const SortableItem = ({ item }: { item: IAddFieldInitialValue }) => {
   }
   return (
     <div
-      className="group relative"
+      className="group relative border-rose-500 p-2 hover:rounded-md hover:border"
       ref={setNodeRef}
       {...attributes}
       {...listeners}
@@ -22,10 +22,10 @@ const SortableItem = ({ item }: { item: IAddFieldInitialValue }) => {
       <Form.Input
         disabled
         isRequired
-        value={item.fieldControlName}
+        value=""
         errors={{}}
         name="fieldControlName"
-        label={item.fieldControlName}
+        label={item.labelNameEnglish}
         onChange={() => {}}
       />
     </div>

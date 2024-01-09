@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CSS } from '@dnd-kit/utilities'
 import { Button, Flexbox, Grid, Icon } from '@/components/ui'
 import {
@@ -34,6 +34,11 @@ const SortableGroup = ({
 }) => {
   const { t } = useTranslation()
   const [items, setItems] = useState(item.fieldResponseList!)
+
+  useEffect(() => {
+    item.fieldResponseList && setItems(item.fieldResponseList)
+  }, [item])
+
   const [showAddOrEditForm, setShowAddOrEditForm] = useState(false)
   const [editId, setEditId] = useState<number>()
 
@@ -132,7 +137,7 @@ const SortableGroup = ({
   )
 
   return (
-    <div className="group relative mb-3 bg-gray-50">
+    <div className="group relative mb-3 p-2 hover:rounded-md hover:border hover:border-rose-500">
       <div className="absolute right-0 top-[-20px] mr-3 flex hidden flex-row-reverse space-x-2 group-hover:flex">
         <Button
           {...listeners}
@@ -174,7 +179,7 @@ const SortableGroup = ({
         </Button>
       </div>
 
-      <div className="group relative p-3" style={style}>
+      <div className="relativ group" style={style}>
         <Flexbox
           align="center"
           justify="space-between"
@@ -197,7 +202,7 @@ const SortableGroup = ({
                 <>
                   <Grid.Col
                     sm={'sm:col-span-4'}
-                    className="group relative hover:rounded-3xl hover:bg-gray-50"
+                    className="group relative"
                     key={item.id}
                   >
                     {renderActionButtons(item)}

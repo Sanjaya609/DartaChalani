@@ -119,10 +119,11 @@ const useGetAllField = <T = IAddFieldResponse[]>() => {
       },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries([getAllGroupByRecommendationId.controllerName, getAllGroup.controllerName])
+          queryClient.invalidateQueries([getAllGroupByRecommendationId.controllerName])
         },
       }
-    )
+      )
+      debugger
   }
 
 export {
