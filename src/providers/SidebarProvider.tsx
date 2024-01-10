@@ -57,7 +57,6 @@ export const SidebarProvider = ({ children }: Props) => {
           : navList.path,
       }))
   }, [flatModulePropsFromURL])
-  console.log({ privilegedSidebarNavList, flatModulePropsFromURL })
 
   const contextValue = React.useMemo(
     () => ({

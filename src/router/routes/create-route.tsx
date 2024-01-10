@@ -1,6 +1,6 @@
 import RouteWrapper from '@/providers/RouteWrapper'
-import type { RoutePaths, RouteType } from '@/router'
-import React from 'react'
+import { RoutePaths, RouteType, useLocation } from '@/router'
+import React, { useMemo } from 'react'
 import { _RouteObject } from 'react-router-dom'
 // import { toast } from 'react-toastify'
 import ErrorBoundary from '@/components/ErrorBoundary/ErrorBoundary'
@@ -17,6 +17,7 @@ export interface CreateRoute<Type extends RouteType>
   type?: RouteType
   checkFromParentPath?: RoutePaths
   checkPrivilege?: PRIVILEGEENUM[]
+  isDynamicRoute?: boolean
 }
 
 export interface IRoutePrivilege {
@@ -28,6 +29,7 @@ interface IPermissionProps {
   path: RoutePaths
   checkFromParentPath?: RoutePaths
   checkPrivilege?: PRIVILEGEENUM[]
+  isDynamicRoute?: boolean
 }
 
 export const Permission = (props: IPermissionProps) => {
@@ -36,25 +38,37 @@ export const Permission = (props: IPermissionProps) => {
     path,
     checkFromParentPath,
     checkPrivilege = [PRIVILEGEENUM.READ_LIST],
+    isDynamicRoute = false,
   } = props
   const { flatModulePropsFromURL, initDataFetching } = useAuth()
+  const location = useLocation()
 
-  const currentPathDetails = checkFromParentPath
-    ? flatModulePropsFromURL?.[checkFromParentPath]
-    : flatModulePropsFromURL?.[path]
+  const currentPathDetails = useMemo<IModulePropsFromURL | undefined>(() => {
+    let pathDetails: undefined | IModulePropsFromURL
+    if (isDynamicRoute) {
+      return flatModulePropsFromURL?.[location.pathname]
+    }
+
+    pathDetails = checkFromParentPath
+      ? flatModulePropsFromURL?.[checkFromParentPath]
+      : flatModulePropsFromURL?.[path]
+
+    return pathDetails
+  }, [])
 
   if (initDataFetching) {
     return <FallbackLoader />
   }
 
   if (currentPathDetails) {
-    const hasRouteAccess = !currentPathDetails?.isConfigurable
-      ? true
-      : checkPrivilege.some((checkPriv) =>
-          currentPathDetails?.resourceResponses
-            ?.map((priv) => priv.privilege)
-            .includes(checkPriv)
-        )
+    const hasRouteAccess =
+      !currentPathDetails?.isConfigurable || currentPathDetails?.dynamicField
+        ? true
+        : checkPrivilege.some((checkPriv) =>
+            currentPathDetails?.resourceResponses
+              ?.map((priv) => priv.privilege)
+              .includes(checkPriv)
+          )
 
     const routePrivilege = currentPathDetails?.resourceResponses?.reduce<
       Partial<Record<PRIVILEGEENUM, boolean>>
@@ -92,6 +106,7 @@ export function createRoute<Type extends RouteType = 'private'>(
     checkFromParentPath,
     checkPrivilege,
     type = !checkPrivilege ? 'bypass' : undefined,
+    isDynamicRoute,
   } = args
   return {
     ...args,
@@ -106,6 +121,7 @@ export function createRoute<Type extends RouteType = 'private'>(
           path={path as RoutePaths}
           checkFromParentPath={checkFromParentPath}
           checkPrivilege={checkPrivilege}
+          isDynamicRoute={isDynamicRoute}
         />
       ),
     errorElement: <ErrorBoundary />,
