@@ -1,6 +1,6 @@
 import Form from '@/components/functional/Form/Form'
 import { DYNAMICFORMFIELDTYPE } from '../enums/dynamic-form.enum'
-import { dynamicForm } from '@/core/private/DynamicForm/DynamicForm'
+import { dynamicForm } from '@/core/private/DynamicForm/AddDynamicForm/AddDynamicForm'
 import React, { FunctionComponent } from 'react'
 import { IInputProps } from '@/components/functional/Form/Input/Input'
 import { generateDynamicError } from './generate-dynamic-error'

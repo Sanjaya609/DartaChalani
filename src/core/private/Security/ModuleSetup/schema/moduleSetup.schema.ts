@@ -20,6 +20,7 @@ export const moduleSetupInitialValues: IModuleSetupFormSchema = {
     },
   ],
   url: '',
+  dynamicFormApplicable: false,
 }
 
 export const moduleSetupValidationSchema = Yup.object().shape({

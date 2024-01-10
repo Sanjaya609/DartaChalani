@@ -1,25 +1,21 @@
 import Form from '@/components/functional/Form/Form'
 import { Box, Flexbox, Grid, Layout } from '@/components/ui'
+import Modal from '@/components/ui/Modal/Modal'
 import { Text } from '@/components/ui/core/Text'
-import { useGetConfigurableModuleList } from '@/core/private/Security/ModuleSetup/services/moduleSetup.query'
+import {
+  useGetConfigurableModuleList,
+  useGetDynamicFormModuleList,
+} from '@/core/private/Security/ModuleSetup/services/moduleSetup.query'
 import { getTextByLanguage } from '@/lib/i18n/i18n'
 import { Trash2 } from 'lucide-react'
-import {
-  Dispatch,
-  MouseEventHandler,
-  SetStateAction,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react'
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { IModuleSetupTableData } from '../../ModuleSetup/schema/moduleSetup.interface'
 import {
   useDeleteRoleMapping,
   useGetAssignedModulesForRole,
 } from '../services/roleModuleMapping.query'
 import useGetRoleMappingParamsData from './useGetRoleMappingParamsData'
-import { useTranslation } from 'react-i18next'
-import Modal from '@/components/ui/Modal/Modal'
 
 interface IRoleModuleAssignedListProps {
   setSelectedModule: Dispatch<SetStateAction<IModuleSetupTableData | undefined>>
@@ -42,6 +38,9 @@ const RoleModuleAssignedList = ({
   const { data: moduleList = [] } = useGetConfigurableModuleList<OptionType[]>({
     mapDatatoStyleSelect: true,
   })
+  const { data: dynamicFormModuleList = [] } = useGetDynamicFormModuleList<
+    OptionType[]
+  >(true, { mapDatatoStyleSelect: true })
 
   const { data: assignedModuleList = [] } = useGetAssignedModulesForRole({
     roleId: roleData?.id,
@@ -64,13 +63,13 @@ const RoleModuleAssignedList = ({
 
   const nonAssignedModuleList = useMemo(
     () =>
-      moduleList.filter(
+      [...moduleList, ...dynamicFormModuleList].filter(
         (module) =>
           !assignedModuleListData
             ?.map((assignList) => +assignList.id)
             .includes(+module.value)
       ),
-    [assignedModuleListData, moduleList]
+    [assignedModuleListData, moduleList, dynamicFormModuleList]
   )
 
   const setOrRemoveCurrentSelectedId = (id?: number) =>

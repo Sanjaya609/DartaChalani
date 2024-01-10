@@ -8,7 +8,7 @@ export interface ISidebarNavList {
     IconProps & React.RefAttributes<SVGSVGElement>
   >
   path: ValueOf<typeof privateRoutePath>
-  title: TFuncKey<'translation'>
+  title: TFuncKey<'translation'> | string
   bypass?: boolean
   titleEn?: string
   titleNp?: string
@@ -49,6 +49,6 @@ export const sidebarNavList: ISidebarNavList[] = [
   {
     icon: Keyboard,
     path: privateRoutePath.recommendation.base,
-    title: 'sidebar.recommendation'
-  }
+    title: 'sidebar.recommendation',
+  },
 ]

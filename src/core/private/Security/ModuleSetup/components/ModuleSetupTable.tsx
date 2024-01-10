@@ -37,6 +37,7 @@ const ModuleSetupTable = () => {
       orderNumber,
       parentModuleId,
       resourceResponses,
+      dynamicField,
     } = values
 
     setInitialValues({
@@ -68,6 +69,7 @@ const ModuleSetupTable = () => {
               url: '',
             },
           ],
+      dynamicFormApplicable: dynamicField,
     })
   }
 

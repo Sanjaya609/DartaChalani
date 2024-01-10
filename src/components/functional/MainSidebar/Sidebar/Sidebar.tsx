@@ -1,8 +1,12 @@
 import { Icon } from '@/components/ui'
 import { Text } from '@/components/ui/core/Text'
+import { getTextByLanguage } from '@/lib/i18n/i18n'
+import { useAuth } from '@/providers'
 import { Link, useLocation } from '@/router'
 import { getComputedClassNames } from '@/utility/tailwind/tailwind-utility'
 import { CaretDown } from 'phosphor-react'
+import { useEffect, useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Collapse, {
   CollapsibleContent,
   CollapsibleTrigger,
@@ -13,11 +17,6 @@ import {
   sidebarCollapseTriggerStyle,
   sidebarLinkStyle,
 } from './sidebar.styles'
-import { useEffect, useMemo } from 'react'
-import { useAuth } from '@/providers'
-import { PRIVILEGEENUM } from '@/utility/enums/privilege.enum'
-import { getTextByLanguage } from '@/lib/i18n/i18n'
-import { useNavigate } from 'react-router-dom'
 
 interface ISidebarProps {
   sideBarItem: ISidebarItem[]

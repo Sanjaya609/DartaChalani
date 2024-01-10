@@ -1,4 +1,4 @@
-const baseRoute = '/dynamic-form'
+const baseRoute = '/recommendation/:dynamicModule'
 
 export const dynamicFormRoutePath = {
   base: baseRoute,

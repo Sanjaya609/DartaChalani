@@ -245,6 +245,24 @@ const ModuleSetupForm = ({
                   <Form.Switch
                     isRequired
                     className="inline"
+                    checked={values.dynamicFormApplicable}
+                    errors={errors}
+                    touched={touched}
+                    name="dynamicFormApplicable"
+                    label={t('security.module.dynamicFormApplicable')}
+                    onChange={() => {
+                      setFieldValue(
+                        'dynamicFormApplicable',
+                        !values.dynamicFormApplicable
+                      )
+                    }}
+                    onBlur={handleBlur}
+                  />
+                </Grid.Col>
+                <Grid.Col sm={'sm:col-span-2'}>
+                  <Form.Switch
+                    isRequired
+                    className="inline"
                     checked={values.isConfigurable}
                     errors={errors}
                     touched={touched}

@@ -20,6 +20,7 @@ export interface IModuleSetupFormSchema {
   parentModuleId?: StringNumber | null
   resourceRequestList: IResourceRequestList[]
   url: string
+  dynamicFormApplicable: boolean
 }
 
 export interface IModuleSetupTableData {
@@ -37,4 +38,5 @@ export interface IModuleSetupTableData {
   parentModuleId?: StringNumber
   showModuleOnMenu?: boolean
   childModuleList?: IModuleSetupTableData[]
+  dynamicField: boolean
 }
