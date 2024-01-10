@@ -6,11 +6,14 @@
   "nepalGovernment": "नेपाल सरकार",
   "errors": {
     "username": "प्रयोगकर्ताको नाम अनिवार्य छ",
-    "password": "पासवर्ड अनिवार्य छ"
+    "password": "पासवर्ड अनिवार्य छ",
+    "email": "इमेल अनिवार्य छ"
   },
   "resetPassword": {
     "header": "पासवर्ड रिसेट गर्नुहोस्",
     "email": "इमेल",
     "btnTitle": "पासवर्ड रिसेट गर्नुहोस्"
-  }
+  },
+  "forgotPassword": "पासवर्ड बिर्सनुभयो",
+  "sendResetPasswordLink": "रिसेट पासवर्ड लिङ्क पठाउनुहोस्"
 }

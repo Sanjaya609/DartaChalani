@@ -1,15 +1,16 @@
+import { Grid } from '@/components/ui'
 import Modal from '@/components/ui/Modal/Modal'
+import PasswordStrengthInfo from '@/core/public/ResetPassword/PasswordStrengthInfo'
+import { useAuth } from '@/providers'
+import { useChangePassword } from '@/service/oauth/oauth.query'
+import TokenService from '@/service/token/token.service'
+import { useFormik } from 'formik'
 import { t } from 'i18next'
 import PasswordInput from '../../PasswordInput'
-import { Grid } from '@/components/ui'
-import { useFormik } from 'formik'
 import {
   changePasswordInitialValue,
   changePasswordValidationSchema,
 } from './schema/change-password.schema'
-import { useChangePassword } from '@/service/oauth/oauth.query'
-import { useAuth } from '@/providers'
-import TokenService from '@/service/token/token.service'
 
 interface IChangePasswordModalProps {
   openModal: boolean
@@ -22,25 +23,37 @@ const ChangePasswordModal = (props: IChangePasswordModalProps) => {
     useChangePassword()
   const { setIsAuthenticated } = useAuth()
 
-  const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
-    useFormik({
-      initialValues: changePasswordInitialValue,
-      enableReinitialize: true,
-      validationSchema: changePasswordValidationSchema,
-      onSubmit: (values) => {
-        changePassword(values, {
-          onSuccess: () => {
-            setIsAuthenticated(false)
-            TokenService.clearToken()
-          },
-        })
-      },
-    })
+  const {
+    values,
+    errors,
+    touched,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    resetForm,
+  } = useFormik({
+    initialValues: changePasswordInitialValue,
+    enableReinitialize: true,
+    validationSchema: changePasswordValidationSchema,
+    onSubmit: (values) => {
+      changePassword(values, {
+        onSuccess: () => {
+          setIsAuthenticated(false)
+          TokenService.clearToken()
+        },
+      })
+    },
+  })
+
+  const toggleModalAction = () => {
+    toggleModal()
+    resetForm()
+  }
 
   return (
     <Modal
       open={openModal}
-      toggleModal={toggleModal}
+      toggleModal={toggleModalAction}
       title={t('changePasswordLabel')}
       saveBtnProps={{
         btnTitle: t('changePasswordLabel'),
@@ -50,6 +63,7 @@ const ChangePasswordModal = (props: IChangePasswordModalProps) => {
       }}
       cancelBtnProps={{
         disabled: changePasswordLoading,
+        btnAction: toggleModalAction,
       }}
     >
       <form>
@@ -69,6 +83,7 @@ const ChangePasswordModal = (props: IChangePasswordModalProps) => {
           </Grid.Col>
           <Grid.Col sm={'sm:col-span-12'}>
             <PasswordInput
+              showError={!values?.newPassword}
               isRequired
               autoComplete="new-password"
               value={values.newPassword}
@@ -78,6 +93,9 @@ const ChangePasswordModal = (props: IChangePasswordModalProps) => {
               label={t('form.newPassword')}
               onChange={handleChange}
               onBlur={handleBlur}
+            />
+            <PasswordStrengthInfo
+              showInfo={!!values?.newPassword && !!errors?.newPassword}
             />
           </Grid.Col>
           <Grid.Col sm={'sm:col-span-12'}>
