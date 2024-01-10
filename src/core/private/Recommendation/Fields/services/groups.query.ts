@@ -98,7 +98,7 @@ const useGetAllGroup = <T = IAddGroupResponse[]>() => {
       },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries([getAllGroupByRecommendationId.controllerName, getAllGroup.controllerName])
+          queryClient.invalidateQueries([getAllGroupByRecommendationId.controllerName])
         },
       }
     )

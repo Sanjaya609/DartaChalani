@@ -4,7 +4,7 @@ import { CSS } from '@dnd-kit/utilities'
 import Form from '@/components/functional/Form/Form'
 import { IAddFieldInitialValue } from './schema/field.interface'
 import { Button, Icon } from '@/components/ui'
-import { Pencil, Trash } from 'phosphor-react'
+import { HandGrabbing, Pencil, Trash } from 'phosphor-react'
 import Modal from '@/components/ui/Modal/Modal'
 import { useDeleteFieldById } from './services/fields.query'
 import { useTranslation } from 'react-i18next'
@@ -14,9 +14,10 @@ const SortableField = ({ item, setEditId }: {
   setEditId: (id: number) => void;
  }) => {
   const { t } = useTranslation()
-  const { attributes, listeners, setNodeRef, transform, transition } =
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
     useSortable({ id: item.id })
   const style = {
+    opacity: isDragging ? 0.4 : undefined,
     transition,
     transform: CSS.Transform.toString(transform),
   }
@@ -36,10 +37,10 @@ const SortableField = ({ item, setEditId }: {
   }
 
   const renderActionButtons = (item: IAddFieldInitialValue) => (
-    <div className="absolute right-0 top-4 mr-3 hidden space-x-2 group-hover/group:flex">
+    <div className="absolute right-0 top-1 mr-3 hidden space-x-2 group-hover/group:flex">
       <Button
-        variant="success"
-        size="sm"
+        variant="primary"
+        size="xs"
         type="button"
         icons="icons"
         className="z-40 ml-4 whitespace-nowrap rounded border border-gray-80"
@@ -52,33 +53,29 @@ const SortableField = ({ item, setEditId }: {
 
       <Button
         variant="danger"
-        size="sm"
+        size="xs"
         type="button"
         icons="icons"
         className="z-40 ml-4 whitespace-nowrap rounded border border-gray-80"
-        onClick={() => setDeleteId(item.id)}
+        onClick={() => {
+          setDeleteId(item.id)
+        } 
+      }
       >
         <Icon icon={Trash} />
       </Button>
 
-      <Modal
-        open={!!deleteId}
-        toggleModal={setOrRemoveDeleteId}
-        size="md"
-        title={t('recommendation.deleteModal.title')}
-        saveBtnProps={{
-          btnAction: handleDeleteById,
-          loading: deleteByIdLoading,
-          btnTitle: t('btns.delete'),
-        }}
-        cancelBtnProps={{
-          btnAction: () => {
-            setOrRemoveDeleteId()
-          },
-        }}
+      <Button
+          {...listeners}
+          ref={setNodeRef}
+          variant="warning"
+          size="xs"
+          type="button"
+          icons="icons"
+          className="z-40 ml-4 whitespace-nowrap rounded border border-gray-80"
       >
-        {t('recommendation.deleteModal.description')}
-      </Modal>
+        <Icon icon={HandGrabbing} />
+      </Button>
     </div>
   )
 
@@ -87,7 +84,6 @@ const SortableField = ({ item, setEditId }: {
       className="group/group relative hover:rounded-md hover:border p-2 hover:bg-gray-50"
       ref={setNodeRef}
       {...attributes}
-      {...listeners}
       style={style}
     >
       {renderActionButtons(item)}
@@ -100,6 +96,25 @@ const SortableField = ({ item, setEditId }: {
         label={item.labelNameEnglish}
         onChange={() => {}}
       />
+
+      <Modal
+        open={!!deleteId}
+        toggleModal={setOrRemoveDeleteId}
+        size="md"
+        title="Delete Field"
+        saveBtnProps={{
+          btnAction: handleDeleteById,
+          loading: deleteByIdLoading,
+          btnTitle: t('btns.delete'),
+        }}
+        cancelBtnProps={{
+          btnAction: () => {
+            setOrRemoveDeleteId()
+          },
+        }}
+      >
+        Are you sure to delete this Field
+      </Modal>
     </div>
   )
 }

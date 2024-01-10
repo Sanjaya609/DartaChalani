@@ -20,13 +20,16 @@ import { decodeParams } from '@/utility/route-params'
 
 const AddField = ({
   fieldId,
+  setFieldId,
   groupId,
   setShowAddOrEditForm,
 }: {
   fieldId?: number
+  setFieldId:  Dispatch<SetStateAction<number | null | undefined>>
   groupId: number
   setShowAddOrEditForm: Dispatch<SetStateAction<boolean>>
 }) => {
+  console.log(fieldId, "filter here")
   const { t } = useTranslation()
   const params = useParams()
   const recommendationId = decodeParams<string>(params?.id)
@@ -261,6 +264,8 @@ const AddField = ({
             className="ml-4 whitespace-nowrap border border-gray-80"
             onClick={() => {
               setShowAddOrEditForm(false)
+              setFieldId(null)
+              setInitialFieldValue(addFieldInitialValues)
             }}
           >
             Close
