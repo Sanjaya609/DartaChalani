@@ -100,8 +100,8 @@ const AddGroup = ({
         size="md"
         title={
           editGroupData
-            ? t('recommendation.editRecommendation')
-            : t('recommendation.addRecommendation')
+            ? "Edit Group"
+            : "Add Group"
         }
         saveBtnProps={{
           btnAction: handleSubmit,
