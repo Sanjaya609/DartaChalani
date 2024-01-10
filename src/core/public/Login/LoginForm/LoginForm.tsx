@@ -4,17 +4,19 @@ import { Button } from '@/components/ui'
 import { Card } from '@/components/ui/core/Card'
 import { Text } from '@/components/ui/core/Text'
 import { useFormik } from 'formik'
-import { FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   loginInitialValue,
   loginValidationSchema,
 } from '../schema/login.schema'
 import { useLogin } from '../services/login.query'
+import { Dispatch, SetStateAction } from 'react'
+import { publicRoutePath, useNavigate } from '@/router'
 
 const LoginForm = () => {
   const { t } = useTranslation()
   const { mutate, isLoading } = useLogin()
+  const navigate = useNavigate()
 
   const {
     values,
@@ -52,7 +54,9 @@ const LoginForm = () => {
           }}
           onBlur={handleBlur}
         />
+
         <PasswordInput
+          wrapperClassName="mb-0"
           autoComplete="new-password"
           value={values.password}
           errors={errors}
@@ -63,8 +67,18 @@ const LoginForm = () => {
           onBlur={handleBlur}
         />
 
-        <Button loading={isLoading} className="w-full">
-          Login
+        <Text
+          onClick={() => {
+            navigate(publicRoutePath.forgotPassword)
+          }}
+          className="duration-500y mb-4 mt-2 cursor-pointer text-right text-navy-32 hover:text-primary hover:underline"
+          variant="subtitle1"
+        >
+          {t('public.login.forgotPassword')} ?
+        </Text>
+
+        <Button disabled={isLoading} loading={isLoading} className="w-full">
+          {t('btns.login')}
         </Button>
       </form>
     </Card>

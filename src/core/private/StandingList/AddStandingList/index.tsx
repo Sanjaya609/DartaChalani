@@ -36,13 +36,20 @@ import {
 } from './services/standing-list.query'
 import { IRoutePrivilege } from '@/router/routes/create-route'
 import { inputChangeNumberOnly } from '@/utility/inputUtils/input-change-utils'
+import { useAuth } from '@/providers'
+import { getTextByLanguage } from '@/lib/i18n/i18n'
 
 const StandingList = (props: Partial<IRoutePrivilege>) => {
   const { currentModuleDetails } = props
   const { t } = useTranslation()
+  const { initData } = useAuth()
+
   const [wardOption, setWardOption] = useState<OptionType[]>([])
   const [initialRegistrationBookValue, setInitialRegistrationBookValue] =
-    useState(addStandingListInitialValues)
+    useState({
+      ...addStandingListInitialValues,
+      letter_no: initData?.currentFiscalYear?.id || '',
+    })
   const [isAllRequiredDocumentUploaded, setIsAllRequiredDocumentUploaded] =
     useState(false)
   const [uploadedDocumentData, setUploadedDocumentData] = useState<
@@ -51,12 +58,12 @@ const StandingList = (props: Partial<IRoutePrivilege>) => {
 
   const navigate = useNavigate()
   const params = useParams()
-  const registrationBookId = decodeParams<string>(params?.id)
+  const standingBookId = decodeParams<string>(params?.id)
 
   const { mutate: createStandingList } = useCreateStandingList()
 
   const { data: registrationBookDetails } =
-    useGetStandingListDetailById(registrationBookId)
+    useGetStandingListDetailById(standingBookId)
 
   const { data: provinceList = [], isFetching: provinceListFetching } =
     useGetAllProvince<OptionType[]>({
@@ -84,6 +91,7 @@ const StandingList = (props: Partial<IRoutePrivilege>) => {
           totalWards,
         },
         letter_no,
+        letter_noNp,
         panOrVatNumber,
         serviceTypeId,
         panOrVatRegistrationDate,
@@ -102,6 +110,7 @@ const StandingList = (props: Partial<IRoutePrivilege>) => {
         firmRegistrationNumber,
         localBodyId,
         letter_no,
+        letter_noNp,
         panOrVatNumber,
         serviceTypeId,
         panOrVatRegistrationDate,
@@ -139,6 +148,7 @@ const StandingList = (props: Partial<IRoutePrivilege>) => {
       firmRegistrationNumber,
       id,
       letter_no,
+      letter_noNp,
       localBodyId,
       panOrVatNumber,
       panOrVatRegistrationDate,
@@ -162,6 +172,7 @@ const StandingList = (props: Partial<IRoutePrivilege>) => {
       contactPersonName,
       firmRegistrationNumber,
       letter_no,
+      letter_noNp,
       localBodyId,
       panOrVatNumber,
       panOrVatRegistrationDate,
@@ -171,6 +182,11 @@ const StandingList = (props: Partial<IRoutePrivilege>) => {
       taxClearanceDate,
       taxClearanceDateExtendedDate,
       workingSectorDetails,
+    }
+
+    if (standingBookId) {
+      delete reqData.letter_no
+      delete reqData.letter_noNp
     }
 
     createStandingList(reqData, {
@@ -230,12 +246,23 @@ const StandingList = (props: Partial<IRoutePrivilege>) => {
             <Grid.Col sm={'sm:col-span-3'}>
               <Form.Input
                 isRequired
-                value={values.letter_no}
+                value={
+                  standingBookId
+                    ? getTextByLanguage(
+                        values?.letter_no.toString(),
+                        values?.letter_noNp?.toString()!
+                      )
+                    : getTextByLanguage(
+                        initData?.currentFiscalYear?.fiscalYearNameEn || '',
+                        initData?.currentFiscalYear?.fiscalYearNameNp || ''
+                      )
+                }
                 errors={errors}
                 touched={touched}
                 name="letter_no"
                 label={t('standingList.letter_no')}
-                onChange={handleChange}
+                // onChange={handleChange}
+                disabled
                 onBlur={handleBlur}
               />
             </Grid.Col>{' '}
@@ -528,7 +555,7 @@ const StandingList = (props: Partial<IRoutePrivilege>) => {
             onClick={() => handleSubmit()}
             className="ml-auto"
           >
-            {registrationBookId ? t('btns.update') : t('btns.save')}
+            {standingBookId ? t('btns.update') : t('btns.save')}
           </Button>
         </ContainerLayout>
       </Box>

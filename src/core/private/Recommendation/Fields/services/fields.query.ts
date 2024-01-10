@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   IAddFieldInitialValue,
   IAddFieldResponse,
+  IUpdateFieldOrder,
 } from '../schema/field.interface'
 
 const {
@@ -12,7 +13,10 @@ const {
   getAllFieldByRecommendationId,
   getAllField,
   getFieldDetailById,
-  deleteFieldById
+  deleteFieldById,
+  getAllGroupByRecommendationId,
+  getAllGroup,
+  updateFieldOrder
 } = apiDetails
 
 const useCreateField = () => {
@@ -26,7 +30,7 @@ const useCreateField = () => {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries([getAllFieldByRecommendationId.controllerName])
+        queryClient.invalidateQueries([getAllGroupByRecommendationId.controllerName])
       },
     }
   )
@@ -43,7 +47,7 @@ const useUpdateField = () => {
       },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries([getAllFieldByRecommendationId.controllerName])
+          queryClient.invalidateQueries([getAllGroupByRecommendationId.controllerName])
         },
       }
     )
@@ -117,7 +121,24 @@ const useGetAllField = <T = IAddFieldResponse[]>() => {
       },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries([getAllFieldByRecommendationId.controllerName, getAllField.controllerName])
+          queryClient.invalidateQueries([getAllGroupByRecommendationId.controllerName])
+        },
+      }
+      )
+  }
+
+  const useUpdateFieldOrder = () => {
+    const queryClient = useQueryClient()
+    return useMutation(
+      (requestData: IUpdateFieldOrder[]) => {
+        return initApiRequest({
+          apiDetails: updateFieldOrder,
+          requestData,
+        })
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries([getAllGroupByRecommendationId.controllerName])
         },
       }
     )
@@ -129,5 +150,6 @@ export {
   useGetAllFieldByRecommendationId,
   useGetAllField,
   useGetFieldDetailById,
-  useDeleteFieldById
+  useDeleteFieldById,
+  useUpdateFieldOrder
 }

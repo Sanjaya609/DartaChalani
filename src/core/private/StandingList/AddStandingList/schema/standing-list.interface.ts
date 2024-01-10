@@ -7,7 +7,8 @@ export interface IStandingListInitialValue {
   contactPersonName: string
   firmRegistrationNumber: string
   id?: number
-  letter_no: StringNumber
+  letter_no?: StringNumber
+  letter_noNp?: StringNumber
   localBodyId: StringNumber
   provinceId: StringNumber
   districtId: StringNumber
@@ -38,7 +39,8 @@ export interface IStandingListPayload
 
 export interface IStandingListResponse {
   id: number
-  letter_no: number
+  letter_no: string
+  letter_noNp: string
   registrationDate: string
   personOrFirmName: string
   address: string

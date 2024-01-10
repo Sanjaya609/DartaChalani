@@ -23,7 +23,8 @@
     "close": "Close",
     "update": "Update",
     "setting": "Setting",
-    "search": "Search"
+    "search": "Search",
+    "changePassword": "Change Password"
   },
   "yup": {
     "required": "{{key}} is required",
@@ -31,7 +32,15 @@
     "password-required": "Password is required"
   },
   "form": {
-    "password": "Password"
+    "password": "Password",
+    "newPassword": "New Password",
+    "newPassword-required": "New Password is required",
+    "currentPassword": "Current Password",
+    "currentPassword-required": "Current Password is required",
+    "confirmNewPassword": "Confirm Password",
+    "confirmNewPassword-required": "Confirm Password is required",
+    "passwordDoesNotMatch": "New and confirm password doesn't match",
+    "newAndOldSame": "New and current password cannot be same"
   },
   "document": {
     "title": "Documents",
@@ -50,5 +59,14 @@
     "confirmRemove": "Confirm Remove",
     "uploadAllDoc": "Please upload all required documents.",
     "necessaryDoc": "Necessary Documents"
+  },
+  "changePasswordLabel": "Change Password",
+  "passwordStrength": {
+    "notStrong": "Your password is not strong enough. New password must:",
+    "sixChar": "Be at least six characters long",
+    "upper": "Have at least one uppercase letter",
+    "lower": "Have at least one lowercase letter",
+    "number": "Have at least one number",
+    "special": "Have at least one special character (!@#$%^&*)"
   }
 }

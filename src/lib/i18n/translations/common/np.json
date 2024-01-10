@@ -23,7 +23,8 @@
     "close": "बन्द गर्नुहोस्",
     "update": "अपडेट गर्नुहोस्",
     "setting": "सेटिङ",
-    "search": "खोज्नुहोस्"
+    "search": "खोज्नुहोस्",
+    "changePassword": "पासवर्ड परिवर्तन"
   },
   "yup": {
     "required": "{{key}} अनिवार्य छ",
@@ -31,7 +32,15 @@
     "password-required": "पासवर्ड अनिवार्य छ"
   },
   "form": {
-    "password": "पासवर्ड"
+    "password": "पासवर्ड",
+    "newPassword": "नयाँ पासवर्ड",
+    "newPassword-required": "नयाँ पासवर्ड अनिवार्य छ",
+    "currentPassword": "हालको पासवर्ड",
+    "currentPassword-required": "हालको पासवर्ड अनिवार्य छ",
+    "confirmNewPassword": "पुन: नयाँ पासवर्ड",
+    "confirmNewPassword-required": "पुन: नयाँ पासवर्ड पासवर्ड अनिवार्य छ",
+    "passwordDoesNotMatch": "नयाँँ र पुन: नयाँ पासवर्ड पासवर्ड बराबर छैन",
+    "newAndOldSame": "नयाँँ र हालको पासवर्ड एउटै राख्न सकिँदैन"
   },
   "document": {
     "title": "कागजातहरू",
@@ -50,5 +59,14 @@
     "confirmRemove": "हटाउन निश्चित हुनुहुन्छ",
     "uploadAllDoc": "कृपया सबै आवश्यक कागजातहरू अपलोड गर्नुहोस्।",
     "necessaryDoc": "आवश्यक कागजातहरू"
+  },
+  "changePasswordLabel": "पासवर्ड परिवर्तन गर्नुहोस्",
+  "passwordStrength": {
+    "notStrong": "तपाईको पासवर्ड बलियो छैन। नयाँ पासवर्ड अनिवार्य:",
+    "sixChar": "छ वर्ण लामो राख्नुहोस्",
+    "upper": "कम्तिमा एउटा ठूलो अक्षर हुनुपर्दछ (A-Z)",
+    "lower": "कम्तिमा एउटा सानो अक्षर हुनुपर्दछ (a-z)",
+    "number": "कम्तिमा एउटा नम्बर हुनुपर्दछ (1-9)",
+    "special": "कम्तिमा एक विशेष चरित्र हुनुपर्दछ (!@#$%^&*)"
   }
 }

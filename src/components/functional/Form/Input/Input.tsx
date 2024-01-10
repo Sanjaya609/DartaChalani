@@ -41,9 +41,10 @@ const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
     isNepali,
     onChange,
     isRequired,
+    showError = true,
     ...rest
   } = props
-  const showError = getErrorStatus({
+  const hasErrorMessage = getErrorStatus({
     name: name || '',
     errors,
     touched,
@@ -55,7 +56,7 @@ const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
     formCommonInputWrapperClass,
     inputWrapperClass,
     {
-      [formErrorClass]: showError,
+      [formErrorClass]: hasErrorMessage,
       'bg-gray-92': !!rest?.disabled || !!rest?.readOnly,
     }
   )
@@ -68,7 +69,7 @@ const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
   return (
     <FormWrapper
       touched={touched}
-      showError={showError}
+      showError={hasErrorMessage && showError}
       errorClassName={errorClassName}
       errors={errors}
       isFieldArray={isFieldArray}

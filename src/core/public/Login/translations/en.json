@@ -6,6 +6,14 @@
   "nepalGovernment": "Government of Nepal",
   "errors": {
     "username": "Username is required",
-    "password": "Password is required"
-  }
+    "password": "Password is required",
+    "email": "Email is required"
+  },
+  "resetPassword": {
+    "header": "Reset Password",
+    "email": "Email",
+    "btnTitle": "Reset Password"
+  },
+  "forgotPassword": "Forgot Password",
+  "sendResetPasswordLink": "Send Reset Password Link"
 }

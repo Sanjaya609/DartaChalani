@@ -11,14 +11,13 @@ import AuthProvider from './providers/AuthProvider'
 const container = document.getElementById('root') as HTMLElement
 const root = createRoot(container)
 root.render(
-  <React.StrictMode>
-    <ThemeProvider theme={THEME}>
-      <AppProvider>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
-      </AppProvider>
-    </ThemeProvider>
-    {/* <ReactQueryDevtools initialIsOpen={false} /> */}
-  </React.StrictMode>
+  // <React.StrictMode>
+  <ThemeProvider theme={THEME}>
+    <AppProvider>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </AppProvider>
+  </ThemeProvider>
+  // </React.StrictMode>
 )

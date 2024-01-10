@@ -19,6 +19,11 @@
     "status": {
       "title": "Change Status",
       "description": "Are you sure you want to change the status?"
+    },
+    "resetPassword": {
+      "icon": "Reset Password",
+      "title": "Send Password Reset Link",
+      "description": "Are you sure you want to send reset password link to '{{email}}'?"
     }
   }
 }
