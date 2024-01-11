@@ -11,7 +11,7 @@
   "fieldName": "Field Name",
   "fieldType": "Field Type",
   "orderNo": "Order Number",
-  "isValidationRequired": "Is Validation Required ?",
+  "isValidationRequired": "Is Mandatory?",
   "showInForm": "Show In Form",
   "labelNameEnglish": "Lable Name (English)",
   "labelNameNepali": "Lable Name (Nepali)",
