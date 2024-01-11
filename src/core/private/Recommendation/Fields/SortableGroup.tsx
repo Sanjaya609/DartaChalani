@@ -44,7 +44,7 @@ const SortableGroup = ({
   const { mutate: updateFieldOrder, isLoading: createGroupLoading } =
     useUpdateFieldOrder()
 
-    const { mutate: deleteById, isLoading: deleteByIdLoading } =
+  const { mutate: deleteById, isLoading: deleteByIdLoading } =
     useDeleteGroupById()
 
   const handleDeleteById = () => {
@@ -83,13 +83,13 @@ const SortableGroup = ({
       const oldIndex = items.findIndex((item) => item.id === active.id)
       const newIndex = items.findIndex((item) => item.id === over.id)
       let newOrder = arrayMove(items, oldIndex, newIndex)
-      let newOrderPayload = newOrder?.map((order,index) => ({
+      let newOrderDto = newOrder?.map((order, index) => ({
         fieldGroupId: item.id,
         id: order.id,
-        orderNo: index
+        orderNo: index,
       }))
 
-      updateFieldOrder(newOrderPayload)
+      updateFieldOrder(newOrderDto)
       // Update the items array when an item is dropped
       setItems(newOrder)
     }
@@ -97,58 +97,57 @@ const SortableGroup = ({
 
   const renderGroupActionButtons = (item: IAddGroupResponse) => (
     <div className="absolute right-0 top-[-10px] mr-3 hidden flex-row-reverse space-x-2 group-hover/field:flex">
-        <Button
-          {...listeners}
-          {...attributes}
-          ref={setNodeRef}
-          variant="warning"
-          size="sm"
-          type="button"
-          icons="icons"
-          className="z-40 ml-2 whitespace-nowrap rounded border border-gray-80"
-        >
-          <Icon icon={HandGrabbing} />
-        </Button>
+      <Button
+        {...listeners}
+        ref={setNodeRef}
+        variant="warning"
+        size="sm"
+        type="button"
+        icons="icons"
+        className="z-40 ml-2 whitespace-nowrap rounded border border-gray-80"
+      >
+        <Icon icon={HandGrabbing} />
+      </Button>
 
-        <Button
-          variant="danger"
-          size="sm"
-          type="button"
-          icons="icons"
-          className="z-40 whitespace-nowrap rounded border border-gray-80"
-          onClick={() => {
-            setDeleteId(item.id)
-          }}
-        >
-          <Icon icon={Trash} />
-        </Button>
+      <Button
+        variant="danger"
+        size="sm"
+        type="button"
+        icons="icons"
+        className="z-40 whitespace-nowrap rounded border border-gray-80"
+        onClick={() => {
+          setDeleteId(item.id)
+        }}
+      >
+        <Icon icon={Trash} />
+      </Button>
 
-        <Button
-          variant="primary"
-          size="sm"
-          type="button"
-          icons="icons"
-          className="z-40 whitespace-nowrap rounded border border-gray-80"
-          onClick={() => {
-            toggleGroupForm(item)
-          }}
-        >
-          <Icon icon={Pencil} />
-        </Button>
+      <Button
+        variant="primary"
+        size="sm"
+        type="button"
+        icons="icons"
+        className="z-40 whitespace-nowrap rounded border border-gray-80"
+        onClick={() => {
+          toggleGroupForm(item)
+        }}
+      >
+        <Icon icon={Pencil} />
+      </Button>
 
-        <Button
-          variant="success"
-          size="sm"
-          type="button"
-          icons="icons"
-          className="z-40 whitespace-nowrap rounded border border-gray-80"
-          onClick={() => {
-            setShowAddOrEditForm(true)
-          }}
-        >
-          <Icon icon={Plus} />
-        </Button>
-      </div>
+      <Button
+        variant="success"
+        size="sm"
+        type="button"
+        icons="icons"
+        className="z-40 whitespace-nowrap rounded border border-gray-80"
+        onClick={() => {
+          setShowAddOrEditForm(true)
+        }}
+      >
+        <Icon icon={Plus} />
+      </Button>
+    </div>
   )
 
   useEffect(() => {
@@ -156,18 +155,20 @@ const SortableGroup = ({
   }, [item])
 
   return (
-    <div className="relative mb-3 bg-gray-200">
-      <div 
-        className="relativ group/field hover:rounded-md hover:border hover:border-rose-500 p-2"
+    <div className="relative mb-3">
+      <div
+        className="relativ group/field bg-gray-200 p-2 hover:rounded-md hover:border hover:border-rose-500"
         ref={setNodeRef}
         {...attributes}
         style={style}
       >
-      {renderGroupActionButtons(item)}
+        {renderGroupActionButtons(item)}
         <Flexbox
           align="center"
           justify="space-between"
-          className={`mt-3 w-full mb-2 ml-2 ${item.showInForm ? "" : "line-through text-zinc-400"}`}
+          className={`mb-2 ml-2 mt-3 w-full ${
+            item.showInForm ? '' : 'text-zinc-400 line-through'
+          }`}
         >
           <Text variant="h5" typeface="semibold">
             {item.nameEnglish}
@@ -189,10 +190,14 @@ const SortableGroup = ({
                     className=" relative"
                     key={item.id}
                   >
-                    <SortableItem key={item.id} item={item} setEditId={(id: number) => {
-                      setEditId(id)
-                      setShowAddOrEditForm(true)
-                    }} />
+                    <SortableItem
+                      key={item.id}
+                      item={item}
+                      setEditId={(id: number) => {
+                        setEditId(id)
+                        setShowAddOrEditForm(true)
+                      }}
+                    />
                   </Grid.Col>
                 </>
               ))}

@@ -27,6 +27,11 @@ const addGroupAPI = {
     controllerName: `${prefix}/{id}`,
     queryName: 'DELETE_GROUP_BY_ID',
     requestMethod: RequestMethod.DELETE
+  },
+  updateGroupOrder: {
+    controllerName: `${prefix}/update-order`,
+    queryName: 'UPDATE_GROUP_ORDER',
+    requestMethod: RequestMethod.POST
   }
 }
 

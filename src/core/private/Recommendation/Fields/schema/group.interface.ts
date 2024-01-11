@@ -19,3 +19,13 @@ export interface IAddGroupPayload
     fieldResponseList?: IAddFieldInitialValue[]
     showInForm: boolean
  }
+
+ export interface IUpdateGroupOrderDTO {
+    id: number,
+    ordering: number
+ }
+
+ export interface IUpdateGroupOrder {
+    orderDto: IUpdateGroupOrderDTO[],
+    targetId: number
+ }
