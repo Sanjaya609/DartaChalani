@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   IAddGroupInitialValue,
   IAddGroupResponse,
+  IUpdateGroupOrder,
 } from '../schema/group.interface'
 
 const {
@@ -11,7 +12,8 @@ const {
   updateGroup,
   getAllGroupByRecommendationId,
   getAllGroup,
-  deleteGroupById
+  deleteGroupById,
+  updateGroupOrder
 } = apiDetails
 
 const useCreateGroup = () => {
@@ -104,10 +106,28 @@ const useGetAllGroup = <T = IAddGroupResponse[]>() => {
     )
   }
 
+  const useUpdateGroupOrder = () => {
+    const queryClient = useQueryClient()
+    return useMutation(
+      (requestData: IUpdateGroupOrder) => {
+        return initApiRequest({
+          apiDetails: updateGroupOrder,
+          requestData,
+        })
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries([getAllGroupByRecommendationId.controllerName])
+        },
+      }
+    )
+  }
+
 export {
   useCreateGroup,
   useUpdateGroup,
   useGetAllGroupByRecommendationId,
   useGetAllGroup,
-  useDeleteGroupById
+  useDeleteGroupById,
+  useUpdateGroupOrder
 }

@@ -7,15 +7,13 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
-  DragOverlay,
-  DragStartEvent,
   MouseSensor,
 } from '@dnd-kit/core'
 
 import {
   arrayMove,
+  rectSortingStrategy,
   SortableContext,
-  verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
 import SectionHeader from '@/components/functional/SectionHeader'
 import ContainerLayout from '@/components/ui/core/Layout/ContainerLayout'
@@ -25,11 +23,12 @@ import { decodeParams } from '@/utility/route-params'
 import { useGetRecommendationDetailById } from '../AddRecommendation/services/add-recommendation.query'
 import { useTranslation } from 'react-i18next'
 import { Card } from '@/components/ui/core/Card'
-import { useGetAllGroupByRecommendationId } from './services/groups.query'
-import SortableGroup from './SortableGroup'
 import {
-  IAddGroupResponse,
-} from './schema/group.interface'
+  useGetAllGroupByRecommendationId,
+  useUpdateGroupOrder,
+} from './services/groups.query'
+import SortableGroup from './SortableGroup'
+import { IAddGroupResponse } from './schema/group.interface'
 import AddGroup from './AddGroup'
 
 const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
@@ -63,24 +62,34 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
   const { data: groupListData = [], isFetching: groupListDataFetching } =
     useGetAllGroupByRecommendationId(recommendationId)
 
+  const { mutate: uodateGroupOrder, isLoading: createGroupLoading } =
+    useUpdateGroupOrder()
+
   useEffect(() => {
     if (groupListData) setGroupingList(groupListData)
   }, [groupListData])
 
-  const handleDragGroupEnd = useCallback(({ active, over }: { active: any; over: any }) => {
+  const handleDragGroupEnd = ({ active, over }: { active: any; over: any }) => {
     if (active.id === over.id) {
       return
     }
 
     if (active.id !== over.id) {
       // Update the items array when an item is dropped
-      setGroupingList((groupingList) => {
-        const oldIndex = groupingList.findIndex((item) => item.id === active.id)
-        const newIndex = groupingList.findIndex((item) => item.id === over.id)
-        return arrayMove(groupingList, oldIndex, newIndex)
+      const oldIndex = groupingList.findIndex((item) => item.id === active.id)
+      const newIndex = groupingList.findIndex((item) => item.id === over.id)
+      let newOrder = arrayMove(groupingList, oldIndex, newIndex)
+      let newOrderDto = newOrder?.map((order, index) => ({
+        id: order.id,
+        ordering: index,
+      }))
+      uodateGroupOrder({
+        orderDto: newOrderDto,
+        targetId: parseInt(recommendationId!),
       })
+      setGroupingList(newOrder)
     }
-  }, [])
+  }
 
   return (
     <>
@@ -111,7 +120,7 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
           >
             <SortableContext
               items={groupingList}
-              strategy={verticalListSortingStrategy}
+              strategy={rectSortingStrategy}
             >
               {groupingList.map((item) => (
                 <SortableGroup
