@@ -16,6 +16,13 @@ const DynamicFormModuleTable = lazy(
     )
 )
 
+const AddDynamicForm = lazy(
+  () =>
+    import(
+      '@/core/private/DynamicForm/DynamicFormModules/AddDynamicForm/AddDynamicForm'
+    )
+)
+
 export const dynamicFormRoutes: _RouteObject<'private'>[] = [
   createRoute({
     path: privateRoutePath.dynamicForm.base,
@@ -34,6 +41,13 @@ export const dynamicFormRoutes: _RouteObject<'private'>[] = [
             element: DynamicFormModuleTable,
             checkPrivilege: [PRIVILEGEENUM.READ_LIST],
             isDynamicRoute: true,
+          }),
+          createRoute({
+            path: privateRoutePath.dynamicForm.add,
+            element: AddDynamicForm,
+            checkPrivilege: [PRIVILEGEENUM.CREATE],
+            isDynamicRoute: true,
+            checkFromParentPath: privateRoutePath.dynamicForm.formModules,
           }),
         ],
       }),

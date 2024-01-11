@@ -42,10 +42,14 @@ export const Permission = (props: IPermissionProps) => {
   } = props
   const { flatModulePropsFromURL, initDataFetching } = useAuth()
   const location = useLocation()
+  console.log({ checkFromParentPath })
 
   const currentPathDetails = useMemo<IModulePropsFromURL | undefined>(() => {
     let pathDetails: undefined | IModulePropsFromURL
-    if (isDynamicRoute) {
+    if (checkFromParentPath && isDynamicRoute) {
+      const dynamicParent = location.pathname
+      return flatModulePropsFromURL?.[location.pathname]
+    } else if (isDynamicRoute) {
       return flatModulePropsFromURL?.[location.pathname]
     }
 
@@ -54,7 +58,7 @@ export const Permission = (props: IPermissionProps) => {
       : flatModulePropsFromURL?.[path]
 
     return pathDetails
-  }, [])
+  }, [location.pathname])
 
   if (initDataFetching) {
     return <FallbackLoader />
@@ -62,7 +66,9 @@ export const Permission = (props: IPermissionProps) => {
 
   if (currentPathDetails) {
     const hasRouteAccess =
-      !currentPathDetails?.isConfigurable || currentPathDetails?.dynamicField
+      !currentPathDetails?.isConfigurable ||
+      currentPathDetails?.dynamicFormApplicable ||
+      currentPathDetails?.dynamicField
         ? true
         : checkPrivilege.some((checkPriv) =>
             currentPathDetails?.resourceResponses

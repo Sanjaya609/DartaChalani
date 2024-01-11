@@ -39,4 +39,5 @@ export interface IModuleSetupTableData {
   showModuleOnMenu?: boolean
   childModuleList?: IModuleSetupTableData[]
   dynamicField: boolean
+  dynamicFormApplicable: boolean
 }

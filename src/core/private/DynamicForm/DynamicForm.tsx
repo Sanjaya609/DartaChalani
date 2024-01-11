@@ -1,18 +1,19 @@
 import Sidebar from '@/components/functional/MainSidebar/Sidebar/Sidebar'
 import { ISidebarItem } from '@/components/functional/MainSidebar/Sidebar/sidebar.interface'
 import { Layout } from '@/components/ui'
-import { privateRoutePath } from '@/router'
 import { IRoutePrivilege } from '@/router/routes/create-route'
 import { useMemo } from 'react'
 import { Outlet } from 'react-router-dom'
 
 const DynamicForm = (props: Partial<IRoutePrivilege>) => {
   const { currentModuleDetails } = props
-  console.log({ currentModuleDetails })
 
   const sideBarItem = useMemo(
     () =>
-      currentModuleDetails?.childModuleList?.map((child) => ({
+      (currentModuleDetails?.dynamicField
+        ? currentModuleDetails?.parentMenuData?.childModuleList
+        : currentModuleDetails?.childModuleList
+      )?.map((child) => ({
         title: child.moduleNameNepali,
         path: child.url,
         titleEn: child.moduleNameEnglish,
@@ -25,7 +26,11 @@ const DynamicForm = (props: Partial<IRoutePrivilege>) => {
     <Layout.Flex>
       <Sidebar
         sideBarItem={sideBarItem as ISidebarItem[]}
-        currentPath={currentModuleDetails?.url}
+        currentPath={
+          currentModuleDetails?.dynamicField
+            ? currentModuleDetails?.parentMenuData?.url
+            : currentModuleDetails?.url
+        }
       />
       <Outlet />
     </Layout.Flex>

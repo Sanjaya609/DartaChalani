@@ -28,7 +28,9 @@ export const SidebarProvider = ({ children }: Props) => {
   const dynamicSidebarNavList = React.useMemo<ISidebarNavList[]>(() => {
     return initData?.moduleList?.length
       ? initData?.moduleList
-          ?.filter((module) => module.dynamicField)
+          ?.filter(
+            (module) => module.dynamicField || module.dynamicFormApplicable
+          )
           .map((module) => ({
             ...module,
             titleEn: module.moduleNameEnglish,
@@ -52,9 +54,11 @@ export const SidebarProvider = ({ children }: Props) => {
         ...navList,
         titleEn: flatModulePropsFromURL?.[navList.path]?.moduleNameEnglish,
         titleNp: flatModulePropsFromURL?.[navList.path]?.moduleNameNepali,
-        path: flatModulePropsFromURL?.[navList.path]?.dynamicField
-          ? flatModulePropsFromURL?.[navList.path]?.url
-          : navList.path,
+        path:
+          flatModulePropsFromURL?.[navList.path]?.dynamicField ||
+          flatModulePropsFromURL?.[navList.path]?.dynamicFormApplicable
+            ? flatModulePropsFromURL?.[navList.path]?.url
+            : navList.path,
       }))
   }, [flatModulePropsFromURL])
 
