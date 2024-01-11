@@ -2,7 +2,6 @@ import * as Yup from 'yup'
 import { IAddFieldInitialValue } from './field.interface'
 
 export const addFieldInitialValues: IAddFieldInitialValue =
-
     {
         dropDownId: "",
         // fieldControlName: "Name",
@@ -14,7 +13,8 @@ export const addFieldInitialValues: IAddFieldInitialValue =
         labelNameEnglish: "",
         labelNameNepali: "",
         className: "",
-        groupingId: null
+        groupingId: null,
+        gridLength: 4
     }
 
 

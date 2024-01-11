@@ -24,16 +24,21 @@ import { IAddGroupResponse } from './schema/group.interface'
 import { useUpdateFieldOrder } from './services/fields.query'
 import Modal from '@/components/ui/Modal/Modal'
 import { useDeleteGroupById } from './services/groups.query'
+import { Spinner } from '@/components/ui/Spinner'
 
 const SortableGroup = ({
   item,
   toggleGroupForm,
+  groupListDataFetching,
 }: {
   item: IAddGroupResponse
   toggleGroupForm: (groupData?: IAddGroupResponse) => void
+  groupListDataFetching: boolean
 }) => {
   const { t } = useTranslation()
-  const [items, setItems] = useState(item.fieldResponseList!)
+  const [items, setItems] = useState(
+    item.fieldResponseList!.sort((a, b) => a?.orderNo! - b?.orderNo!)
+  )
 
   const [showAddOrEditForm, setShowAddOrEditForm] = useState(false)
   const [editId, setEditId] = useState<number | null>()
@@ -41,7 +46,7 @@ const SortableGroup = ({
   const [deleteId, setDeleteId] = useState<string | number>('')
   const setOrRemoveDeleteId = (id?: string | number) => setDeleteId(id || '')
 
-  const { mutate: updateFieldOrder, isLoading: createGroupLoading } =
+  const { mutate: updateFieldOrder, isLoading: updateFieldOrderLoading } =
     useUpdateFieldOrder()
 
   const { mutate: deleteById, isLoading: deleteByIdLoading } =
@@ -180,28 +185,33 @@ const SortableGroup = ({
             sensors={sensors}
             collisionDetection={closestCenter}
             onDragEnd={handleDragEnd}
-            onDragCancel={() => console.log('Drag cancelled')}
           >
-            <SortableContext items={items} strategy={rectSortingStrategy}>
-              {items.map((item) => (
-                <>
-                  <Grid.Col
-                    sm={'sm:col-span-4'}
-                    className=" relative"
-                    key={item.id}
-                  >
-                    <SortableItem
+            {groupListDataFetching ||
+            updateFieldOrderLoading ||
+            deleteByIdLoading ? (
+              <Spinner />
+            ) : (
+              <SortableContext items={items} strategy={rectSortingStrategy}>
+                {items.map((item) => (
+                  <>
+                    <Grid.Col
+                      sm={`sm:col-span-${item.gridLength ?? 4}`}
+                      className="relative"
                       key={item.id}
-                      item={item}
-                      setEditId={(id: number) => {
-                        setEditId(id)
-                        setShowAddOrEditForm(true)
-                      }}
-                    />
-                  </Grid.Col>
-                </>
-              ))}
-            </SortableContext>
+                    >
+                      <SortableItem
+                        key={item.id}
+                        item={item}
+                        setEditId={(id: number) => {
+                          setEditId(id)
+                          setShowAddOrEditForm(true)
+                        }}
+                      />
+                    </Grid.Col>
+                  </>
+                ))}
+              </SortableContext>
+            )}
           </DndContext>
         </Grid>
         {showAddOrEditForm && (

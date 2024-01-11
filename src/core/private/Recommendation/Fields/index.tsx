@@ -30,6 +30,7 @@ import {
 import SortableGroup from './SortableGroup'
 import { IAddGroupResponse } from './schema/group.interface'
 import AddGroup from './AddGroup'
+import { Spinner } from '@/components/ui/Spinner'
 
 const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
   const { t } = useTranslation()
@@ -66,7 +67,8 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
     useUpdateGroupOrder()
 
   useEffect(() => {
-    if (groupListData) setGroupingList(groupListData)
+    if (groupListData)
+      setGroupingList(groupListData?.sort((a, b) => a?.orderNo! - b?.orderNo!))
   }, [groupListData])
 
   const handleDragGroupEnd = ({ active, over }: { active: any; over: any }) => {
@@ -107,6 +109,8 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
           onClick={() => {
             toggleGroupForm()
           }}
+          loading={createGroupLoading}
+          disabled={createGroupLoading}
         >
           Add Group
         </Button>
@@ -118,18 +122,23 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
             collisionDetection={closestCenter}
             onDragEnd={handleDragGroupEnd}
           >
-            <SortableContext
-              items={groupingList}
-              strategy={rectSortingStrategy}
-            >
-              {groupingList.map((item) => (
-                <SortableGroup
-                  key={item.id}
-                  item={item}
-                  toggleGroupForm={toggleGroupForm}
-                />
-              ))}
-            </SortableContext>
+            {groupListDataFetching || createGroupLoading ? (
+              <Spinner />
+            ) : (
+              <SortableContext
+                items={groupingList}
+                strategy={rectSortingStrategy}
+              >
+                {groupingList.map((item) => (
+                  <SortableGroup
+                    key={item.id}
+                    item={item}
+                    toggleGroupForm={toggleGroupForm}
+                    groupListDataFetching={groupListDataFetching}
+                  />
+                ))}
+              </SortableContext>
+            )}
           </DndContext>
         </Card>
       </ContainerLayout>
