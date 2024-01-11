@@ -22,6 +22,8 @@ import { useTranslation } from 'react-i18next'
 import AddField from './AddField'
 import { IAddGroupResponse } from './schema/group.interface'
 import { useUpdateFieldOrder } from './services/fields.query'
+import Modal from '@/components/ui/Modal/Modal'
+import { useDeleteGroupById } from './services/groups.query'
 
 const SortableGroup = ({
   item,
@@ -33,17 +35,32 @@ const SortableGroup = ({
   const { t } = useTranslation()
   const [items, setItems] = useState(item.fieldResponseList!)
 
+  const [showAddOrEditForm, setShowAddOrEditForm] = useState(false)
+  const [editId, setEditId] = useState<number | null>()
+
+  const [deleteId, setDeleteId] = useState<string | number>('')
+  const setOrRemoveDeleteId = (id?: string | number) => setDeleteId(id || '')
+
   const { mutate: updateFieldOrder, isLoading: createGroupLoading } =
     useUpdateFieldOrder()
 
-  const [showAddOrEditForm, setShowAddOrEditForm] = useState(false)
-  const [editId, setEditId] = useState<number>()
+    const { mutate: deleteById, isLoading: deleteByIdLoading } =
+    useDeleteGroupById()
+
+  const handleDeleteById = () => {
+    deleteById(deleteId, {
+      onSuccess: () => {
+        setOrRemoveDeleteId()
+      },
+    })
+  }
 
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor)
   )
   const {
+    isDragging,
     attributes,
     listeners,
     setNodeRef,
@@ -52,6 +69,7 @@ const SortableGroup = ({
     setActivatorNodeRef,
   } = useSortable({ id: item.id })
   const style = {
+    opacity: isDragging ? 0.4 : undefined,
     transition,
     transform: CSS.Transform.toString(transform),
   }
@@ -83,7 +101,7 @@ const SortableGroup = ({
           {...listeners}
           {...attributes}
           ref={setNodeRef}
-          variant="secondary"
+          variant="warning"
           size="sm"
           type="button"
           icons="icons"
@@ -93,7 +111,20 @@ const SortableGroup = ({
         </Button>
 
         <Button
-          variant="secondary"
+          variant="danger"
+          size="sm"
+          type="button"
+          icons="icons"
+          className="z-40 whitespace-nowrap rounded border border-gray-80"
+          onClick={() => {
+            setDeleteId(item.id)
+          }}
+        >
+          <Icon icon={Trash} />
+        </Button>
+
+        <Button
+          variant="primary"
           size="sm"
           type="button"
           icons="icons"
@@ -106,7 +137,7 @@ const SortableGroup = ({
         </Button>
 
         <Button
-          variant="secondary"
+          variant="success"
           size="sm"
           type="button"
           icons="icons"
@@ -126,12 +157,17 @@ const SortableGroup = ({
 
   return (
     <div className="relative mb-3 bg-gray-200">
-      <div className="relativ group/field hover:rounded-md hover:border hover:border-rose-500 p-2" style={style}>
+      <div 
+        className="relativ group/field hover:rounded-md hover:border hover:border-rose-500 p-2"
+        ref={setNodeRef}
+        {...attributes}
+        style={style}
+      >
       {renderGroupActionButtons(item)}
         <Flexbox
           align="center"
           justify="space-between"
-          className={`mt-3 w-full mb-2 ml-2 ${item.showInForm && "line-through text-zinc-400"}`}
+          className={`mt-3 w-full mb-2 ml-2 ${item.showInForm ? "" : "line-through text-zinc-400"}`}
         >
           <Text variant="h5" typeface="semibold">
             {item.nameEnglish}
@@ -171,7 +207,8 @@ const SortableGroup = ({
           >
             <Grid.Col sm={'sm:col-span-12'} className="group relative p-3">
               <AddField
-                fieldId={editId}
+                fieldId={editId!}
+                setFieldId={setEditId}
                 groupId={item.id}
                 setShowAddOrEditForm={setShowAddOrEditForm}
               />
@@ -179,6 +216,25 @@ const SortableGroup = ({
           </Grid>
         )}
       </div>
+
+      <Modal
+        open={!!deleteId}
+        toggleModal={setOrRemoveDeleteId}
+        size="md"
+        title="Delete Field"
+        saveBtnProps={{
+          btnAction: handleDeleteById,
+          loading: deleteByIdLoading,
+          btnTitle: t('btns.delete'),
+        }}
+        cancelBtnProps={{
+          btnAction: () => {
+            setOrRemoveDeleteId()
+          },
+        }}
+      >
+        Are you sure to delete this Group
+      </Modal>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-export type ButtonVariants = 'primary' | 'secondary' | 'success' | 'danger'
+export type ButtonVariants = 'primary' | 'secondary' | 'success' | 'danger' | 'warning'
 
 export type ButtonTypes = 'solid' | 'outlined' | 'ghost'
 
@@ -56,6 +56,11 @@ export const DefaultClassesMapping: Record<
     outlined: 'border border-red-48 text-red-48 bg-white',
     ghost: 'text-red-48 bg-white',
   },
+  warning: {
+    solid: 'text-white bg-orange-48',
+    outlined: 'border border-orange-48 text-orange-48 bg-white',
+    ghost: 'text-orange-48 bg-white',
+  }
 }
 
 export const HoverClassesMapping: Record<
@@ -81,6 +86,11 @@ export const HoverClassesMapping: Record<
     solid: 'hover:bg-red-800',
     outlined: 'hover:bg-red-700 hover:text-white',
     ghost: 'hover:bg-red-48 hover:text-white',
+  },
+  warning: {
+    solid: 'hover:bg-orange-800',
+    outlined: 'hover:bg-orange-700 hover:text-white',
+    ghost: 'hover:bg-orange-48 hover:text-white',
   },
 }
 
@@ -118,6 +128,14 @@ export const FocusedClassesMapping: Record<
     ghost:
       'focus:bg-red-48 focus:outline-0 focus:shadow-[0px_0px_0px_2px_rgba(201,24,74,0.4)] focus:border focus:border-white focus:text-white',
   },
+  warning: {
+    solid:
+      'focus:outline-0 focus:shadow-[0px_0px_0px_2px_rgba(201,24,74,0.4)] focus:border focus:border-white',
+    outlined:
+      'focus:bg-orange-700 focus:text-white focus:outline-0 focus:shadow-[0px_0px_0px_2px_rgba(201,24,74,0.4)] focus:border focus:border-white',
+    ghost:
+      'focus:bg-orange-48 focus:outline-0 focus:shadow-[0px_0px_0px_2px_rgba(201,24,74,0.4)] focus:border focus:border-white focus:text-white',
+  },
 }
 
 export const ClickedMapping: Record<
@@ -142,6 +160,11 @@ export const ClickedMapping: Record<
   danger: {
     solid: 'active:shadow-[inset_0px_2px_8px_rgba(0,0,0,0.32)]',
     ghost: 'active:bg-red-100 active:shadow-none',
+    outlined: 'active:shadow-[inset_0px_2px_8px_rgba(0,0,0,0.32)]',
+  },
+  warning: {
+    solid: 'active:shadow-[inset_0px_2px_8px_rgba(0,0,0,0.32)]',
+    ghost: 'active:bg-orange-100 active:shadow-none',
     outlined: 'active:shadow-[inset_0px_2px_8px_rgba(0,0,0,0.32)]',
   },
 }
@@ -181,5 +204,13 @@ export const DisabledMapping: Record<
       'disabled:opacity-[0.64] disabled:hover:bg-white disabled:hover:text-red-700 disabled:active:shadow-none',
     outlined:
       'disabled:opacity-[0.64] disabled:hover:bg-white disabled:hover:text-red-700 disabled:active:shadow-none',
+  },
+  warning: {
+    solid:
+      'disabled:opacity-[0.64] disabled:hover:bg-orange-700 disabled:active:bg-orange-700 disabled:active:shadow-none',
+    ghost:
+      'disabled:opacity-[0.64] disabled:hover:bg-white disabled:hover:text-orange-700 disabled:active:shadow-none',
+    outlined:
+      'disabled:opacity-[0.64] disabled:hover:bg-white disabled:hover:text-orange-700 disabled:active:shadow-none',
   },
 }

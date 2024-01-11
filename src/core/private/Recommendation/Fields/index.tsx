@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { privateRoutePath, useNavigate, useParams } from '@/router'
 import {
   DndContext,
@@ -7,6 +7,9 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
+  DragOverlay,
+  DragStartEvent,
+  MouseSensor,
 } from '@dnd-kit/core'
 
 import {
@@ -17,7 +20,7 @@ import {
 import SectionHeader from '@/components/functional/SectionHeader'
 import ContainerLayout from '@/components/ui/core/Layout/ContainerLayout'
 import { IRoutePrivilege } from '@/router/routes/create-route'
-import { Button, Flexbox, Grid, Icon } from '@/components/ui'
+import { Button, Flexbox } from '@/components/ui'
 import { decodeParams } from '@/utility/route-params'
 import { useGetRecommendationDetailById } from '../AddRecommendation/services/add-recommendation.query'
 import { useTranslation } from 'react-i18next'
@@ -25,7 +28,6 @@ import { Card } from '@/components/ui/core/Card'
 import { useGetAllGroupByRecommendationId } from './services/groups.query'
 import SortableGroup from './SortableGroup'
 import {
-  IAddGroupInitialValue,
   IAddGroupResponse,
 } from './schema/group.interface'
 import AddGroup from './AddGroup'
@@ -49,6 +51,7 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
   }
 
   const sensors = useSensors(
+    useSensor(MouseSensor),
     useSensor(PointerSensor),
     useSensor(KeyboardSensor)
   )
@@ -64,7 +67,7 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
     if (groupListData) setGroupingList(groupListData)
   }, [groupListData])
 
-  const handleDragGroupEnd = ({ active, over }: { active: any; over: any }) => {
+  const handleDragGroupEnd = useCallback(({ active, over }: { active: any; over: any }) => {
     if (active.id === over.id) {
       return
     }
@@ -77,7 +80,7 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
         return arrayMove(groupingList, oldIndex, newIndex)
       })
     }
-  }
+  }, [])
 
   return (
     <>
