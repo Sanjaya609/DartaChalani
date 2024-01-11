@@ -10,6 +10,7 @@
   "addField": "Add Field",
   "fieldName": "Field Name",
   "fieldType": "Field Type",
+  "gridLength": "Grid Length",
   "orderNo": "Order Number",
   "isValidationRequired": "Is Mandatory?",
   "showInForm": "Show In Form",
