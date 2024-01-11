@@ -43,14 +43,14 @@ const AddGroup = ({
     useCreateGroup()
 
   const handleAddGroup = (values: IAddGroupInitialValue) => {
-    const { id, nameEnglish, nameNepali, recommendationId, showInForm } = values
+    const { id, nameEnglish, nameNepali, showInForm } = values
 
     const reqData: IAddGroupPayload = {
       id: id || '',
       nameEnglish: nameEnglish,
       nameNepali: nameNepali,
-      recommendationId: recommendationId,
-      showInForm: showInForm
+      recommendationId: recommendationId!,
+      showInForm: showInForm,
     }
 
     createGroup(reqData, {
@@ -78,7 +78,7 @@ const AddGroup = ({
           nameEnglish: editGroupData.nameEnglish,
           nameNepali: editGroupData.nameNepali,
           recommendationId: editGroupData.recommendationId,
-          showInForm: editGroupData.showInForm
+          showInForm: editGroupData.showInForm,
         }
       : initialGroupValue,
     enableReinitialize: true,
@@ -98,11 +98,7 @@ const AddGroup = ({
           setViewOnly && setViewOnly(false)
         }}
         size="md"
-        title={
-          editGroupData
-            ? "Edit Group"
-            : "Add Group"
-        }
+        title={editGroupData ? 'Edit Group' : 'Add Group'}
         saveBtnProps={{
           btnAction: handleSubmit,
           loading: createGroupLoading,
@@ -158,10 +154,7 @@ const AddGroup = ({
                 name="showInForm"
                 label={t('recommendation.showInForm')}
                 onChange={() => {
-                  setFieldValue(
-                    'showInForm',
-                    !values.showInForm
-                  )
+                  setFieldValue('showInForm', !values.showInForm)
                 }}
                 onBlur={handleBlur}
               />

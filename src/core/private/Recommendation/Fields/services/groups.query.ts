@@ -21,7 +21,7 @@ const useCreateGroup = () => {
   return useMutation(
     (requestData: IAddGroupInitialValue) => {
       return initApiRequest({
-        apiDetails: createGroup,
+        apiDetails:  requestData?.id ? updateGroup : createGroup,
         requestData,
       })
     },
