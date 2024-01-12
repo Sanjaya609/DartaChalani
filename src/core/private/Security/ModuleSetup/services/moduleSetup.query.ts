@@ -15,7 +15,8 @@ const {
   getConfigurableModuleList,
   changeModuleStatus,
   getUnConfigurableModuleList,
-  deleteModuleResource
+  deleteModuleResource,
+  getDynamicFormModuleList,
 } = apiDetails
 
 const useCreateModule = () => {
@@ -162,21 +163,21 @@ const useGetUnConfigurableModuleList = <T = IModuleSetupTableData[]>(
   return useQuery(
     [getUnConfigurableModuleList.queryKeyName],
     () =>
-    initApiRequest<BackendSuccessResponse<IModuleSetupTableData[]>>({
-      apiDetails:getUnConfigurableModuleList,
-    }),
+      initApiRequest<BackendSuccessResponse<IModuleSetupTableData[]>>({
+        apiDetails: getUnConfigurableModuleList,
+      }),
     {
       select: (data) => {
         const moduleListData = data?.data?.data?.length ? data.data.data : []
         return (
           getDataWithPropsValue?.mapDatatoStyleSelect
-          ? mapDataToStyledSelect({
-            arrayData: moduleListData,
-            id: 'id',
-            name: 'moduleNameEnglish',
-            nameNp: 'moduleNameNepali'
-          })
-          : moduleListData
+            ? mapDataToStyledSelect({
+                arrayData: moduleListData,
+                id: 'id',
+                name: 'moduleNameEnglish',
+                nameNp: 'moduleNameNepali',
+              })
+            : moduleListData
         ) as T
       },
     }
@@ -201,6 +202,35 @@ const useDeleteModuleResource = () => {
   )
 }
 
+const useGetDynamicFormModuleList = <T = IModuleSetupTableData[]>(
+  isActive = true,
+  getDataWithPropsValue?: IGetDataWithPropsVal
+) => {
+  return useQuery(
+    [getDynamicFormModuleList.queryKeyName],
+    () =>
+      initApiRequest<BackendSuccessResponse<IModuleSetupTableData[]>>({
+        apiDetails: getDynamicFormModuleList,
+        pathVariables: { isActive },
+      }),
+    {
+      select: (data) => {
+        const moduleListData = data?.data?.data?.length ? data.data.data : []
+        return (
+          getDataWithPropsValue?.mapDatatoStyleSelect
+            ? mapDataToStyledSelect({
+                arrayData: moduleListData,
+                id: 'id',
+                name: 'moduleNameEnglish',
+                nameNp: 'moduleNameNepali',
+              })
+            : moduleListData
+        ) as T
+      },
+    }
+  )
+}
+
 export {
   useCreateModule,
   useGetAllModule,
@@ -209,5 +239,6 @@ export {
   useGetModuleListByStatus,
   useGetConfigurableModuleList,
   useGetUnConfigurableModuleList,
-  useDeleteModuleResource
+  useDeleteModuleResource,
+  useGetDynamicFormModuleList,
 }

@@ -22,7 +22,7 @@ const MainSidebar = () => {
                 title={
                   nav?.titleEn
                     ? getTextByLanguage(nav?.titleEn || '', nav?.titleNp || '')
-                    : (t(nav.title) as TFuncKey<'translation'>)
+                    : (t(nav.title as TFuncKey<'translation'>) as string)
                 }
                 className={`flex w-full cursor-pointer justify-center py-4 hover:bg-primary ${
                   isActive ? 'bg-primary' : ''

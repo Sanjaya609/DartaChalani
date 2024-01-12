@@ -1,4 +1,4 @@
-const baseRoute = '/recommendation'
+const baseRoute = '/recommendation-setup'
 
 export const recommendationSetupRoutePath = {
   base: baseRoute,

@@ -80,7 +80,7 @@ const MenuOverlay = () => {
               />
 
               <Text className="text-sm text-white">
-                {t(nav.title) as TFuncKey<'translation'>}
+                {t(nav.title as TFuncKey<'translation'>) as string}
               </Text>
             </Link>
           )

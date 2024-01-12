@@ -4,6 +4,7 @@ import {
 } from '@/components/functional/MainSidebar/sidebar.data'
 import React, { useContext } from 'react'
 import { useAuth } from './AuthProvider'
+import { Ticket } from 'phosphor-react'
 
 interface ISidebarContext {
   isOpen: boolean
@@ -22,7 +23,25 @@ interface Props {
 }
 export const SidebarProvider = ({ children }: Props) => {
   const [isOpen, setIsOpen] = React.useState(false)
-  const { flatModulePropsFromURL } = useAuth()
+  const { flatModulePropsFromURL, initData } = useAuth()
+
+  const dynamicSidebarNavList = React.useMemo<ISidebarNavList[]>(() => {
+    return initData?.moduleList?.length
+      ? initData?.moduleList
+          ?.filter(
+            (module) => module.dynamicField || module.dynamicFormApplicable
+          )
+          .map((module) => ({
+            ...module,
+            titleEn: module.moduleNameEnglish,
+            titleNp: module.moduleNameNepali,
+            icon: Ticket,
+            path: module.url,
+            title: module.moduleNameNepali,
+          }))
+      : []
+  }, [initData?.moduleList])
+
   const privilegedSidebarNavList = React.useMemo(() => {
     return sidebarNavList
       .filter((navList) => {
@@ -35,6 +54,11 @@ export const SidebarProvider = ({ children }: Props) => {
         ...navList,
         titleEn: flatModulePropsFromURL?.[navList.path]?.moduleNameEnglish,
         titleNp: flatModulePropsFromURL?.[navList.path]?.moduleNameNepali,
+        path:
+          flatModulePropsFromURL?.[navList.path]?.dynamicField ||
+          flatModulePropsFromURL?.[navList.path]?.dynamicFormApplicable
+            ? flatModulePropsFromURL?.[navList.path]?.url
+            : navList.path,
       }))
   }, [flatModulePropsFromURL])
 
@@ -42,9 +66,12 @@ export const SidebarProvider = ({ children }: Props) => {
     () => ({
       isOpen,
       setIsOpen: (state?: boolean) => setIsOpen(state || !isOpen),
-      privilegedSidebarNavList,
+      privilegedSidebarNavList: [
+        ...privilegedSidebarNavList,
+        ...dynamicSidebarNavList,
+      ],
     }),
-    [isOpen, privilegedSidebarNavList]
+    [isOpen, privilegedSidebarNavList, dynamicSidebarNavList]
   )
 
   return (

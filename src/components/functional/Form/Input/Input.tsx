@@ -14,7 +14,7 @@ import {
   inputWrapperClass,
 } from './input.styles'
 
-interface IInputProps
+export interface IInputProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
     IBaseFormControlProps {
   type?: 'number' | 'email' | 'password' | 'text'
@@ -50,6 +50,7 @@ const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
     touched,
     isFieldArray,
   })
+
   const computedInputWrapperClass = getComputedClassNames(
     formCommonInputWrapperClass,
     inputWrapperClass,

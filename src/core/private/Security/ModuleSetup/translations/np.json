@@ -10,6 +10,7 @@
   "url": "URL",
   "code": "कोड",
   "resource": "Resource",
+  "dynamicFormApplicable": "डायनामिक फारम मोड्युल हो?",
   "resourceRequestList": {
     "httpMethod": "HTTP विधि",
     "privilege": "Privilege",
