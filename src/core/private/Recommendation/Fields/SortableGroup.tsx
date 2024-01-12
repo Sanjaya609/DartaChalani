@@ -162,7 +162,7 @@ const SortableGroup = ({
   return (
     <div className="relative mb-3">
       <div
-        className="relativ group/field bg-gray-200 p-2 hover:rounded-md hover:border hover:border-rose-500"
+        className="relativ group/field bg-gray-100 p-2 hover:rounded-md hover:border hover:border-rose-500"
         ref={setNodeRef}
         {...attributes}
         style={style}
