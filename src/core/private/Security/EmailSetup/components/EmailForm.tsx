@@ -53,6 +53,7 @@ const EmailForm = () => {
             handleChange,
             handleSubmit,
             handleBlur,
+            setFieldValue,
           }) => {
             return (
               <>
@@ -67,7 +68,12 @@ const EmailForm = () => {
                         touched={touched}
                         name="email"
                         label={t('security.email.email')}
-                        onChange={handleChange}
+                        onChange={(e) => {
+                          setFieldValue(
+                            'email',
+                            e.target.value.replace(/\s/g, '')
+                          )
+                        }}
                         onBlur={handleBlur}
                       />
                     </Grid.Col>
