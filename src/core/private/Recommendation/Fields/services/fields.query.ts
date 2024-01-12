@@ -24,7 +24,7 @@ const useCreateField = () => {
   return useMutation(
     (requestData: IAddFieldInitialValue) => {
       return initApiRequest({
-        apiDetails: createField,
+        apiDetails: requestData.id ? updateField : createField,
         requestData,
       })
     },

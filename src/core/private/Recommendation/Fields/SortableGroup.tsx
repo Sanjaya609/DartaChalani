@@ -24,16 +24,21 @@ import { IAddGroupResponse } from './schema/group.interface'
 import { useUpdateFieldOrder } from './services/fields.query'
 import Modal from '@/components/ui/Modal/Modal'
 import { useDeleteGroupById } from './services/groups.query'
+import { Spinner } from '@/components/ui/Spinner'
 
 const SortableGroup = ({
   item,
   toggleGroupForm,
+  groupListDataFetching,
 }: {
   item: IAddGroupResponse
   toggleGroupForm: (groupData?: IAddGroupResponse) => void
+  groupListDataFetching: boolean
 }) => {
   const { t } = useTranslation()
-  const [items, setItems] = useState(item.fieldResponseList!)
+  const [items, setItems] = useState(
+    item.fieldResponseList!.sort((a, b) => a?.orderNo! - b?.orderNo!)
+  )
 
   const [showAddOrEditForm, setShowAddOrEditForm] = useState(false)
   const [editId, setEditId] = useState<number | null>()
@@ -41,10 +46,10 @@ const SortableGroup = ({
   const [deleteId, setDeleteId] = useState<string | number>('')
   const setOrRemoveDeleteId = (id?: string | number) => setDeleteId(id || '')
 
-  const { mutate: updateFieldOrder, isLoading: createGroupLoading } =
+  const { mutate: updateFieldOrder, isLoading: updateFieldOrderLoading } =
     useUpdateFieldOrder()
 
-    const { mutate: deleteById, isLoading: deleteByIdLoading } =
+  const { mutate: deleteById, isLoading: deleteByIdLoading } =
     useDeleteGroupById()
 
   const handleDeleteById = () => {
@@ -83,13 +88,13 @@ const SortableGroup = ({
       const oldIndex = items.findIndex((item) => item.id === active.id)
       const newIndex = items.findIndex((item) => item.id === over.id)
       let newOrder = arrayMove(items, oldIndex, newIndex)
-      let newOrderPayload = newOrder?.map((order,index) => ({
+      let newOrderDto = newOrder?.map((order, index) => ({
         fieldGroupId: item.id,
         id: order.id,
-        orderNo: index
+        orderNo: index,
       }))
 
-      updateFieldOrder(newOrderPayload)
+      updateFieldOrder(newOrderDto)
       // Update the items array when an item is dropped
       setItems(newOrder)
     }
@@ -97,58 +102,57 @@ const SortableGroup = ({
 
   const renderGroupActionButtons = (item: IAddGroupResponse) => (
     <div className="absolute right-0 top-[-10px] mr-3 hidden flex-row-reverse space-x-2 group-hover/field:flex">
-        <Button
-          {...listeners}
-          {...attributes}
-          ref={setNodeRef}
-          variant="warning"
-          size="sm"
-          type="button"
-          icons="icons"
-          className="z-40 ml-2 whitespace-nowrap rounded border border-gray-80"
-        >
-          <Icon icon={HandGrabbing} />
-        </Button>
+      <Button
+        {...listeners}
+        ref={setNodeRef}
+        variant="warning"
+        size="sm"
+        type="button"
+        icons="icons"
+        className="z-40 ml-2 whitespace-nowrap rounded border border-gray-80"
+      >
+        <Icon icon={HandGrabbing} />
+      </Button>
 
-        <Button
-          variant="danger"
-          size="sm"
-          type="button"
-          icons="icons"
-          className="z-40 whitespace-nowrap rounded border border-gray-80"
-          onClick={() => {
-            setDeleteId(item.id)
-          }}
-        >
-          <Icon icon={Trash} />
-        </Button>
+      <Button
+        variant="danger"
+        size="sm"
+        type="button"
+        icons="icons"
+        className="z-40 whitespace-nowrap rounded border border-gray-80"
+        onClick={() => {
+          setDeleteId(item.id)
+        }}
+      >
+        <Icon icon={Trash} />
+      </Button>
 
-        <Button
-          variant="primary"
-          size="sm"
-          type="button"
-          icons="icons"
-          className="z-40 whitespace-nowrap rounded border border-gray-80"
-          onClick={() => {
-            toggleGroupForm(item)
-          }}
-        >
-          <Icon icon={Pencil} />
-        </Button>
+      <Button
+        variant="primary"
+        size="sm"
+        type="button"
+        icons="icons"
+        className="z-40 whitespace-nowrap rounded border border-gray-80"
+        onClick={() => {
+          toggleGroupForm(item)
+        }}
+      >
+        <Icon icon={Pencil} />
+      </Button>
 
-        <Button
-          variant="success"
-          size="sm"
-          type="button"
-          icons="icons"
-          className="z-40 whitespace-nowrap rounded border border-gray-80"
-          onClick={() => {
-            setShowAddOrEditForm(true)
-          }}
-        >
-          <Icon icon={Plus} />
-        </Button>
-      </div>
+      <Button
+        variant="success"
+        size="sm"
+        type="button"
+        icons="icons"
+        className="z-40 whitespace-nowrap rounded border border-gray-80"
+        onClick={() => {
+          setShowAddOrEditForm(true)
+        }}
+      >
+        <Icon icon={Plus} />
+      </Button>
+    </div>
   )
 
   useEffect(() => {
@@ -156,18 +160,20 @@ const SortableGroup = ({
   }, [item])
 
   return (
-    <div className="relative mb-3 bg-gray-200">
-      <div 
-        className="relativ group/field hover:rounded-md hover:border hover:border-rose-500 p-2"
+    <div className="relative mb-3">
+      <div
+        className="relativ group/field bg-gray-200 p-2 hover:rounded-md hover:border hover:border-rose-500"
         ref={setNodeRef}
         {...attributes}
         style={style}
       >
-      {renderGroupActionButtons(item)}
+        {renderGroupActionButtons(item)}
         <Flexbox
           align="center"
           justify="space-between"
-          className={`mt-3 w-full mb-2 ml-2 ${item.showInForm ? "" : "line-through text-zinc-400"}`}
+          className={`mb-2 ml-2 mt-3 w-full ${
+            item.showInForm ? '' : 'text-zinc-400 line-through'
+          }`}
         >
           <Text variant="h5" typeface="semibold">
             {item.nameEnglish}
@@ -179,24 +185,33 @@ const SortableGroup = ({
             sensors={sensors}
             collisionDetection={closestCenter}
             onDragEnd={handleDragEnd}
-            onDragCancel={() => console.log('Drag cancelled')}
           >
-            <SortableContext items={items} strategy={rectSortingStrategy}>
-              {items.map((item) => (
-                <>
-                  <Grid.Col
-                    sm={'sm:col-span-4'}
-                    className=" relative"
-                    key={item.id}
-                  >
-                    <SortableItem key={item.id} item={item} setEditId={(id: number) => {
-                      setEditId(id)
-                      setShowAddOrEditForm(true)
-                    }} />
-                  </Grid.Col>
-                </>
-              ))}
-            </SortableContext>
+            {groupListDataFetching ||
+            updateFieldOrderLoading ||
+            deleteByIdLoading ? (
+              <Spinner />
+            ) : (
+              <SortableContext items={items} strategy={rectSortingStrategy}>
+                {items.map((item) => (
+                  <>
+                    <Grid.Col
+                      sm={`sm:col-span-${item.gridLength ?? 4}`}
+                      className="relative"
+                      key={item.id}
+                    >
+                      <SortableItem
+                        key={item.id}
+                        item={item}
+                        setEditId={(id: number) => {
+                          setEditId(id)
+                          setShowAddOrEditForm(true)
+                        }}
+                      />
+                    </Grid.Col>
+                  </>
+                ))}
+              </SortableContext>
+            )}
           </DndContext>
         </Grid>
         {showAddOrEditForm && (

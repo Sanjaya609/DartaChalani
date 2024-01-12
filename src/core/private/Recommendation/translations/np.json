@@ -10,6 +10,7 @@
   "addField": "फिल्ड थप्नुहोस्",
   "fieldName": "फिल्डको नाम",
   "fieldType": "फिल्डको प्रकार",
+  "gridLength": "Grid Length",
   "orderNo": "अर्डर नम्बर",
   "isValidationRequired": "प्रमाणीकरण आवश्यक छ ?",
   "showInForm": "Show In Form",

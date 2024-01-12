@@ -18,4 +18,15 @@ export interface IAddGroupPayload
     recommendationId: string;
     fieldResponseList?: IAddFieldInitialValue[]
     showInForm: boolean
+    orderNo?: number
+ }
+
+ export interface IUpdateGroupOrderDTO {
+    id: number,
+    ordering: number
+ }
+
+ export interface IUpdateGroupOrder {
+    orderDto: IUpdateGroupOrderDTO[],
+    targetId: number
  }

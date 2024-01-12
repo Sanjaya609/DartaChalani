@@ -4,12 +4,13 @@ export interface IAddFieldInitialValue {
     fieldControlName?: string;
     fieldType: string;
     isValidationRequired: boolean;
-    // orderNo: string | number;
+    orderNo?: number;
     recommendationId: string;
     labelNameEnglish: string;
     labelNameNepali: string;
     className: string;
     groupingId: number | null;
+    gridLength: 3 | 4 | 6 | 12
 }
 
 export interface IAddFieldPayload
@@ -27,6 +28,7 @@ export interface IAddFieldResponse {
     labelNameNepali: string;
     className: string
     groupingId: number | null;
+    gridLength: 3 | 4 | 6 | 12
  }
 
  export interface IUpdateFieldOrder {

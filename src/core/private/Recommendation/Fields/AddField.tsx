@@ -25,11 +25,11 @@ const AddField = ({
   setShowAddOrEditForm,
 }: {
   fieldId?: number
-  setFieldId:  Dispatch<SetStateAction<number | null | undefined>>
+  setFieldId: Dispatch<SetStateAction<number | null | undefined>>
   groupId: number
   setShowAddOrEditForm: Dispatch<SetStateAction<boolean>>
 }) => {
-  console.log(fieldId, "filter here")
+  console.log(fieldId, 'filter here')
   const { t } = useTranslation()
   const params = useParams()
   const recommendationId = decodeParams<string>(params?.id)
@@ -57,6 +57,7 @@ const AddField = ({
       labelNameEnglish,
       labelNameNepali,
       className,
+      gridLength,
     } = values
 
     const reqData: IAddFieldPayload = {
@@ -69,6 +70,7 @@ const AddField = ({
       className,
       groupingId: groupId,
       recommendationId: recommendationId!,
+      gridLength,
     }
 
     createField(reqData, {
@@ -91,6 +93,7 @@ const AddField = ({
         className,
         dropDownId,
         groupingId,
+        gridLength,
       } = fieldDetails
       setInitialFieldValue({
         id,
@@ -102,6 +105,7 @@ const AddField = ({
         className,
         groupingId,
         recommendationId: recommendationId!,
+        gridLength,
       })
     }
   }, [fieldDetails, fieldId])
@@ -201,6 +205,29 @@ const AddField = ({
                   'isValidationRequired',
                   !values.isValidationRequired
                 )
+              }}
+              onBlur={handleBlur}
+            />
+          </Grid.Col>
+
+          <Grid.Col sm={'sm:col-span-4'}>
+            <Form.Select
+              isRequired
+              isLoading={fieldTypeFetching}
+              options={[
+                { label: '1/4 Screen Length', value: 3 },
+                { label: '1/3 Screen Length', value: 4 },
+                { label: 'Half Screen Length', value: 6 },
+                { label: 'Full Screen Length', value: 12 },
+              ]}
+              calculateValueOnChange
+              value={values.gridLength}
+              errors={errors}
+              touched={touched}
+              name="gridLength"
+              label={t('recommendation.gridLength')}
+              onChange={(event) => {
+                setFieldValue(event.name, event?.main || '')
               }}
               onBlur={handleBlur}
             />

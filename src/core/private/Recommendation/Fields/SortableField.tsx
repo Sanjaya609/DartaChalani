@@ -9,13 +9,22 @@ import Modal from '@/components/ui/Modal/Modal'
 import { useDeleteFieldById } from './services/fields.query'
 import { useTranslation } from 'react-i18next'
 
-const SortableField = ({ item, setEditId }: { 
+const SortableField = ({
+  item,
+  setEditId,
+}: {
   item: IAddFieldInitialValue
-  setEditId: (id: number) => void;
- }) => {
+  setEditId: (id: number) => void
+}) => {
   const { t } = useTranslation()
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
-    useSortable({ id: item.id })
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: item.id })
   const style = {
     opacity: isDragging ? 0.4 : undefined,
     transition,
@@ -59,20 +68,19 @@ const SortableField = ({ item, setEditId }: {
         className="z-40 ml-4 whitespace-nowrap rounded border border-gray-80"
         onClick={() => {
           setDeleteId(item.id)
-        } 
-      }
+        }}
       >
         <Icon icon={Trash} />
       </Button>
 
       <Button
-          {...listeners}
-          ref={setNodeRef}
-          variant="warning"
-          size="xs"
-          type="button"
-          icons="icons"
-          className="z-40 ml-4 whitespace-nowrap rounded border border-gray-80"
+        {...listeners}
+        ref={setNodeRef}
+        variant="warning"
+        size="xs"
+        type="button"
+        icons="icons"
+        className="z-40 ml-4 whitespace-nowrap rounded border border-gray-80"
       >
         <Icon icon={HandGrabbing} />
       </Button>
@@ -81,7 +89,7 @@ const SortableField = ({ item, setEditId }: {
 
   return (
     <div
-      className="group/group relative hover:rounded-md hover:border p-2 hover:bg-gray-50"
+      className="group/group relative p-2 hover:rounded-md hover:border hover:bg-gray-50"
       ref={setNodeRef}
       {...attributes}
       style={style}
