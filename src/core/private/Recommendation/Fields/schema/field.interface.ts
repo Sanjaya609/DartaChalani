@@ -1,8 +1,10 @@
+import { FormKeyType } from "@/components/functional/Form/Form";
+
 export interface IAddFieldInitialValue {
     id: number;
     dropDownId: string | number;
     fieldControlName?: string;
-    fieldType: string;
+    fieldType: FormKeyType;
     isValidationRequired: boolean;
     orderNo?: number;
     recommendationId: string;
@@ -10,7 +12,7 @@ export interface IAddFieldInitialValue {
     labelNameNepali: string;
     className: string;
     groupingId: number | null;
-    gridLength: 3 | 4 | 6 | 12
+    gridLength: 3 | 4 | 6 | 12 // usecase: col-span-{gridLenght}
 }
 
 export interface IAddFieldPayload
@@ -19,7 +21,7 @@ export interface IAddFieldPayload
 export interface IAddFieldResponse {
     dropDownId: string | number;
     fieldControlName: string;
-    fieldType: string;
+    fieldType: FormKeyType;
     id: number;
     isValidationRequired: boolean;
     // orderNo: string | number;

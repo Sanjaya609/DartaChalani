@@ -27,7 +27,7 @@ export const createFormInputFromFieldType = (
   const { values, handleChange, handleBlur, errors, setFieldValue, touched } =
     formikConfig
 
-  switch (field.fieldType) {
+  switch (field.fieldType.toUpperCase()) {
     case DYNAMICFORMFIELDTYPE.SELECT:
       return DynamicFormFieldTypeMapping.SELECT({
         onChange: (e) => {
