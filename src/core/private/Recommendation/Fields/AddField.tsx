@@ -29,7 +29,6 @@ const AddField = ({
   groupId: number
   setShowAddOrEditForm: Dispatch<SetStateAction<boolean>>
 }) => {
-  console.log(fieldId, 'filter here')
   const { t } = useTranslation()
   const params = useParams()
   const recommendationId = decodeParams<string>(params?.id)

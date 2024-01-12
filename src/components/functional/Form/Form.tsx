@@ -18,4 +18,7 @@ const Form = {
   Switch: SwitchInput,
 }
 
+type FormType = typeof Form
+export type FormKeyType = keyof FormType
+
 export default Form

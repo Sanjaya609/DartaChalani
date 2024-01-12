@@ -87,6 +87,23 @@ const SortableField = ({
     </div>
   )
 
+  const renderField = (item: IAddFieldInitialValue) => {
+    const ComponentToRender = Form[item.fieldType]
+
+    return (
+      <ComponentToRender
+        options={[]}
+        disabled
+        isRequired
+        value=""
+        errors={{}}
+        name="fieldControlName"
+        label={item.labelNameEnglish}
+        onChange={() => {}}
+      />
+    )
+  }
+
   return (
     <div
       className="group/group relative p-2 hover:rounded-md hover:border hover:bg-gray-50"
@@ -95,6 +112,7 @@ const SortableField = ({
       style={style}
     >
       {renderActionButtons(item)}
+      {}
       <Form.Input
         disabled
         isRequired
