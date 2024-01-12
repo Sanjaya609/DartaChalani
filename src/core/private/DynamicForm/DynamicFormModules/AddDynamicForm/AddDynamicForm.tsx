@@ -1,3 +1,4 @@
+import FallbackLoader from '@/components/FallbackLoader'
 import SectionHeader from '@/components/functional/SectionHeader'
 import { Box, Button, Grid } from '@/components/ui'
 import ContainerLayout from '@/components/ui/core/Layout/ContainerLayout'
@@ -5,6 +6,7 @@ import { Text } from '@/components/ui/core/Text'
 import { IAddGroupResponse } from '@/core/private/Recommendation/Fields/schema/group.interface'
 import { useGetAllGroupByRecommendationId } from '@/core/private/Recommendation/Fields/services/groups.query'
 import { getTextByLanguage } from '@/lib/i18n/i18n'
+import { IRoutePrivilege } from '@/router/routes/create-route'
 import {
   createFormInputFromFieldType,
   makeFieldsWithSchema,
@@ -12,6 +14,7 @@ import {
 import { useFormik } from 'formik'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
 
 // export const dynamicForm = [
@@ -124,21 +127,24 @@ import * as Yup from 'yup'
 //   },
 // ]
 
-const AddDynamicForm = () => {
-  const { t } = useTranslation()
+const AddDynamicForm = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
+  console.log({ currentModuleDetails })
+
   const [isFormFieldReady, setIsFormFieldReady] = useState(false)
   const [validationSchema, setValidationSchema] = useState<Record<string, any>>(
     Yup.object({})
   )
   const [initialValues, setInitialValues] = useState({})
-  const { data: dynamicFormData } = useGetAllGroupByRecommendationId(11)
+  const { t } = useTranslation()
+  const navigate = useNavigate()
+  const { data: dynamicFormData, isFetching: dynamicFormDataFetching } =
+    useGetAllGroupByRecommendationId(currentModuleDetails?.id || null)
 
   const generateFieldWithValidationSchema = (form: IAddGroupResponse[]) => {
     const { initialValues, validationSchema } = makeFieldsWithSchema(form)
-    console.log({ initialValues })
-
     setInitialValues(initialValues)
     setValidationSchema(Yup.object(validationSchema))
+    setIsFormFieldReady(true)
   }
 
   useEffect(() => {
@@ -158,11 +164,20 @@ const AddDynamicForm = () => {
     },
   })
 
-  console.log({ formikConfig: formikConfig.errors })
-
-  return (
+  return dynamicFormDataFetching ? (
+    <FallbackLoader />
+  ) : isFormFieldReady && !dynamicFormDataFetching ? (
     <>
-      <SectionHeader title={'Dynamic Form'} />
+      <SectionHeader
+        parentTitle={getTextByLanguage(
+          currentModuleDetails?.moduleNameEnglish || '',
+          currentModuleDetails?.moduleNameNepali || ''
+        )}
+        title={t('btns.add')}
+        backAction={() => {
+          navigate(currentModuleDetails?.url || '-1')
+        }}
+      />
       <ContainerLayout className="scrollbars grow ">
         <form>
           {dynamicFormData?.map((group) => (
@@ -209,6 +224,8 @@ const AddDynamicForm = () => {
         </ContainerLayout>
       </Box>
     </>
+  ) : (
+    <>Form setup not completed</>
   )
 }
 

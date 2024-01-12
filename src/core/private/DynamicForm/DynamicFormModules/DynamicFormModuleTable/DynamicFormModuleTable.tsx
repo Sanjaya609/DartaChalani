@@ -6,23 +6,24 @@ import { IDropdownConfigResponse } from '@/core/private/MasterSetup/DropdownConf
 import { getTextByLanguage } from '@/lib/i18n/i18n'
 import { IRoutePrivilege } from '@/router/routes/create-route'
 import { ColumnDef } from '@tanstack/react-table'
-import { t } from 'i18next'
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
 const DynamicFormModuleTable = ({
   currentModuleDetails,
 }: Partial<IRoutePrivilege>) => {
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   const columns = React.useMemo<ColumnDef<IDropdownConfigResponse>[]>(
     () => [
       {
-        header: 'dynamicdata',
+        header: 'Dynamic Fields',
         accessorKey: 'dropDownCode',
       },
     ],
-    []
+    [t]
   )
 
   return (

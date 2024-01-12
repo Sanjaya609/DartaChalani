@@ -42,15 +42,15 @@ export const dynamicFormRoutes: _RouteObject<'private'>[] = [
             checkPrivilege: [PRIVILEGEENUM.READ_LIST],
             isDynamicRoute: true,
           }),
-          createRoute({
-            path: privateRoutePath.dynamicForm.add,
-            element: AddDynamicForm,
-            checkPrivilege: [PRIVILEGEENUM.CREATE],
-            isDynamicRoute: true,
-            checkFromParentPath: privateRoutePath.dynamicForm.formModules,
-          }),
         ],
       }),
     ],
+  }),
+  createRoute({
+    path: privateRoutePath.dynamicForm.add,
+    element: AddDynamicForm,
+    checkPrivilege: [PRIVILEGEENUM.CREATE],
+    isDynamicRoute: true,
+    checkFromParentPath: privateRoutePath.dynamicForm.formModules,
   }),
 ]

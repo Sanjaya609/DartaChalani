@@ -27,8 +27,6 @@ export const createFormInputFromFieldType = (
   const { values, handleChange, handleBlur, errors, setFieldValue, touched } =
     formikConfig
 
-  console.log({ errors: errors[field.fieldControlName as string] })
-
   switch (field.fieldType) {
     case DYNAMICFORMFIELDTYPE.SELECT:
       return DynamicFormFieldTypeMapping.SELECT({

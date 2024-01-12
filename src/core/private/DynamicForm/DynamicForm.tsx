@@ -3,10 +3,12 @@ import { ISidebarItem } from '@/components/functional/MainSidebar/Sidebar/sideba
 import { Layout } from '@/components/ui'
 import { IRoutePrivilege } from '@/router/routes/create-route'
 import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Outlet } from 'react-router-dom'
 
 const DynamicForm = (props: Partial<IRoutePrivilege>) => {
   const { currentModuleDetails } = props
+  const { t } = useTranslation()
 
   const sideBarItem = useMemo(
     () =>
@@ -19,7 +21,7 @@ const DynamicForm = (props: Partial<IRoutePrivilege>) => {
         titleEn: child.moduleNameEnglish,
         titleNp: child.moduleNameNepali,
       })) || [],
-    []
+    [t]
   )
 
   return (

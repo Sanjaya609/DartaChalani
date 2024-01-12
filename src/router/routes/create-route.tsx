@@ -42,20 +42,25 @@ export const Permission = (props: IPermissionProps) => {
   } = props
   const { flatModulePropsFromURL, initDataFetching } = useAuth()
   const location = useLocation()
-  console.log({ checkFromParentPath })
 
   const currentPathDetails = useMemo<IModulePropsFromURL | undefined>(() => {
     let pathDetails: undefined | IModulePropsFromURL
     if (checkFromParentPath && isDynamicRoute) {
-      const dynamicParent = location.pathname
-      return flatModulePropsFromURL?.[location.pathname]
+      const splitCurrentRoute = location.pathname.split('/')
+      const parentRoute = [
+        splitCurrentRoute[0],
+        splitCurrentRoute[1],
+        splitCurrentRoute[2],
+        splitCurrentRoute[3],
+      ].join('/')
+      pathDetails = flatModulePropsFromURL?.[parentRoute]
     } else if (isDynamicRoute) {
-      return flatModulePropsFromURL?.[location.pathname]
+      pathDetails = flatModulePropsFromURL?.[location.pathname]
+    } else {
+      pathDetails = checkFromParentPath
+        ? flatModulePropsFromURL?.[checkFromParentPath]
+        : flatModulePropsFromURL?.[path]
     }
-
-    pathDetails = checkFromParentPath
-      ? flatModulePropsFromURL?.[checkFromParentPath]
-      : flatModulePropsFromURL?.[path]
 
     return pathDetails
   }, [location.pathname])
@@ -114,6 +119,7 @@ export function createRoute<Type extends RouteType = 'private'>(
     type = !checkPrivilege ? 'bypass' : undefined,
     isDynamicRoute,
   } = args
+
   return {
     ...args,
     element:

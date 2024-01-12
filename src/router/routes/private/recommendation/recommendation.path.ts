@@ -1,4 +1,4 @@
-const baseRoute = '/recommendation-form-setup'
+const baseRoute = '/recommendation-setup'
 
 export const recommendationSetupRoutePath = {
   base: baseRoute,
