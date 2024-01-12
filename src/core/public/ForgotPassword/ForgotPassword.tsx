@@ -28,7 +28,7 @@ const ResetPassword = () => {
     navigate(publicRoutePath.login)
   }
 
-  const { values, handleSubmit, errors, touched, handleChange, handleBlur } =
+  const { values, handleSubmit, errors, touched, setFieldValue, handleBlur } =
     useFormik({
       enableReinitialize: true,
       initialValues: forgotPasswordInitialValue,
@@ -71,8 +71,10 @@ const ResetPassword = () => {
             touched={touched}
             id="email"
             label={t('public.login.resetPassword.email')}
-            onChange={handleChange}
             onBlur={handleBlur}
+            onChange={(e) => {
+              setFieldValue('email', e.target.value.replace(/\s/g, ''))
+            }}
           />
 
           <Button
