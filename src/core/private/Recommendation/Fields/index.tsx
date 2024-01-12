@@ -83,7 +83,7 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
       let newOrder = arrayMove(groupingList, oldIndex, newIndex)
       let newOrderDto = newOrder?.map((order, index) => ({
         id: order.id,
-        ordering: index,
+        ordering: index + 1,
       }))
       uodateGroupOrder({
         orderDto: newOrderDto,
