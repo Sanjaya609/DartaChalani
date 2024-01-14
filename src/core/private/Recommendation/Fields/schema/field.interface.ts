@@ -1,7 +1,7 @@
 import { FormKeyType } from "@/components/functional/Form/Form";
 
 export interface IAddFieldInitialValue {
-    id: number;
+    id: number | string;
     dropDownId: string | number;
     fieldControlName?: string;
     fieldType: FormKeyType;
@@ -35,6 +35,6 @@ export interface IAddFieldResponse {
 
  export interface IUpdateFieldOrder {
     fieldGroupId: number,
-    id: number,
+    id: number | string,
     orderNo: number
  }
