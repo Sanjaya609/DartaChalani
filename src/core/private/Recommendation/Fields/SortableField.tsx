@@ -88,16 +88,25 @@ const SortableField = ({
   )
 
   const renderField = (item: IAddFieldInitialValue) => {
-    const camelCaseFieldType: FormKeyType = item.fieldType.charAt(0).toUpperCase() + item?.fieldType.toLowerCase().replace(/_(\w)/g, (match, group1) => group1.toUpperCase()).slice(1) as FormKeyType;
+    let camelCaseFieldType: FormKeyType = item.fieldType.charAt(0).toUpperCase() + item?.fieldType.toLowerCase().replace(/_(\w)/g, (match, group1) => group1.toUpperCase()).slice(1) as FormKeyType;
+    if (camelCaseFieldType.includes("Radio") ) {
+      camelCaseFieldType = "Radio"
+    }
     const ComponentToRender = Form[camelCaseFieldType]
     
 
     return (
       <ComponentToRender
-        options={[]}
+        options={[
+          {label: "Yes", value: true},
+          {label: "No", value: true},
+        ]}
+        cols={5}
+        rows={5}
         disabled
         isRequired
         value=""
+        checked= {true}
         errors={{}}
         name="fieldControlName"
         label={item.labelNameEnglish}
