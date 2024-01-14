@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import Form from '@/components/functional/Form/Form'
+import Form, { FormKeyType } from '@/components/functional/Form/Form'
 import { IAddFieldInitialValue } from './schema/field.interface'
 import { Button, Icon } from '@/components/ui'
 import { HandGrabbing, Pencil, Trash } from 'phosphor-react'
@@ -24,7 +24,7 @@ const SortableField = ({
     transform,
     transition,
     isDragging,
-  } = useSortable({ id: item.id })
+  } = useSortable({ id: item?.id! })
   const style = {
     opacity: isDragging ? 0.4 : undefined,
     transition,
@@ -54,7 +54,7 @@ const SortableField = ({
         icons="icons"
         className="z-40 ml-4 whitespace-nowrap rounded border border-gray-80"
         onClick={() => {
-          setEditId(item.id)
+          setEditId(parseInt(item?.id.toString()))
         }}
       >
         <Icon icon={Pencil} />
@@ -67,7 +67,7 @@ const SortableField = ({
         icons="icons"
         className="z-40 ml-4 whitespace-nowrap rounded border border-gray-80"
         onClick={() => {
-          setDeleteId(item.id)
+          setDeleteId(item?.id!)
         }}
       >
         <Icon icon={Trash} />
@@ -88,7 +88,9 @@ const SortableField = ({
   )
 
   const renderField = (item: IAddFieldInitialValue) => {
-    const ComponentToRender = Form[item.fieldType]
+    const camelCaseFieldType: FormKeyType = item.fieldType.charAt(0).toUpperCase() + item?.fieldType.toLowerCase().replace(/_(\w)/g, (match, group1) => group1.toUpperCase()).slice(1) as FormKeyType;
+    const ComponentToRender = Form[camelCaseFieldType]
+    
 
     return (
       <ComponentToRender
@@ -112,8 +114,8 @@ const SortableField = ({
       style={style}
     >
       {renderActionButtons(item)}
-      {}
-      <Form.Input
+      {renderField(item)}
+      {/* <Form.Input
         disabled
         isRequired
         value=""
@@ -121,7 +123,7 @@ const SortableField = ({
         name="fieldControlName"
         label={item.labelNameEnglish}
         onChange={() => {}}
-      />
+      /> */}
 
       <Modal
         open={!!deleteId}

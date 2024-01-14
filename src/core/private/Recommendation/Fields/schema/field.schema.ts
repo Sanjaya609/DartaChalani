@@ -6,7 +6,7 @@ export const addFieldInitialValues: IAddFieldInitialValue =
         dropDownId: "",
         // fieldControlName: "Name",
         fieldType: "Input",
-        id: 5,
+        id: "",
         isValidationRequired: false,
         // orderNo: "",
         recommendationId: "",
