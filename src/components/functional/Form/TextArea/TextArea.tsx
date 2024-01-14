@@ -10,7 +10,9 @@ import { convertEngToNepNumber } from '../../Datepicker/datePickerUtils'
 interface IInputProps
   extends React.InputHTMLAttributes<HTMLTextAreaElement>,
     IBaseFormControlProps {
-  withCharacterCount?: boolean
+  withCharacterCount?: boolean,
+  rows?: number,
+  cols?: number
 }
 
 const TextArea = forwardRef<HTMLTextAreaElement, IInputProps>((props, ref) => {
