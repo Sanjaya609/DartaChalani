@@ -88,16 +88,6 @@ const SortableField = ({
   )
 
   const renderField = (item: IAddFieldInitialValue) => {
-    let camelCaseFieldType: FormKeyType = (item.fieldType
-      .charAt(0)
-      .toUpperCase() +
-      item?.fieldType
-        .toLowerCase()
-        .replace(/_(\w)/g, (match, group1) => group1.toUpperCase())
-        .slice(1)) as FormKeyType
-    if (camelCaseFieldType.includes('Radio')) {
-      camelCaseFieldType = 'Radio'
-    }
     const ComponentToRender = Form[item.fieldType]
 
     return (
