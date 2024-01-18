@@ -3,6 +3,16 @@ import { FormKeyType } from "@/components/functional/Form/Form";
 export interface IAddFieldInitialValue {
     id: number | string;
     dropDownId: string | number;
+    dropDownResponse?: { 
+        id: number, 
+        dropDownDescriptionEn: string, 
+        dropDownDescriptionNp: string, 
+        dropDownDetailResponseDtoList: {
+            id: number, 
+            descriptionEn: string, 
+            descriptionNp: string
+        }[] 
+    }
     fieldControlName?: string;
     fieldType: FormKeyType;
     isValidationRequired: boolean;
@@ -24,7 +34,7 @@ export interface IAddFieldResponse {
     fieldType: FormKeyType;
     id: number;
     isValidationRequired: boolean;
-    // orderNo: string | number;
+    orderNo?: number
     recommendationId: "";
     labelNameEnglish: string;
     labelNameNepali: string;

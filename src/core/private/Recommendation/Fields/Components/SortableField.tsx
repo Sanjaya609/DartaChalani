@@ -90,12 +90,21 @@ const SortableField = ({
   const renderField = (item: IAddFieldInitialValue) => {
     const ComponentToRender = Form[item.fieldType]
 
+    console.log(item, "filter here")
     return (
       <ComponentToRender
-        options={[
-          { label: 'Yes', value: true },
-          { label: 'No', value: true },
-        ]}
+        options={
+          item.fieldType === "Select" 
+          ? item.dropDownResponse?.dropDownDetailResponseDtoList?.map(data => ({
+            label: data.descriptionEn,
+            value: data.id,
+            labelNp: data.descriptionNp
+          })) || []
+          : [
+            {label: "Yes", value: true},
+            {label: "No", value: true},
+          ]
+        }
         cols={5}
         rows={5}
         disabled
@@ -119,15 +128,6 @@ const SortableField = ({
     >
       {renderActionButtons(item)}
       {renderField(item)}
-      {/* <Form.Input
-        disabled
-        isRequired
-        value=""
-        errors={{}}
-        name="fieldControlName"
-        label={item.labelNameEnglish}
-        onChange={() => {}}
-      /> */}
 
       <Modal
         open={!!deleteId}
