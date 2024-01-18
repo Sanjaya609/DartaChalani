@@ -9,14 +9,16 @@ import { Text } from '@/components/ui/core/Text'
 import {
   addFieldInitialValues,
   addFieldValidationSchema,
-} from './schema/field.schema'
-import { useCreateField, useGetFieldDetailById } from './services/fields.query'
+} from '../schema/field.schema'
+import { useCreateField, useGetFieldDetailById } from '../services/fields.query'
 import {
   IAddFieldInitialValue,
   IAddFieldPayload,
-} from './schema/field.interface'
+} from '../schema/field.interface'
 import { useParams } from 'react-router-dom'
 import { decodeParams } from '@/utility/route-params'
+import GeneralFields from './FieldTypes/GeneralFields'
+import SwitchFields from './FieldTypes/SwitchFields'
 
 const AddField = ({
   fieldId,
@@ -76,7 +78,7 @@ const AddField = ({
       onSuccess: () => {
         setInitialFieldValue(addFieldInitialValues)
         setShowAddOrEditForm(false)
-        resetForm()
+        formikProps.resetForm()
       },
     })
   }
@@ -109,16 +111,7 @@ const AddField = ({
     }
   }, [fieldDetails, fieldId])
 
-  const {
-    values,
-    errors,
-    touched,
-    handleChange,
-    handleBlur,
-    handleSubmit,
-    setFieldValue,
-    resetForm,
-  } = useFormik({
+  const formikProps = useFormik({
     initialValues: initialFieldValue,
     enableReinitialize: true,
     validationSchema: addFieldValidationSchema,
@@ -127,19 +120,14 @@ const AddField = ({
     },
   })
 
-  const renderAdditionalFields = (
-    fieldType: string,
-    values: IAddFieldInitialValue,
-    handleChange: any,
-    handleBlur: any
-  ) => {
+  const renderAdditionalFields = () => {
     let renderByFieldType = () => {
-      switch (fieldType) {
+      switch (formikProps.values.fieldType.toUpperCase()) {
         case 'INPUT':
           return <></>
 
         case 'SELECT':
-          return <Grid.Col sm={'sm:col-span-12'} key="selectField"></Grid.Col>
+          return <SwitchFields formikProps={formikProps} t={t} />
 
         case 'CHECKBOX':
           return <Grid.Col sm={'sm:col-span-12'} key="checkboxField"></Grid.Col>
@@ -160,77 +148,10 @@ const AddField = ({
       }
     }
 
-    if (values.fieldType)
+    if (formikProps.values.fieldType)
       return (
         <>
-          <Grid.Col sm={'sm:col-span-4'}>
-            <Form.Input
-              isRequired
-              value={values.labelNameEnglish}
-              errors={errors}
-              touched={touched}
-              name="labelNameEnglish"
-              label={t('recommendation.labelNameEnglish')}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-          </Grid.Col>
-
-          <Grid.Col sm={'sm:col-span-4'}>
-            <Form.Input
-              isNepali
-              isRequired
-              value={values.labelNameNepali}
-              errors={errors}
-              touched={touched}
-              name="labelNameNepali"
-              label={t('recommendation.labelNameNepali')}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-          </Grid.Col>
-
-          <Grid.Col sm={'sm:col-span-4'}>
-            <Form.Switch
-              isRequired
-              className="inline"
-              checked={values.isValidationRequired}
-              errors={errors}
-              touched={touched}
-              name="isValidationRequired"
-              label={t('recommendation.isValidationRequired')}
-              onChange={() => {
-                setFieldValue(
-                  'isValidationRequired',
-                  !values.isValidationRequired
-                )
-              }}
-              onBlur={handleBlur}
-            />
-          </Grid.Col>
-
-          <Grid.Col sm={'sm:col-span-4'}>
-            <Form.Select
-              isRequired
-              isLoading={fieldTypeFetching}
-              options={[
-                { label: '1/4 Screen Length', value: 3 },
-                { label: '1/3 Screen Length', value: 4 },
-                { label: 'Half Screen Length', value: 6 },
-                { label: 'Full Screen Length', value: 12 },
-              ]}
-              calculateValueOnChange
-              value={values.gridLength}
-              errors={errors}
-              touched={touched}
-              name="gridLength"
-              label={t('recommendation.gridLength')}
-              onChange={(event) => {
-                setFieldValue(event.name, event?.main || '')
-              }}
-              onBlur={handleBlur}
-            />
-          </Grid.Col>
+          <GeneralFields formikProps={formikProps} t={t} />
 
           {renderByFieldType()}
         </>
@@ -249,7 +170,7 @@ const AddField = ({
         </Text>
         <div className="h-px flex-auto bg-gray-100"></div>
       </Flexbox>
-      <form onSubmit={handleSubmit} className="ml-3">
+      <form onSubmit={formikProps.handleSubmit} className="ml-3">
         <Grid sm={'sm:grid-cols-12'} gap="gap-4">
           <Grid.Col sm={'sm:col-span-4'}>
             <Form.Select
@@ -259,26 +180,21 @@ const AddField = ({
                 return { value: field.key, label: field.nameEnglish }
               })}
               calculateValueOnChange
-              value={values.fieldType}
-              errors={errors}
-              touched={touched}
+              value={formikProps.values.fieldType}
+              errors={formikProps.errors}
+              touched={formikProps.touched}
               name="fieldType"
               label={t('recommendation.fieldType')}
               onChange={(event) => {
-                setFieldValue(event.name, event?.main || '')
+                formikProps.setFieldValue(event.name, event?.main || '')
               }}
-              onBlur={handleBlur}
+              onBlur={formikProps.handleBlur}
             />
           </Grid.Col>
         </Grid>
 
         <Grid sm={'sm:grid-cols-12'} gap="gap-6" className="mt-5">
-          {renderAdditionalFields(
-            values.fieldType,
-            values,
-            handleChange,
-            handleBlur
-          )}
+          {renderAdditionalFields()}
         </Grid>
 
         <Flexbox align="flex-end" justify="flex-end">

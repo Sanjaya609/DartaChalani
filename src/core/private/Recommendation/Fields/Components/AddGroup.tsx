@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useFormik } from 'formik'
 import { useTranslation } from 'react-i18next'
-import { useCreateGroup } from './services/groups.query'
+import { useCreateGroup } from '../services/groups.query'
 import Form from '@/components/functional/Form/Form'
 import { Grid } from '@/components/ui'
 import Modal from '@/components/ui/Modal/Modal'
@@ -9,11 +9,11 @@ import {
   IAddGroupInitialValue,
   IAddGroupPayload,
   IAddGroupResponse,
-} from './schema/group.interface'
+} from '../schema/group.interface'
 import {
   addGroupInitialValues,
   addGroupValidationSchema,
-} from './schema/group.schema'
+} from '../schema/group.schema'
 import { decodeParams } from '@/utility/route-params'
 import { useParams } from 'react-router-dom'
 

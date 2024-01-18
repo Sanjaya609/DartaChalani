@@ -11,6 +11,7 @@
   "fieldName": "फिल्डको नाम",
   "fieldType": "फिल्डको प्रकार",
   "gridLength": "Grid Length",
+  "dropdownOption": "Dropdown Options",
   "orderNo": "अर्डर नम्बर",
   "isValidationRequired": "प्रमाणीकरण आवश्यक छ ?",
   "showInForm": "Show In Form",

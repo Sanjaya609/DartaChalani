@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import Form, { FormKeyType } from '@/components/functional/Form/Form'
-import { IAddFieldInitialValue } from './schema/field.interface'
+import { IAddFieldInitialValue } from '../schema/field.interface'
 import { Button, Icon } from '@/components/ui'
 import { HandGrabbing, Pencil, Trash } from 'phosphor-react'
 import Modal from '@/components/ui/Modal/Modal'
-import { useDeleteFieldById } from './services/fields.query'
+import { useDeleteFieldById } from '../services/fields.query'
 import { useTranslation } from 'react-i18next'
 
 const SortableField = ({
