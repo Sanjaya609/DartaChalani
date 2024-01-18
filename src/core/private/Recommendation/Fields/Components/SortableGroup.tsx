@@ -15,15 +15,15 @@ import {
   rectSortingStrategy,
   useSortable,
 } from '@dnd-kit/sortable'
-import SortableItem from './SortableField'
+import SortableItem from '../Components/SortableField'
 import { Text } from '@/components/ui/core/Text'
 import { Pencil, Trash, HandGrabbing, Plus } from 'phosphor-react'
 import { useTranslation } from 'react-i18next'
-import AddField from './AddField'
-import { IAddGroupResponse } from './schema/group.interface'
-import { useUpdateFieldOrder } from './services/fields.query'
+import AddField from '../Components/AddField'
+import { IAddGroupResponse } from '../schema/group.interface'
+import { useUpdateFieldOrder } from '../services/fields.query'
 import Modal from '@/components/ui/Modal/Modal'
-import { useDeleteGroupById } from './services/groups.query'
+import { useDeleteGroupById } from '../services/groups.query'
 import { Spinner } from '@/components/ui/Spinner'
 
 const SortableGroup = ({

@@ -19,7 +19,7 @@ const addGroupAPI = {
     requestMethod: RequestMethod.GET,
   },
   getAllGroupByRecommendationId: {
-    controllerName: `${prefix}/recommendation/{id}`,
+    controllerName: `field/recommendation/{id}`,
     queryKeyName: 'GET_ALL_GROUP_BY_RECOMMENDATION_ID',
     requestMethod: RequestMethod.GET,
   },

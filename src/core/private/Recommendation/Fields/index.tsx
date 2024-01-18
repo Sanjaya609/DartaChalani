@@ -27,10 +27,11 @@ import {
   useGetAllGroupByRecommendationId,
   useUpdateGroupOrder,
 } from './services/groups.query'
-import SortableGroup from './SortableGroup'
+import SortableGroup from './Components/SortableGroup'
 import { IAddGroupResponse } from './schema/group.interface'
-import AddGroup from './AddGroup'
+import AddGroup from './Components/AddGroup'
 import { Spinner } from '@/components/ui/Spinner'
+import { useGetAllFieldByRecommendationId } from './services/fields.query'
 
 const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
   const { t } = useTranslation()

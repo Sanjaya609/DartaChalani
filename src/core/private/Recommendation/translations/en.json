@@ -11,6 +11,7 @@
   "fieldName": "Field Name",
   "fieldType": "Field Type",
   "gridLength": "Grid Length",
+  "dropdownOption": "Dropdown Options",
   "orderNo": "Order Number",
   "isValidationRequired": "Is Mandatory?",
   "showInForm": "Show In Form",
