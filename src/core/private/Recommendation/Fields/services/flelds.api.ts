@@ -37,6 +37,11 @@ const addFieldAPI = {
     controllerName: `${prefix}/update-order`,
     queryName: "UPDATE_FIELD_ORDER",
     requestMethod: RequestMethod.POST
+  },
+  dynamicFieldList: {
+    controllerName: `${prefix}/list-data/{id}`,
+    queryName: "DYNAMIC_FIELD_LIST",
+    requestMethod: RequestMethod.GET
   }
 }
 

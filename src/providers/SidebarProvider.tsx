@@ -5,6 +5,7 @@ import {
 import React, { useContext } from 'react'
 import { useAuth } from './AuthProvider'
 import { Ticket } from 'phosphor-react'
+import { getTextByLanguage } from '@/lib/i18n/i18n'
 
 interface ISidebarContext {
   isOpen: boolean
@@ -37,7 +38,7 @@ export const SidebarProvider = ({ children }: Props) => {
             titleNp: module.moduleNameNepali,
             icon: Ticket,
             path: module.url,
-            title: module.moduleNameNepali,
+            title: getTextByLanguage(module.moduleNameEnglish,module.moduleNameNepali),
           }))
       : []
   }, [initData?.moduleList])

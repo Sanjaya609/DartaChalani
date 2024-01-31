@@ -90,7 +90,6 @@ const SortableField = ({
   const renderField = (item: IAddFieldInitialValue) => {
     const ComponentToRender = Form[item.fieldType]
 
-    console.log(item, "filter here")
     return (
       <ComponentToRender
         options={
