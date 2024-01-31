@@ -100,7 +100,7 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
         title={recommendationDetails?.nameEnglish}
         backAction={navigateToRecommendationList}
       />
-      <Flexbox align="center" justify="space-between" className="mt-3 w-full">
+      <Flexbox align="center" justify="space-between" className="mt-3 w-full mb-4">
         <div></div>
         <Button
           size="md"
@@ -116,8 +116,8 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
           Add Group
         </Button>
       </Flexbox>
-      <ContainerLayout className="scrollbars mt-[-15px] grow">
-        <Card className="h-full">
+      <ContainerLayout className="scrollbars pt-0">
+        <Card className="pb-8">
           <DndContext
             sensors={sensors}
             collisionDetection={closestCenter}

@@ -7,4 +7,5 @@ export interface ISidebarItem {
   bypass?: boolean
   titleEn?: string
   titleNp?: string
+  id?: number
 }

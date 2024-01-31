@@ -57,14 +57,15 @@ const Sidebar = (props: ISidebarProps) => {
       location.pathname === `${currentPath}/`
     ) {
       if (privilegeSideBarItem.length) {
-        navigate(privilegeSideBarItem[0].path)
+        navigate(privilegeSideBarItem[0].path, { state: { id: privilegeSideBarItem[0]?.id!}})
       }
     }
   }, [privilegeSideBarItem, navigate, location.pathname])
+  
   return (
     <aside className={sideBarAsideWrapper}>
       {privilegeSideBarItem.map((sidebar) => {
-        const isActive = location.pathname.includes(sidebar.path)
+        const isActive = location.pathname === (sidebar.path)
 
         if (sidebar?.children?.length) {
           return (
@@ -100,6 +101,7 @@ const Sidebar = (props: ISidebarProps) => {
               isActive ? 'bg-navy-24' : ''
             }`}
             to={sidebar.path}
+            state={{ id: sidebar.id }}
           >
             <Text variant="subtitle2" className="text-white">
               {sidebar?.titleEn

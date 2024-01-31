@@ -16,7 +16,8 @@ const {
   deleteFieldById,
   getAllGroupByRecommendationId,
   getAllGroup,
-  updateFieldOrder
+  updateFieldOrder,
+  dynamicFieldList
 } = apiDetails
 
 const useCreateField = () => {
@@ -144,6 +145,24 @@ const useGetAllField = <T = IAddFieldResponse[]>() => {
     )
   }
 
+  const useGetDynamicFieldListByFormId = (id: string | number | null) => {
+    return useQuery(
+      [dynamicFieldList.controllerName, id],
+      () =>
+        initApiRequest<BackendSuccessResponse<any>>({
+          apiDetails: dynamicFieldList,
+          pathVariables: { id }
+        }),
+        {
+          select: (data) => {
+            return data?.data?.data
+          },
+          enabled: !!id,
+          staleTime: 0
+        }
+    )
+  }
+
 export {
   useCreateField,
   useUpdateField,
@@ -151,5 +170,6 @@ export {
   useGetAllField,
   useGetFieldDetailById,
   useDeleteFieldById,
-  useUpdateFieldOrder
+  useUpdateFieldOrder,
+  useGetDynamicFieldListByFormId
 }
