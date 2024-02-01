@@ -14,7 +14,7 @@ import {
 import { useFormik } from 'formik'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
 
 // export const dynamicForm = [
@@ -129,7 +129,8 @@ import * as Yup from 'yup'
 
 const AddDynamicForm = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
   console.log({ currentModuleDetails })
-
+  const location = useLocation()
+  
   const [isFormFieldReady, setIsFormFieldReady] = useState(false)
   const [validationSchema, setValidationSchema] = useState<Record<string, any>>(
     Yup.object({})
@@ -175,7 +176,7 @@ const AddDynamicForm = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
         )}
         title={t('btns.add')}
         backAction={() => {
-          navigate(currentModuleDetails?.url || '-1')
+          navigate(currentModuleDetails?.url || '-1', { state: { id: location?.state?.id!}})
         }}
       />
       <ContainerLayout className="scrollbars grow ">
