@@ -11,6 +11,15 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router-dom'
 
+interface ConvertedDataItem {
+  [key: string]: any;
+}
+interface Field {
+  labelNameEnglish: string;
+  fieldId: number;
+  value: any;
+}
+
 const DynamicFormModuleTable = ({
   currentModuleDetails,
 }: Partial<IRoutePrivilege>) => {
@@ -18,18 +27,38 @@ const DynamicFormModuleTable = ({
   const { t } = useTranslation()
   const location = useLocation()
 
+  console.log(location, "filter location")
+
   const { data: dynamicFieldListData = [], isFetching: dynamicFieldListDataFetching } =
     useGetDynamicFieldListByFormId(location?.state?.id)
 
-  const columns = React.useMemo<ColumnDef<IDropdownConfigResponse>[]>(
-    () => [
-      {
-        header: 'Dynamic Fields',
-        accessorKey: 'dropDownCode',
-      },
-    ],
-    [t]
+  const columns = React.useMemo<ColumnDef<any>[]>(
+    () => {
+      if(dynamicFieldListData.length) {
+        return dynamicFieldListData[0]?.values?.map((field: { labelNameEnglish: string, fieldId: number}) => ({
+          id: field.fieldId,
+          header: field.labelNameEnglish,
+          accessorKey: (field.labelNameEnglish + field.fieldId).toLocaleLowerCase()
+        }))
+      } else {
+        return [
+          {
+            header: "Dynamic Fields",
+            accessorKey: ""
+          } 
+        ]
+      }
+    },
+    [t, dynamicFieldListDataFetching, dynamicFieldListData[0]?.values]
   )
+
+  const convertedData: ConvertedDataItem[] = dynamicFieldListData.map((item: {values: Field[]}) => {
+    const convertedItem: ConvertedDataItem = {};
+    item.values.forEach((field: Field) => {
+        convertedItem[field.labelNameEnglish.toLocaleLowerCase() + field.fieldId] = field.value ?? "-";
+    });
+    return convertedItem;
+  });
 
   return (
     <>
@@ -49,11 +78,11 @@ const DynamicFormModuleTable = ({
             canSearch
             addHeaderProps={{
               handleAdd: () => {
-                navigate(`${currentModuleDetails?.url}/add`)
+                navigate(`${currentModuleDetails?.url}/add`, { state: { id: location?.state?.id!}})
               },
             }}
             columns={columns}
-            data={[]}
+            data={convertedData || []}
           />
         </FlexLayout>
       </ContainerLayout>
