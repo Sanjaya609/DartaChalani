@@ -19,6 +19,7 @@ import { useParams } from 'react-router-dom'
 import { decodeParams } from '@/utility/route-params'
 import GeneralFields from './FieldTypes/GeneralFields'
 import SwitchFields from './FieldTypes/SwitchFields'
+import RadioFields from './FieldTypes/RadioFields'
 
 const AddField = ({
   fieldId,
@@ -59,6 +60,7 @@ const AddField = ({
       labelNameNepali,
       className,
       gridLength,
+      showInList,
     } = values
 
     const reqData: IAddFieldPayload = {
@@ -72,6 +74,7 @@ const AddField = ({
       groupingId: groupId,
       recommendationId: recommendationId!,
       gridLength,
+      showInList,
     }
 
     createField(reqData, {
@@ -95,6 +98,7 @@ const AddField = ({
         dropDownId,
         groupingId,
         gridLength,
+        showInList,
       } = fieldDetails
       setInitialFieldValue({
         id,
@@ -107,6 +111,7 @@ const AddField = ({
         groupingId,
         recommendationId: recommendationId!,
         gridLength,
+        showInList,
       })
     }
   }, [fieldDetails, fieldId])
@@ -133,7 +138,7 @@ const AddField = ({
           return <Grid.Col sm={'sm:col-span-12'} key="checkboxField"></Grid.Col>
 
         case 'RADIO':
-          return <Grid.Col sm={'sm:col-span-12'} key="radioField"></Grid.Col>
+          return <RadioFields formikProps={formikProps} t={t} />
 
         case 'FILE':
           return <Grid.Col sm={'sm:col-span-12'} key="fileField"></Grid.Col>

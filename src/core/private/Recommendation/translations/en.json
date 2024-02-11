@@ -18,6 +18,7 @@
   "labelNameEnglish": "Lable Name (English)",
   "labelNameNepali": "Lable Name (Nepali)",
   "className": "Class Name (CSS Styling)",
+  "showInList": "Show Field in Table List?",
   "errors": {
     "recommendationNameEn": "Recommendation Name (English) is required",
     "recommendationNameNp": "Recommendation Name (Nepali) is required",
