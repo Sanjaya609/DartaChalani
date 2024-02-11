@@ -14,7 +14,8 @@ export const addFieldInitialValues: IAddFieldInitialValue =
         labelNameNepali: "",
         className: "",
         groupingId: null,
-        gridLength: 4
+        gridLength: 4,
+        showInList: false
     }
 
 

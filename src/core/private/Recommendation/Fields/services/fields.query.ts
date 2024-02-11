@@ -6,6 +6,7 @@ import {
   IAddFieldResponse,
   IUpdateFieldOrder,
 } from '../schema/field.interface'
+import { IAddFieldValueInitialValue } from '../schema/filed-value.interface'
 
 const {
   createField,
@@ -15,9 +16,10 @@ const {
   getFieldDetailById,
   deleteFieldById,
   getAllGroupByRecommendationId,
-  getAllGroup,
   updateFieldOrder,
-  dynamicFieldList
+  dynamicFieldList,
+
+  createFieldValue, updateFieldValue
 } = apiDetails
 
 const useCreateField = () => {
@@ -163,6 +165,40 @@ const useGetAllField = <T = IAddFieldResponse[]>() => {
     )
   }
 
+  const useCreateFieldValue = () => {
+    const queryClient = useQueryClient()
+    return useMutation(
+      (requestData: IAddFieldValueInitialValue) => {
+        return initApiRequest({
+          apiDetails: createFieldValue,
+          requestData,
+        })
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries([getAllGroupByRecommendationId.controllerName])
+        },
+      }
+    )
+  }
+  
+  const useUpdateFieldValue = () => {
+      const queryClient = useQueryClient()
+      return useMutation(
+        (requestData: IAddFieldValueInitialValue) => {
+          return initApiRequest({
+            apiDetails: updateFieldValue,
+            requestData,
+          })
+        },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries([getAllGroupByRecommendationId.controllerName])
+          },
+        }
+      )
+    }
+
 export {
   useCreateField,
   useUpdateField,
@@ -171,5 +207,7 @@ export {
   useGetFieldDetailById,
   useDeleteFieldById,
   useUpdateFieldOrder,
-  useGetDynamicFieldListByFormId
+  useGetDynamicFieldListByFormId,
+
+  useCreateFieldValue
 }

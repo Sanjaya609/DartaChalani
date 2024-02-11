@@ -27,20 +27,28 @@ export const createFormInputFromFieldType = (
   const { values, handleChange, handleBlur, errors, setFieldValue, touched } =
     formikConfig
 
+    console.log(values, "filter here this")
+
   switch (field.fieldType.toUpperCase()) {
-    case DYNAMICFORMFIELDTYPE.SELECT:
+    case DYNAMICFORMFIELDTYPE.SELECT: {
+      const options = field.dropDownResponse?.dropDownDetailResponseDtoList?.map((option: { id: number, descriptionEn: string, descriptionNp: string}) => ({
+        label: option.descriptionEn,
+        labelNp: option.descriptionNp,
+        value: option.id
+      }))
       return DynamicFormFieldTypeMapping.SELECT({
         onChange: (e) => {
           setFieldValue(e.name, e.main)
         },
-        options: [],
-        value: '',
+        options: options || [],
+        value: values.fieldControlName,
         label: field.labelNameEnglish,
         id: field.fieldControlName,
         errors: errors,
         touched: touched,
         onBlur: handleBlur,
       })
+    }
 
     case DYNAMICFORMFIELDTYPE.NEPALICALENDAR:
       return DynamicFormFieldTypeMapping.NEPALICALENDAR({
@@ -51,16 +59,47 @@ export const createFormInputFromFieldType = (
       return React.createElement<IInputProps>(
         DynamicFormFieldTypeMapping.TEXT as FunctionComponent,
         {
-          value: values?.[field.fieldControlName as string] || '',
+          value: values?.[field.fieldControlName as string]?.value || '',
+          label: field.labelNameEnglish,
+          id: field.fieldControlName,
+          errors: errors,
+          touched: touched,
+          onChange: (e) => {
+            setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: e.target.value})
+          },
+          onBlur: handleBlur,
+          isRequired: true,
+        }
+      )
+
+      case DYNAMICFORMFIELDTYPE.RADIO:
+        return DynamicFormFieldTypeMapping.RADIO({
+          options: [{label: "Male", value: "male"}, {label: "Female", value: "female"}],
           label: field.labelNameEnglish,
           id: field.fieldControlName,
           errors: errors,
           touched: touched,
           onChange: handleChange,
           onBlur: handleBlur,
-          isRequired: true,
-        }
-      )
+          isRequired: true
+        })
+
+        case DYNAMICFORMFIELDTYPE.TEXTAREA:
+          return React.createElement<IInputProps>(
+            DynamicFormFieldTypeMapping.TEXTAREA as FunctionComponent,
+            {
+              value: values?.[field.fieldControlName as string]?.value || '',
+              label: field.labelNameEnglish,
+              id: field.fieldControlName,
+              errors: errors,
+              touched: touched,
+              onChange: (e) => {
+                setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: e.target.value})
+              },
+              onBlur: handleBlur,
+              isRequired: true,
+            }
+          )
   }
 }
 

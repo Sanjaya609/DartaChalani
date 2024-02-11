@@ -1,6 +1,7 @@
 import { RequestMethod } from '@/lib/api-request'
 
 const prefix = '/field'
+const fieldValuePrefix = '/field-value'
 
 const addFieldAPI = {
   createField: {
@@ -42,6 +43,17 @@ const addFieldAPI = {
     controllerName: `${prefix}/list-data/{id}`,
     queryName: "DYNAMIC_FIELD_LIST",
     requestMethod: RequestMethod.GET
+  },
+  // field-value
+  createFieldValue: {
+    controllerName: `${fieldValuePrefix}`,
+    queryName: "CREATE_FILED_VALUE",
+    requestMethod: RequestMethod.POST
+  },
+  updateFieldValue: {
+    controllerName: `${fieldValuePrefix}`,
+    queryName: "UPDATE_FILED_VALUE",
+    requestMethod: RequestMethod.POST
   }
 }
 

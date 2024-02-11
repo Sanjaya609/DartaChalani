@@ -23,6 +23,7 @@ export interface IAddFieldInitialValue {
     className: string;
     groupingId: number | null;
     gridLength: 3 | 4 | 6 | 12 // usecase: col-span-{gridLenght}
+    showInList: boolean
 }
 
 export interface IAddFieldPayload
@@ -40,7 +41,8 @@ export interface IAddFieldResponse {
     labelNameNepali: string;
     className: string
     groupingId: number | null;
-    gridLength: 3 | 4 | 6 | 12
+    gridLength: 3 | 4 | 6 | 12;
+    showInList: boolean
  }
 
  export interface IUpdateFieldOrder {
