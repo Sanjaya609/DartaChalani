@@ -4,6 +4,7 @@ import { Box, Button, Grid } from '@/components/ui'
 import ContainerLayout from '@/components/ui/core/Layout/ContainerLayout'
 import { Text } from '@/components/ui/core/Text'
 import { IAddGroupResponse } from '@/core/private/Recommendation/Fields/schema/group.interface'
+import { useCreateFieldValue } from '@/core/private/Recommendation/Fields/services/fields.query'
 import { useGetAllGroupByRecommendationId } from '@/core/private/Recommendation/Fields/services/groups.query'
 import { getTextByLanguage } from '@/lib/i18n/i18n'
 import { IRoutePrivilege } from '@/router/routes/create-route'
@@ -19,6 +20,8 @@ import * as Yup from 'yup'
 
 const AddDynamicForm = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
   console.log({ currentModuleDetails })
+  const { t } = useTranslation()
+  const navigate = useNavigate()
   const location = useLocation()
 
   const [isFormFieldReady, setIsFormFieldReady] = useState(false)
@@ -26,16 +29,35 @@ const AddDynamicForm = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
     Yup.object({})
   )
   const [initialValues, setInitialValues] = useState({})
-  const { t } = useTranslation()
-  const navigate = useNavigate()
-  const { data: dynamicFormData, isFetching: dynamicFormDataFetching } =
-    useGetAllGroupByRecommendationId(currentModuleDetails?.id || null)
-
   const generateFieldWithValidationSchema = (form: IAddGroupResponse[]) => {
     const { initialValues, validationSchema } = makeFieldsWithSchema(form)
     setInitialValues(initialValues)
     setValidationSchema(Yup.object(validationSchema))
     setIsFormFieldReady(true)
+  }
+
+  const { data: dynamicFormData, isFetching: dynamicFormDataFetching } =
+    useGetAllGroupByRecommendationId(currentModuleDetails?.id || null)
+
+  const { mutate: createFieldValue, isLoading: createFieldValueLoading } =
+    useCreateFieldValue()
+
+  const handleAddFieldValue = (values: any) => {
+    const transformedArray: { fieldId: number; value: string }[] =
+      Object.values(values)
+    const reqData = {
+      fieldValueListRequestList: transformedArray,
+      formId: 2,
+      formValueId: 0,
+    }
+    createFieldValue(reqData, {
+      onSuccess: () => {
+        // navigate(-1)
+      },
+      onError: () => {
+        debugger
+      },
+    })
   }
 
   useEffect(() => {
@@ -51,10 +73,9 @@ const AddDynamicForm = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
     initialValues,
     validationSchema,
     onSubmit: (values) => {
-      console.log(values, 'filter it')
+      handleAddFieldValue(values)
     },
   })
-  console.log(formikConfig.values, 'filter here')
 
   return dynamicFormDataFetching ? (
     <FallbackLoader />

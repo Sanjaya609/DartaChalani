@@ -59,12 +59,14 @@ export const createFormInputFromFieldType = (
       return React.createElement<IInputProps>(
         DynamicFormFieldTypeMapping.TEXT as FunctionComponent,
         {
-          value: values?.[field.fieldControlName as string] || '',
+          value: values?.[field.fieldControlName as string]?.value || '',
           label: field.labelNameEnglish,
           id: field.fieldControlName,
           errors: errors,
           touched: touched,
-          onChange: handleChange,
+          onChange: (e) => {
+            setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: e.target.value})
+          },
           onBlur: handleBlur,
           isRequired: true,
         }
@@ -86,12 +88,14 @@ export const createFormInputFromFieldType = (
           return React.createElement<IInputProps>(
             DynamicFormFieldTypeMapping.TEXTAREA as FunctionComponent,
             {
-              value: values?.[field.fieldControlName as string] || '',
+              value: values?.[field.fieldControlName as string]?.value || '',
               label: field.labelNameEnglish,
               id: field.fieldControlName,
               errors: errors,
               touched: touched,
-              onChange: handleChange,
+              onChange: (e) => {
+                setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: e.target.value})
+              },
               onBlur: handleBlur,
               isRequired: true,
             }
