@@ -54,9 +54,6 @@ const AddDynamicForm = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
       onSuccess: () => {
         // navigate(-1)
       },
-      onError: () => {
-        debugger
-      },
     })
   }
 
