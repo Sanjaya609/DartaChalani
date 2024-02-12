@@ -90,7 +90,6 @@ const AddDropDownConfig = () => {
           {}
         )
 
-        debugger
         return {
           ...(list.dropDownId && { dropDownId: list.dropDownId }),
           ...(list.id && { id: list.id }),
