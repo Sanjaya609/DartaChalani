@@ -35,7 +35,7 @@ const AddDynamicForm = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
     setValidationSchema(Yup.object(validationSchema))
     setIsFormFieldReady(true)
   }
-
+  console.log(initialValues, 'filter initial value')
   const { data: dynamicFormData, isFetching: dynamicFormDataFetching } =
     useGetAllGroupByRecommendationId(currentModuleDetails?.id || null)
 
@@ -47,12 +47,12 @@ const AddDynamicForm = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
       Object.values(values)
     const reqData = {
       fieldValueListRequestList: transformedArray,
-      formId: 2,
+      formId: currentModuleDetails?.id!,
       formValueId: 0,
     }
     createFieldValue(reqData, {
       onSuccess: () => {
-        // navigate(-1)
+        navigate(-1)
       },
     })
   }

@@ -31,7 +31,7 @@ const RadioInput = (props: IRadioInputProps) => {
         {...restProps}
         type="radio"
         value={value}
-        checked={value === selectedValue}
+        checked={value?.toString() === selectedValue?.toString()}
         id={`${name}-${value}`}
       />
       <label className={computedLabelClass} htmlFor={`${name}-${value}`}>

@@ -38,7 +38,7 @@ export const createFormInputFromFieldType = (
       }))
       return DynamicFormFieldTypeMapping.SELECT({
         onChange: (e) => {
-          setFieldValue(e.name, e.main)
+          setFieldValue(e.name, { fieldId: field.id, value: e?.main })
         },
         options: options || [],
         value: values.fieldControlName,
@@ -74,14 +74,20 @@ export const createFormInputFromFieldType = (
 
       case DYNAMICFORMFIELDTYPE.RADIO:
         return DynamicFormFieldTypeMapping.RADIO({
-          options: [{label: "Male", value: "male"}, {label: "Female", value: "female"}],
+          options: field.dropDownResponse?.dropDownDetailResponseDtoList?.map((option: { id: number, descriptionEn: string, descriptionNp: string}) => ({
+            label: option.descriptionEn,
+            value: option.id
+          })) || [],
           label: field.labelNameEnglish,
           id: field.fieldControlName,
           errors: errors,
           touched: touched,
-          onChange: handleChange,
+          onChange: (e) => {
+            setFieldValue(field?.fieldControlName || "", {fieldId: field?.id, value: e.target?.value})
+          },
           onBlur: handleBlur,
-          isRequired: true
+          isRequired: true,
+          value: values?.[field.fieldControlName as string]?.value || "" 
         })
 
         case DYNAMICFORMFIELDTYPE.TEXTAREA:
@@ -121,7 +127,7 @@ export const makeFieldsWithSchema = (form: IAddGroupResponse[]) => {
   )
 
   flatGroupFormData.forEach((field) => {
-    initialValues[field.fieldControlName as string] = ''
+    initialValues[field.fieldControlName as string] = 'resr'
     // if (field?.fieldValidationList?.length) {
     //   const schema = generateDynamicError(
     //     field.fieldType as keyof typeof DynamicFormFieldTypeMapping,
