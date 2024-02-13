@@ -63,7 +63,7 @@ export const Permission = (props: IPermissionProps) => {
     }
 
     return pathDetails
-  }, [location.pathname])
+  }, [location.pathname, flatModulePropsFromURL])
 
   if (initDataFetching) {
     return <FallbackLoader />
