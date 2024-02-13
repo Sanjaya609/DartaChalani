@@ -60,8 +60,6 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
     [isAuthenticated, initData, initDataFetching]
   )
 
-  console.log(providerValue, 'filter provider')
-
   return (
     <AuthContext.Provider value={providerValue}>
       {children}
