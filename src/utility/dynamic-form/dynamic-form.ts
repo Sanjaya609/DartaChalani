@@ -7,6 +7,7 @@ import { useFormik } from 'formik'
 import { StringSchema, ArraySchema } from 'yup'
 import { IAddGroupResponse } from '@/core/private/Recommendation/Fields/schema/group.interface'
 import { IAddFieldInitialValue } from '@/core/private/Recommendation/Fields/schema/field.interface'
+import formatDate from '../date/dateFunction'
 
 export const DynamicFormFieldTypeMapping = {
   SELECT: Form.Select,
@@ -53,6 +54,18 @@ export const createFormInputFromFieldType = (
     case DYNAMICFORMFIELDTYPE.NEPALICALENDAR:
       return DynamicFormFieldTypeMapping.NEPALICALENDAR({
         label: field.labelNameEnglish,
+      })
+
+    case DYNAMICFORMFIELDTYPE.ENGLISHCALENDAR:
+      return DynamicFormFieldTypeMapping.ENGLISHCALENDAR({
+        label: field.fieldControlName,
+        value: values?.[field.fieldControlName as string]?.value || "",
+        id: field.fieldControlName,
+        errors: errors,
+        touched: touched,
+        onChange: (engDate, nepDate) => {
+          setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: engDate ? formatDate(engDate) : ""})
+        }
       })
 
     case DYNAMICFORMFIELDTYPE.INPUT:
