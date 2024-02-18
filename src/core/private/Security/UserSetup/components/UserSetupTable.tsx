@@ -113,10 +113,10 @@ const UserSetupTable = (props: IUserSetupTableProps) => {
       },
       {
         header: t('security.userSetup.status'),
-        accessorKey: 'isActive',
+        accessorKey: 'isDisabled',
         cell: ({ row: { original } }) => (
           <Switch
-            checked={original.isActive}
+            checked={original.isDisabled}
             onChange={() => {
               setOrRemoveCurrentSelectedId(original.id)
             }}

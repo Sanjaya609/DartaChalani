@@ -16,7 +16,7 @@ export interface IUserSetupResponse {
   email: string
   isDisabled: boolean
   isCredentialsExpired: boolean
-  isActive: boolean
+  isActiveRole: boolean
   roleId: number
   roleNameEnglish: string
   roleNameNepali: string

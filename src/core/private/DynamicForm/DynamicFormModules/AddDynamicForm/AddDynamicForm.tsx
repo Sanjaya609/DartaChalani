@@ -4,7 +4,11 @@ import { Box, Button, Grid } from '@/components/ui'
 import ContainerLayout from '@/components/ui/core/Layout/ContainerLayout'
 import { Text } from '@/components/ui/core/Text'
 import { IAddGroupResponse } from '@/core/private/Recommendation/Fields/schema/group.interface'
-import { useCreateFieldValue } from '@/core/private/Recommendation/Fields/services/fields.query'
+import {
+  useCreateFieldValue,
+  useGetFieldValueById,
+  useUpdateFieldValue,
+} from '@/core/private/Recommendation/Fields/services/fields.query'
 import { useGetAllGroupByRecommendationId } from '@/core/private/Recommendation/Fields/services/groups.query'
 import { getTextByLanguage } from '@/lib/i18n/i18n'
 import { IRoutePrivilege } from '@/router/routes/create-route'
@@ -12,10 +16,11 @@ import {
   createFormInputFromFieldType,
   makeFieldsWithSchema,
 } from '@/utility/dynamic-form/dynamic-form'
+import { decodeParams } from '@/utility/route-params'
 import { useFormik } from 'formik'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import * as Yup from 'yup'
 
 const AddDynamicForm = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
@@ -23,6 +28,8 @@ const AddDynamicForm = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const location = useLocation()
+  const params = useParams()
+  const formValueId = decodeParams<number>(params?.id)
 
   const [isFormFieldReady, setIsFormFieldReady] = useState(false)
   const [validationSchema, setValidationSchema] = useState<Record<string, any>>(
@@ -35,12 +42,26 @@ const AddDynamicForm = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
     setValidationSchema(Yup.object(validationSchema))
     setIsFormFieldReady(true)
   }
-  console.log(initialValues, 'filter initial value')
+
   const { data: dynamicFormData, isFetching: dynamicFormDataFetching } =
     useGetAllGroupByRecommendationId(currentModuleDetails?.id || null)
 
+  const { data: fieldValueById, isFetching: fieldValueIdLoading } =
+    useGetFieldValueById(currentModuleDetails?.id!, formValueId!)
+
+  useEffect(() => {
+    if (formValueId && fieldValueById) {
+      generateFieldWithValidationSchema(fieldValueById)
+    } else if (dynamicFormData) {
+      generateFieldWithValidationSchema(dynamicFormData)
+    }
+  }, [dynamicFormData, fieldValueById, formValueId])
+
   const { mutate: createFieldValue, isLoading: createFieldValueLoading } =
     useCreateFieldValue()
+
+  const { mutate: updateFieldValue, isLoading: updateFieldValueLoading } =
+    useUpdateFieldValue()
 
   const handleAddFieldValue = (values: any) => {
     const transformedArray: { fieldId: number; value: string }[] =
@@ -48,20 +69,22 @@ const AddDynamicForm = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
     const reqData = {
       fieldValueListRequestList: transformedArray,
       formId: currentModuleDetails?.id!,
-      formValueId: 0,
+      formValueId: formValueId ?? 0,
     }
-    createFieldValue(reqData, {
-      onSuccess: () => {
-        navigate(-1)
-      },
-    })
+    if (formValueId) {
+      updateFieldValue(reqData, {
+        onSuccess: () => {
+          navigate(-1)
+        },
+      })
+    } else {
+      createFieldValue(reqData, {
+        onSuccess: () => {
+          navigate(-1)
+        },
+      })
+    }
   }
-
-  useEffect(() => {
-    if (dynamicFormData) {
-      generateFieldWithValidationSchema(dynamicFormData)
-    }
-  }, [dynamicFormData])
 
   console.log({ validationSchema })
 

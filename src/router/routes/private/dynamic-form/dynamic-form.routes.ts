@@ -53,4 +53,11 @@ export const dynamicFormRoutes: _RouteObject<'private'>[] = [
     isDynamicRoute: true,
     checkFromParentPath: privateRoutePath.dynamicForm.formModules,
   }),
+  createRoute({
+    path: privateRoutePath.dynamicForm.edit,
+    element: AddDynamicForm,
+    checkPrivilege: [PRIVILEGEENUM.UPDATE],
+    isDynamicRoute: true,
+    checkFromParentPath: privateRoutePath.dynamicForm.edit
+  })
 ]

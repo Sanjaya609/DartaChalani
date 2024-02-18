@@ -31,26 +31,6 @@ export const createFormInputFromFieldType = (
     console.log(values, "filter here this")
 
   switch (field.fieldType.toUpperCase()) {
-    case DYNAMICFORMFIELDTYPE.SELECT: {
-      const options = field.dropDownResponse?.dropDownDetailResponseDtoList?.map((option: { id: number, descriptionEn: string, descriptionNp: string}) => ({
-        label: option.descriptionEn,
-        labelNp: option.descriptionNp,
-        value: option.id
-      }))
-      return DynamicFormFieldTypeMapping.SELECT({
-        onChange: (e) => {
-          setFieldValue(e.name, { fieldId: field.id, value: e?.main })
-        },
-        options: options || [],
-        value: values.fieldControlName,
-        label: field.labelNameEnglish,
-        id: field.fieldControlName,
-        errors: errors,
-        touched: touched,
-        onBlur: handleBlur,
-      })
-    }
-
     case DYNAMICFORMFIELDTYPE.NEPALICALENDAR:
       return DynamicFormFieldTypeMapping.NEPALICALENDAR({
         label: field.labelNameEnglish,
@@ -67,6 +47,28 @@ export const createFormInputFromFieldType = (
           setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: engDate ? formatDate(engDate) : ""})
         }
       })
+
+    case DYNAMICFORMFIELDTYPE.SELECT: {
+      const options = field.dropDownResponse?.dropDownDetailResponseDtoList?.map((option: { id: number, descriptionEn: string, descriptionNp: string}) => ({
+        label: option.descriptionEn,
+        labelNp: option.descriptionNp,
+        value: option.id
+      }))
+
+      return DynamicFormFieldTypeMapping.SELECT({
+        options: options || [],
+        value: values.fieldControlName,
+        name: field.fieldControlName,
+        onChange: (e) => {
+          setFieldValue(field?.fieldControlName || "", { fieldId: field?.id, value: e?.main})
+        },
+        label: field.labelNameEnglish,
+        id: field.fieldControlName,
+        errors: errors,
+        touched: touched,
+        onBlur: handleBlur,
+      })
+    }
 
     case DYNAMICFORMFIELDTYPE.INPUT:
       return React.createElement<IInputProps>(
@@ -85,40 +87,40 @@ export const createFormInputFromFieldType = (
         }
       )
 
-      case DYNAMICFORMFIELDTYPE.RADIO:
-        return DynamicFormFieldTypeMapping.RADIO({
-          options: field.dropDownResponse?.dropDownDetailResponseDtoList?.map((option: { id: number, descriptionEn: string, descriptionNp: string}) => ({
-            label: option.descriptionEn,
-            value: option.id
-          })) || [],
-          label: field.labelNameEnglish,
-          id: field.fieldControlName,
-          errors: errors,
-          touched: touched,
-          onChange: (e) => {
-            setFieldValue(field?.fieldControlName || "", {fieldId: field?.id, value: e.target?.value})
-          },
-          onBlur: handleBlur,
-          isRequired: true,
-          value: values?.[field.fieldControlName as string]?.value || "" 
-        })
+    case DYNAMICFORMFIELDTYPE.RADIO:
+      return DynamicFormFieldTypeMapping.RADIO({
+        options: field.dropDownResponse?.dropDownDetailResponseDtoList?.map((option: { id: number, descriptionEn: string, descriptionNp: string}) => ({
+          label: option.descriptionEn,
+          value: option.id
+        })) || [],
+        label: field.labelNameEnglish,
+        id: field.fieldControlName,
+        errors: errors,
+        touched: touched,
+        onChange: (e) => {
+          setFieldValue(field?.fieldControlName || "", {fieldId: field?.id, value: e.target?.value})
+        },
+        onBlur: handleBlur,
+        isRequired: true,
+        value: values?.[field.fieldControlName as string]?.value || "" 
+      })
 
-        case DYNAMICFORMFIELDTYPE.TEXTAREA:
-          return React.createElement<IInputProps>(
-            DynamicFormFieldTypeMapping.TEXTAREA as FunctionComponent,
-            {
-              value: values?.[field.fieldControlName as string]?.value || '',
-              label: field.labelNameEnglish,
-              id: field.fieldControlName,
-              errors: errors,
-              touched: touched,
-              onChange: (e) => {
-                setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: e.target.value})
-              },
-              onBlur: handleBlur,
-              isRequired: true,
-            }
-          )
+      case DYNAMICFORMFIELDTYPE.TEXTAREA:
+        return React.createElement<IInputProps>(
+          DynamicFormFieldTypeMapping.TEXTAREA as FunctionComponent,
+          {
+            value: values?.[field.fieldControlName as string]?.value || '',
+            label: field.labelNameEnglish,
+            id: field.fieldControlName,
+            errors: errors,
+            touched: touched,
+            onChange: (e) => {
+              setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: e.target.value})
+            },
+            onBlur: handleBlur,
+            isRequired: true,
+          }
+        )
   }
 }
 
@@ -127,7 +129,7 @@ export const makeFieldsWithSchema = (form: IAddGroupResponse[]) => {
     string,
     StringSchema<TAny> | ArraySchema<TAny, TAny>
   > = {}
-  const initialValues: Record<string, string> = {}
+  const initialValues: Record<string, {fieldId: number | string, value: string | number}> = {}
   const flatGroupFormData = form.reduce<IAddFieldInitialValue[]>(
     (allForm, currForm) => {
       let currFormData = [...allForm]
@@ -140,7 +142,7 @@ export const makeFieldsWithSchema = (form: IAddGroupResponse[]) => {
   )
 
   flatGroupFormData.forEach((field) => {
-    initialValues[field.fieldControlName as string] = 'resr'
+    initialValues[field.fieldControlName as string] = {fieldId: field.id, value: field.value}
     // if (field?.fieldValidationList?.length) {
     //   const schema = generateDynamicError(
     //     field.fieldType as keyof typeof DynamicFormFieldTypeMapping,
