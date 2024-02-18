@@ -23,7 +23,8 @@ export interface IAddFieldInitialValue {
     className: string;
     groupingId: number | null;
     gridLength: 3 | 4 | 6 | 12 // usecase: col-span-{gridLenght}
-    showInList: boolean
+    showInList: boolean,
+    value?: any
 }
 
 export interface IAddFieldPayload

@@ -50,10 +50,20 @@ const addFieldAPI = {
     queryName: "CREATE_FILED_VALUE",
     requestMethod: RequestMethod.POST
   },
+  deleteFieldValueById: {
+    controllerName: `${fieldValuePrefix}/form-value/{id}`,
+    queryName: "DELETE_FORM_VALUE_BY_ID",
+    requestMethod: RequestMethod.DELETE
+  },
   updateFieldValue: {
     controllerName: `${fieldValuePrefix}`,
     queryName: "UPDATE_FILED_VALUE",
-    requestMethod: RequestMethod.POST
+    requestMethod: RequestMethod.PUT
+  },
+  getFieldValueById: {
+    controllerName: `${prefix}/recommendation/{id}`,
+    qyeryName: "GET_FIELD_VALUE_BY_IdD",
+    requestMethod: RequestMethod.GET
   }
 }
 

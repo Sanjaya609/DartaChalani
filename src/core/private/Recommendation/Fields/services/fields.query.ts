@@ -19,7 +19,7 @@ const {
   updateFieldOrder,
   dynamicFieldList,
 
-  createFieldValue, updateFieldValue
+  createFieldValue, updateFieldValue, getFieldValueById, deleteFieldValueById
 } = apiDetails
 
 const useCreateField = () => {
@@ -30,6 +30,7 @@ const useCreateField = () => {
         apiDetails: requestData.id ? updateField : createField,
         requestData,
       })
+      debugger
     },
     {
       onSuccess: () => {
@@ -176,7 +177,7 @@ const useGetAllField = <T = IAddFieldResponse[]>() => {
       },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries([getAllGroupByRecommendationId.controllerName])
+          queryClient.invalidateQueries([dynamicFieldList.controllerName])
         },
       }
     )
@@ -193,10 +194,46 @@ const useGetAllField = <T = IAddFieldResponse[]>() => {
         },
         {
           onSuccess: () => {
-            queryClient.invalidateQueries([getAllGroupByRecommendationId.controllerName])
+            queryClient.invalidateQueries([dynamicFieldList.controllerName])
           },
         }
       )
+    }
+
+    const useGetFieldValueById = (id: string | number | null, fieldValueId: number) => {
+      return useQuery(
+        [getFieldValueById.controllerName, id],
+        () =>
+          initApiRequest<BackendSuccessResponse<any>>({
+            apiDetails: getFieldValueById,
+            pathVariables: { id },
+            params: { formValueId: fieldValueId}
+          }),
+          {
+            select: (data) => {
+              return data?.data?.data
+            },
+            enabled: !!id,
+            staleTime: 0
+          }
+      )
+    }
+
+    const useDeleteFieldValueById = () => {
+      const queryClient = useQueryClient()
+      return useMutation(
+        (id: number | string) => {
+          return initApiRequest({
+            apiDetails: deleteFieldValueById,
+            pathVariables: { id }
+          })
+        },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries([dynamicFieldList.controllerName])
+          },
+        }
+        )
     }
 
 export {
@@ -209,5 +246,5 @@ export {
   useUpdateFieldOrder,
   useGetDynamicFieldListByFormId,
 
-  useCreateFieldValue
+  useCreateFieldValue, useUpdateFieldValue, useGetFieldValueById, useDeleteFieldValueById
 }
