@@ -7,6 +7,7 @@ import {
   IUpdateFieldOrder,
 } from '../schema/field.interface'
 import { IAddFieldValueInitialValue } from '../schema/filed-value.interface'
+import { IValidationsFormSchema } from '../schema/validations.interface'
 
 const {
   createField,
@@ -19,7 +20,9 @@ const {
   updateFieldOrder,
   dynamicFieldList,
 
-  createFieldValue, updateFieldValue, getFieldValueById, deleteFieldValueById
+  createFieldValue, updateFieldValue, getFieldValueById, deleteFieldValueById,
+
+  createFieldValidation, updateFieldValidation, getFieldValidationById, deleteFieldValidationById, findAllValidationByFieldId,
 } = apiDetails
 
 const useCreateField = () => {
@@ -236,6 +239,79 @@ const useGetAllField = <T = IAddFieldResponse[]>() => {
         )
     }
 
+    // -------- Field Validations --------
+    const useCreateFieldValidation = () => {
+      const queryClient = useQueryClient()
+      return useMutation(
+        (requestData: IValidationsFormSchema) => {
+          return initApiRequest({
+            apiDetails: createFieldValidation,
+            requestData,
+          })
+          debugger
+        },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries([getAllGroupByRecommendationId.controllerName])
+          },
+        }
+      )
+    }
+
+    const useUpdateFieldValidation = () => {
+      const queryClient = useQueryClient()
+      return useMutation(
+        (requestData: IValidationsFormSchema) => {
+          return initApiRequest({
+            apiDetails: updateFieldValidation,
+            requestData,
+          })
+        },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries([getAllGroupByRecommendationId.controllerName])
+          },
+        }
+      )
+    }
+
+    const useGetAllValidationByFieldId = (id: string | number | null) => {
+      return useQuery(
+        [findAllValidationByFieldId.controllerName, id],
+        () =>
+          initApiRequest<BackendSuccessResponse<IValidationsFormSchema[]>>({
+            apiDetails: findAllValidationByFieldId,
+            pathVariables: {
+                id
+            }
+          }),
+        {
+          select: (data) => {
+            return data?.data.data
+          },
+          enabled: !!id,
+          staleTime: 0
+        }
+      )
+    }
+
+    const useDeleteFieldValidationById = () => {
+      const queryClient = useQueryClient()
+      return useMutation(
+        (id: number | string) => {
+          return initApiRequest({
+            apiDetails: deleteFieldValidationById,
+            pathVariables: { id }
+          })
+        },
+        {
+          onSuccess: () => {
+            queryClient.invalidateQueries([findAllValidationByFieldId.controllerName])
+          },
+        }
+        )
+    }
+
 export {
   useCreateField,
   useUpdateField,
@@ -246,5 +322,6 @@ export {
   useUpdateFieldOrder,
   useGetDynamicFieldListByFormId,
 
-  useCreateFieldValue, useUpdateFieldValue, useGetFieldValueById, useDeleteFieldValueById
+  useCreateFieldValue, useUpdateFieldValue, useGetFieldValueById, useDeleteFieldValueById,
+  useCreateFieldValidation, useUpdateFieldValidation, useGetAllValidationByFieldId, useDeleteFieldValidationById
 }

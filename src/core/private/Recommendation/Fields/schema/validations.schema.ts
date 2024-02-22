@@ -2,11 +2,11 @@ import * as Yup from 'yup'
 import { IValidationsFormSchema } from './validations.interface'
 
 export const validationSetupInitialValues: IValidationsFormSchema = {
-    errorMessage: "Please enter a value",
+    errorMessage: "",
     fieldId: 0,
     id: 0,
     regex: "",
-    validationType: "NOT_NULL"
+    validationType: ""
 }
 
 export const ValidationSetupValidationSchema = Yup.object().shape({
