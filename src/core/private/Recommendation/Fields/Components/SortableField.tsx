@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import Form, { FormKeyType } from '@/components/functional/Form/Form'
+import Form from '@/components/functional/Form/Form'
 import { IAddFieldInitialValue } from '../schema/field.interface'
 import { Button, Icon } from '@/components/ui'
-import { HandGrabbing, Pencil, Trash } from 'phosphor-react'
+import { HandGrabbing, Pencil, Trash, Warning } from 'phosphor-react'
 import Modal from '@/components/ui/Modal/Modal'
 import { useDeleteFieldById } from '../services/fields.query'
 import { useTranslation } from 'react-i18next'
+import ValidationSetup from './AddValidations'
+import { useBoolean } from 'usehooks-ts'
+import { validationSetupInitialValues } from '../schema/validations.schema'
 
 const SortableField = ({
   item,
@@ -33,6 +36,11 @@ const SortableField = ({
 
   const [deleteId, setDeleteId] = useState<string | number>('')
   const setOrRemoveDeleteId = (id?: string | number) => setDeleteId(id || '')
+
+  const { value: isOpenAddEditModal, toggle: toggleAddEditModal } = useBoolean()
+  const [initialValues, setInitialValues] = useState(
+    validationSetupInitialValues
+  )
 
   const { mutate: deleteById, isLoading: deleteByIdLoading } =
     useDeleteFieldById()
@@ -84,6 +92,19 @@ const SortableField = ({
       >
         <Icon icon={HandGrabbing} />
       </Button>
+
+      <Button
+        variant="danger"
+        size="xs"
+        type="button"
+        icons="icons"
+        className="z-40 whitespace-nowrap rounded border border-gray-80"
+        onClick={() => {
+          toggleAddEditModal()
+        }}
+      >
+        <Icon icon={Warning} />
+      </Button>
     </div>
   )
 
@@ -93,16 +114,18 @@ const SortableField = ({
     return (
       <ComponentToRender
         options={
-          item.fieldType === "Select" 
-          ? item.dropDownResponse?.dropDownDetailResponseDtoList?.map(data => ({
-            label: data.descriptionEn,
-            value: data.id,
-            labelNp: data.descriptionNp
-          })) || []
-          : [
-            {label: "Yes", value: true},
-            {label: "No", value: true},
-          ]
+          item.fieldType === 'Select'
+            ? item.dropDownResponse?.dropDownDetailResponseDtoList?.map(
+                (data) => ({
+                  label: data.descriptionEn,
+                  value: data.id,
+                  labelNp: data.descriptionNp,
+                })
+              ) || []
+            : [
+                { label: 'Yes', value: true },
+                { label: 'No', value: true },
+              ]
         }
         cols={5}
         rows={5}
@@ -146,6 +169,13 @@ const SortableField = ({
       >
         Are you sure to delete this Field
       </Modal>
+
+      <ValidationSetup
+        isOpenAddEditModal={isOpenAddEditModal}
+        toggleAddEditModal={toggleAddEditModal}
+        initialValues={initialValues}
+        setInitialValues={setInitialValues}
+      />
     </div>
   )
 }

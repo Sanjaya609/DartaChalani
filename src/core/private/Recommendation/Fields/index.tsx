@@ -29,7 +29,7 @@ import {
 } from './services/groups.query'
 import SortableGroup from './Components/SortableGroup'
 import { IAddGroupResponse } from './schema/group.interface'
-import AddGroup from './Components/AddGroup'
+import AddGroupModal from './Components/AddGroup'
 import { Spinner } from '@/components/ui/Spinner'
 
 const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
@@ -99,7 +99,11 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
         title={recommendationDetails?.nameEnglish}
         backAction={navigateToRecommendationList}
       />
-      <Flexbox align="center" justify="space-between" className="mt-3 w-full mb-4">
+      <Flexbox
+        align="center"
+        justify="space-between"
+        className="mb-4 mt-3 w-full"
+      >
         <div></div>
         <Button
           size="md"
@@ -143,7 +147,7 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
         </Card>
       </ContainerLayout>
 
-      <AddGroup
+      <AddGroupModal
         toggleGroupForm={() => {
           toggleGroupForm()
           setEditGroupData(undefined)
