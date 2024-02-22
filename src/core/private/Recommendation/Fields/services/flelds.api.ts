@@ -2,6 +2,7 @@ import { RequestMethod } from '@/lib/api-request'
 
 const prefix = '/field'
 const fieldValuePrefix = '/field-value'
+const fieldValidationPrefix = '/field-validation'
 
 const addFieldAPI = {
   createField: {
@@ -62,7 +63,33 @@ const addFieldAPI = {
   },
   getFieldValueById: {
     controllerName: `${prefix}/recommendation/{id}`,
-    qyeryName: "GET_FIELD_VALUE_BY_IdD",
+    queryName: "GET_FIELD_VALUE_BY_ID",
+    requestMethod: RequestMethod.GET
+  },
+  // field validations
+  createFieldValidation: {
+    controllerName: `${fieldValidationPrefix}`,
+    queryName: "CREATE_FIELD_VALIDATION",
+    requestMethod: RequestMethod.POST
+  },
+  updateFieldValidation: {
+    controllerName: `${fieldValidationPrefix}`,
+    queryName: "UPDATE_FIELD_VALIDATION",
+    requestMethod: RequestMethod.PUT
+  },
+  getFieldValidationById: {
+    controllerName: `${fieldValidationPrefix}/{id}`,
+    queryName: "GET_FIELD_VALIDATION_BY_ID",
+    requestMethod: RequestMethod.GET
+  },
+  deleteFieldValidationById: {
+    controllerName: `${fieldValidationPrefix}/{id}`,
+    queryName: "DELETE_FIELD_VALIDATION_BY_ID",
+    requestMethod: RequestMethod.DELETE
+  },
+  findAllValidationByFieldId: {
+    controllerName: `${fieldValidationPrefix}/field/{id}`,
+    queryName: "FIND_ALL_VALIDATION_BY_FIELD_ID",
     requestMethod: RequestMethod.GET
   }
 }

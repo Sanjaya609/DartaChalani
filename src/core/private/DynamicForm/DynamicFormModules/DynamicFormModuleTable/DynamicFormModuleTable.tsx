@@ -85,7 +85,10 @@ const DynamicFormModuleTable = ({
                 navigate(
                   `${currentModuleDetails?.url}/edit/${encodeParams(
                     formValueId
-                  )}`
+                  )}`,
+                  {
+                    state: { id: location?.state?.id! },
+                  }
                 )
               }}
               handleDeleteClick={() => {

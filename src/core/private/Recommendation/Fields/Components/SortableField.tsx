@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import Form, { FormKeyType } from '@/components/functional/Form/Form'
+import Form from '@/components/functional/Form/Form'
 import { IAddFieldInitialValue } from '../schema/field.interface'
 import { Button, Icon } from '@/components/ui'
-import { HandGrabbing, Pencil, Trash } from 'phosphor-react'
+import { HandGrabbing, Pencil, Trash, Warning } from 'phosphor-react'
 import Modal from '@/components/ui/Modal/Modal'
 import { useDeleteFieldById } from '../services/fields.query'
 import { useTranslation } from 'react-i18next'
+import ValidationSetup from './ValidationSetup'
+import { useBoolean } from 'usehooks-ts'
+import { validationSetupInitialValues } from '../schema/validations.schema'
 
 const SortableField = ({
   item,
@@ -31,16 +34,25 @@ const SortableField = ({
     transform: CSS.Transform.toString(transform),
   }
 
-  const [deleteId, setDeleteId] = useState<string | number>('')
-  const setOrRemoveDeleteId = (id?: string | number) => setDeleteId(id || '')
+  const [selectedId, setSelectedId] = useState<string | number>('')
+  const setOrRemoveselectedId = (id?: string | number) =>
+    setSelectedId(id || '')
+
+  const { value: openDelegeModal, toggle: toggleDelegeModal } = useBoolean()
+  const { value: openValidationModal, toggle: toggleValidationModal } =
+    useBoolean()
+  const [initialValues, setInitialValues] = useState(
+    validationSetupInitialValues
+  )
 
   const { mutate: deleteById, isLoading: deleteByIdLoading } =
     useDeleteFieldById()
 
   const handleDeleteById = () => {
-    deleteById(deleteId, {
+    deleteById(selectedId, {
       onSuccess: () => {
-        setOrRemoveDeleteId()
+        setOrRemoveselectedId()
+        toggleDelegeModal()
       },
     })
   }
@@ -67,7 +79,8 @@ const SortableField = ({
         icons="icons"
         className="z-40 ml-4 whitespace-nowrap rounded border border-gray-80"
         onClick={() => {
-          setDeleteId(item?.id!)
+          setSelectedId(item?.id!)
+          toggleDelegeModal()
         }}
       >
         <Icon icon={Trash} />
@@ -84,6 +97,20 @@ const SortableField = ({
       >
         <Icon icon={HandGrabbing} />
       </Button>
+
+      <Button
+        variant="danger"
+        size="xs"
+        type="button"
+        icons="icons"
+        className="z-40 whitespace-nowrap rounded border border-gray-80"
+        onClick={() => {
+          setSelectedId(item.id!)
+          toggleValidationModal()
+        }}
+      >
+        <Icon icon={Warning} />
+      </Button>
     </div>
   )
 
@@ -93,16 +120,18 @@ const SortableField = ({
     return (
       <ComponentToRender
         options={
-          item.fieldType === "Select" 
-          ? item.dropDownResponse?.dropDownDetailResponseDtoList?.map(data => ({
-            label: data.descriptionEn,
-            value: data.id,
-            labelNp: data.descriptionNp
-          })) || []
-          : [
-            {label: "Yes", value: true},
-            {label: "No", value: true},
-          ]
+          item.fieldType === 'Select'
+            ? item.dropDownResponse?.dropDownDetailResponseDtoList?.map(
+                (data) => ({
+                  label: data.descriptionEn,
+                  value: data.id,
+                  labelNp: data.descriptionNp,
+                })
+              ) || []
+            : [
+                { label: 'Yes', value: true },
+                { label: 'No', value: true },
+              ]
         }
         cols={5}
         rows={5}
@@ -129,8 +158,8 @@ const SortableField = ({
       {renderField(item)}
 
       <Modal
-        open={!!deleteId}
-        toggleModal={setOrRemoveDeleteId}
+        open={openDelegeModal}
+        toggleModal={setOrRemoveselectedId}
         size="md"
         title="Delete Field"
         saveBtnProps={{
@@ -140,12 +169,22 @@ const SortableField = ({
         }}
         cancelBtnProps={{
           btnAction: () => {
-            setOrRemoveDeleteId()
+            setOrRemoveselectedId()
           },
         }}
       >
         Are you sure to delete this Field
       </Modal>
+
+      {openValidationModal && selectedId && (
+        <ValidationSetup
+          openValidationModal={openValidationModal}
+          toggleValidationModal={toggleValidationModal}
+          initialValues={initialValues}
+          setInitialValues={setInitialValues}
+          fieldId={selectedId}
+        />
+      )}
     </div>
   )
 }
