@@ -252,7 +252,7 @@ const useGetAllField = <T = IAddFieldResponse[]>() => {
         },
         {
           onSuccess: () => {
-            queryClient.invalidateQueries([getAllGroupByRecommendationId.controllerName])
+            queryClient.invalidateQueries([findAllValidationByFieldId.controllerName])
           },
         }
       )

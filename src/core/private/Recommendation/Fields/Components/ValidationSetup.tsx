@@ -22,11 +22,6 @@ import {
   useDeleteFieldValidationById,
   useGetAllValidationByFieldId,
 } from '../services/fields.query'
-import {
-  DialogFooter,
-  Dialog,
-  DialogContent,
-} from '@/components/shadcn/Dialog/Dialog'
 
 interface IValidationSetupProps {
   initialValues: IValidationsFormSchema
@@ -78,7 +73,7 @@ const ValidationSetup = ({
     // setInitialValues(validationSetupInitialValues)
   }
 
-  const handleSaveMValidation = (
+  const handleSaveValidation = (
     values: typeof validationSetupInitialValues
   ) => {
     const payload = {
@@ -100,7 +95,7 @@ const ValidationSetup = ({
       validationSchema={ValidationSetupValidationSchema}
       onSubmit={(values, { setSubmitting, resetForm }) => {
         setSubmitting(false)
-        handleSaveMValidation(values)
+        handleSaveValidation(values)
         resetForm()
       }}
     >
@@ -117,7 +112,10 @@ const ValidationSetup = ({
           <Modal
             centered={false}
             open={!!openValidationModal}
-            toggleModal={resetFormWithToggleModal}
+            toggleModal={() => {
+              resetFormWithToggleModal()
+              toggleValidationModal()
+            }}
             size="xl"
             title={
               values?.id ? t('security.module.editModule') : 'Validation Setup'
@@ -179,7 +177,10 @@ const ValidationSetup = ({
                         btnType="outlined"
                         variant="secondary"
                         className="mr-3"
-                        onClick={resetFormWithToggleModal}
+                        onClick={() => {
+                          resetFormWithToggleModal()
+                          toggleValidationModal()
+                        }}
                       >
                         {t('btns.cancel')}
                       </Button>

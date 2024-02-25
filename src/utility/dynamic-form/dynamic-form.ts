@@ -87,6 +87,24 @@ export const createFormInputFromFieldType = (
         }
       )
 
+    case DYNAMICFORMFIELDTYPE.NUMBER:
+      return React.createElement<IInputProps>(
+        DynamicFormFieldTypeMapping.NUMBER as FunctionComponent,
+        {
+          value: values?.[field.fieldControlName as string]?.value || null,
+          label: field.labelNameEnglish,
+          id: field.fieldControlName,
+          errors: errors,
+          touched: touched,
+          onChange: (e) => {
+            debugger
+            setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: e.target.value})
+          },
+          onBlur: handleBlur,
+          isRequired: true,
+        }
+      )
+
     case DYNAMICFORMFIELDTYPE.RADIO:
       return DynamicFormFieldTypeMapping.RADIO({
         options: field.dropDownResponse?.dropDownDetailResponseDtoList?.map((option: { id: number, descriptionEn: string, descriptionNp: string}) => ({
