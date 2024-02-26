@@ -38,7 +38,7 @@ export const createFormInputFromFieldType = (
 
     case DYNAMICFORMFIELDTYPE.ENGLISHCALENDAR:
       return DynamicFormFieldTypeMapping.ENGLISHCALENDAR({
-        label: field.fieldControlName,
+        label: field.labelNameEnglish,
         value: values?.[field.fieldControlName as string]?.value || "",
         id: field.fieldControlName,
         errors: errors,
@@ -80,6 +80,24 @@ export const createFormInputFromFieldType = (
           errors: errors,
           touched: touched,
           onChange: (e) => {
+            setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: e.target.value})
+          },
+          onBlur: handleBlur,
+          isRequired: true,
+        }
+      )
+
+    case DYNAMICFORMFIELDTYPE.NUMBER:
+      return React.createElement<IInputProps>(
+        DynamicFormFieldTypeMapping.NUMBER as FunctionComponent,
+        {
+          value: values?.[field.fieldControlName as string]?.value || null,
+          label: field.labelNameEnglish,
+          id: field.fieldControlName,
+          errors: errors,
+          touched: touched,
+          onChange: (e) => {
+            debugger
             setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: e.target.value})
           },
           onBlur: handleBlur,

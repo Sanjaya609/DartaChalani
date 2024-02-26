@@ -16,6 +16,8 @@ import {
   useGetAllModule,
 } from '../services/moduleSetup.query'
 import ModuleSetupForm from './ModuleSetupForm'
+import { getTextByLanguage } from '@/lib/i18n/i18n'
+import { convertEngToNepNumber } from '@/components/functional/Datepicker/datePickerUtils'
 
 const ModuleSetupTable = () => {
   const { t } = useTranslation()
@@ -94,12 +96,23 @@ const ModuleSetupTable = () => {
         header: t('security.module.moduleNameNepali'),
       },
       {
-        accessorKey: 'parentModule',
+        accessorKey: getTextByLanguage(
+          'parentModuleNameEnglish',
+          'parentModuleNameNepali'
+        ),
         header: t('security.module.parentModuleName'),
       },
       {
-        accessorKey: 'orderNumber',
+        // accessorKey: 'orderNumber',
         header: t('security.module.orderNumber'),
+        cell: ({ row: { original } }) => (
+          <>
+            {getTextByLanguage(
+              original?.orderNumber.toString(),
+              convertEngToNepNumber(original.orderNumber)
+            )}
+          </>
+        ),
       },
       {
         accessorKey: 'isActive',

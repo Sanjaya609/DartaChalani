@@ -4,6 +4,7 @@ import { Grid } from '@/components/ui'
 import { TFunction } from 'i18next'
 import { FormikProps } from 'formik'
 import { IAddFieldInitialValue } from '../../schema/field.interface'
+import { toast } from 'react-toastify'
 
 interface FieldCaseProps {
   formikProps: FormikProps<IAddFieldInitialValue>
@@ -21,7 +22,20 @@ function GeneralFields({ formikProps, t }: FieldCaseProps) {
           touched={formikProps.touched}
           name="labelNameEnglish"
           label={t('recommendation.labelNameEnglish')}
-          onChange={formikProps.handleChange}
+          onChange={(e) => {
+            const inputValue = e.target.value
+            // Regular expression to match English alphabets (a-z, A-Z), digits (0-9), words, and sentences
+            const englishAlphabetAndDigitRegex =
+              /^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _']*$/
+
+            if (
+              englishAlphabetAndDigitRegex.test(inputValue) ||
+              inputValue === ''
+            ) {
+              // Call handleChange only when input contains only English alphabets, digits, words, and sentences
+              formikProps.handleChange(e)
+            }
+          }}
           onBlur={formikProps.handleBlur}
         />
       </Grid.Col>
