@@ -22,7 +22,9 @@ const {
 
   createFieldValue, updateFieldValue, getFieldValueById, deleteFieldValueById,
 
-  createFieldValidation, updateFieldValidation, getFieldValidationById, deleteFieldValidationById, findAllValidationByFieldId,
+  createFieldValidation, updateFieldValidation, getFieldValidationById, 
+  deleteFieldValidationById, findAllValidationByFieldId,
+  validationTypeEnum
 } = apiDetails
 
 const useCreateField = () => {
@@ -312,6 +314,24 @@ const useGetAllField = <T = IAddFieldResponse[]>() => {
         )
     }
 
+    const useGetValidationTypeByEnumKey = (enumKey: string) => {
+      return useQuery(
+        [validationTypeEnum.controllerName, enumKey],
+        () =>
+          initApiRequest<BackendSuccessResponse<any>>({
+            apiDetails: validationTypeEnum,
+            pathVariables: { enumKey }
+          }),
+          {
+            select: (data) => {
+              return data?.data?.data
+            },
+            enabled: !!enumKey,
+            staleTime: 0
+          }
+      )
+    }
+
 export {
   useCreateField,
   useUpdateField,
@@ -323,5 +343,6 @@ export {
   useGetDynamicFieldListByFormId,
 
   useCreateFieldValue, useUpdateFieldValue, useGetFieldValueById, useDeleteFieldValueById,
-  useCreateFieldValidation, useUpdateFieldValidation, useGetAllValidationByFieldId, useDeleteFieldValidationById
+  useCreateFieldValidation, useUpdateFieldValidation, useGetAllValidationByFieldId, useDeleteFieldValidationById,
+  useGetValidationTypeByEnumKey
 }

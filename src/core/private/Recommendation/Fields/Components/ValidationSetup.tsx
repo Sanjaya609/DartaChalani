@@ -21,6 +21,7 @@ import {
   useCreateFieldValidation,
   useDeleteFieldValidationById,
   useGetAllValidationByFieldId,
+  useGetValidationTypeByEnumKey,
 } from '../services/fields.query'
 
 interface IValidationSetupProps {
@@ -67,6 +68,10 @@ const ValidationSetup = ({
     mapDatatoStyleSelect: true,
     enabled: openValidationModal,
   })
+
+  const { data: validationTypes } = useGetValidationTypeByEnumKey('STRINGS')
+
+  console.log(validationTypes, 'filtetr here')
 
   const resetFormWithToggleModal = () => {
     // toggleValidationModal()

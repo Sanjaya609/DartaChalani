@@ -38,7 +38,7 @@ export const createFormInputFromFieldType = (
 
     case DYNAMICFORMFIELDTYPE.ENGLISHCALENDAR:
       return DynamicFormFieldTypeMapping.ENGLISHCALENDAR({
-        label: field.fieldControlName,
+        label: field.labelNameEnglish,
         value: values?.[field.fieldControlName as string]?.value || "",
         id: field.fieldControlName,
         errors: errors,

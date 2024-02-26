@@ -91,6 +91,12 @@ const addFieldAPI = {
     controllerName: `${fieldValidationPrefix}/field/{id}`,
     queryName: "FIND_ALL_VALIDATION_BY_FIELD_ID",
     requestMethod: RequestMethod.GET
+  },
+  validationTypeEnum: {
+    controllerName: `validation-type-enum/{enumKey}`,
+    baseUrl: `${import.meta.env.VITE_API_BASEPOINT}`,
+    queryName: "VALIDATION_TYPE_ENUM",
+    requestMethod: RequestMethod.GET
   }
 }
 
