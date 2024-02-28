@@ -57,15 +57,18 @@ const Sidebar = (props: ISidebarProps) => {
       location.pathname === `${currentPath}/`
     ) {
       if (privilegeSideBarItem.length) {
-        navigate(privilegeSideBarItem[0].path, { state: { id: privilegeSideBarItem[0]?.id!}})
+        debugger
+        navigate(privilegeSideBarItem[0].path, {
+          state: { id: privilegeSideBarItem[0]?.id! },
+        })
       }
     }
   }, [privilegeSideBarItem, navigate, location.pathname])
-  
+
   return (
     <aside className={sideBarAsideWrapper}>
       {privilegeSideBarItem.map((sidebar) => {
-        const isActive = location.pathname === (sidebar.path)
+        const isActive = location.pathname === sidebar.path
 
         if (sidebar?.children?.length) {
           return (

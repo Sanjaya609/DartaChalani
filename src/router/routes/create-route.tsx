@@ -56,6 +56,8 @@ export const Permission = (props: IPermissionProps) => {
       pathDetails = flatModulePropsFromURL?.[parentRoute]
     } else if (isDynamicRoute) {
       pathDetails = flatModulePropsFromURL?.[location.pathname]
+      console.log(flatModulePropsFromURL, 'filter flat')
+      console.log(location, 'filter loc')
     } else {
       pathDetails = checkFromParentPath
         ? flatModulePropsFromURL?.[checkFromParentPath]
