@@ -79,6 +79,9 @@ const ModuleSetupForm = ({
         ? values?.resourceRequestList
         : [],
       orderNumber: +values?.orderNumber,
+      url: values.dynamicFormApplicable
+        ? `/recommendation/${values?.moduleNameEnglish?.replace(/\s/g, '_')}`
+        : values.url,
     }
     createModule(payload, {
       onSuccess: () => {
@@ -117,12 +120,16 @@ const ModuleSetupForm = ({
         handleSubmit,
         handleBlur,
         setFieldValue,
+        resetForm,
       }) => {
         return (
           <Modal
             centered={false}
             open={!!isOpenAddEditModal}
-            toggleModal={resetFormWithToggleModal}
+            toggleModal={() => {
+              resetForm()
+              resetFormWithToggleModal()
+            }}
             size="xl"
             title={
               values?.id
@@ -197,10 +204,37 @@ const ModuleSetupForm = ({
                   />
                 </Grid.Col>
 
+                <Grid.Col sm={'sm:col-span-2'}>
+                  <Form.Switch
+                    isRequired
+                    className="inline"
+                    checked={values.dynamicFormApplicable}
+                    errors={errors}
+                    touched={touched}
+                    name="dynamicFormApplicable"
+                    label={t('security.module.dynamicFormApplicable')}
+                    onChange={() => {
+                      setFieldValue(
+                        'dynamicFormApplicable',
+                        !values.dynamicFormApplicable
+                      )
+                    }}
+                    onBlur={handleBlur}
+                  />
+                </Grid.Col>
+
                 <Grid.Col sm={'sm:col-span-3'}>
                   <Form.Input
                     isRequired
-                    value={values.url}
+                    disabled={values.dynamicFormApplicable}
+                    value={
+                      values.dynamicFormApplicable
+                        ? `/recommendation/${values?.moduleNameEnglish?.replace(
+                            /\s/g,
+                            '_'
+                          )}`
+                        : values.url
+                    }
                     errors={errors}
                     touched={touched}
                     name="url"
@@ -241,24 +275,6 @@ const ModuleSetupForm = ({
                   />
                 </Grid.Col>
 
-                <Grid.Col sm={'sm:col-span-2'}>
-                  <Form.Switch
-                    isRequired
-                    className="inline"
-                    checked={values.dynamicFormApplicable}
-                    errors={errors}
-                    touched={touched}
-                    name="dynamicFormApplicable"
-                    label={t('security.module.dynamicFormApplicable')}
-                    onChange={() => {
-                      setFieldValue(
-                        'dynamicFormApplicable',
-                        !values.dynamicFormApplicable
-                      )
-                    }}
-                    onBlur={handleBlur}
-                  />
-                </Grid.Col>
                 <Grid.Col sm={'sm:col-span-2'}>
                   <Form.Switch
                     isRequired

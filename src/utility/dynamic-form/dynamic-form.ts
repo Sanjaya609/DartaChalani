@@ -34,6 +34,13 @@ export const createFormInputFromFieldType = (
     case DYNAMICFORMFIELDTYPE.NEPALICALENDAR:
       return DynamicFormFieldTypeMapping.NEPALICALENDAR({
         label: field.labelNameEnglish,
+        value: values?.[field.fieldControlName as string]?.value || "",
+        id: field.fieldControlName,
+        errors: errors,
+        touched: touched,
+        onChange: (engDate, nepDate) => {
+          setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: nepDate ? formatDate(nepDate) : ""})
+        }
       })
 
     case DYNAMICFORMFIELDTYPE.ENGLISHCALENDAR:

@@ -65,25 +65,8 @@ const RegistrationBookTable = ({
     })
   }
 
-  // const handleChangeStatus = () => {
-  //   if (currentSelectedIdToChangeStatus) {
-  //     changeRecommendationStatus(
-  //       { recommendationId: currentSelectedIdToChangeStatus },
-  //       {
-  //         onSuccess: () => {
-  //           setOrRemoveCurrentSelectedIdToChangeStatus()
-  //         },
-  //       }
-  //     )
-  //   }
-  // }
-
   const columns = useMemo<ColumnDef<IRecommendationResponse>[]>(
     () => [
-      // {
-      //   accessorKey: 'id',
-      //   header: t('recommendation.recommendationNo'),
-      // },
       {
         accessorKey: 'nameEnglish',
         header: t('recommendation.recommendationNameEn'),
@@ -92,22 +75,14 @@ const RegistrationBookTable = ({
         accessorKey: 'nameNepali',
         header: t('recommendation.recommendationNameNp'),
       },
-      // {
-      //   header: t('masterSetup.office.status'),
-      //   accessorKey: 'isActive',
-      //   cell: ({
-      //     row: {
-      //       original: { id, isActive },
-      //     },
-      //   }) => (
-      //     <Switch
-      //       checked={isActive}
-      //       onChange={() => {
-      //         setOrRemoveCurrentSelectedIdToChangeStatus(id)
-      //       }}
-      //     />
-      //   ),
-      // },
+      {
+        accessorKey: 'moduleNameEnglish',
+        header: t('security.module.moduleNameEnglish'),
+      },
+      {
+        accessorKey: 'moduleNameNepali',
+        header: t('security.module.moduleNameNepali'),
+      },
       {
         header: t('actions'),
         cell: ({
