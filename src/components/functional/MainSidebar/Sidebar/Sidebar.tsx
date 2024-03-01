@@ -48,7 +48,7 @@ const Sidebar = (props: ISidebarProps) => {
           titleEn: flatModulePropsFromURL?.[navList.path]?.moduleNameEnglish,
           titleNp: flatModulePropsFromURL?.[navList.path]?.moduleNameNepali,
         })),
-    []
+    [sideBarItem]
   )
 
   useEffect(() => {
@@ -57,7 +57,6 @@ const Sidebar = (props: ISidebarProps) => {
       location.pathname === `${currentPath}/`
     ) {
       if (privilegeSideBarItem.length) {
-        debugger
         navigate(privilegeSideBarItem[0].path, {
           state: { id: privilegeSideBarItem[0]?.id! },
         })

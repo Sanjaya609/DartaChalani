@@ -20,9 +20,9 @@ const DynamicForm = (props: Partial<IRoutePrivilege>) => {
         path: child.url,
         titleEn: child.moduleNameEnglish,
         titleNp: child.moduleNameNepali,
-        id: child.id
+        id: child.id,
       })) || [],
-    [t]
+    [t, currentModuleDetails]
   )
 
   return (
