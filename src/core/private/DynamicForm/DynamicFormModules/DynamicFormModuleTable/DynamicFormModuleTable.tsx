@@ -74,13 +74,16 @@ const DynamicFormModuleTable = ({
             },
           }) => (
             <TableAction
-              // handleViewClick={() => {
-              //   navigate(
-              //     `${currentModuleDetails?.url}/view/${encodeParams(
-              //       formValueId
-              //     )}`
-              //   )
-              // }}
+              handleViewClick={() => {
+                navigate(
+                  `${currentModuleDetails?.url}/view/${encodeParams(
+                    formValueId
+                  )}`,
+                  {
+                    state: { id: location?.state?.id! },
+                  }
+                )
+              }}
               handleEditClick={() => {
                 navigate(
                   `${currentModuleDetails?.url}/edit/${encodeParams(
