@@ -19,6 +19,7 @@ export const DynamicFormFieldTypeMapping = {
   RADIO: Form.Radio,
   CHECKBOX: Form.CheckBox,
   TEXTAREA: Form.TextArea,
+  FILE: Form.File
 }
 
 export const createFormInputFromFieldType = (
@@ -27,8 +28,6 @@ export const createFormInputFromFieldType = (
 ) => {
   const { values, handleChange, handleBlur, errors, setFieldValue, touched } =
     formikConfig
-
-    console.log(values, "filter here this")
 
   switch (field.fieldType.toUpperCase()) {
     case DYNAMICFORMFIELDTYPE.NEPALICALENDAR:
@@ -55,6 +54,7 @@ export const createFormInputFromFieldType = (
         }
       })
 
+    case DYNAMICFORMFIELDTYPE.CHECKBOX:
     case DYNAMICFORMFIELDTYPE.SELECT: {
       const options = field.dropDownResponse?.dropDownDetailResponseDtoList?.map((option: { id: number, descriptionEn: string, descriptionNp: string}) => ({
         label: option.descriptionEn,
@@ -63,6 +63,7 @@ export const createFormInputFromFieldType = (
       }))
 
       return DynamicFormFieldTypeMapping.SELECT({
+        multi: field.fieldType.toUpperCase() === DYNAMICFORMFIELDTYPE.CHECKBOX,
         options: options || [],
         value: values.fieldControlName,
         name: field.fieldControlName,
@@ -130,22 +131,56 @@ export const createFormInputFromFieldType = (
         value: values?.[field.fieldControlName as string]?.value || "" 
       })
 
-      case DYNAMICFORMFIELDTYPE.TEXTAREA:
-        return React.createElement<IInputProps>(
-          DynamicFormFieldTypeMapping.TEXTAREA as FunctionComponent,
-          {
-            value: values?.[field.fieldControlName as string]?.value || '',
-            label: field.labelNameEnglish,
-            id: field.fieldControlName,
-            errors: errors,
-            touched: touched,
-            onChange: (e) => {
-              setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: e.target.value})
-            },
-            onBlur: handleBlur,
-            isRequired: true,
+    case DYNAMICFORMFIELDTYPE.TEXTAREA:
+      return React.createElement<IInputProps>(
+        DynamicFormFieldTypeMapping.TEXTAREA as FunctionComponent,
+        {
+          value: values?.[field.fieldControlName as string]?.value || '',
+          label: field.labelNameEnglish,
+          id: field.fieldControlName,
+          errors: errors,
+          touched: touched,
+          onChange: (e) => {
+            setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: e.target.value})
+          },
+          onBlur: handleBlur,
+          isRequired: true,
+        }
+      )
+
+    // case DYNAMICFORMFIELDTYPE.CHECKBOX:
+    //   return DynamicFormFieldTypeMapping.CHECKBOX(
+    //     {
+    //       options: field.dropDownResponse?.dropDownDetailResponseDtoList?.map((option: { id: number, descriptionEn: string, descriptionNp: string}) => ({
+    //         label: option.descriptionEn,
+    //         value: option.id
+    //       })) || [],
+    //       value: values?.[field.fieldControlName as string]?.value || '',
+    //       label: field.labelNameEnglish,
+    //       id: field.fieldControlName,
+    //       errors: errors,
+    //       touched: touched,
+    //       onChange: (e) => {
+    //         setFieldValue(field?.fieldControlName || "", {fieldId: field?.id, value: e.target?.value})
+    //         console.log(values)
+    //         debugger
+    //       },
+    //       onBlur: handleBlur,
+    //       isRequired: true,
+    //     }
+    //   )
+    
+    case DYNAMICFORMFIELDTYPE.FILE: 
+      return React.createElement<IInputProps>(
+        DynamicFormFieldTypeMapping.FILE as FunctionComponent,
+        {
+          value: values?.[field.fieldControlName as string]?.value || '',
+          label: field.labelNameEnglish,
+          onChange: (e) => {
+            debugger
           }
-        )
+        }
+      )
   }
 }
 

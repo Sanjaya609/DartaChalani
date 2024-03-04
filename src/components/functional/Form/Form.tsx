@@ -6,6 +6,8 @@ import { TextArea } from '@/components/functional/Form/TextArea/TextArea'
 import { CheckBox } from '@/components/functional/Form/CheckBox/CheckBox'
 import { FormSelect } from '@/components/functional/Form/Select/Select'
 import SwitchInput from './Switch/SwitchInput'
+import { UploadSimple } from 'phosphor-react'
+import { FileUpload } from './FileUpload/FileUpload'
 
 const Form = {
   Input,
@@ -16,6 +18,7 @@ const Form = {
   CheckBox,
   Select: FormSelect,
   Switch: SwitchInput,
+  File: FileUpload,
 }
 
 type FormType = typeof Form

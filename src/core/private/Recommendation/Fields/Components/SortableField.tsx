@@ -3,8 +3,14 @@ import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import Form from '@/components/functional/Form/Form'
 import { IAddFieldInitialValue } from '../schema/field.interface'
-import { Button, Icon } from '@/components/ui'
-import { HandGrabbing, Pencil, Trash, Warning } from 'phosphor-react'
+import { Box, Button, Icon } from '@/components/ui'
+import {
+  HandGrabbing,
+  Pencil,
+  Trash,
+  UploadSimple,
+  Warning,
+} from 'phosphor-react'
 import Modal from '@/components/ui/Modal/Modal'
 import { useDeleteFieldById } from '../services/fields.query'
 import { useTranslation } from 'react-i18next'
@@ -120,18 +126,11 @@ const SortableField = ({
     return (
       <ComponentToRender
         options={
-          item.fieldType === 'Select'
-            ? item.dropDownResponse?.dropDownDetailResponseDtoList?.map(
-                (data) => ({
-                  label: data.descriptionEn,
-                  value: data.id,
-                  labelNp: data.descriptionNp,
-                })
-              ) || []
-            : [
-                { label: 'Yes', value: true },
-                { label: 'No', value: true },
-              ]
+          item.dropDownResponse?.dropDownDetailResponseDtoList?.map((data) => ({
+            label: data.descriptionEn,
+            value: data.id,
+            labelNp: data.descriptionNp,
+          })) || []
         }
         cols={5}
         rows={5}

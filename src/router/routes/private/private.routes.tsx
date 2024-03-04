@@ -9,9 +9,12 @@ import { registrationBookRoutes } from './registration-book/registration-book.ro
 import { dispatchBookRoutes } from './dispatch-book/dispatch-book.routes'
 import { recommendationSetupRoutes } from './recommendation/recommendation.routes'
 import { dynamicFormRoutes } from './dynamic-form/dynamic-form.routes'
+import { PRIVILEGEENUM } from '@/utility/enums/privilege.enum'
 
 const Boundary = React.lazy(() => import('@/core/private/Boundary'))
 const NotFound = React.lazy(() => import('@/core/NotFound'))
+
+const Dashboard = React.lazy(() => import('@/core/private/Dashboard'))
 
 export const privateRoutes: _RouteObject<'private'>[] = [
   createRoute({
@@ -19,6 +22,12 @@ export const privateRoutes: _RouteObject<'private'>[] = [
     element: Boundary,
     type: 'bypass',
     children: [
+      createRoute({
+        path: privateRoutePath.dashboard,
+        element: Dashboard,
+        checkPrivilege: [PRIVILEGEENUM.READ_LIST],
+        type: 'bypass',
+      }),
       ...masterSetupRoutes,
       ...securityRoutes,
       ...standingListRoutes,
