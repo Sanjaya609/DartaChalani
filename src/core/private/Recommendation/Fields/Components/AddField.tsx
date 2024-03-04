@@ -135,7 +135,7 @@ const AddField = ({
           return <SwitchFields formikProps={formikProps} t={t} />
 
         case 'CHECKBOX':
-          return <Grid.Col sm={'sm:col-span-12'} key="checkboxField"></Grid.Col>
+          return <RadioFields formikProps={formikProps} t={t} />
 
         case 'RADIO':
           return <RadioFields formikProps={formikProps} t={t} />

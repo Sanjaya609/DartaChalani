@@ -33,7 +33,7 @@ export interface IAddFieldPayload
 export interface IAddFieldResponse {
     dropDownId: string | number;
     fieldControlName: string;
-    fieldType: FormKeyType;
+    fieldType: FormKeyType | "File";
     id: number;
     isValidationRequired: boolean;
     orderNo?: number

@@ -13,8 +13,6 @@ function RadioFields({ formikProps, t }: FieldCaseProps) {
   const { isFetching: getAllDropdownFetching, data: dropdownData } =
     useGetAllDropdownConfig()
 
-  console.log(dropdownData, 'filter')
-
   return (
     <>
       <Grid.Col sm={'sm:col-span-4'}>
