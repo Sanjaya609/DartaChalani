@@ -16,9 +16,6 @@ export const addRecommendationValidationSchema = Yup.object({
   nameNepali: Yup.string().required(
     'recommendation.errors.recommendationNameNp'
   ),
-  description: Yup.string().required(
-    'recommendation.errors.description'
-  ),
   moduleId: Yup.string().required(
     'recommendation.errors.moduleId'
   )
