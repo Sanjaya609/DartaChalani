@@ -19,6 +19,7 @@ export const DynamicFormFieldTypeMapping = {
   RADIO: Form.Radio,
   CHECKBOX: Form.CheckBox,
   TEXTAREA: Form.TextArea,
+  SWITCH: Form.Switch,
   FILE: Form.File
 }
 
@@ -95,6 +96,25 @@ export const createFormInputFromFieldType = (
         }
       )
 
+      case DYNAMICFORMFIELDTYPE.SWITCH:
+      return React.createElement<IInputProps>(
+        DynamicFormFieldTypeMapping.SWITCH as FunctionComponent,
+        {
+          checked: values?.[field.fieldControlName as string]?.value || false,
+          label: field.labelNameEnglish,
+          id: field.fieldControlName,
+          errors: errors,
+          touched: touched,
+          onChange: (e) => {
+            setFieldValue(field?.fieldControlName || "", 
+            {fieldId: field.id, value: !values?.[field.fieldControlName as string]?.value})
+          },
+          onBlur: handleBlur,
+          isRequired: true,
+          className: "inline"
+        }
+      )
+
     case DYNAMICFORMFIELDTYPE.NUMBER:
       return React.createElement<IInputProps>(
         DynamicFormFieldTypeMapping.NUMBER as FunctionComponent,
@@ -105,7 +125,6 @@ export const createFormInputFromFieldType = (
           errors: errors,
           touched: touched,
           onChange: (e) => {
-            debugger
             setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: e.target.value})
           },
           onBlur: handleBlur,
@@ -163,7 +182,6 @@ export const createFormInputFromFieldType = (
     //       onChange: (e) => {
     //         setFieldValue(field?.fieldControlName || "", {fieldId: field?.id, value: e.target?.value})
     //         console.log(values)
-    //         debugger
     //       },
     //       onBlur: handleBlur,
     //       isRequired: true,
@@ -177,7 +195,6 @@ export const createFormInputFromFieldType = (
           value: values?.[field.fieldControlName as string]?.value || '',
           label: field.labelNameEnglish,
           onChange: (e) => {
-            debugger
           }
         }
       )

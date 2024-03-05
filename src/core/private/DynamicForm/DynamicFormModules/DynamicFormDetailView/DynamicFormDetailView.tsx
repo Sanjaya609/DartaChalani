@@ -44,6 +44,9 @@ const DynamicFormDetailView = ({
       case DYNAMICFORMFIELDTYPE.NUMBER:
         return field.value ?? '-'
 
+      case DYNAMICFORMFIELDTYPE.SWITCH:
+        return field.value === true ? 'Yes' : 'No'
+
       case DYNAMICFORMFIELDTYPE.SELECT:
       case DYNAMICFORMFIELDTYPE.RADIO: {
         const options =

@@ -35,7 +35,6 @@ const useCreateField = () => {
         apiDetails: requestData.id ? updateField : createField,
         requestData,
       })
-      debugger
     },
     {
       onSuccess: () => {
@@ -250,7 +249,6 @@ const useGetAllField = <T = IAddFieldResponse[]>() => {
             apiDetails: createFieldValidation,
             requestData,
           })
-          debugger
         },
         {
           onSuccess: () => {
