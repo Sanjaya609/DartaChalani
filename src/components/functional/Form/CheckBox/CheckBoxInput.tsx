@@ -26,11 +26,6 @@ const CheckBoxInput = (props: ICheckBoxInputProps) => {
     className
   )
 
-  console.log(selectedValue, 'filter')
-  console.log(value, 'filter')
-  console.log(selectedValue instanceof Array, 'filter')
-  console.log(selectedValue?.toString() === value.toString(), 'filter')
-
   return (
     <Box className="flex items-center pr-4 last:pr-0">
       <input
