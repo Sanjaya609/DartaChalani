@@ -30,6 +30,12 @@ export const createFormInputFromFieldType = (
   const { values, handleChange, handleBlur, errors, setFieldValue, touched } =
     formikConfig
 
+    const options = field.dropDownResponse?.dropDownDetailResponseDtoList?.map((option: { id: number, descriptionEn: string, descriptionNp: string}) => ({
+      label: option.descriptionEn,
+      labelNp: option.descriptionNp,
+      value: option.id
+    })) || []
+
   switch (field.fieldType.toUpperCase()) {
     case DYNAMICFORMFIELDTYPE.NEPALICALENDAR:
       return DynamicFormFieldTypeMapping.NEPALICALENDAR({
@@ -55,17 +61,11 @@ export const createFormInputFromFieldType = (
         }
       })
 
-    case DYNAMICFORMFIELDTYPE.CHECKBOX:
+    // case DYNAMICFORMFIELDTYPE.CHECKBOX:
     case DYNAMICFORMFIELDTYPE.SELECT: {
-      const options = field.dropDownResponse?.dropDownDetailResponseDtoList?.map((option: { id: number, descriptionEn: string, descriptionNp: string}) => ({
-        label: option.descriptionEn,
-        labelNp: option.descriptionNp,
-        value: option.id
-      }))
-
       return DynamicFormFieldTypeMapping.SELECT({
-        multi: field.fieldType.toUpperCase() === DYNAMICFORMFIELDTYPE.CHECKBOX,
-        options: options || [],
+        // multi: field.fieldType.toUpperCase() === DYNAMICFORMFIELDTYPE.CHECKBOX,
+        options: options,
         value: values.fieldControlName,
         name: field.fieldControlName,
         onChange: (e) => {
@@ -134,10 +134,7 @@ export const createFormInputFromFieldType = (
 
     case DYNAMICFORMFIELDTYPE.RADIO:
       return DynamicFormFieldTypeMapping.RADIO({
-        options: field.dropDownResponse?.dropDownDetailResponseDtoList?.map((option: { id: number, descriptionEn: string, descriptionNp: string}) => ({
-          label: option.descriptionEn,
-          value: option.id
-        })) || [],
+        options: options,
         label: field.labelNameEnglish,
         id: field.fieldControlName,
         errors: errors,
@@ -167,26 +164,36 @@ export const createFormInputFromFieldType = (
         }
       )
 
-    // case DYNAMICFORMFIELDTYPE.CHECKBOX:
-    //   return DynamicFormFieldTypeMapping.CHECKBOX(
-    //     {
-    //       options: field.dropDownResponse?.dropDownDetailResponseDtoList?.map((option: { id: number, descriptionEn: string, descriptionNp: string}) => ({
-    //         label: option.descriptionEn,
-    //         value: option.id
-    //       })) || [],
-    //       value: values?.[field.fieldControlName as string]?.value || '',
-    //       label: field.labelNameEnglish,
-    //       id: field.fieldControlName,
-    //       errors: errors,
-    //       touched: touched,
-    //       onChange: (e) => {
-    //         setFieldValue(field?.fieldControlName || "", {fieldId: field?.id, value: e.target?.value})
-    //         console.log(values)
-    //       },
-    //       onBlur: handleBlur,
-    //       isRequired: true,
-    //     }
-    //   )
+    case DYNAMICFORMFIELDTYPE.CHECKBOX:
+      return DynamicFormFieldTypeMapping.CHECKBOX(
+        {
+          options: options,
+          value: values?.[field.fieldControlName as string]?.value || '',
+          label: field.labelNameEnglish,
+          id: field.fieldControlName,
+          errors: errors,
+          touched: touched,
+          onChange: (e) => {
+            // Check if the data is already in the value array
+            let valueArray = values?.[field.fieldControlName as string]?.value?.split(',').map(Number) || []
+            let index = valueArray?.indexOf(parseInt(e?.target?.value));
+
+            if (index !== -1) {
+                // If data is already in value, remove it
+                valueArray?.splice(index, 1);
+            } else {
+                // If data is not in value, insert it
+                valueArray.push(e.target.value);
+            }
+
+            let updatedValue = valueArray.join(',');
+            
+            setFieldValue(field?.fieldControlName || "", {fieldId: field?.id, value: updatedValue})
+          },
+          onBlur: handleBlur,
+          isRequired: true,
+        }
+      )
     
     case DYNAMICFORMFIELDTYPE.FILE: 
       return React.createElement<IInputProps>(

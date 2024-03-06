@@ -32,11 +32,7 @@ const CheckBoxInput = (props: ICheckBoxInputProps) => {
         {...restProps}
         type="checkbox"
         value={value}
-        checked={
-          selectedValue && selectedValue instanceof Array
-            ? selectedValue.includes(value)
-            : selectedValue === value
-        }
+        checked={selectedValue?.toString().includes(value.toString())}
         id={`${name}-${value}`}
       />
       <label className={computedLabelClass} htmlFor={`${name}-${value}`}>
