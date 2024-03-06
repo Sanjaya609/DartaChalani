@@ -86,7 +86,7 @@ const AddDynamicForm = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
     }
   }
 
-  console.log({ validationSchema })
+  console.log(validationSchema, 'filter v')
 
   const formikConfig = useFormik({
     enableReinitialize: true,

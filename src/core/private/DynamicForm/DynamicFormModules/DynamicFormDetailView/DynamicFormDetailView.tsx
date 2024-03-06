@@ -36,6 +36,18 @@ const DynamicFormDetailView = ({
   }
 
   const getValueForField = (field: IAddFieldInitialValue) => {
+    const options = field.dropDownResponse?.dropDownDetailResponseDtoList?.map(
+      (option: {
+        id: number
+        descriptionEn: string
+        descriptionNp: string
+      }) => ({
+        label: option.descriptionEn,
+        labelNp: option.descriptionNp,
+        value: option.id,
+      })
+    )
+
     switch (field.fieldType.toUpperCase()) {
       case DYNAMICFORMFIELDTYPE.NEPALICALENDAR:
       case DYNAMICFORMFIELDTYPE.ENGLISHCALENDAR:
@@ -49,19 +61,6 @@ const DynamicFormDetailView = ({
 
       case DYNAMICFORMFIELDTYPE.SELECT:
       case DYNAMICFORMFIELDTYPE.RADIO: {
-        const options =
-          field.dropDownResponse?.dropDownDetailResponseDtoList?.map(
-            (option: {
-              id: number
-              descriptionEn: string
-              descriptionNp: string
-            }) => ({
-              label: option.descriptionEn,
-              labelNp: option.descriptionNp,
-              value: option.id,
-            })
-          )
-
         const detailValue = options?.find(
           (option) => (option.value = field.value)
         )
