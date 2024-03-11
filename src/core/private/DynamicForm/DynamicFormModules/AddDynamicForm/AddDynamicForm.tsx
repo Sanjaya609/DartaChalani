@@ -3,6 +3,7 @@ import SectionHeader from '@/components/functional/SectionHeader'
 import { Box, Button, Grid } from '@/components/ui'
 import ContainerLayout from '@/components/ui/core/Layout/ContainerLayout'
 import { Text } from '@/components/ui/core/Text'
+import { IAddFieldInitialValue } from '@/core/private/Recommendation/Fields/schema/field.interface'
 import { IAddGroupResponse } from '@/core/private/Recommendation/Fields/schema/group.interface'
 import {
   useCreateFieldValue,
@@ -36,11 +37,24 @@ const AddDynamicForm = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
     Yup.object({})
   )
   const [initialValues, setInitialValues] = useState({})
+  const [initialValuesWithoutObj, setInitialValuesWithoutObj] = useState({})
   const generateFieldWithValidationSchema = (form: IAddGroupResponse[]) => {
     const { initialValues, validationSchema } = makeFieldsWithSchema(form)
     setInitialValues(initialValues)
     setValidationSchema(Yup.object(validationSchema))
     setIsFormFieldReady(true)
+
+    let transformedObject: any = {}
+
+    for (const key in initialValues) {
+      if (initialValues.hasOwnProperty(key)) {
+        const element = initialValues[key]
+        const fieldName = element.fieldId ? key : ''
+        transformedObject[fieldName] = element.value
+      }
+    }
+
+    setInitialValuesWithoutObj(transformedObject)
   }
 
   const { data: dynamicFormData, isFetching: dynamicFormDataFetching } =
@@ -63,9 +77,18 @@ const AddDynamicForm = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
   const { mutate: updateFieldValue, isLoading: updateFieldValueLoading } =
     useUpdateFieldValue()
 
+  const onHandleChange = (field: IAddFieldInitialValue, value?: any) => {
+    formikConfig.setFieldValue(field?.fieldControlName!, value)
+    setInitialValues((prevValue) => ({
+      ...prevValue,
+      [field?.fieldControlName!]: { fieldId: field.id, value: value },
+    }))
+  }
+
   const handleAddFieldValue = (values: any) => {
     const transformedArray: { fieldId: number; value: string }[] =
-      Object.values(values)
+      Object.values(initialValues)
+
     const reqData = {
       fieldValueListRequestList: transformedArray,
       formId: currentModuleDetails?.id!,
@@ -90,12 +113,13 @@ const AddDynamicForm = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
 
   const formikConfig = useFormik({
     enableReinitialize: true,
-    initialValues,
+    initialValues: initialValuesWithoutObj,
     validationSchema,
     onSubmit: (values) => {
       handleAddFieldValue(values)
     },
   })
+  console.log(formikConfig.errors, 'errors filter')
 
   return dynamicFormDataFetching ? (
     <FallbackLoader />
@@ -130,7 +154,11 @@ const AddDynamicForm = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
               >
                 {group?.fieldResponseList?.map((field) => (
                   <Grid.Col key={field.id} sm={'sm:col-span-3'}>
-                    {createFormInputFromFieldType(field, formikConfig)}
+                    {createFormInputFromFieldType(
+                      field,
+                      formikConfig,
+                      onHandleChange
+                    )}
                   </Grid.Col>
                 ))}
               </Grid>

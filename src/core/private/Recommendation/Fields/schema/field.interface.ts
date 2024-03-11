@@ -24,7 +24,14 @@ export interface IAddFieldInitialValue {
     groupingId: number | null;
     gridLength: 3 | 4 | 6 | 12 // usecase: col-span-{gridLenght}
     showInList: boolean,
-    value?: any
+    value?: any;
+    fieldValidationList?: {
+        id: number,
+        fieldId: number,
+        validationType: string,
+        errorMessage: string,
+        regex: string
+    }[]
 }
 
 export interface IAddFieldPayload

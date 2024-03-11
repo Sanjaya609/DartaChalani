@@ -4,7 +4,7 @@ import React, { FunctionComponent } from 'react'
 import { IInputProps } from '@/components/functional/Form/Input/Input'
 import { generateDynamicError } from './generate-dynamic-error'
 import { useFormik } from 'formik'
-import { StringSchema, ArraySchema } from 'yup'
+import { StringSchema, ArraySchema, MixedSchema } from 'yup'
 import { IAddGroupResponse } from '@/core/private/Recommendation/Fields/schema/group.interface'
 import { IAddFieldInitialValue } from '@/core/private/Recommendation/Fields/schema/field.interface'
 import formatDate from '../date/dateFunction'
@@ -13,6 +13,7 @@ export const DynamicFormFieldTypeMapping = {
   SELECT: Form.Select,
   MULTISELECT: Form.Select,
   TEXT: Form.Input,
+  INPUT: Form.Input,
   NUMBER: Form.Input,
   NEPALICALENDAR: Form.NepaliDatePicker,
   ENGLISHCALENDAR: Form.EnglishDatePicker,
@@ -25,7 +26,8 @@ export const DynamicFormFieldTypeMapping = {
 
 export const createFormInputFromFieldType = (
   field: IAddFieldInitialValue,
-  formikConfig: ReturnType<typeof useFormik>
+  formikConfig: ReturnType<typeof useFormik>,
+  onHandleChange: (field: IAddFieldInitialValue, value: any) => void
 ) => {
   const { values, handleChange, handleBlur, errors, setFieldValue, touched } =
     formikConfig
@@ -33,49 +35,54 @@ export const createFormInputFromFieldType = (
     const options = field.dropDownResponse?.dropDownDetailResponseDtoList?.map((option: { id: number, descriptionEn: string, descriptionNp: string}) => ({
       label: option.descriptionEn,
       labelNp: option.descriptionNp,
-      value: option.id
+      value: option.id?.toString()
     })) || []
 
   switch (field.fieldType.toUpperCase()) {
     case DYNAMICFORMFIELDTYPE.NEPALICALENDAR:
       return DynamicFormFieldTypeMapping.NEPALICALENDAR({
         label: field.labelNameEnglish,
-        value: values?.[field.fieldControlName as string]?.value || "",
+        value: values?.[field.fieldControlName as string] || "",
         id: field.fieldControlName,
         errors: errors,
         touched: touched,
         onChange: (engDate, nepDate) => {
-          setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: nepDate ? formatDate(nepDate) : ""})
-        }
+          onHandleChange(field, engDate ? formatDate(engDate) : "")
+          // setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: nepDate ? formatDate(nepDate) : ""})
+        },
+        isRequired: field?.fieldValidationList?.filter(validation => validation?.validationType === "REQUIRED").length! > 0
       })
 
     case DYNAMICFORMFIELDTYPE.ENGLISHCALENDAR:
       return DynamicFormFieldTypeMapping.ENGLISHCALENDAR({
         label: field.labelNameEnglish,
-        value: values?.[field.fieldControlName as string]?.value || "",
+        value: values?.[field.fieldControlName as string] || "",
         id: field.fieldControlName,
         errors: errors,
         touched: touched,
         onChange: (engDate, nepDate) => {
-          setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: engDate ? formatDate(engDate) : ""})
-        }
+          onHandleChange(field, engDate ? formatDate(engDate) : "")
+          // setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: engDate ? formatDate(engDate) : ""})
+        },
+        isRequired: field?.fieldValidationList?.filter(validation => validation?.validationType === "REQUIRED").length! > 0
       })
 
-    // case DYNAMICFORMFIELDTYPE.CHECKBOX:
     case DYNAMICFORMFIELDTYPE.SELECT: {
       return DynamicFormFieldTypeMapping.SELECT({
-        // multi: field.fieldType.toUpperCase() === DYNAMICFORMFIELDTYPE.CHECKBOX,
         options: options,
-        value: values.fieldControlName,
+        value: values?.[field.fieldControlName as string] || "",
         name: field.fieldControlName,
         onChange: (e) => {
-          setFieldValue(field?.fieldControlName || "", { fieldId: field?.id, value: e?.main})
+          onHandleChange(field, e?.main)
+          // setFieldValue(field?.fieldControlName || "", { fieldId: field?.id, value: e?.main})
         },
         label: field.labelNameEnglish,
         id: field.fieldControlName,
         errors: errors,
         touched: touched,
         onBlur: handleBlur,
+        calculateValueOnChange: true,
+        isRequired: field?.fieldValidationList?.filter(validation => validation?.validationType === "REQUIRED").length! > 0
       })
     }
 
@@ -83,16 +90,17 @@ export const createFormInputFromFieldType = (
       return React.createElement<IInputProps>(
         DynamicFormFieldTypeMapping.TEXT as FunctionComponent,
         {
-          value: values?.[field.fieldControlName as string]?.value || '',
+          value: values?.[field.fieldControlName as string] || '',
           label: field.labelNameEnglish,
           id: field.fieldControlName,
           errors: errors,
           touched: touched,
           onChange: (e) => {
-            setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: e.target.value})
+            onHandleChange(field, e.target.value)
+            // setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: e.target.value})
           },
           onBlur: handleBlur,
-          isRequired: true,
+          isRequired: field?.fieldValidationList?.filter(validation => validation?.validationType === "REQUIRED").length! > 0,
         }
       )
 
@@ -100,17 +108,18 @@ export const createFormInputFromFieldType = (
       return React.createElement<IInputProps>(
         DynamicFormFieldTypeMapping.SWITCH as FunctionComponent,
         {
-          checked: values?.[field.fieldControlName as string]?.value || false,
+          checked: values?.[field.fieldControlName as string] || false,
           label: field.labelNameEnglish,
           id: field.fieldControlName,
           errors: errors,
           touched: touched,
           onChange: (e) => {
-            setFieldValue(field?.fieldControlName || "", 
-            {fieldId: field.id, value: !values?.[field.fieldControlName as string]?.value})
+            onHandleChange(field, !values?.[field.fieldControlName as string]?.value)
+            // setFieldValue(field?.fieldControlName || "", 
+            // {fieldId: field.id, value: !values?.[field.fieldControlName as string]?.value})
           },
           onBlur: handleBlur,
-          isRequired: true,
+          isRequired: field?.fieldValidationList?.filter(validation => validation?.validationType === "REQUIRED").length! > 0,
           className: "inline"
         }
       )
@@ -119,16 +128,18 @@ export const createFormInputFromFieldType = (
       return React.createElement<IInputProps>(
         DynamicFormFieldTypeMapping.NUMBER as FunctionComponent,
         {
-          value: values?.[field.fieldControlName as string]?.value || null,
+          value: values?.[field.fieldControlName as string] || null,
           label: field.labelNameEnglish,
           id: field.fieldControlName,
           errors: errors,
           touched: touched,
           onChange: (e) => {
-            setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: e.target.value})
+            onHandleChange(field, e.target.value)
+            // setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: e.target.value})
           },
           onBlur: handleBlur,
-          isRequired: true,
+          isRequired: field?.fieldValidationList?.filter(validation => validation?.validationType === "REQUIRED").length! > 0
+          ,
         }
       )
 
@@ -137,30 +148,33 @@ export const createFormInputFromFieldType = (
         options: options,
         label: field.labelNameEnglish,
         id: field.fieldControlName,
+        name: field.fieldControlName,
         errors: errors,
         touched: touched,
         onChange: (e) => {
-          setFieldValue(field?.fieldControlName || "", {fieldId: field?.id, value: e.target?.value})
+          onHandleChange(field, e.target.value)
+          // setFieldValue(field?.fieldControlName || "", {fieldId: field?.id, value: e.target?.value})
         },
         onBlur: handleBlur,
-        isRequired: true,
-        value: values?.[field.fieldControlName as string]?.value || "" 
+        isRequired: field?.fieldValidationList?.filter(validation => validation?.validationType === "REQUIRED").length! > 0,
+        value: values?.[field.fieldControlName as string] || "" 
       })
 
     case DYNAMICFORMFIELDTYPE.TEXTAREA:
       return React.createElement<IInputProps>(
         DynamicFormFieldTypeMapping.TEXTAREA as FunctionComponent,
         {
-          value: values?.[field.fieldControlName as string]?.value || '',
+          value: values?.[field.fieldControlName as string] || '',
           label: field.labelNameEnglish,
           id: field.fieldControlName,
           errors: errors,
           touched: touched,
           onChange: (e) => {
-            setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: e.target.value})
+            onHandleChange(field, e.target.value)
+            // setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: e.target.value})
           },
           onBlur: handleBlur,
-          isRequired: true,
+        isRequired: field?.fieldValidationList?.filter(validation => validation?.validationType === "REQUIRED").length! > 0,
         }
       )
 
@@ -168,14 +182,14 @@ export const createFormInputFromFieldType = (
       return DynamicFormFieldTypeMapping.CHECKBOX(
         {
           options: options,
-          value: values?.[field.fieldControlName as string]?.value || '',
+          value: values?.[field.fieldControlName as string] || '',
           label: field.labelNameEnglish,
           id: field.fieldControlName,
           errors: errors,
           touched: touched,
           onChange: (e) => {
             // Check if the data is already in the value array
-            let valueArray = values?.[field.fieldControlName as string]?.value?.split(',').map(Number) || []
+            let valueArray = values?.[field.fieldControlName as string]?.split(',').map(Number) || []
             let index = valueArray?.indexOf(parseInt(e?.target?.value));
 
             if (index !== -1) {
@@ -188,10 +202,11 @@ export const createFormInputFromFieldType = (
 
             let updatedValue = valueArray.join(',');
             
-            setFieldValue(field?.fieldControlName || "", {fieldId: field?.id, value: updatedValue})
+            onHandleChange(field, updatedValue)
+            // setFieldValue(field?.fieldControlName || "", {fieldId: field?.id, value: updatedValue})
           },
           onBlur: handleBlur,
-          isRequired: true,
+          isRequired: field?.fieldValidationList?.filter(validation => validation?.validationType === "REQUIRED").length! > 0
         }
       )
     
@@ -211,7 +226,7 @@ export const createFormInputFromFieldType = (
 export const makeFieldsWithSchema = (form: IAddGroupResponse[]) => {
   let validationSchema: Record<
     string,
-    StringSchema<TAny> | ArraySchema<TAny, TAny>
+    MixedSchema<TAny> | ArraySchema<TAny, TAny>
   > = {}
   const initialValues: Record<string, {fieldId: number | string, value: string | number}> = {}
   const flatGroupFormData = form.reduce<IAddFieldInitialValue[]>(
@@ -227,17 +242,17 @@ export const makeFieldsWithSchema = (form: IAddGroupResponse[]) => {
 
   flatGroupFormData.forEach((field) => {
     initialValues[field.fieldControlName as string] = {fieldId: field.id, value: field.value}
-    // if (field?.fieldValidationList?.length) {
-    //   const schema = generateDynamicError(
-    //     field.fieldType as keyof typeof DynamicFormFieldTypeMapping,
-    //     field.fieldValidationList
-    //   )
+    if (field?.fieldValidationList?.length) {
+      const schema = generateDynamicError(
+        field.fieldType.toUpperCase() as keyof typeof DynamicFormFieldTypeMapping,
+        field.fieldValidationList
+      )
 
-    //   validationSchema = {
-    //     ...validationSchema,
-    //     [field.fieldControlName]: schema,
-    //   }
-    // }
+      validationSchema = {
+        ...validationSchema,
+        [field.fieldControlName as string]: schema,
+      }
+    }
   })
 
   return {
