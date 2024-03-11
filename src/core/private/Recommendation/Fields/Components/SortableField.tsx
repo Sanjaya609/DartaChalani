@@ -135,7 +135,11 @@ const SortableField = ({
         cols={5}
         rows={5}
         disabled
-        isRequired={item.isValidationRequired}
+        isRequired={
+          item?.fieldValidationList?.filter(
+            (validation) => validation?.validationType === 'REQUIRED'
+          ).length! > 0
+        }
         value=""
         checked={true}
         errors={{}}
