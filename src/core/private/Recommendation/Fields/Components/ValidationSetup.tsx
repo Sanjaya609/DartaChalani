@@ -30,6 +30,7 @@ interface IValidationSetupProps {
   openValidationModal: boolean
   toggleValidationModal: VoidFunction
   fieldId: number | string
+  fieldType: string
 }
 const ValidationSetup = ({
   initialValues,
@@ -37,6 +38,7 @@ const ValidationSetup = ({
   openValidationModal,
   toggleValidationModal,
   fieldId,
+  fieldType,
 }: IValidationSetupProps) => {
   const { t } = useTranslation()
   const [deleteIdId, setDeleteId] = useState<string | number>('')
@@ -62,14 +64,15 @@ const ValidationSetup = ({
     })
   }
 
-  const { data: validationTypeData = [] } = useGetEnumDataWithName<
-    OptionType[]
-  >(APIENUM.VALIDATION_TYPE, {
-    mapDatatoStyleSelect: true,
-    enabled: openValidationModal,
-  })
-
-  const { data: validationTypes } = useGetValidationTypeByEnumKey('STRINGS')
+  const { data: validationTypes } = useGetValidationTypeByEnumKey(fieldType)
+  const validationTypeData: OptionType[] = validationTypes?.map(
+    (validation: any) =>
+      ({
+        label: validation?.nameEnglish,
+        labelNp: validation?.nameNepali,
+        value: validation?.key,
+      } || [])
+  )
 
   console.log(validationTypes, 'filtetr here')
 

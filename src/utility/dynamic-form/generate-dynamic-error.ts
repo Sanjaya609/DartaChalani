@@ -16,30 +16,31 @@ export const generateDynamicError = (
   const getYupType: Partial<
     Record<
       keyof typeof DynamicFormFieldTypeMapping,
-      Yup.MixedSchema<TAny> | Yup.ArraySchema<TAny, TAny>
+      Yup.StringSchema<TAny> | Yup.ArraySchema<TAny, TAny>
     >
   > = {
     SELECT: Yup.string().nullable(),
     TEXT: Yup.string().nullable(),
-    INPUT: Yup.mixed().nullable(),
-    RADIO: Yup.mixed().nullable()
+    INPUT: Yup.string().nullable(),
+    RADIO: Yup.string().nullable()
   }
   let error = getYupType[fieldType]
 
   const getValidationSchema = (validation: IFieldValidationList) => {
     switch (validation.validationType) {
       case 'REQUIRED':
-        case 'NOT_NULL':
-          {
-            error = error?.required(validation.errorMessage)
-            console.log(fieldType)
-            return
+      case 'NOT_NULL':
+          error = error?.required(validation.errorMessage)
+          return
 
-        }
+      case 'MAX_LENGTH':
+        error = error?.max(10, validation.errorMessage)
+        return
 
-      // case 'MAX_LENGTH':
-      //   error = error?.max(10, validation.errorMessage)
-      //   return
+      case 'MIN_LENGTH':
+        error = error?.min(5, validation.errorMessage)
+        return
+
     }
   }
 
