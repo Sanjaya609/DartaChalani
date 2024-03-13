@@ -217,6 +217,7 @@ export const createFormInputFromFieldType = (
           value: values?.[field.fieldControlName as string]?.value || '',
           label: field.labelNameEnglish,
           onChange: (e) => {
+            onHandleChange(field, e.target.value)
           }
         }
       )

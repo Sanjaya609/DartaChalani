@@ -41,6 +41,7 @@ const SortableField = ({
   }
 
   const [selectedId, setSelectedId] = useState<string | number>('')
+  const [selectedFieldType, setSelectedFieldType] = useState('')
   const setOrRemoveselectedId = (id?: string | number) =>
     setSelectedId(id || '')
 
@@ -112,6 +113,7 @@ const SortableField = ({
         className="z-40 whitespace-nowrap rounded border border-gray-80"
         onClick={() => {
           setSelectedId(item.id!)
+          setSelectedFieldType(item.fieldType.toUpperCase())
           toggleValidationModal()
         }}
       >
@@ -186,6 +188,7 @@ const SortableField = ({
           initialValues={initialValues}
           setInitialValues={setInitialValues}
           fieldId={selectedId}
+          fieldType={selectedFieldType}
         />
       )}
     </div>

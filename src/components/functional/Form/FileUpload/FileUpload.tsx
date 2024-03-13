@@ -1,7 +1,10 @@
 import { getErrorStatus } from '@/utility/inputUtils/input-error'
-import { ChangeEvent, forwardRef } from 'react'
+import { ChangeEvent, forwardRef, useRef, useState } from 'react'
 import { FormWrapper } from '../FormWrapper/FormWrapper'
-import { UploadSimple } from 'phosphor-react'
+import { Spinner, UploadSimple } from 'phosphor-react'
+import DocumentsUpload from '../../Documents/DocumentsUpload'
+import { useDocumentUpload } from '@/service/generic/generic.query'
+import { IFileState } from '../../Documents/DocumentsUpload/document-upload.interface'
 
 export interface IInputProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
@@ -10,6 +13,7 @@ export interface IInputProps
   leftIcon?: React.ReactNode
   rightIcon?: React.ReactNode
   isNepali?: boolean
+  canUploadMultipleFile?: boolean
 }
 
 const FileUpload = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
@@ -31,6 +35,7 @@ const FileUpload = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
     onChange,
     isRequired,
     showError = true,
+    canUploadMultipleFile = false,
     ...rest
   } = props
   const hasErrorMessage = getErrorStatus({
@@ -40,6 +45,27 @@ const FileUpload = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
     isFieldArray,
   })
 
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const handleButtonClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click()
+    }
+  }
+
+  const [fileState, setFileState] = useState<IFileState>({
+    files: {},
+    isRequiredFileUploaded: false,
+  })
+
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([])
+  const [selectedUUID, setSelectedUUID] = useState<string[]>([])
+
+  const [uploadProgressValue, setUploadProgressValue] = useState(0)
+
+  const { mutateAsync: uploadDocument, isLoading: isUploading } =
+    useDocumentUpload(setUploadProgressValue)
+
   const handleInputFileChange = async (
     event: ChangeEvent<HTMLInputElement>
   ) => {
@@ -48,11 +74,11 @@ const FileUpload = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
         target: { files, id },
       } = event
 
-      //   const validateFileMsg = validateDocumentFile({
-      //     file: files[0],
-      //     allowedFileTypes: fileState.files[id].allowedFileTypes,
-      //     maxFileSize: fileState.files[id].maxFileSize,
-      //   })
+      // const validateFileMsg = validateDocumentFile({
+      //   file: files[0],
+      //   allowedFileTypes: fileState.files[id].allowedFileTypes,
+      //   maxFileSize: fileState.files[id].maxFileSize,
+      // })
 
       //   if (validateFileMsg.length) {
       //     return toast({
@@ -61,47 +87,29 @@ const FileUpload = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
       //     })
       //   }
 
-      //   await uploadDocument(
-      //     { file: files[0] },
-      //     {
-      //       onSuccess: (res) => {
-      //         let updatedFileState = {} as IFileState
-      //         if (!canUploadMultipleFile) {
-      //           updatedFileState = {
-      //             ...fileState,
-      //             files: {
-      //               ...fileState.files,
-      //               [id]: {
-      //                 ...fileState.files[id],
-      //                 fileData: {
-      //                   file: files[0],
-      //                   uuid: res?.data.data.uuid || '',
-      //                 },
-      //               },
-      //             },
-      //           }
-      //         } else {
-      //           updatedFileState = {
-      //             ...fileState,
-      //             files: {
-      //               ...fileState.files,
-      //               [id]: {
-      //                 ...fileState.files[id],
-      //                 filesData: [
-      //                   ...fileState.files[id].filesData,
-      //                   { file: files[0], uuid: res?.data.data.uuid || '' },
-      //                 ],
-      //               },
-      //             },
-      //           }
-      //         }
+      await uploadDocument(
+        { file: files[0] },
+        {
+          onSuccess: (res) => {
+            let newFiles = [...selectedFiles, ...files]
 
-      //         setFileState(updatedFileState)
-      //         validateFileChanges(updatedFileState.files)
-      //       },
-      //     }
-      //   )
-      //   setUploadProgressValue(0)
+            let newUUID = [...selectedUUID, res?.data.data.uuid ?? '']
+
+            setSelectedFiles(newFiles)
+            setSelectedUUID(newUUID)
+
+            onChange &&
+              onChange({
+                ...event,
+                target: {
+                  ...event.target,
+                  value: newUUID.toString(),
+                },
+              })
+          },
+        }
+      )
+      setUploadProgressValue(0)
     }
   }
 
@@ -119,23 +127,43 @@ const FileUpload = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
       className={wrapperClassName}
       isRequired={isRequired}
     >
-      <li style={{ listStyle: 'none' }}>
-        <span className="group relative ">
-          <div className="mt-2 flex">
-            <div className="basis-3/4 cursor-pointer">
-              <UploadSimple weight="fill" size={22} />
-            </div>
-          </div>
-          <label className="cursor-pointer"></label>
-          <input
-            accept={'jpg, jpeg, png, pdf'}
-            onChange={handleInputFileChange}
-            id={id}
-            type="file"
-            className="sr-only"
-          />
-        </span>
-      </li>
+      <div className="flex">
+        <div className="w-30 flex-none">
+          <button
+            type="button"
+            className="border border-slate-400 bg-slate-200 px-3 py-2 text-base"
+            onClick={handleButtonClick}
+          >
+            Choose File
+          </button>
+        </div>
+        <div className="w-70 flex-auto">
+          <p className=" w-100 border border-slate-400 px-3 py-2.5 text-sm">
+            {uploadProgressValue ? (
+              <Spinner />
+            ) : selectedFiles.length > 0 ? (
+              selectedFiles.map((file, index) => (
+                <span
+                  className="mr-2 border border-primary-16 px-2"
+                  key={index}
+                >
+                  {file.name}
+                </span>
+              ))
+            ) : (
+              'No file chosen'
+            )}
+          </p>
+        </div>
+
+        <input
+          type="file"
+          accept={'jpg,png'}
+          className="form-control sr-only"
+          ref={fileInputRef}
+          onChange={handleInputFileChange}
+        />
+      </div>
     </FormWrapper>
   )
 })
