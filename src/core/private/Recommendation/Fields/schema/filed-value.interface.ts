@@ -1,7 +1,8 @@
 export interface IAddFieldValueInitialValue {
     fieldValueListRequestList: {
           fieldId: number,
-          value: string
+          value?: string,
+          documentUUIDList?: string[]
     }[],
     formId: number,
     formValueId?: number

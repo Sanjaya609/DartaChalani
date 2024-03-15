@@ -130,7 +130,7 @@ const RegistrationBookTable = ({
       <ContainerLayout stretch>
         <FlexLayout direction="column">
           <DataTable
-            withSN={false}
+            withSN={true}
             isLoading={allRecommendationFetching}
             canSearch
             addHeaderProps={{
