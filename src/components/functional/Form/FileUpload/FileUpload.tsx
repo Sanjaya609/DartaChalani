@@ -14,6 +14,7 @@ export interface IInputProps
   rightIcon?: React.ReactNode
   isNepali?: boolean
   canUploadMultipleFile?: boolean
+  disabled?: boolean
 }
 
 const FileUpload = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
@@ -36,6 +37,7 @@ const FileUpload = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
     isRequired,
     showError = true,
     canUploadMultipleFile = false,
+    disabled = false,
     ...rest
   } = props
   const hasErrorMessage = getErrorStatus({
@@ -157,6 +159,7 @@ const FileUpload = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
         </div>
 
         <input
+          disabled={disabled}
           type="file"
           accept={'jpg,png'}
           className="form-control sr-only"
