@@ -140,6 +140,7 @@ const DynamicFormModuleTable = ({
       <ContainerLayout stretch>
         <FlexLayout direction="column">
           <DataTable
+            withSN
             canSearch
             addHeaderProps={{
               handleAdd: () => {

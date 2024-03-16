@@ -4,7 +4,7 @@ import React, { FunctionComponent } from 'react'
 import { IInputProps } from '@/components/functional/Form/Input/Input'
 import { generateDynamicError } from './generate-dynamic-error'
 import { useFormik } from 'formik'
-import { StringSchema, ArraySchema, MixedSchema } from 'yup'
+import { StringSchema, ArraySchema } from 'yup'
 import { IAddGroupResponse } from '@/core/private/Recommendation/Fields/schema/group.interface'
 import { IAddFieldInitialValue } from '@/core/private/Recommendation/Fields/schema/field.interface'
 import formatDate from '../date/dateFunction'
@@ -227,7 +227,7 @@ export const createFormInputFromFieldType = (
 export const makeFieldsWithSchema = (form: IAddGroupResponse[]) => {
   let validationSchema: Record<
     string,
-    MixedSchema<TAny> | ArraySchema<TAny, TAny>
+    StringSchema<TAny> | ArraySchema<TAny, TAny>
   > = {}
   const initialValues: Record<string, {fieldId: number | string, value: string | number}> = {}
   const flatGroupFormData = form.reduce<IAddFieldInitialValue[]>(

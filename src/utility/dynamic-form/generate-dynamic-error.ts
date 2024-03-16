@@ -46,5 +46,5 @@ export const generateDynamicError = (
 
   validations.forEach((validation) => getValidationSchema(validation))
 
-  return error as Yup.MixedSchema<TAny> | Yup.ArraySchema<TAny, TAny>
+  return error as Yup.StringSchema<TAny> | Yup.ArraySchema<TAny, TAny>
 }

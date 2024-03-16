@@ -1,18 +1,14 @@
+import { useState } from 'react'
 import Form from '@/components/functional/Form/Form'
 import { Box, Button, Flexbox, Grid, Icon, Layout } from '@/components/ui'
-import { ArrayHelpers, FieldArray, Formik } from 'formik'
+import { Formik } from 'formik'
 import { useTranslation } from 'react-i18next'
 import { IValidationsFormSchema } from '../schema/validations.interface'
 import { FormikValidationError } from '@/components/functional/Form/InputErrorMessage/InputErrorMessage'
 import { Label } from '@/components/functional/Form/Label/Label'
 import { Text } from '@/components/ui/core/Text'
 import Modal from '@/components/ui/Modal/Modal'
-import { useGetEnumDataWithName } from '@/service/generic/generic.query'
-import { APIENUM } from '@/utility/enums/api.enum'
-import { inputChangeNumberOnly } from '@/utility/inputUtils/input-change-utils'
-import { mapDataToStyledSelect } from '@/utility/react-select-helper'
-import { Plus, Trash } from 'phosphor-react'
-import { useMemo, useState } from 'react'
+import { Trash } from 'phosphor-react'
 import {
   ValidationSetupValidationSchema,
   validationSetupInitialValues,
@@ -23,6 +19,7 @@ import {
   useGetAllValidationByFieldId,
   useGetValidationTypeByEnumKey,
 } from '../services/fields.query'
+import { getValidationEnumForFieldType } from '../../utils'
 
 interface IValidationSetupProps {
   initialValues: IValidationsFormSchema
@@ -34,7 +31,6 @@ interface IValidationSetupProps {
 }
 const ValidationSetup = ({
   initialValues,
-  setInitialValues,
   openValidationModal,
   toggleValidationModal,
   fieldId,
@@ -55,6 +51,7 @@ const ValidationSetup = ({
     mutate: deleteValidationById,
     isLoading: deleteValidationByIdLoading,
   } = useDeleteFieldValidationById()
+
   const handleDeleteById = () => {
     deleteValidationById(deleteIdId, {
       onSuccess: () => {
@@ -64,7 +61,7 @@ const ValidationSetup = ({
     })
   }
 
-  const { data: validationTypes } = useGetValidationTypeByEnumKey(fieldType)
+  const { data: validationTypes } = useGetValidationTypeByEnumKey(getValidationEnumForFieldType(fieldType))
   const validationTypeData: OptionType[] = validationTypes?.map(
     (validation: any) =>
       ({

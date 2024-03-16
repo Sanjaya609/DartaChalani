@@ -81,15 +81,18 @@ const AddDynamicForm = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
     formikConfig.setFieldValue(field?.fieldControlName!, value)
     setInitialValues((prevValue) => ({
       ...prevValue,
-      [field?.fieldControlName!]: { fieldId: field.id, value: value },
+      [field?.fieldControlName!]: { 
+        fieldId: field.id, 
+        [field.fieldType !== "File" ? "value" : "documentUUIDList"]: field.fieldType !== "File" ? value : value.split(',').map((item: string) => item.trim()) 
+      },
     }))
   }
 
   const handleAddFieldValue = (values: any) => {
-    const transformedArray: { fieldId: number; value: string }[] =
+    const transformedArray: { fieldId: number; value?: string; documentUUIDList: string[] }[] =
       Object.values(initialValues)
 
-    const reqData = {
+      const reqData = {
       fieldValueListRequestList: transformedArray,
       formId: currentModuleDetails?.id!,
       formValueId: formValueId ?? 0,
@@ -153,7 +156,7 @@ const AddDynamicForm = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
                 className="mb-4"
               >
                 {group?.fieldResponseList?.map((field) => (
-                  <Grid.Col key={field.id} sm={'sm:col-span-3'}>
+                  <Grid.Col key={field.id} sm={`sm:col-span-${field.gridLength}`}>
                     {createFormInputFromFieldType(
                       field,
                       formikConfig,
