@@ -55,13 +55,14 @@ const ValidationSetup = ({
   const handleDeleteById = () => {
     deleteValidationById(deleteIdId, {
       onSuccess: () => {
-        // setOrRemoveDeleteId()
-        // toggleValidationModal()
+        setOrRemoveDeleteId()
       },
     })
   }
 
-  const { data: validationTypes } = useGetValidationTypeByEnumKey(getValidationEnumForFieldType(fieldType))
+  const { data: validationTypes } = useGetValidationTypeByEnumKey(
+    getValidationEnumForFieldType(fieldType)
+  )
   const validationTypeData: OptionType[] = validationTypes?.map(
     (validation: any) =>
       ({
@@ -161,7 +162,7 @@ const ValidationSetup = ({
                 <Grid.Col sm={'sm:col-span-5'}>
                   <Form.TextArea
                     withCharacterCount
-                    maxLength={500}
+                    maxLength={300}
                     value={values.errorMessage}
                     errors={errors}
                     touched={touched}
@@ -267,6 +268,9 @@ const ValidationSetup = ({
                 btnAction: handleDeleteById,
                 loading: validationListFetching,
                 btnTitle: t('btns.delete'),
+              }}
+              cancelBtnProps={{
+                btnAction: () => setOrRemoveDeleteId(),
               }}
             >
               Are you sure you want to delete this resource?
