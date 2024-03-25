@@ -56,6 +56,7 @@ const EnglishDatePicker: React.FC<EnglishDatePickerProps> = (props) => {
         dateFormat={dateFormat}
         showMonthDropdown={showMonthDropdown}
         showYearDropdown={showYearDropdown}
+        yearDropdownItemNumber={60}
         popperClassName="!z-20"
         ref={datePickerRef}
       />
