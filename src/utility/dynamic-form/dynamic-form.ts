@@ -21,7 +21,7 @@ export const DynamicFormFieldTypeMapping = {
   CHECKBOX: Form.CheckBox,
   TEXTAREA: Form.TextArea,
   SWITCH: Form.Switch,
-  FILE: Form.File
+  FILE: Form.File,
 }
 
 export const createFormInputFromFieldType = (
@@ -32,45 +32,60 @@ export const createFormInputFromFieldType = (
   const { values, handleChange, handleBlur, errors, setFieldValue, touched } =
     formikConfig
 
-    const options = field.dropDownResponse?.dropDownDetailResponseDtoList?.map((option: { id: number, descriptionEn: string, descriptionNp: string}) => ({
-      label: option.descriptionEn,
-      labelNp: option.descriptionNp,
-      value: option.id?.toString()
-    })) || []
+  const options =
+    field.dropDownResponse?.dropDownDetailResponseDtoList?.map(
+      (option: {
+        id: number
+        descriptionEn: string
+        descriptionNp: string
+      }) => ({
+        label: option.descriptionEn,
+        labelNp: option.descriptionNp,
+        value: option.id?.toString(),
+      })
+    ) || []
 
   switch (field.fieldType.toUpperCase()) {
     case DYNAMICFORMFIELDTYPE.NEPALICALENDAR:
       return DynamicFormFieldTypeMapping.NEPALICALENDAR({
         label: field.labelNameEnglish,
-        value: values?.[field.fieldControlName as string] || "",
+        value: values?.[field.fieldControlName as string] || '',
         id: field.fieldControlName,
         errors: errors,
         touched: touched,
         onChange: (engDate, nepDate) => {
-          onHandleChange(field, engDate ? formatDate(engDate) : "")
+          onHandleChange(field, engDate ? formatDate(engDate) : '')
           // setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: nepDate ? formatDate(nepDate) : ""})
         },
-        isRequired: field?.fieldValidationList?.filter(validation => validation?.validationType === "REQUIRED").length! > 0
+        isRequired:
+          field?.fieldValidationList?.filter(
+            (validation) => validation?.validationType === 'REQUIRED'
+          ).length! > 0,
       })
 
     case DYNAMICFORMFIELDTYPE.ENGLISHCALENDAR:
       return DynamicFormFieldTypeMapping.ENGLISHCALENDAR({
         label: field.labelNameEnglish,
-        value: values?.[field.fieldControlName as string] || "",
+        value: values?.[field.fieldControlName as string] || '',
         id: field.fieldControlName,
         errors: errors,
         touched: touched,
+        scrollableYearDropdown: true,
+        showYearDropdown: true,
         onChange: (engDate, nepDate) => {
-          onHandleChange(field, engDate ? formatDate(engDate) : "")
+          onHandleChange(field, engDate ? formatDate(engDate) : '')
           // setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: engDate ? formatDate(engDate) : ""})
         },
-        isRequired: field?.fieldValidationList?.filter(validation => validation?.validationType === "REQUIRED").length! > 0
+        isRequired:
+          field?.fieldValidationList?.filter(
+            (validation) => validation?.validationType === 'REQUIRED'
+          ).length! > 0,
       })
 
     case DYNAMICFORMFIELDTYPE.SELECT: {
       return DynamicFormFieldTypeMapping.SELECT({
         options: options,
-        value: values?.[field.fieldControlName as string] || "",
+        value: values?.[field.fieldControlName as string] || '',
         name: field.fieldControlName,
         onChange: (e) => {
           onHandleChange(field, e?.main)
@@ -82,7 +97,10 @@ export const createFormInputFromFieldType = (
         touched: touched,
         onBlur: handleBlur,
         calculateValueOnChange: true,
-        isRequired: field?.fieldValidationList?.filter(validation => validation?.validationType === "REQUIRED").length! > 0
+        isRequired:
+          field?.fieldValidationList?.filter(
+            (validation) => validation?.validationType === 'REQUIRED'
+          ).length! > 0,
       })
     }
 
@@ -100,11 +118,14 @@ export const createFormInputFromFieldType = (
             // setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: e.target.value})
           },
           onBlur: handleBlur,
-          isRequired: field?.fieldValidationList?.filter(validation => validation?.validationType === "REQUIRED").length! > 0,
+          isRequired:
+            field?.fieldValidationList?.filter(
+              (validation) => validation?.validationType === 'REQUIRED'
+            ).length! > 0,
         }
       )
 
-      case DYNAMICFORMFIELDTYPE.SWITCH:
+    case DYNAMICFORMFIELDTYPE.SWITCH:
       return React.createElement<IInputProps>(
         DynamicFormFieldTypeMapping.SWITCH as FunctionComponent,
         {
@@ -114,13 +135,19 @@ export const createFormInputFromFieldType = (
           errors: errors,
           touched: touched,
           onChange: (e) => {
-            onHandleChange(field, !values?.[field.fieldControlName as string]?.value)
-            // setFieldValue(field?.fieldControlName || "", 
+            onHandleChange(
+              field,
+              !values?.[field.fieldControlName as string]?.value
+            )
+            // setFieldValue(field?.fieldControlName || "",
             // {fieldId: field.id, value: !values?.[field.fieldControlName as string]?.value})
           },
           onBlur: handleBlur,
-          isRequired: field?.fieldValidationList?.filter(validation => validation?.validationType === "REQUIRED").length! > 0,
-          className: "inline"
+          isRequired:
+            field?.fieldValidationList?.filter(
+              (validation) => validation?.validationType === 'REQUIRED'
+            ).length! > 0,
+          className: 'inline',
         }
       )
 
@@ -138,8 +165,10 @@ export const createFormInputFromFieldType = (
             // setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: e.target.value})
           },
           onBlur: handleBlur,
-          isRequired: field?.fieldValidationList?.filter(validation => validation?.validationType === "REQUIRED").length! > 0
-          ,
+          isRequired:
+            field?.fieldValidationList?.filter(
+              (validation) => validation?.validationType === 'REQUIRED'
+            ).length! > 0,
         }
       )
 
@@ -156,8 +185,11 @@ export const createFormInputFromFieldType = (
           // setFieldValue(field?.fieldControlName || "", {fieldId: field?.id, value: e.target?.value})
         },
         onBlur: handleBlur,
-        isRequired: field?.fieldValidationList?.filter(validation => validation?.validationType === "REQUIRED").length! > 0,
-        value: values?.[field.fieldControlName as string] || "" 
+        isRequired:
+          field?.fieldValidationList?.filter(
+            (validation) => validation?.validationType === 'REQUIRED'
+          ).length! > 0,
+        value: values?.[field.fieldControlName as string] || '',
       })
 
     case DYNAMICFORMFIELDTYPE.TEXTAREA:
@@ -174,43 +206,50 @@ export const createFormInputFromFieldType = (
             // setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: e.target.value})
           },
           onBlur: handleBlur,
-        isRequired: field?.fieldValidationList?.filter(validation => validation?.validationType === "REQUIRED").length! > 0,
+          isRequired:
+            field?.fieldValidationList?.filter(
+              (validation) => validation?.validationType === 'REQUIRED'
+            ).length! > 0,
         }
       )
 
     case DYNAMICFORMFIELDTYPE.CHECKBOX:
-      return DynamicFormFieldTypeMapping.CHECKBOX(
-        {
-          options: options,
-          value: values?.[field.fieldControlName as string] || '',
-          label: field.labelNameEnglish,
-          id: field.fieldControlName,
-          errors: errors,
-          touched: touched,
-          onChange: (e) => {
-            // Check if the data is already in the value array
-            let valueArray = values?.[field.fieldControlName as string]?.split(',').map(Number) || []
-            let index = valueArray?.indexOf(parseInt(e?.target?.value));
+      return DynamicFormFieldTypeMapping.CHECKBOX({
+        options: options,
+        value: values?.[field.fieldControlName as string] || '',
+        label: field.labelNameEnglish,
+        id: field.fieldControlName,
+        errors: errors,
+        touched: touched,
+        onChange: (e) => {
+          // Check if the data is already in the value array
+          let valueArray =
+            values?.[field.fieldControlName as string]
+              ?.split(',')
+              .map(Number) || []
+          let index = valueArray?.indexOf(parseInt(e?.target?.value))
 
-            if (index !== -1) {
-                // If data is already in value, remove it
-                valueArray?.splice(index, 1);
-            } else {
-                // If data is not in value, insert it
-                valueArray.push(e.target.value);
-            }
+          if (index !== -1) {
+            // If data is already in value, remove it
+            valueArray?.splice(index, 1)
+          } else {
+            // If data is not in value, insert it
+            valueArray.push(e.target.value)
+          }
 
-            let updatedValue = valueArray.join(',');
-            
-            onHandleChange(field, updatedValue)
-            // setFieldValue(field?.fieldControlName || "", {fieldId: field?.id, value: updatedValue})
-          },
-          onBlur: handleBlur,
-          isRequired: field?.fieldValidationList?.filter(validation => validation?.validationType === "REQUIRED").length! > 0
-        }
-      )
-    
-    case DYNAMICFORMFIELDTYPE.FILE: 
+          let updatedValue = valueArray.join(',')
+
+          onHandleChange(field, updatedValue)
+          // setFieldValue(field?.fieldControlName || "", {fieldId: field?.id, value: updatedValue})
+        },
+        onBlur: handleBlur,
+        isRequired:
+          field?.fieldValidationList?.filter(
+            (validation) => validation?.validationType === 'REQUIRED'
+          ).length! > 0,
+      })
+
+    case DYNAMICFORMFIELDTYPE.FILE:
       return React.createElement<IInputProps>(
         DynamicFormFieldTypeMapping.FILE as FunctionComponent,
         {
@@ -218,7 +257,7 @@ export const createFormInputFromFieldType = (
           label: field.labelNameEnglish,
           onChange: (e) => {
             onHandleChange(field, e.target.value)
-          }
+          },
         }
       )
   }
@@ -229,7 +268,10 @@ export const makeFieldsWithSchema = (form: IAddGroupResponse[]) => {
     string,
     StringSchema<TAny> | ArraySchema<TAny, TAny>
   > = {}
-  const initialValues: Record<string, {fieldId: number | string, value: string | number}> = {}
+  const initialValues: Record<
+    string,
+    { fieldId: number | string; value: string | number }
+  > = {}
   const flatGroupFormData = form.reduce<IAddFieldInitialValue[]>(
     (allForm, currForm) => {
       let currFormData = [...allForm]
@@ -242,7 +284,10 @@ export const makeFieldsWithSchema = (form: IAddGroupResponse[]) => {
   )
 
   flatGroupFormData.forEach((field) => {
-    initialValues[field.fieldControlName as string] = {fieldId: field.id, value: field.value}
+    initialValues[field.fieldControlName as string] = {
+      fieldId: field.id,
+      value: field.value,
+    }
     if (field?.fieldValidationList?.length) {
       const schema = generateDynamicError(
         field.fieldType.toUpperCase() as keyof typeof DynamicFormFieldTypeMapping,

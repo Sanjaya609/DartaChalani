@@ -73,6 +73,9 @@ const DynamicFormDetailView = ({
       case DYNAMICFORMFIELDTYPE.CHECKBOX: {
         return field?.value?.toString === 'true' ? 'Yes' : 'No'
       }
+      case DYNAMICFORMFIELDTYPE.FILE: {
+        return field?.FieldDocumentResponse
+      }
 
       default:
         return field.value
@@ -108,13 +111,16 @@ const DynamicFormDetailView = ({
                     {group?.fieldResponseList &&
                     group?.fieldResponseList?.length > 0
                       ? group?.fieldResponseList?.map((field) => (
-                          <GridColDetailByLabelAndValue
-                            value={getValueForField(field)}
-                            label={getTextByLanguage(
-                              field?.labelNameEnglish,
-                              field?.labelNameNepali
-                            )}
-                          />
+                          <>
+                            <GridColDetailByLabelAndValue
+                              value={getValueForField(field)}
+                              label={getTextByLanguage(
+                                field?.labelNameEnglish,
+                                field?.labelNameNepali
+                              )}
+                            />
+                            {/* {field?.fieldType === ''} */}
+                          </>
                         ))
                       : ''}
                   </>
