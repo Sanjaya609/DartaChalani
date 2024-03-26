@@ -12,6 +12,7 @@ import { Trash } from 'phosphor-react'
 import {
   ValidationSetupValidationSchema,
   validationSetupInitialValues,
+  valueRequiringValidationType,
 } from '../schema/validations.schema'
 import {
   useCreateFieldValidation,
@@ -146,7 +147,7 @@ const ValidationSetup = ({
                   />
                 </Grid.Col>
 
-                <Grid.Col sm={'sm:col-span-4'}>
+                {/* <Grid.Col sm={'sm:col-span-4'}>
                   <Form.Input
                     label="Regex"
                     value={values.regex}
@@ -157,7 +158,24 @@ const ValidationSetup = ({
                     onBlur={handleBlur}
                     touched={touched}
                   />
-                </Grid.Col>
+                </Grid.Col> */}
+
+                {valueRequiringValidationType?.includes(
+                  values?.validationType
+                ) && (
+                  <Grid.Col sm={'sm:col-span-4'}>
+                    <Form.Input
+                      label="Value"
+                      value={values.value}
+                      id={`value`}
+                      name={`value`}
+                      onChange={handleChange}
+                      errors={errors}
+                      onBlur={handleBlur}
+                      touched={touched}
+                    />
+                  </Grid.Col>
+                )}
 
                 <Grid.Col sm={'sm:col-span-5'}>
                   <Form.TextArea
