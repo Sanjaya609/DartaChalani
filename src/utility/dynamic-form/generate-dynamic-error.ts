@@ -49,5 +49,4 @@ export const generateDynamicError = (
   validations.forEach((validation) => getValidationSchema(validation))
 
   return error as Yup.StringSchema<TAny> | Yup.ArraySchema<TAny, TAny>
-  debugger
 }
