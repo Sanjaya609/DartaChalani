@@ -12,8 +12,8 @@ const MainSidebar = () => {
 
   return (
     <>
-      <aside className="h-full w-[3.5rem] shrink-0 bg-navy-24">
-        <div className="flex w-full flex-col items-center justify-center">
+      <aside className="scrollbars h-full w-[3.5rem] shrink-0 bg-navy-24">
+        <div className="flex w-full flex-col items-center justify-center ">
           {privilegedSidebarNavList.map((nav) => {
             const isActive = location.pathname.includes(nav.path)
             return (
