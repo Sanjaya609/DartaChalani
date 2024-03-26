@@ -1,39 +1,39 @@
 import { FormKeyType } from '@/components/functional/Form/Form'
 
 export interface IAddFieldInitialValue {
-  id: number | string
-  dropDownId: string | number
-  dropDownResponse?: {
-    id: number
-    dropDownDescriptionEn: string
-    dropDownDescriptionNp: string
-    dropDownDetailResponseDtoList: {
-      id: number
-      descriptionEn: string
-      descriptionNp: string
+    id: number | string;
+    dropDownId: string | number;
+    dropDownResponse?: { 
+        id: number, 
+        dropDownDescriptionEn: string, 
+        dropDownDescriptionNp: string, 
+        dropDownDetailResponseDtoList: {
+            id: number, 
+            descriptionEn: string, 
+            descriptionNp: string
+        }[] 
+    }
+    fieldControlName?: string;
+    fieldType: FormKeyType;
+    FieldDocumentResponse?: FieldDocumentResponseType
+    isValidationRequired: boolean;
+    orderNo?: number;
+    recommendationId: string;
+    labelNameEnglish: string;
+    labelNameNepali: string;
+    className: string;
+    groupingId: number | null;
+    gridLength: 3 | 4 | 6 | 12 // usecase: col-span-{gridLenght}
+    showInList: boolean,
+    value?: any;
+    fieldValidationList?: {
+        id: number,
+        fieldId: number,
+        validationType: string,
+        errorMessage: string,
+        // regex: string
+        value: string | number
     }[]
-  }
-  fieldControlName?: string
-  fieldType: FormKeyType
-  FieldDocumentResponse?: FieldDocumentResponseType
-
-  isValidationRequired: boolean
-  orderNo?: number
-  recommendationId: string
-  labelNameEnglish: string
-  labelNameNepali: string
-  className: string
-  groupingId: number | null
-  gridLength: 3 | 4 | 6 | 12 // usecase: col-span-{gridLenght}
-  showInList: boolean
-  value?: any
-  fieldValidationList?: {
-    id: number
-    fieldId: number
-    validationType: string
-    errorMessage: string
-    regex: string
-  }[]
 }
 
 export interface IAddFieldPayload extends IAddFieldInitialValue {}

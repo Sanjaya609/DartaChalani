@@ -15,8 +15,8 @@ export const DynamicFormFieldTypeMapping = {
   TEXT: Form.Input,
   INPUT: Form.Input,
   NUMBER: Form.Input,
-  NEPALICALENDAR: Form.NepaliDatePicker,
-  ENGLISHCALENDAR: Form.EnglishDatePicker,
+  NEPALIDATEPICKER: Form.NepaliDatePicker,
+  ENGLISHDATEPICKER: Form.EnglishDatePicker,
   RADIO: Form.Radio,
   CHECKBOX: Form.CheckBox,
   TEXTAREA: Form.TextArea,
@@ -47,12 +47,14 @@ export const createFormInputFromFieldType = (
 
   switch (field.fieldType.toUpperCase()) {
     case DYNAMICFORMFIELDTYPE.NEPALICALENDAR:
-      return DynamicFormFieldTypeMapping.NEPALICALENDAR({
+      return DynamicFormFieldTypeMapping.NEPALIDATEPICKER({
         label: field.labelNameEnglish,
         value: values?.[field.fieldControlName as string] || '',
         id: field.fieldControlName,
         errors: errors,
         touched: touched,
+        minDate: field.fieldValidationList?.find(validation => validation.validationType === "MIN")?.value?.toString() ?? "",
+        maxDate: field.fieldValidationList?.find(validation => validation.validationType === "MAX")?.value?.toString() ?? "",
         onChange: (engDate, nepDate) => {
           onHandleChange(field, engDate ? formatDate(engDate) : '')
           // setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: nepDate ? formatDate(nepDate) : ""})
@@ -64,7 +66,7 @@ export const createFormInputFromFieldType = (
       })
 
     case DYNAMICFORMFIELDTYPE.ENGLISHCALENDAR:
-      return DynamicFormFieldTypeMapping.ENGLISHCALENDAR({
+      return DynamicFormFieldTypeMapping.ENGLISHDATEPICKER({
         label: field.labelNameEnglish,
         value: values?.[field.fieldControlName as string] || '',
         id: field.fieldControlName,
@@ -76,10 +78,9 @@ export const createFormInputFromFieldType = (
           onHandleChange(field, engDate ? formatDate(engDate) : '')
           // setFieldValue(field?.fieldControlName || "", {fieldId: field.id, value: engDate ? formatDate(engDate) : ""})
         },
-        isRequired:
-          field?.fieldValidationList?.filter(
-            (validation) => validation?.validationType === 'REQUIRED'
-          ).length! > 0,
+        minDate: field.fieldValidationList?.find(validation => validation.validationType === "MIN")?.value?.toString() ?? "",
+        maxDate: field.fieldValidationList?.find(validation => validation.validationType === "MAX")?.value?.toString() ?? "",
+        isRequired: field?.fieldValidationList?.filter(validation => validation?.validationType === "REQUIRED").length! > 0
       })
 
     case DYNAMICFORMFIELDTYPE.SELECT: {
