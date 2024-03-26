@@ -23,7 +23,7 @@ export const ValidationSetupValidationSchema = Yup.object().shape({
     ),
     value: Yup.string().when('validationType', {
         is: (val: string) => {
-            !valueRequiringValidationType.includes(val)
+            return !valueRequiringValidationType.includes(val)
         },
         then: () => Yup.string().nullable(),
         otherwise: () =>
