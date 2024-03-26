@@ -36,7 +36,7 @@ const MenuOverlay = () => {
 
   const computedAsideMenuOverlayClass = getComputedClassNames(
     menuOverlayAside,
-    'transition-all duration-200 translate-x-[-16rem]',
+    'transition-all duration-200 translate-x-[-16rem] scrollbars',
     { 'transform-none': isOpen }
   )
 
@@ -54,7 +54,7 @@ const MenuOverlay = () => {
       <aside className={computedAsideMenuOverlayClass} ref={asideRef}>
         <div></div>
 
-        <Flexbox align="center" className="p-4">
+        <Flexbox align="center" className="sticky top-0  bg-navy-24 p-4">
           <Image src={Logo} alt="Govt. of Nepal" width={40} height={40} />
           <Text className="ml-4" color="text-white" variant="h6">
             {t('projectTitle')}
