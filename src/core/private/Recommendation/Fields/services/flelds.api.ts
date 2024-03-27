@@ -23,7 +23,7 @@ const addFieldAPI = {
   getFieldDetailById: {
     controllerName: `${prefix}/{id}`,
     queryName: 'GET_FIELD_DETAIL_BY_ID',
-    requestMethod: RequestMethod.GET
+    requestMethod: RequestMethod.GET,
   },
   getAllFieldByRecommendationId: {
     controllerName: `${prefix}/recommendation/{id}`,
@@ -33,71 +33,76 @@ const addFieldAPI = {
   deleteFieldById: {
     controllerName: `${prefix}/{id}`,
     queryName: 'DELETE_FIELD_BY_ID',
-    requestMethod: RequestMethod.DELETE
+    requestMethod: RequestMethod.DELETE,
   },
   updateFieldOrder: {
     controllerName: `${prefix}/update-order`,
-    queryName: "UPDATE_FIELD_ORDER",
-    requestMethod: RequestMethod.POST
+    queryName: 'UPDATE_FIELD_ORDER',
+    requestMethod: RequestMethod.POST,
   },
   dynamicFieldList: {
     controllerName: `${prefix}/list-data`,
-    queryName: "DYNAMIC_FIELD_LIST",
-    requestMethod: RequestMethod.POST
+    queryName: 'DYNAMIC_FIELD_LIST',
+    requestMethod: RequestMethod.POST,
+  },
+  downloadDynamicFieldFile: {
+    controllerName: `document/download`,
+    queryKeyName: 'DOWNLOAD_DOCUMENT_FOR_DISPATCH_BOOK',
+    requestMethod: RequestMethod.POST,
   },
   // field-value
   createFieldValue: {
     controllerName: `${fieldValuePrefix}`,
-    queryName: "CREATE_FILED_VALUE",
-    requestMethod: RequestMethod.POST
+    queryName: 'CREATE_FILED_VALUE',
+    requestMethod: RequestMethod.POST,
   },
   deleteFieldValueById: {
     controllerName: `${fieldValuePrefix}/form-value/{id}`,
-    queryName: "DELETE_FORM_VALUE_BY_ID",
-    requestMethod: RequestMethod.DELETE
+    queryName: 'DELETE_FORM_VALUE_BY_ID',
+    requestMethod: RequestMethod.DELETE,
   },
   updateFieldValue: {
     controllerName: `${fieldValuePrefix}`,
-    queryName: "UPDATE_FILED_VALUE",
-    requestMethod: RequestMethod.PUT
+    queryName: 'UPDATE_FILED_VALUE',
+    requestMethod: RequestMethod.PUT,
   },
   getFieldValueById: {
     controllerName: `${prefix}/recommendation/{id}`,
-    queryName: "GET_FIELD_VALUE_BY_ID",
-    requestMethod: RequestMethod.GET
+    queryName: 'GET_FIELD_VALUE_BY_ID',
+    requestMethod: RequestMethod.GET,
   },
   // field validations
   createFieldValidation: {
     controllerName: `${fieldValidationPrefix}`,
-    queryName: "CREATE_FIELD_VALIDATION",
-    requestMethod: RequestMethod.POST
+    queryName: 'CREATE_FIELD_VALIDATION',
+    requestMethod: RequestMethod.POST,
   },
   updateFieldValidation: {
     controllerName: `${fieldValidationPrefix}`,
-    queryName: "UPDATE_FIELD_VALIDATION",
-    requestMethod: RequestMethod.PUT
+    queryName: 'UPDATE_FIELD_VALIDATION',
+    requestMethod: RequestMethod.PUT,
   },
   getFieldValidationById: {
     controllerName: `${fieldValidationPrefix}/{id}`,
-    queryName: "GET_FIELD_VALIDATION_BY_ID",
-    requestMethod: RequestMethod.GET
+    queryName: 'GET_FIELD_VALIDATION_BY_ID',
+    requestMethod: RequestMethod.GET,
   },
   deleteFieldValidationById: {
     controllerName: `${fieldValidationPrefix}/{id}`,
-    queryName: "DELETE_FIELD_VALIDATION_BY_ID",
-    requestMethod: RequestMethod.DELETE
+    queryName: 'DELETE_FIELD_VALIDATION_BY_ID',
+    requestMethod: RequestMethod.DELETE,
   },
   findAllValidationByFieldId: {
     controllerName: `${fieldValidationPrefix}/field/{id}`,
-    queryName: "FIND_ALL_VALIDATION_BY_FIELD_ID",
-    requestMethod: RequestMethod.GET
+    queryName: 'FIND_ALL_VALIDATION_BY_FIELD_ID',
+    requestMethod: RequestMethod.GET,
   },
   validationTypeEnum: {
     controllerName: `validation-type-enum/{enumKey}`,
     baseUrl: `${import.meta.env.VITE_API_BASEPOINT}`,
-    queryName: "VALIDATION_TYPE_ENUM",
-    requestMethod: RequestMethod.GET
-  }
+    queryName: 'VALIDATION_TYPE_ENUM',
+    requestMethod: RequestMethod.GET,
+  },
 }
 
 export default addFieldAPI
