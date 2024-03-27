@@ -2,6 +2,7 @@
     id?: number,
     errorMessage: string,
     fieldId: StringNumber,
-    regex: string,
-    validationType: string
+    // regex: string,
+    validationType: string,
+    value: string
   }

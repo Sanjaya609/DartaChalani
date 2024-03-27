@@ -6,7 +6,8 @@ interface IFieldValidationList {
   fieldId: number
   validationType: string
   errorMessage: string
-  regex: string
+  // regex: string
+  value?: number | string
 }
 
 export const generateDynamicError = (
@@ -22,7 +23,9 @@ export const generateDynamicError = (
     SELECT: Yup.string().nullable(),
     TEXT: Yup.string().nullable(),
     INPUT: Yup.string().nullable(),
-    RADIO: Yup.string().nullable()
+    RADIO: Yup.string().nullable(),
+    ENGLISHDATEPICKER: Yup.string().nullable(),
+    NEPALIDATEPICKER: Yup.string().nullable()
   }
   let error = getYupType[fieldType]
 
@@ -33,14 +36,13 @@ export const generateDynamicError = (
           error = error?.required(validation.errorMessage)
           return
 
-      case 'MAX_LENGTH':
-        error = error?.max(10, validation.errorMessage)
+      case 'MAX':
+        error = error?.max(parseInt(validation?.value?.toString()!), validation.errorMessage)
         return
 
-      case 'MIN_LENGTH':
-        error = error?.min(5, validation.errorMessage)
+      case 'MIN':
+        error = error?.min(parseInt(validation?.value?.toString()!), validation.errorMessage)
         return
-
     }
   }
 

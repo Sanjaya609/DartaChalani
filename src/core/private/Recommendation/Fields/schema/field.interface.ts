@@ -16,7 +16,6 @@ export interface IAddFieldInitialValue {
   fieldControlName?: string
   fieldType: FormKeyType
   fieldDocumentResponse?: FieldDocumentResponseType
-
   isValidationRequired: boolean
   orderNo?: number
   recommendationId: string
@@ -32,7 +31,8 @@ export interface IAddFieldInitialValue {
     fieldId: number
     validationType: string
     errorMessage: string
-    regex: string
+    // regex: string
+    value: string | number
   }[]
 }
 

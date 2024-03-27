@@ -12,6 +12,7 @@ import { Trash } from 'phosphor-react'
 import {
   ValidationSetupValidationSchema,
   validationSetupInitialValues,
+  valueRequiringValidationType,
 } from '../schema/validations.schema'
 import {
   useCreateFieldValidation,
@@ -20,6 +21,8 @@ import {
   useGetValidationTypeByEnumKey,
 } from '../services/fields.query'
 import { getValidationEnumForFieldType } from '../../utils'
+import NepaliCalendar from '@/components/functional/Datepicker/NepaliCalendar'
+import formatDate from '@/utility/date/dateFunction'
 
 interface IValidationSetupProps {
   initialValues: IValidationsFormSchema
@@ -146,7 +149,7 @@ const ValidationSetup = ({
                   />
                 </Grid.Col>
 
-                <Grid.Col sm={'sm:col-span-4'}>
+                {/* <Grid.Col sm={'sm:col-span-4'}>
                   <Form.Input
                     label="Regex"
                     value={values.regex}
@@ -157,7 +160,61 @@ const ValidationSetup = ({
                     onBlur={handleBlur}
                     touched={touched}
                   />
-                </Grid.Col>
+                </Grid.Col> */}
+
+                {valueRequiringValidationType?.includes(
+                  values?.validationType
+                ) ? (
+                  fieldType === 'NEPALIDATEPICKER' ? (
+                    <Grid.Col sm={'sm:col-span-4'}>
+                      <Form.NepaliDatePicker
+                        isRequired
+                        value={values.value}
+                        errors={errors}
+                        touched={touched}
+                        name="value"
+                        label={'Value'}
+                        onChange={(nepDate) => {
+                          setFieldValue('value', nepDate)
+                        }}
+                        onBlur={handleBlur}
+                      />
+                    </Grid.Col>
+                  ) : fieldType === 'ENGLISHDATEPICKER' ? (
+                    <Grid.Col sm={'sm:col-span-4'}>
+                      <Form.EnglishDatePicker
+                        maxDate={values?.value || ''}
+                        onBlur={handleBlur}
+                        errors={errors}
+                        touched={touched}
+                        value={values.value}
+                        name="startDateAd"
+                        label={t('masterSetup.fiscalYear.startDateAd')}
+                        onChange={(engDate, nepDate) => {
+                          setFieldValue(
+                            'value',
+                            engDate ? formatDate(engDate) : ''
+                          )
+                        }}
+                        isRequired
+                      />
+                    </Grid.Col>
+                  ) : (
+                    <Grid.Col sm={'sm:col-span-4'}>
+                      <Form.Input
+                        type="number"
+                        label="Value"
+                        value={values.value}
+                        id={`value`}
+                        name={`value`}
+                        onChange={handleChange}
+                        errors={errors}
+                        onBlur={handleBlur}
+                        touched={touched}
+                      />
+                    </Grid.Col>
+                  )
+                ) : null}
 
                 <Grid.Col sm={'sm:col-span-5'}>
                   <Form.TextArea
