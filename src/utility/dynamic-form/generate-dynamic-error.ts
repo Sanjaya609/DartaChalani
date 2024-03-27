@@ -36,13 +36,22 @@ export const generateDynamicError = (
           error = error?.required(validation.errorMessage)
           return
 
-      case 'MAX':
-        error = error?.max(parseInt(validation?.value?.toString()!), validation.errorMessage)
-        return
+      case 'MAX': {
+        if((fieldType === "ENGLISHDATEPICKER") || (fieldType === "NEPALIDATEPICKER")) {
+          return error;
+        } else {
+          error = error?.max(parseInt(validation?.value?.toString()!), validation.errorMessage)
+          return
+        }
+      }
 
       case 'MIN':
-        error = error?.min(parseInt(validation?.value?.toString()!), validation.errorMessage)
-        return
+        if((fieldType === "ENGLISHDATEPICKER") || (fieldType === "NEPALIDATEPICKER")) {
+          return error;
+        } else {
+          error = error?.min(parseInt(validation?.value?.toString()!), validation.errorMessage)
+          return
+        }
     }
   }
 

@@ -10,8 +10,8 @@ import {
 } from '@/core/private/Recommendation/Fields/services/fields.query'
 import { getTextByLanguage } from '@/lib/i18n/i18n'
 import { IRoutePrivilege } from '@/router/routes/create-route'
-import { ColumnDef } from '@tanstack/react-table'
-import React, { useState } from 'react'
+import { ColumnDef, PaginationState } from '@tanstack/react-table'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
 import { useNavigate } from '@/router'
@@ -36,6 +36,11 @@ const DynamicFormModuleTable = ({
   const [deleteId, setdeleteId] = useState<string | number>('')
   const setOrRemovedeleteId = (id?: string | number) => setdeleteId(id || '')
 
+  const [pagination, setPagination] = React.useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  })
+
   const { mutate: deleteById, isLoading: deleteByIdLoading } =
     useDeleteFieldValueById()
 
@@ -48,14 +53,38 @@ const DynamicFormModuleTable = ({
   }
 
   const {
-    data: dynamicFieldListData = [],
-    isFetching: dynamicFieldListDataFetching,
-  } = useGetDynamicFieldListByFormId(location?.state?.id)
+    mutateAsync: getDynamicFieldList,
+    data: mydaga,
+    isLoading: dynamicFieldListDataFetching,
+  } = useGetDynamicFieldListByFormId()
+
+  const [acc, setacc] = useState<any[]>([])
+  const initData = useCallback(async () => {
+    const res: any = await getDynamicFieldList({
+      // id: location?.state?.id!,
+      id: 26,
+      pqCurrentPage: 1,
+      pqRpp: 10,
+    })
+
+    const dynamicFieldListData = Object.values(res?.data?.data)
+
+    setacc(dynamicFieldListData)
+  }, [])
+
+  useEffect(() => {
+    console.log(location.state?.id, 'gandu mug ')
+    initData()
+  }, [initData, location.state?.id])
+
+  // const daaaa: any = mydaga?.data
+  // const dynamicFieldListData = daaaa?.data && Object.values(daaaa?.data)
+  // console.log(dynamicFieldListData, 'filter here')
 
   const columns = React.useMemo<ColumnDef<any>[]>(() => {
-    if (dynamicFieldListData.length) {
+    if (acc.length) {
       return [
-        ...dynamicFieldListData[0]?.values?.map(
+        ...acc[0]?.values?.map(
           (field: { labelNameEnglish: string; fieldId: number }) => ({
             id: field.fieldId,
             header: field.labelNameEnglish,
@@ -109,9 +138,9 @@ const DynamicFormModuleTable = ({
         },
       ]
     }
-  }, [t, dynamicFieldListDataFetching, dynamicFieldListData[0]?.values])
+  }, [t, dynamicFieldListDataFetching, acc[0]?.values])
 
-  const convertedData: ConvertedDataItem[] = dynamicFieldListData.map(
+  const convertedData: ConvertedDataItem[] = acc.map(
     (item: { values: Field[]; formValueId: number }) => {
       const convertedItem: ConvertedDataItem = {}
       item.values.forEach((field: Field) => {
@@ -151,6 +180,11 @@ const DynamicFormModuleTable = ({
             }}
             columns={columns}
             data={convertedData || []}
+            serverPagination
+            serverPaginationParams={{
+              pagination: pagination,
+              setPagination: setPagination,
+            }}
           />
         </FlexLayout>
       </ContainerLayout>

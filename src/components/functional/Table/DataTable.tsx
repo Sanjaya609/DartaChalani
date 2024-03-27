@@ -20,6 +20,7 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  PaginationState,
   Row,
   RowData,
   RowModel,
@@ -58,6 +59,12 @@ export interface ITableProps<TData extends RowData> extends TableHeaderProps {
   className?: string
   withScrollable?: boolean
   withSN?: boolean
+
+  serverPagination?: boolean
+  serverPaginationParams?: {
+    pagination: PaginationState
+    setPagination: React.Dispatch<React.SetStateAction<PaginationState>>
+  }
 }
 
 interface FixedHeightTableProps {
@@ -103,6 +110,9 @@ const NormalDataTable = <TData extends RowData>({
   customAddFilter,
   customTableFilter,
   filterClassName,
+
+  serverPagination,
+  serverPaginationParams,
 }: ITableProps<TData>) => {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -147,6 +157,7 @@ const NormalDataTable = <TData extends RowData>({
       fuzzy: fuzzyFilter,
     },
     state: {
+      // serverPaginationParams.pagination,
       sorting,
       rowSelection: rowSelection || undefined,
       columnFilters,
@@ -163,6 +174,9 @@ const NormalDataTable = <TData extends RowData>({
     onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: setGlobalFilter,
     enableGlobalFilter: true,
+
+    manualPagination: serverPagination,
+    onPaginationChange: serverPaginationParams?.setPagination,
   })
   const isNoDataFound = !isLoading && table.getRowModel().rows?.length === 0
 
