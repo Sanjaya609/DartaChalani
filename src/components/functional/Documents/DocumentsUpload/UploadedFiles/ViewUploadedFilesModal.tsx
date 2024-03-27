@@ -40,10 +40,10 @@ const ViewUploadedFilesModal = (props: IViewUploadedFilesModalProps) => {
   } = useTranslation()
 
   const fileWithObjectSrc = useMemo(() => {
-    return filesData.map((data) => ({
+    return filesData?.map((data) => ({
       ...data,
-      fileSrc: data.file ? URL.createObjectURL(data.file!) : '',
-      documentName: data.documentName || '',
+      fileSrc: data?.file ? URL.createObjectURL(data.file!) : '',
+      documentName: data?.documentName || '',
     }))
   }, [filesData])
 
@@ -67,7 +67,7 @@ const ViewUploadedFilesModal = (props: IViewUploadedFilesModalProps) => {
       contentClassName="pb-3"
     >
       <Grid sm={'sm:grid-cols-12'} gap="gap-4" className="w-full">
-        {fileWithObjectSrc.map((fileData) => {
+        {fileWithObjectSrc?.map((fileData) => {
           const fileExt = fileData.file?.name.split('.').pop() || ''
           const uploadedDocumentFileExt =
             fileData.documentName.split('.').pop() || ''
@@ -77,7 +77,7 @@ const ViewUploadedFilesModal = (props: IViewUploadedFilesModalProps) => {
               key={fileData.uuid}
               className={`${
                 imgWidthWithLength?.[
-                  filesData.length as keyof typeof imgWidthWithLength
+                  filesData?.length as keyof typeof imgWidthWithLength
                 ] || 'sm:col-span-4'
               } group relative h-[250px] cursor-pointer `}
             >
