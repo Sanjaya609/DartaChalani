@@ -1,4 +1,3 @@
-import ViewUploadedFiles from '@/components/functional/Documents/DocumentsUpload/ViewUploadedFiles'
 import GridColDetailByLabelAndValue from '@/components/functional/GridColDetailByLabelAndValue/GridColDetailByLabelAndValue'
 import SectionHeader from '@/components/functional/SectionHeader'
 import { Grid } from '@/components/ui'
@@ -9,9 +8,8 @@ import { IAddFieldInitialValue } from '@/core/private/Recommendation/Fields/sche
 import { IAddGroupResponse } from '@/core/private/Recommendation/Fields/schema/group.interface'
 import { useGetFieldValueById } from '@/core/private/Recommendation/Fields/services/fields.query'
 import { getTextByLanguage } from '@/lib/i18n/i18n'
-import { privateRoutePath, useNavigate, useParams } from '@/router'
+import { useNavigate, useParams } from '@/router'
 import { IRoutePrivilege } from '@/router/routes/create-route'
-import { apiDetails } from '@/service/api'
 import { DYNAMICFORMFIELDTYPE } from '@/utility/enums/dynamic-form.enum'
 import { decodeParams } from '@/utility/route-params'
 import { useTranslation } from 'react-i18next'
@@ -74,7 +72,7 @@ const DynamicFormDetailView = ({
         return field?.value?.toString === 'true' ? 'Yes' : 'No'
       }
       case DYNAMICFORMFIELDTYPE.FILE: {
-        return field?.FieldDocumentResponse
+        return field?.fieldDocumentResponse
       }
 
       default:
@@ -118,8 +116,8 @@ const DynamicFormDetailView = ({
                                 field?.labelNameEnglish,
                                 field?.labelNameNepali
                               )}
+                              fieldType={field?.fieldType}
                             />
-                            {/* {field?.fieldType === ''} */}
                           </>
                         ))
                       : ''}
