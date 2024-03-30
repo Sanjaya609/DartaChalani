@@ -184,11 +184,14 @@ const useGetAllField = <T = IAddFieldResponse[]>() => {
           requestData,
         })
       },
-      // {
-      //   onSuccess: () => {
-      //     queryClient.invalidateQueries([getAllGroupByRecommendationId.controllerName])
-      //   },
-      // }
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries([getAllGroupByRecommendationId.controllerName])
+        },
+        meta: {
+          disableSuccessToast: true,
+        },
+      }
     )
   }
 

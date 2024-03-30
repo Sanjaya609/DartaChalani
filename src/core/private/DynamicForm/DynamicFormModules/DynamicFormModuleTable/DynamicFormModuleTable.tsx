@@ -3,20 +3,20 @@ import { DataTable } from '@/components/functional/Table'
 import TableAction from '@/components/functional/Table/Components/Table/TableAction'
 import ContainerLayout from '@/components/ui/core/Layout/ContainerLayout'
 import FlexLayout from '@/components/ui/core/Layout/FlexLayout'
-import { IDropdownConfigResponse } from '@/core/private/MasterSetup/DropdownConfig/AddDropDownConfig/schema/dropdown-config.interface'
 import {
   useDeleteFieldValueById,
   useGetDynamicFieldListByFormId,
 } from '@/core/private/Recommendation/Fields/services/fields.query'
 import { getTextByLanguage } from '@/lib/i18n/i18n'
 import { IRoutePrivilege } from '@/router/routes/create-route'
-import { ColumnDef, PaginationState } from '@tanstack/react-table'
+import { ColumnDef, OnChangeFn, PaginationState } from '@tanstack/react-table'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocation } from 'react-router-dom'
 import { useNavigate } from '@/router'
 import { encodeParams } from '@/utility/route-params'
 import Modal from '@/components/ui/Modal/Modal'
+import { usePagination } from '@/components/functional/Table/usePagination'
 
 interface ConvertedDataItem {
   [key: string]: any
@@ -33,13 +33,9 @@ const DynamicFormModuleTable = ({
   const navigate = useNavigate()
   const { t } = useTranslation()
   const location = useLocation()
+  const { limit, onPaginationChange, skip, pagination } = usePagination()
   const [deleteId, setdeleteId] = useState<string | number>('')
   const setOrRemovedeleteId = (id?: string | number) => setdeleteId(id || '')
-
-  const [pagination, setPagination] = React.useState<PaginationState>({
-    pageIndex: 0,
-    pageSize: 10,
-  })
 
   const { mutate: deleteById, isLoading: deleteByIdLoading } =
     useDeleteFieldValueById()
@@ -54,37 +50,30 @@ const DynamicFormModuleTable = ({
 
   const {
     mutateAsync: getDynamicFieldList,
-    data: mydaga,
     isLoading: dynamicFieldListDataFetching,
   } = useGetDynamicFieldListByFormId()
 
-  const [acc, setacc] = useState<any[]>([])
+  const [dynamicFieldList, setDynamicFieldList] = useState<any[]>([])
   const initData = useCallback(async () => {
     const res: any = await getDynamicFieldList({
-      // id: location?.state?.id!,
-      id: 26,
-      pqCurrentPage: 1,
-      pqRpp: 10,
+      id: currentModuleDetails?.id!,
+      pqCurrentPage: pagination.pageIndex + 1,
+      pqRpp: pagination.pageSize,
     })
 
     const dynamicFieldListData = Object.values(res?.data?.data)
 
-    setacc(dynamicFieldListData)
-  }, [])
+    setDynamicFieldList(dynamicFieldListData)
+  }, [currentModuleDetails?.id, pagination])
 
   useEffect(() => {
-    console.log(location.state?.id, 'gandu mug ')
     initData()
-  }, [initData, location.state?.id])
-
-  // const daaaa: any = mydaga?.data
-  // const dynamicFieldListData = daaaa?.data && Object.values(daaaa?.data)
-  // console.log(dynamicFieldListData, 'filter here')
+  }, [initData, currentModuleDetails?.id])
 
   const columns = React.useMemo<ColumnDef<any>[]>(() => {
-    if (acc.length) {
+    if (dynamicFieldList.length) {
       return [
-        ...acc[0]?.values?.map(
+        ...dynamicFieldList[0]?.values?.map(
           (field: { labelNameEnglish: string; fieldId: number }) => ({
             id: field.fieldId,
             header: field.labelNameEnglish,
@@ -138,15 +127,15 @@ const DynamicFormModuleTable = ({
         },
       ]
     }
-  }, [t, dynamicFieldListDataFetching, acc[0]?.values])
+  }, [t, dynamicFieldListDataFetching, dynamicFieldList[0]?.values])
 
-  const convertedData: ConvertedDataItem[] = acc.map(
+  const convertedData: ConvertedDataItem[] = dynamicFieldList?.map(
     (item: { values: Field[]; formValueId: number }) => {
       const convertedItem: ConvertedDataItem = {}
       item.values.forEach((field: Field) => {
         convertedItem[
-          field.labelNameEnglish.toLocaleLowerCase() + field.fieldId
-        ] = field.value ?? '-'
+          field?.labelNameEnglish?.toLocaleLowerCase() + field.fieldId
+        ] = field?.value ?? '-'
       })
 
       convertedItem.formValueId = item.formValueId
@@ -180,10 +169,14 @@ const DynamicFormModuleTable = ({
             }}
             columns={columns}
             data={convertedData || []}
+            isLoading={dynamicFieldListDataFetching}
             serverPagination
             serverPaginationParams={{
               pagination: pagination,
-              setPagination: setPagination,
+              setPagination: onPaginationChange,
+              totalCount: dynamicFieldList.length
+                ? dynamicFieldList[0].totalCount
+                : 0,
             }}
           />
         </FlexLayout>

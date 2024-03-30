@@ -1,4 +1,9 @@
-import { PaginationState, RowData, Table } from '@tanstack/react-table'
+import {
+  OnChangeFn,
+  PaginationState,
+  RowData,
+  Table,
+} from '@tanstack/react-table'
 import {
   ArrowLineLeft,
   ArrowLineRight,
@@ -25,6 +30,13 @@ interface ITableFooterProps<TData> {
   pagination?: PaginationState
   paginationServer?: boolean
   paginationRowsPerPageOptions?: Array<number>
+  serverPaginationParams:
+    | {
+        pagination: PaginationState
+        setPagination: OnChangeFn<PaginationState> | undefined
+        totalCount: number
+      }
+    | undefined
 }
 
 const TableFooter = <TData extends RowData>({
@@ -32,13 +44,14 @@ const TableFooter = <TData extends RowData>({
   pagination,
   paginationServer,
   paginationRowsPerPageOptions = paginationRowOpt,
+  serverPaginationParams,
 }: ITableFooterProps<TData>) => {
   const currentPage = table.getState().pagination.pageIndex + 1
   const pageSize = paginationServer
     ? pagination?.pageSize || 10
     : table.getState().pagination.pageSize
   const total = paginationServer
-    ? table.getPageCount() * (pagination?.pageSize || 10)
+    ? serverPaginationParams?.totalCount!
     : table.getPrePaginationRowModel().rows.length
 
   const pageNumbers = getPageNumbers({
@@ -57,6 +70,7 @@ const TableFooter = <TData extends RowData>({
 
   const pagesStartEndData = useMemo(() => {
     const page = currentPage - 1
+
     return {
       startPage: page * pageSize + 1,
       endPage: page * pageSize + table.getRowModel().rows.length,
