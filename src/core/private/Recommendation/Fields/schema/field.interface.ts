@@ -16,7 +16,6 @@ export interface IAddFieldInitialValue {
   fieldControlName?: string
   fieldType: FormKeyType
   fieldDocumentResponse?: FieldDocumentResponseType
-
   isValidationRequired: boolean
   orderNo?: number
   recommendationId: string
