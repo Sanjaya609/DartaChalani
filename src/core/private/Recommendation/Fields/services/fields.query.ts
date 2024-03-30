@@ -152,21 +152,46 @@ const useGetAllField = <T = IAddFieldResponse[]>() => {
     )
   }
 
-  const useGetDynamicFieldListByFormId = (id: string | number | null) => {
-    return useQuery(
-      [dynamicFieldList.controllerName, id],
-      () =>
-        initApiRequest<BackendSuccessResponse<any>>({
+  // const useGetDynamicFieldListByFormId = (id: string | number | null) => {
+  //   return useQuery(
+  //     [dynamicFieldList.controllerName, id],
+  //     () =>
+  //       initApiRequest<BackendSuccessResponse<any>>({
+  //         apiDetails: dynamicFieldList,
+  //         pathVariables: { id }
+  //       }),
+  //       {
+  //         select: (data) => {
+  //           return data?.data?.data
+  //         },
+  //         enabled: !!id,
+  //         staleTime: 0
+  //       }
+  //   )
+  // }
+
+  interface IfieldValueListProps {
+    "id": number,
+    "pqCurrentPage": number,
+    "pqRpp": number
+  }
+  const useGetDynamicFieldListByFormId = () => {
+    const queryClient = useQueryClient()
+    return useMutation(
+      (requestData: IfieldValueListProps) => {
+        return initApiRequest({
           apiDetails: dynamicFieldList,
-          pathVariables: { id }
-        }),
-        {
-          select: (data) => {
-            return data?.data?.data
-          },
-          enabled: !!id,
-          staleTime: 0
-        }
+          requestData,
+        })
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries([getAllGroupByRecommendationId.controllerName])
+        },
+        meta: {
+          disableSuccessToast: true,
+        },
+      }
     )
   }
 

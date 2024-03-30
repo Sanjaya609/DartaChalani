@@ -31,8 +31,7 @@ export interface IAddFieldInitialValue {
     fieldId: number
     validationType: string
     errorMessage: string
-    // regex: string
-    value: string | number
+    value: string
   }[]
 }
 

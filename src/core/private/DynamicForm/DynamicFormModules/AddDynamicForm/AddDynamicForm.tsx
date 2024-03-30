@@ -25,7 +25,6 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import * as Yup from 'yup'
 
 const AddDynamicForm = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
-  console.log({ currentModuleDetails })
   const { t } = useTranslation()
   const navigate = useNavigate()
   const location = useLocation()
@@ -120,8 +119,6 @@ const AddDynamicForm = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
     }
   }
 
-  console.log(validationSchema, 'filter v')
-
   const formikConfig = useFormik({
     enableReinitialize: true,
     initialValues: initialValuesWithoutObj,
@@ -130,7 +127,6 @@ const AddDynamicForm = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
       handleAddFieldValue(values)
     },
   })
-  console.log(formikConfig.errors, 'errors filter')
 
   return dynamicFormDataFetching ? (
     <FallbackLoader />

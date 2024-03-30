@@ -20,11 +20,14 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  OnChangeFn,
+  PaginationState,
   Row,
   RowData,
   RowModel,
   RowSelectionState,
   SortingState,
+  TableOptions,
   useReactTable,
 } from '@tanstack/react-table'
 import * as React from 'react'
@@ -58,6 +61,13 @@ export interface ITableProps<TData extends RowData> extends TableHeaderProps {
   className?: string
   withScrollable?: boolean
   withSN?: boolean
+
+  serverPagination?: boolean
+  serverPaginationParams?: {
+    pagination: PaginationState
+    setPagination: OnChangeFn<PaginationState> | undefined
+    totalCount: number
+  }
 }
 
 interface FixedHeightTableProps {
@@ -103,6 +113,9 @@ const NormalDataTable = <TData extends RowData>({
   customAddFilter,
   customTableFilter,
   filterClassName,
+
+  serverPagination,
+  serverPaginationParams,
 }: ITableProps<TData>) => {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -118,7 +131,14 @@ const NormalDataTable = <TData extends RowData>({
         id: 'Sn',
         header: () => t('sn'),
         show: !!withSN,
-        cell: (prop: TAny) => prop.row.index + 1,
+        cell: (prop: TAny) => {
+          return serverPagination
+            ? serverPaginationParams?.pagination?.pageIndex! *
+                serverPaginationParams?.pagination?.pageSize! +
+                prop.row.index +
+                1
+            : prop.row.index + 1
+        },
       },
       ...columns,
     ],
@@ -140,19 +160,28 @@ const NormalDataTable = <TData extends RowData>({
     {}
   )
 
-  const table = useReactTable({
+  let reactTableState: any = {
+    sorting,
+    rowSelection: rowSelection || undefined,
+    columnFilters,
+    globalFilter,
+    columnVisibility: hiddenColumns,
+  }
+
+  if (serverPagination) {
+    reactTableState = {
+      ...reactTableState,
+      pagination: serverPaginationParams?.pagination,
+    }
+  }
+
+  const reactTableProps: TableOptions<TData> = {
     data: memorizedData,
     columns: memoizedColumns,
     filterFns: {
       fuzzy: fuzzyFilter,
     },
-    state: {
-      sorting,
-      rowSelection: rowSelection || undefined,
-      columnFilters,
-      globalFilter,
-      columnVisibility: hiddenColumns,
-    },
+    state: reactTableState,
     onSortingChange: setSorting,
     globalFilterFn: fuzzyFilter,
     getCoreRowModel: getCoreRowModel(),
@@ -163,7 +192,15 @@ const NormalDataTable = <TData extends RowData>({
     onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: setGlobalFilter,
     enableGlobalFilter: true,
-  })
+  }
+
+  if (serverPagination) {
+    reactTableProps.manualPagination = true
+    reactTableProps.onPaginationChange = serverPaginationParams?.setPagination
+    // reactTableProps.pageCount = serverPaginationParams?.pageCount
+  }
+
+  const table = useReactTable(reactTableProps)
   const isNoDataFound = !isLoading && table.getRowModel().rows?.length === 0
 
   useEffect(
@@ -226,7 +263,9 @@ const NormalDataTable = <TData extends RowData>({
         </Box>
         <TableFooter
           table={table}
+          paginationServer={serverPagination}
           paginationRowsPerPageOptions={paginationRowsPerPageOptions}
+          serverPaginationParams={serverPaginationParams}
         />
       </Flexbox>
     </>
