@@ -41,9 +41,9 @@ const addFieldAPI = {
     requestMethod: RequestMethod.POST,
   },
   dynamicFieldList: {
-    controllerName: `${prefix}/list-data/{id}`,
+    controllerName: `${prefix}/list-data`,
     queryName: 'DYNAMIC_FIELD_LIST',
-    requestMethod: RequestMethod.GET,
+    requestMethod: RequestMethod.POST,
   },
   downloadDynamicFieldFile: {
     controllerName: `document/download`,
