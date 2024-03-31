@@ -113,6 +113,7 @@ const AddRecommendationForm = ({
           toggleRecommendationForm()
           setInitialRecommendationValue(addRecommendationInitialValues)
           setViewOnly && setViewOnly(false)
+          !!openRecommendationForm && resetForm()
         }}
         size="md"
         title={
@@ -131,6 +132,7 @@ const AddRecommendationForm = ({
             loading: createRecommendationLoading
             setInitialRecommendationValue(addRecommendationInitialValues)
             setViewOnly && setViewOnly(false)
+            resetForm()
           },
         }}
       >
