@@ -25,6 +25,7 @@ import { useUpdateFieldOrder } from '../services/fields.query'
 import Modal from '@/components/ui/Modal/Modal'
 import { useDeleteGroupById } from '../services/groups.query'
 import { Spinner } from '@/components/ui/Spinner'
+import { getTextByLanguage } from '@/lib/i18n/i18n'
 
 const SortableGroup = ({
   item,
@@ -176,7 +177,7 @@ const SortableGroup = ({
           }`}
         >
           <Text variant="h5" typeface="semibold">
-            {item.nameEnglish}
+            {getTextByLanguage(item.nameEnglish, item.nameNepali)}
           </Text>
         </Flexbox>
 
@@ -236,7 +237,7 @@ const SortableGroup = ({
         open={!!deleteId}
         toggleModal={setOrRemoveDeleteId}
         size="md"
-        title="Delete Field"
+        title={getTextByLanguage('Delete Group', 'समूह मेटाउनुहोस्')}
         saveBtnProps={{
           btnAction: handleDeleteById,
           loading: deleteByIdLoading,
@@ -248,7 +249,10 @@ const SortableGroup = ({
           },
         }}
       >
-        Are you sure to delete this Group
+        {getTextByLanguage(
+          'Are you sure to delete this Group?',
+          'के तपाइँ यो समूह मेटाउन निश्चित हुनुहुन्छ?'
+        )}
       </Modal>
     </div>
   )

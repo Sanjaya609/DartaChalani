@@ -17,6 +17,7 @@ import { useTranslation } from 'react-i18next'
 import ValidationSetup from './ValidationSetup'
 import { useBoolean } from 'usehooks-ts'
 import { validationSetupInitialValues } from '../schema/validations.schema'
+import { getTextByLanguage } from '@/lib/i18n/i18n'
 
 const SortableField = ({
   item,
@@ -45,7 +46,6 @@ const SortableField = ({
   const setOrRemoveselectedId = (id?: string | number) =>
     setSelectedId(id || '')
 
-  const { value: openDelegeModal, toggle: toggleDelegeModal } = useBoolean()
   const { value: openValidationModal, toggle: toggleValidationModal } =
     useBoolean()
   const [initialValues, setInitialValues] = useState(
@@ -59,7 +59,6 @@ const SortableField = ({
     deleteById(selectedId, {
       onSuccess: () => {
         setOrRemoveselectedId()
-        toggleDelegeModal()
       },
     })
   }
@@ -87,7 +86,6 @@ const SortableField = ({
         className="z-40 ml-4 whitespace-nowrap rounded border border-gray-80"
         onClick={() => {
           setSelectedId(item?.id!)
-          toggleDelegeModal()
         }}
       >
         <Icon icon={Trash} />
@@ -146,7 +144,7 @@ const SortableField = ({
         checked={true}
         errors={{}}
         name="fieldControlName"
-        label={item.labelNameEnglish}
+        label={getTextByLanguage(item.labelNameEnglish, item.labelNameNepali)}
         onChange={() => {}}
       />
     )
@@ -163,10 +161,10 @@ const SortableField = ({
       {renderField(item)}
 
       <Modal
-        open={openDelegeModal}
+        open={!!selectedId}
         toggleModal={setOrRemoveselectedId}
         size="md"
-        title="Delete Field"
+        title={getTextByLanguage('Delete Field', 'फिल्ड मेटाउन')}
         saveBtnProps={{
           btnAction: handleDeleteById,
           loading: deleteByIdLoading,
@@ -178,7 +176,10 @@ const SortableField = ({
           },
         }}
       >
-        Are you sure to delete this Field
+        {getTextByLanguage(
+          'Are you sure to delete this Field?',
+          'के तपाइँ यो फिल्ड मेटाउन निश्चित हुनुहुन्छ?'
+        )}
       </Modal>
 
       {openValidationModal && selectedId && (

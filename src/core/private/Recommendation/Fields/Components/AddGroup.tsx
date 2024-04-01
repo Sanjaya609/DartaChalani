@@ -16,6 +16,7 @@ import {
 } from '../schema/group.schema'
 import { decodeParams } from '@/utility/route-params'
 import { useParams } from 'react-router-dom'
+import { getTextByLanguage } from '@/lib/i18n/i18n'
 
 const AddGroup = ({
   toggleGroupForm,
@@ -98,7 +99,11 @@ const AddGroup = ({
           setViewOnly && setViewOnly(false)
         }}
         size="md"
-        title={editGroupData ? 'Edit Group' : 'Add Group'}
+        title={
+          editGroupData
+            ? getTextByLanguage('Edit Group', 'समूह सम्पादन गर्नुहोस्')
+            : getTextByLanguage('Add Group', 'समूह थप्नुहोस्')
+        }
         saveBtnProps={{
           btnAction: handleSubmit,
           loading: createGroupLoading,
@@ -123,7 +128,10 @@ const AddGroup = ({
                 errors={errors}
                 touched={touched}
                 name="nameEnglish"
-                label="Group Name English"
+                label={getTextByLanguage(
+                  'Group Name English',
+                  'समूहको नाम अंग्रेजीमा'
+                )}
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
@@ -138,7 +146,10 @@ const AddGroup = ({
                 errors={errors}
                 touched={touched}
                 name="nameNepali"
-                label="Group Name Nepali"
+                label={getTextByLanguage(
+                  'Group Name Nepali',
+                  'समूहको नाम नेपालीमा'
+                )}
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
