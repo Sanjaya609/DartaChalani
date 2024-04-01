@@ -20,6 +20,7 @@ import { decodeParams } from '@/utility/route-params'
 import GeneralFields from './FieldTypes/GeneralFields'
 import SwitchFields from './FieldTypes/SwitchFields'
 import RadioFields from './FieldTypes/RadioFields'
+import { getTextByLanguage } from '@/lib/i18n/i18n'
 
 const AddField = ({
   fieldId,
@@ -171,7 +172,7 @@ const AddField = ({
         className="my-2 w-full p-3 pb-1"
       >
         <Text typeface="extrabold" className="text-primary" variant="h5">
-          Field Details
+          {getTextByLanguage('Field Details', 'फिल्ड विवरण')}
         </Text>
         <div className="h-px flex-auto bg-gray-100"></div>
       </Flexbox>
@@ -215,7 +216,7 @@ const AddField = ({
               setInitialFieldValue(addFieldInitialValues)
             }}
           >
-            Close
+            {t('btns.close')}
           </Button>
           <Button
             size="md"
@@ -224,7 +225,7 @@ const AddField = ({
             icons="icons"
             className="ml-4 whitespace-nowrap border border-gray-80"
           >
-            {fieldId ? 'Update' : 'Add'}
+            {fieldId ? t('btns.update') : t('btns.add')}
           </Button>
         </Flexbox>
       </form>

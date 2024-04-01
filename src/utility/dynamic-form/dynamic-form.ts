@@ -8,6 +8,7 @@ import { StringSchema, ArraySchema } from 'yup'
 import { IAddGroupResponse } from '@/core/private/Recommendation/Fields/schema/group.interface'
 import { IAddFieldInitialValue } from '@/core/private/Recommendation/Fields/schema/field.interface'
 import formatDate from '../date/dateFunction'
+import { getTextByLanguage } from '@/lib/i18n/i18n'
 
 export const DynamicFormFieldTypeMapping = {
   SELECT: Form.Select,
@@ -48,7 +49,7 @@ export const createFormInputFromFieldType = (
   switch (field.fieldType.toUpperCase()) {
     case DYNAMICFORMFIELDTYPE.NEPALICALENDAR:
       return DynamicFormFieldTypeMapping.NEPALIDATEPICKER({
-        label: field.labelNameEnglish,
+        label: getTextByLanguage(field.labelNameEnglish, field.labelNameNepali),
         value: values?.[field.fieldControlName as string] || '',
         id: field.fieldControlName,
         errors: errors,
@@ -67,7 +68,7 @@ export const createFormInputFromFieldType = (
 
     case DYNAMICFORMFIELDTYPE.ENGLISHCALENDAR:
       return DynamicFormFieldTypeMapping.ENGLISHDATEPICKER({
-        label: field.labelNameEnglish,
+        label: getTextByLanguage(field.labelNameEnglish, field.labelNameNepali),
         value: values?.[field.fieldControlName as string] || '',
         id: field.fieldControlName,
         errors: errors,
@@ -92,7 +93,7 @@ export const createFormInputFromFieldType = (
           onHandleChange(field, e?.main)
           // setFieldValue(field?.fieldControlName || "", { fieldId: field?.id, value: e?.main})
         },
-        label: field.labelNameEnglish,
+        label: getTextByLanguage(field.labelNameEnglish, field.labelNameNepali),
         id: field.fieldControlName,
         errors: errors,
         touched: touched,
@@ -110,7 +111,7 @@ export const createFormInputFromFieldType = (
         DynamicFormFieldTypeMapping.TEXT as FunctionComponent,
         {
           value: values?.[field.fieldControlName as string] || '',
-          label: field.labelNameEnglish,
+          label: getTextByLanguage(field.labelNameEnglish, field.labelNameNepali),
           id: field.fieldControlName,
           errors: errors,
           touched: touched,
@@ -131,7 +132,7 @@ export const createFormInputFromFieldType = (
         DynamicFormFieldTypeMapping.SWITCH as FunctionComponent,
         {
           checked: values?.[field.fieldControlName as string] || false,
-          label: field.labelNameEnglish,
+          label: getTextByLanguage(field.labelNameEnglish, field.labelNameNepali),
           id: field.fieldControlName,
           errors: errors,
           touched: touched,
@@ -157,7 +158,7 @@ export const createFormInputFromFieldType = (
         DynamicFormFieldTypeMapping.NUMBER as FunctionComponent,
         {
           value: values?.[field.fieldControlName as string] || null,
-          label: field.labelNameEnglish,
+          label: getTextByLanguage(field.labelNameEnglish, field.labelNameNepali),
           id: field.fieldControlName,
           errors: errors,
           touched: touched,
@@ -176,7 +177,7 @@ export const createFormInputFromFieldType = (
     case DYNAMICFORMFIELDTYPE.RADIO:
       return DynamicFormFieldTypeMapping.RADIO({
         options: options,
-        label: field.labelNameEnglish,
+        label: getTextByLanguage(field.labelNameEnglish, field.labelNameNepali),
         id: field.fieldControlName,
         name: field.fieldControlName,
         errors: errors,
@@ -198,7 +199,7 @@ export const createFormInputFromFieldType = (
         DynamicFormFieldTypeMapping.TEXTAREA as FunctionComponent,
         {
           value: values?.[field.fieldControlName as string] || '',
-          label: field.labelNameEnglish,
+          label: getTextByLanguage(field.labelNameEnglish, field.labelNameNepali),
           id: field.fieldControlName,
           errors: errors,
           touched: touched,
@@ -218,7 +219,7 @@ export const createFormInputFromFieldType = (
       return DynamicFormFieldTypeMapping.CHECKBOX({
         options: options,
         value: values?.[field.fieldControlName as string] || '',
-        label: field.labelNameEnglish,
+        label: getTextByLanguage(field.labelNameEnglish, field.labelNameNepali),
         id: field.fieldControlName,
         errors: errors,
         touched: touched,
@@ -255,7 +256,7 @@ export const createFormInputFromFieldType = (
         DynamicFormFieldTypeMapping.FILE as FunctionComponent,
         {
           value: values?.[field.fieldControlName as string]?.value || '',
-          label: field.labelNameEnglish,
+          label: getTextByLanguage(field.labelNameEnglish, field.labelNameNepali),
           onChange: (e) => {
             onHandleChange(field, e.target.value)
           },

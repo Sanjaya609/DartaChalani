@@ -31,6 +31,7 @@ import SortableGroup from './Components/SortableGroup'
 import { IAddGroupResponse } from './schema/group.interface'
 import AddGroupModal from './Components/AddGroup'
 import { Spinner } from '@/components/ui/Spinner'
+import { getTextByLanguage } from '@/lib/i18n/i18n'
 
 const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
   const { t } = useTranslation()
@@ -96,7 +97,7 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
   return (
     <>
       <SectionHeader
-        title={recommendationDetails?.nameEnglish}
+        title={`${recommendationDetails?.nameEnglish} (${recommendationDetails?.nameNepali})`}
         backAction={navigateToRecommendationList}
       />
       <Flexbox
@@ -116,7 +117,7 @@ const FieldSetup = ({ currentModuleDetails }: Partial<IRoutePrivilege>) => {
           loading={createGroupLoading}
           disabled={createGroupLoading}
         >
-          Add Group
+          {getTextByLanguage('Add Group', 'समूह थप्नुहोस्')}
         </Button>
       </Flexbox>
       <ContainerLayout className="scrollbars pt-0">

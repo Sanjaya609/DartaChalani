@@ -74,9 +74,16 @@ const DynamicFormModuleTable = ({
     if (dynamicFieldList.length) {
       return [
         ...dynamicFieldList[0]?.values?.map(
-          (field: { labelNameEnglish: string; fieldId: number }) => ({
+          (field: {
+            labelNameEnglish: string
+            fieldId: number
+            labelNameNepali: string
+          }) => ({
             id: field.fieldId,
-            header: field.labelNameEnglish,
+            header: getTextByLanguage(
+              field.labelNameEnglish,
+              field.labelNameNepali
+            ),
             accessorKey: (
               field.labelNameEnglish + field.fieldId
             ).toLocaleLowerCase(),
