@@ -26,7 +26,7 @@ function GeneralFields({ formikProps, t }: FieldCaseProps) {
             const inputValue = e.target.value
             // Regular expression to match English alphabets (a-z, A-Z), digits (0-9), words, and sentences
             const englishAlphabetAndDigitRegex =
-              /^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _']*$/
+              /^[A-Za-z0-9 _./]*[A-Za-z0-9][A-Za-z0-9 _./']*$/
 
             if (
               englishAlphabetAndDigitRegex.test(inputValue) ||
