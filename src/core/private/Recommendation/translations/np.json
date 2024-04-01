@@ -13,20 +13,20 @@
   "gridLength": "Grid Length",
   "dropdownOption": "Dropdown Options",
   "orderNo": "अर्डर नम्बर",
-  "isValidationRequired": "प्रमाणीकरण आवश्यक छ ?",
+  "isValidationRequired": "प्रमाणीकरण अनिवार्य छ ?",
   "showInForm": "Show In Form",
   "labelNameEnglish": "लेबलको नाम (अंग्रेजी)",
   "labelNameNepali": "लेबलको नाम (नेपाली)",
   "className": "Class Name (CSS Styling)",
   "showInList": "तालिका सूचीमा फिल्ड देखाउने हो?",
   "errors": {
-    "recommendationNameEn": "सिफारिस नाम (अंग्रेजी) आवश्यक छ",
-    "recommendationNameNp": "सिफारिस नाम (नेपाली) आवश्यक छ",
-    "description": "विवरण आवश्यक छ",
-    "moduleId": "मोड्युलको नाम आवश्यक छ",
-    "orderNo": "अर्डर नम्बर आवश्यक छ",
-    "labelNameEnglish": "लेबल नाम (अंग्रेजी) आवश्यक छ",
-    "labelNameNepali": "लेबल नाम (नेपाली) आवश्यक छ"
+    "recommendationNameEn": "सिफारिस नाम (अंग्रेजी) अनिवार्य छ",
+    "recommendationNameNp": "सिफारिस नाम (नेपाली) अनिवार्य छ",
+    "description": "विवरण अनिवार्य छ",
+    "moduleId": "मोड्युलको नाम अनिवार्य छ",
+    "orderNo": "अर्डर नम्बर अनिवार्य छ",
+    "labelNameEnglish": "लेबल नाम (अंग्रेजी) अनिवार्य छ",
+    "labelNameNepali": "लेबल नाम (नेपाली) अनिवार्य छ"
   },
   "modal": {
     "status": {

@@ -189,7 +189,7 @@ const AddRecommendationForm = ({
               <Form.TextArea
                 disabled={viewOnly}
                 withCharacterCount
-                maxLength={500}
+                maxLength={300}
                 value={values.description}
                 errors={errors}
                 touched={touched}

@@ -400,7 +400,7 @@ const AddDispatchBook = (props: Partial<IRoutePrivilege>) => {
             <Grid.Col sm={'sm:col-span-6'}>
               <Form.TextArea
                 withCharacterCount
-                maxLength={500}
+                maxLength={300}
                 value={values.remarks}
                 errors={errors}
                 touched={touched}
