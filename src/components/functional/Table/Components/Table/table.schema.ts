@@ -9,7 +9,7 @@ export const tableHeaderBaseStyle =
 export const tableHeaderThStyle =
   'p-3 text-base font-semibold text-gray-16 text-left capitalize whitespace-nowrap '
 
-export const tableHeaderThStickyStyle = 'sticky top-0 z-[2]'
+export const tableHeaderThStickyStyle = 'sticky top-0 '
 
 export const tableBodyRowStyle = `shadow-[0_-1px_0_0_#ccc_inset] hover:bg-orange-88   text-base`
 
