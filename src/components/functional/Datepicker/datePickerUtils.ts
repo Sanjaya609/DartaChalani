@@ -26,7 +26,7 @@ export const convertEngToNepNumber = (number: number | string) => {
             : numberItem
         })
         .join('')
-    : number.toString()
+    : number?.toString()
 }
 
 export const validateBsYear = (year: number) => {
