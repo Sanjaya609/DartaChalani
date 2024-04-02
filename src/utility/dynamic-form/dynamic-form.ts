@@ -15,7 +15,7 @@ export const DynamicFormFieldTypeMapping = {
   MULTISELECT: Form.Select,
   TEXT: Form.Input,
   INPUT: Form.Input,
-  NUMBER: Form.Input,
+  NUMBER: Form.Number,
   NEPALIDATEPICKER: Form.NepaliDatePicker,
   ENGLISHDATEPICKER: Form.EnglishDatePicker,
   RADIO: Form.Radio,

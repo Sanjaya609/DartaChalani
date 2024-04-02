@@ -1,4 +1,4 @@
-import { Input } from '@/components/functional/Form/Input/Input'
+import { Input, Number } from '@/components/functional/Form/Input/Input'
 import { Radio } from '@/components/functional/Form/Radio/Radio'
 import { EnglishDatePickerInput } from '@/components/functional/Form/DatePicker/EnglishDatePicker/EnglishDatePickerInput'
 import { NepaliDatePickerInput } from '@/components/functional/Form/DatePicker/NepaliDatePicker/NepaliDatePickerInput'
@@ -11,6 +11,7 @@ import { FileUpload } from './FileUpload/FileUpload'
 
 const Form = {
   Input,
+  Number,
   Radio,
   EnglishDatePicker: EnglishDatePickerInput,
   NepaliDatePicker: NepaliDatePickerInput,

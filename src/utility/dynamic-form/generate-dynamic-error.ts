@@ -17,7 +17,7 @@ export const generateDynamicError = (
   const getYupType: Partial<
     Record<
       keyof typeof DynamicFormFieldTypeMapping,
-      Yup.StringSchema<TAny> | Yup.ArraySchema<TAny, TAny>
+      Yup.StringSchema<TAny>
     >
   > = {
     SELECT: Yup.string().nullable(),
@@ -52,6 +52,40 @@ export const generateDynamicError = (
           error = error?.min(parseInt(validation?.value?.toString()!), validation.errorMessage)
           return
         }
+
+      case 'LOWERCASE': {
+        error = error?.test(
+          '',
+          validation?.errorMessage,
+          (value) => {
+            const isLowercaseOnly = (str: string) => /^[a-z]+$/.test(str);
+            const check = !isLowercaseOnly(value)
+
+            if (!isLowercaseOnly(value)) {
+              return false;
+            }
+            return true
+          }
+        );
+        return
+      }
+
+      case 'UPPERCASE': {
+        error = error?.test(
+          '',
+          validation?.errorMessage,
+          (value) => {
+            const isUpperCaseOnly = (str: string) => /^[A-Z]+$/.test(str);
+            const check = !isUpperCaseOnly(value)
+
+            if (!isUpperCaseOnly(value)) {
+              return false;
+            }
+            return true
+          }
+        );
+        return
+      }
     }
   }
 
