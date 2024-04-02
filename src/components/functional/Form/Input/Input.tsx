@@ -116,4 +116,8 @@ const Input = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
   )
 })
 
-export { Input }
+const Number = forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
+  return <Input type="number" {...props} {...ref} />
+})
+
+export { Input, Number }

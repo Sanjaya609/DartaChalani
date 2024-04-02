@@ -46,6 +46,7 @@ const SortableField = ({
   const setOrRemoveselectedId = (id?: string | number) =>
     setSelectedId(id || '')
 
+  const { value: openDeleteModal, toggle: toggleDeleteModal } = useBoolean()
   const { value: openValidationModal, toggle: toggleValidationModal } =
     useBoolean()
   const [initialValues, setInitialValues] = useState(
@@ -59,6 +60,7 @@ const SortableField = ({
     deleteById(selectedId, {
       onSuccess: () => {
         setOrRemoveselectedId()
+        toggleDeleteModal()
       },
     })
   }
@@ -86,6 +88,7 @@ const SortableField = ({
         className="z-40 ml-4 whitespace-nowrap rounded border border-gray-80"
         onClick={() => {
           setSelectedId(item?.id!)
+          toggleDeleteModal()
         }}
       >
         <Icon icon={Trash} />
@@ -144,7 +147,7 @@ const SortableField = ({
         checked={true}
         errors={{}}
         name="fieldControlName"
-        label={getTextByLanguage(item.labelNameEnglish, item.labelNameNepali)}
+        label={getTextByLanguage(item?.labelNameEnglish, item?.labelNameNepali)}
         onChange={() => {}}
       />
     )
@@ -161,7 +164,7 @@ const SortableField = ({
       {renderField(item)}
 
       <Modal
-        open={!!selectedId}
+        open={openDeleteModal}
         toggleModal={setOrRemoveselectedId}
         size="md"
         title={getTextByLanguage('Delete Field', 'फिल्ड मेटाउन')}
